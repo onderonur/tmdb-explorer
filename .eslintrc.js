@@ -1,7 +1,7 @@
 module.exports = {
   env: {
     browser: true,
-    es2020: true,
+    es6: true,
     node: true,
   },
   extends: [
@@ -10,19 +10,26 @@ module.exports = {
     'plugin:prettier/recommended',
     'react-app',
   ],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 11,
+    ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: ['react', 'prettier'],
+  plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
     'prettier/prettier': 'warn',
     'no-unused-vars': 'warn',
     'no-empty': 'warn',
+    'no-console': 'warn',
     'react/prop-types': 'off',
     'react/display-name': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
   },
 };
