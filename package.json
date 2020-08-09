@@ -1,0 +1,43 @@
+{
+  "name": "tmdb-explorer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint:fix": "eslint --fix --max-warnings 0 --ext .js,.jsx ."
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "downshift": "^6.0.3",
+    "http-proxy-middleware": "^1.0.5",
+    "next": "9.5.1",
+    "next-seo": "^4.7.3",
+    "nprogress": "^0.2.0",
+    "query-string": "^6.13.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-full-screen": "^0.3.1",
+    "react-hotkeys": "^2.0.0",
+    "react-infinite-scroll-hook": "^3.0.0",
+    "react-intersection-observer-hook": "^1.0.4",
+    "swr": "^0.3.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-plugin-flowtype": "^4.7.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "prettier": "^2.0.5"
+  }
+}
