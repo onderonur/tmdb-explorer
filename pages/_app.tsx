@@ -10,7 +10,7 @@ import App, { AppProps, AppContext } from 'next/app';
 import AppLayout from '@/components/AppLayout';
 import NProgress from 'nprogress';
 import { Router, useRouter } from 'next/router';
-import { SWRConfig } from 'swr';
+import { SWRConfig, ConfigInterface } from 'swr';
 import { api } from '@/utils';
 import { appTitle } from '@/constants';
 import { DefaultSeo } from 'next-seo';
@@ -55,7 +55,7 @@ const getDefaultSeoConfig = (pathname: string) => {
   };
 };
 
-const swrConfig = { fetcher: api.get };
+const swrConfig: ConfigInterface = { fetcher: api.get };
 
 type MyAppProps = AppProps & {
   configuration: APIConfiguration;

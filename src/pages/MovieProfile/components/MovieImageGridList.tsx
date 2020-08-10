@@ -14,6 +14,12 @@ function MovieImageGridList({ movie }: MovieImageGridListProps) {
   const { data, loading } = useFetch<{ backdrops: MovieImage[] }>(
     `/movie/${movieId}/images`,
   );
+
+  const {} = useFetch<{ backdrops: MovieImage[] }>(`/movie/${movieId}/images`);
+
+  const {} = useFetch<{ backdrops: MovieImage[] }>(`/movie/${movieId}/images`);
+
+  const {} = useFetch<{ backdrops: MovieImage[] }>(`/movie/${movieId}/images`);
   const filePaths = data?.backdrops.map((backdrop) => backdrop.file_path);
 
   return (

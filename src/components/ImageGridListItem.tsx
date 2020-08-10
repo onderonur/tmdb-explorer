@@ -12,11 +12,12 @@ interface ImageGridListItemProps {
 function ImageGridListItem({ filePath, aspectRatio }: ImageGridListItemProps) {
   const { getImageUrl } = useConfiguration();
   const router = useRouter();
+  const query = `?view=${filePath}`;
   return (
     <li>
       <NextLink
-        href={`${router.pathname}?view=${filePath}`}
-        as={`${router.asPath}?view=${filePath}`}
+        href={`${router.pathname}${query}`}
+        as={`${router.asPath}${query}`}
         shallow
       >
         <BaseImage
