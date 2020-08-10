@@ -48,9 +48,10 @@ ErrorPage.getInitialProps = async ({ res, err }) => {
   // If there is a client-side error, only "err" has a value.
   // If we open a non-existing path, "res" has a value but "err" not etc.
   const statusCode = err?.statusCode ?? res?.statusCode ?? notFoundStatusCode;
-  const message = err?.message ?? res?.statusMessage ?? 'Unknown Error';
-  // TODO
-  // (statusCode === notFoundStatusCode ? 'Not Found' : undefined);
+  const message =
+    err?.message ??
+    res?.statusMessage ??
+    (statusCode === notFoundStatusCode ? 'Not Found' : undefined);
   return { statusCode, message };
 };
 

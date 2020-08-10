@@ -12,10 +12,10 @@ import { useRouter } from 'next/router';
 import BaseSeo from '@/components/BaseSeo';
 import { useConfiguration } from '@/contexts/ConfigurationContext';
 import { GetServerSideProps } from 'next';
-import { Movie, Maybe } from '@/types';
+import { Movie } from '@/types';
 
 interface MovieProfileProps {
-  initialData: Maybe<Movie>;
+  initialData: Movie;
 }
 
 function MovieProfile({ initialData }: MovieProfileProps) {
@@ -23,13 +23,9 @@ function MovieProfile({ initialData }: MovieProfileProps) {
   const movieIdParam = router.query.movieId;
   const movieId =
     typeof movieIdParam === 'string' ? parseInt(movieIdParam) : null;
-  const { data, loading } = useFetch<Movie>(
-    initialData ? `/movie/${movieId}` : undefined,
-    undefined,
-    {
-      initialData: initialData || undefined,
-    },
-  );
+  const { data, loading } = useFetch<Movie>(`/movie/${movieId}`, undefined, {
+    initialData,
+  });
 
   const { getImageUrl } = useConfiguration();
 
@@ -91,12 +87,7 @@ export const getServerSideProps: GetServerSideProps<
   any
 > = async (context) => {
   const { movieId } = context.params;
-  let initialData;
-  try {
-    initialData = await api.get<Movie>(createUrl(`/movie/${movieId}`));
-  } catch (err) {
-    context.res.statusCode = err.statusCode || 404;
-  }
+  const initialData = await api.get<Movie>(createUrl(`/movie/${movieId}`));
   return {
     props: {
       initialData,
