@@ -23,9 +23,13 @@ function MovieProfile({ initialData }: MovieProfileProps) {
   const movieIdParam = router.query.movieId;
   const movieId =
     typeof movieIdParam === 'string' ? parseInt(movieIdParam) : null;
-  const { data, loading } = useFetch<Movie>(`/movie/${movieId}`, undefined, {
-    initialData: initialData || undefined,
-  });
+  const { data, loading } = useFetch<Movie>(
+    initialData ? `/movie/${movieId}` : undefined,
+    undefined,
+    {
+      initialData: initialData || undefined,
+    },
+  );
 
   const { getImageUrl } = useConfiguration();
 
