@@ -6,6 +6,10 @@ import { api, createUrl } from '@/utils';
 import BaseSeo from '@/components/BaseSeo';
 import { Movie, InfiniteFetchResponse } from '@/types';
 import { GetServerSideProps } from 'next';
+import withError, {
+  withGetServerSideError,
+  ServerSideProps,
+} from '@/hocs/withError';
 
 function renderItem(movie: Movie) {
   return (
@@ -15,15 +19,13 @@ function renderItem(movie: Movie) {
   );
 }
 
-interface PopularMoviesProps {
-  initialData: InfiniteFetchResponse<Movie>[];
-}
+type PopularMoviesProps = ServerSideProps<InfiniteFetchResponse<Movie>[]>;
 
 function PopularMovies({ initialData }: PopularMoviesProps) {
   const { data, hasNextPage, isLoading, loadMore } = useFetchInfinite<Movie>(
     '/movie/popular',
     undefined,
-    { initialData },
+    { initialData: initialData || undefined },
   );
 
   return (
@@ -40,7 +42,7 @@ function PopularMovies({ initialData }: PopularMoviesProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<PopularMoviesProps> = async () => {
+export const getServerSidePropsFn: GetServerSideProps<PopularMoviesProps> = async () => {
   const data = await api.get<InfiniteFetchResponse<Movie>>(
     createUrl('/movie/popular'),
   );
@@ -51,4 +53,6 @@ export const getServerSideProps: GetServerSideProps<PopularMoviesProps> = async 
   };
 };
 
-export default PopularMovies;
+export const getServerSideProps = withGetServerSideError(getServerSidePropsFn);
+
+export default withError(PopularMovies);

@@ -11,13 +11,14 @@ import { api, createUrl } from '@/utils';
 import { useRouter } from 'next/router';
 import BaseSeo from '@/components/BaseSeo';
 import { useConfiguration } from '@/contexts/ConfigurationContext';
-import { GetServerSideProps, NextPage, GetServerSidePropsContext } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { Movie } from '@/types';
-import ErrorPage from '../Error';
+import withError, {
+  withGetServerSideError,
+  ServerSideProps,
+} from '@/hocs/withError';
 
-interface MovieProfileProps {
-  initialData: Movie;
-}
+type MovieProfileProps = ServerSideProps<Movie>;
 
 const MovieProfile: NextPage<MovieProfileProps> = ({ initialData }) => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const MovieProfile: NextPage<MovieProfileProps> = ({ initialData }) => {
   const movieId =
     typeof movieIdParam === 'string' ? parseInt(movieIdParam) : null;
   const { data, loading } = useFetch<Movie>(`/movie/${movieId}`, undefined, {
-    initialData,
+    initialData: initialData || undefined,
   });
 
   const { getImageUrl } = useConfiguration();
@@ -81,14 +82,12 @@ const MovieProfile: NextPage<MovieProfileProps> = ({ initialData }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<
-  // TODO
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  any,
+const getServerSidePropsFn: GetServerSideProps<
+  MovieProfileProps,
   // TODO
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   any
-> = withGetServerSideError<MovieProfileProps>(async (context) => {
+> = async (context) => {
   const { movieId } = context.params;
   const initialData = await api.get<Movie>(createUrl(`/movie/${movieId}`));
   return {
@@ -96,42 +95,8 @@ export const getServerSideProps: GetServerSideProps<
       initialData,
     },
   };
-});
+};
 
-type Q = any;
-
-function withGetServerSideError<P /* Q */>(
-  getServerSideFn: GetServerSideProps<P, Q>,
-) {
-  return async function (ctx: GetServerSidePropsContext<Q>) {
-    try {
-      const result = await getServerSideFn(ctx);
-      return result;
-    } catch (err) {
-      return {
-        props: {
-          error: {
-            statusCode: err.statusCode,
-            message: err.message,
-          },
-        },
-      };
-    }
-  };
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function withError(SomePage: NextPage<any>) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return function ({ error, ...rest }: any) {
-    if (error) {
-      return (
-        <ErrorPage statusCode={error.statusCode} message={error.message} />
-      );
-    }
-
-    return <SomePage {...rest} />;
-  };
-}
+export const getServerSideProps = withGetServerSideError(getServerSidePropsFn);
 
 export default withError(MovieProfile);

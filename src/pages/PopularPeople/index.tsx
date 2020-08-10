@@ -6,6 +6,10 @@ import { api, createUrl } from '@/utils';
 import BaseSeo from '@/components/BaseSeo';
 import { Person, InfiniteFetchResponse } from '@/types';
 import { GetServerSideProps } from 'next';
+import withError, {
+  ServerSideProps,
+  withGetServerSideError,
+} from '@/hocs/withError';
 
 function renderItem(person: Person) {
   return (
@@ -15,15 +19,13 @@ function renderItem(person: Person) {
   );
 }
 
-interface PopularPeopleProps {
-  initialData: InfiniteFetchResponse<Person>[];
-}
+type PopularPeopleProps = ServerSideProps<InfiniteFetchResponse<Person>[]>;
 
 const PopularPeople = ({ initialData }: PopularPeopleProps) => {
   const { data, hasNextPage, isLoading, loadMore } = useFetchInfinite<Person>(
     '/person/popular',
     undefined,
-    { initialData },
+    { initialData: initialData || undefined },
   );
 
   return (
@@ -40,7 +42,7 @@ const PopularPeople = ({ initialData }: PopularPeopleProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<PopularPeopleProps> = async () => {
+const getServerSidePropsFn: GetServerSideProps<PopularPeopleProps> = async () => {
   const data = await api.get<InfiniteFetchResponse<Person>>(
     createUrl('/person/popular'),
   );
@@ -51,4 +53,6 @@ export const getServerSideProps: GetServerSideProps<PopularPeopleProps> = async 
   };
 };
 
-export default PopularPeople;
+export const getServerSideProps = withGetServerSideError(getServerSidePropsFn);
+
+export default withError(PopularPeople);

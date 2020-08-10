@@ -1,8 +1,8 @@
 import React from 'react';
-import ErrorPage from '@/pages/Error';
+import ErrorMessage from '@/components/ErrorMessage';
 
 function NotFound404() {
-  return <ErrorPage statusCode={404} message="Not Found" />;
+  return <ErrorMessage statusCode={404} message="Page Not Found" />;
 }
 
 export default NotFound404;

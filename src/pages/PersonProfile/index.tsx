@@ -12,16 +12,18 @@ import BaseSeo from '@/components/BaseSeo';
 import { useConfiguration } from '@/contexts/ConfigurationContext';
 import { Person } from '@/types';
 import { GetServerSideProps } from 'next';
+import withError, {
+  withGetServerSideError,
+  ServerSideProps,
+} from '@/hocs/withError';
 
-interface PersonProfileProps {
-  initialData: Person;
-}
+type PersonProfileProps = ServerSideProps<Person>;
 
 function PersonProfile({ initialData }: PersonProfileProps) {
   const router = useRouter();
   const { personId } = router.query;
   const { data, loading } = useFetch<Person>(`/person/${personId}`, undefined, {
-    initialData,
+    initialData: initialData || undefined,
   });
 
   const { getImageUrl } = useConfiguration();
@@ -68,7 +70,7 @@ function PersonProfile({ initialData }: PersonProfileProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<
+const getServerSidePropsFn: GetServerSideProps<
   PersonProfileProps,
   // TODO
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -83,4 +85,6 @@ export const getServerSideProps: GetServerSideProps<
   };
 };
 
-export default PersonProfile;
+export const getServerSideProps = withGetServerSideError(getServerSidePropsFn);
+
+export default withError(PersonProfile);

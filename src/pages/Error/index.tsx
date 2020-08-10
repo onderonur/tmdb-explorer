@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, Box, Typography } from '@material-ui/core';
-import NextLink from '@/components/NextLink';
 import { NextPage } from 'next';
+import ErrorMessage from '@/components/ErrorMessage';
 
 interface ErrorPageProps {
   statusCode?: number;
@@ -13,32 +12,7 @@ interface ErrorPageProps {
 // stack to know where the error originated from.
 // https://nextjs.org/docs/advanced-features/custom-error-page#customizing-the-error-page
 const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode, message }) => {
-  return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      flex={1}
-      height="100vh"
-      justifyContent="center"
-      padding={2}
-    >
-      {statusCode && <Typography variant="h1">{statusCode}</Typography>}
-      <Typography variant="h4" align="center">
-        {message || 'Something went wrong'}
-      </Typography>
-      <Box marginTop={2}>
-        <Button
-          href="/"
-          color="primary"
-          variant="contained"
-          component={NextLink}
-        >
-          Go to Homepage
-        </Button>
-      </Box>
-    </Box>
-  );
+  return <ErrorMessage statusCode={statusCode} message={message} />;
 };
 
 const notFoundStatusCode = 404;
