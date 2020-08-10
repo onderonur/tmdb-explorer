@@ -44,19 +44,13 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode, message }) => {
 const notFoundStatusCode = 404;
 
 ErrorPage.getInitialProps = async ({ res, err }) => {
-  // TODO
   // When an error occurs in a "getServerSideProps" etc, both the "res" and "err" has a value.
   // If there is a client-side error, only "err" has a value.
   // If we open a non-existing path, "res" has a value but "err" not etc.
-  // const statusCode = err?.statusCode ?? res?.statusCode ?? notFoundStatusCode;
-  // const message =
-  //   err?.message ??
-  //   res?.statusMessage ??
-  //   (statusCode === notFoundStatusCode ? 'Not Found' : undefined);
-  const statusCode = res?.statusCode ?? err?.statusCode ?? 404;
+  const statusCode = err?.statusCode ?? res?.statusCode ?? notFoundStatusCode;
   const message =
-    res?.statusMessage ??
     err?.message ??
+    res?.statusMessage ??
     (statusCode === notFoundStatusCode ? 'Not Found' : undefined);
   return { statusCode, message };
 };
