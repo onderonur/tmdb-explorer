@@ -11,14 +11,15 @@ import { api, createUrl } from '@/utils';
 import { useRouter } from 'next/router';
 import BaseSeo from '@/components/BaseSeo';
 import { useConfiguration } from '@/contexts/ConfigurationContext';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, NextPage, GetServerSidePropsContext } from 'next';
 import { Movie } from '@/types';
+import ErrorPage from '../Error';
 
 interface MovieProfileProps {
   initialData: Movie;
 }
 
-function MovieProfile({ initialData }: MovieProfileProps) {
+const MovieProfile: NextPage<MovieProfileProps> = ({ initialData }) => {
   const router = useRouter();
   const movieIdParam = router.query.movieId;
   const movieId =
@@ -78,14 +79,16 @@ function MovieProfile({ initialData }: MovieProfileProps) {
       />
     </>
   );
-}
+};
 
 export const getServerSideProps: GetServerSideProps<
-  MovieProfileProps,
+  // TODO
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  any,
   // TODO
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   any
-> = async (context) => {
+> = withGetServerSideError<MovieProfileProps>(async (context) => {
   const { movieId } = context.params;
   const initialData = await api.get<Movie>(createUrl(`/movie/${movieId}`));
   return {
@@ -93,6 +96,42 @@ export const getServerSideProps: GetServerSideProps<
       initialData,
     },
   };
-};
+});
 
-export default MovieProfile;
+type Q = any;
+
+function withGetServerSideError<P /* Q */>(
+  getServerSideFn: GetServerSideProps<P, Q>,
+) {
+  return async function (ctx: GetServerSidePropsContext<Q>) {
+    try {
+      const result = await getServerSideFn(ctx);
+      return result;
+    } catch (err) {
+      return {
+        props: {
+          error: {
+            statusCode: err.statusCode,
+            message: err.message,
+          },
+        },
+      };
+    }
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function withError(SomePage: NextPage<any>) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return function ({ error, ...rest }: any) {
+    if (error) {
+      return (
+        <ErrorPage statusCode={error.statusCode} message={error.message} />
+      );
+    }
+
+    return <SomePage {...rest} />;
+  };
+}
+
+export default withError(MovieProfile);
