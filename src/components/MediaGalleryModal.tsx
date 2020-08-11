@@ -58,12 +58,7 @@ function MediaGalleryModal({
   const { href, asHref } = useRouterPaths();
 
   function handleExited() {
-    const query = {};
-    router.push(
-      { pathname: href, query },
-      { pathname: asHref, query },
-      { shallow: true },
-    );
+    router.push(href, asHref, { shallow: true });
   }
 
   const nextKey =
