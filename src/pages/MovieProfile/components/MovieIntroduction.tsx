@@ -1,9 +1,9 @@
 import React from 'react';
-import { Typography, makeStyles, Box, Grid, Link } from '@material-ui/core';
+import { Typography, makeStyles, Box, Grid } from '@material-ui/core';
 import Rating from './Rating';
-import { getMovieReleaseYear, getImdbProfileUrl } from '@/utils';
+import { getMovieReleaseYear } from '@/utils';
 import Introduction from '@/components/Introduction';
-import ImdbLogo from '@/components/ImdbLogo';
+import ImdbLink, { ImdbProfileType } from '@/components/ImdbLink';
 import MovieGenreChip from './MovieGenreChip';
 import { Movie } from '@/types';
 
@@ -70,13 +70,10 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
               <Box display="flex" alignItems="center">
                 <Rating value={movie.vote_average * 10} />
                 <Box marginLeft={2}>
-                  <Link
-                    href={getImdbProfileUrl(movie.imdb_id)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <ImdbLogo />
-                  </Link>
+                  <ImdbLink
+                    type={ImdbProfileType.MOVIE}
+                    imdbId={movie.imdb_id}
+                  />
                 </Box>
               </Box>
             </Grid>

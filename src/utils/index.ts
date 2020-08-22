@@ -51,10 +51,6 @@ export function getMovieReleaseYear(movie: Movie) {
   return year;
 }
 
-export function getImdbProfileUrl(imdbId: string) {
-  return `https://www.imdb.com/title/${imdbId}`;
-}
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getLastOfArray = (arr: Array<any>) => {
   const { length, [length - 1]: last } = arr;

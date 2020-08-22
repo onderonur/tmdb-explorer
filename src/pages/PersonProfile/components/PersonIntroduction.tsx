@@ -1,8 +1,7 @@
 import React from 'react';
-import { Typography, makeStyles, Box, Grid, Link } from '@material-ui/core';
-import { getImdbProfileUrl } from '@/utils';
+import { Typography, makeStyles, Box, Grid } from '@material-ui/core';
 import Introduction from '@/components/Introduction';
-import ImdbLogo from '@/components/ImdbLogo';
+import ImdbLink, { ImdbProfileType } from '@/components/ImdbLink';
 import { Person } from '@/types';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,17 +29,16 @@ function PersonIntroduction({ person }: PersonIntroductionProps) {
       content={
         <>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Box display="flex" alignItems="center">
-                <Link
-                  href={getImdbProfileUrl(person.imdb_id)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ImdbLogo />
-                </Link>
-              </Box>
-            </Grid>
+            {person.imdb_id && (
+              <Grid item xs={12}>
+                <Box display="flex" alignItems="center">
+                  <ImdbLink
+                    type={ImdbProfileType.PERSON}
+                    imdbId={person.imdb_id}
+                  />
+                </Box>
+              </Grid>
+            )}
             <Grid item xs={12}>
               <Typography variant="h6" gutterBottom>
                 Biography

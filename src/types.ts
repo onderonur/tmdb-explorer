@@ -25,7 +25,7 @@ export interface Movie extends ItemWithId {
   tagline: Maybe<string>;
   poster_path: string;
   backdrop_path: string;
-  imdb_id: string;
+  imdb_id: Maybe<string>;
   release_date: DateString;
   vote_average: number;
   genres: Genre[];
@@ -45,7 +45,7 @@ export interface Person extends BasePerson {
   place_of_birth: string;
   official_site: Maybe<string>;
   also_known_as: Maybe<string[]>;
-  imdb_id: string;
+  imdb_id: Maybe<string>;
 }
 
 export type MovieCast = BasePerson & {
