@@ -22,6 +22,7 @@ function ErrorMessage({ statusCode, message }: ErrorMessageProps) {
       flex={1}
       padding={2}
     >
+      {/* Top offset */}
       <Toolbar />
       {statusCode && <Typography variant="h1">{statusCode}</Typography>}
       <Typography variant="h4" align="center">
@@ -37,6 +38,7 @@ function ErrorMessage({ statusCode, message }: ErrorMessageProps) {
           Go to Homepage
         </Button>
       </Box>
+      {/* Bottom offset */}
       <Toolbar />
     </Box>
   );
