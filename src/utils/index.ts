@@ -6,9 +6,10 @@ export type UrlParams = Record<string, any>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createUrl = (endpoint: string, params?: UrlParams) =>
-  `${process.env.NEXT_PUBLIC_BASE_URL}/api${endpoint}${
-    params ? `?${queryString.stringify(params)}` : ''
-  }`;
+  queryString.stringifyUrl({
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/api${endpoint}`,
+    query: { ...params },
+  });
 
 class CustomError extends Error {
   statusCode: number;

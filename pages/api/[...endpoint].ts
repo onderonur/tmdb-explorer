@@ -24,6 +24,6 @@ export default proxy({
       parsedQuery = queryString.parse(query);
     }
     parsedQuery = { ...parsedQuery, api_key: process.env.API_KEY };
-    return `${base}?${queryString.stringify(parsedQuery)}`;
+    return queryString.stringifyUrl({ url: base, query: parsedQuery });
   },
 });
