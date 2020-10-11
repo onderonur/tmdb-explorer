@@ -1,5 +1,1 @@
-import PersonProfile, { getServerSideProps } from '@/pages/PersonProfile';
-
-export { getServerSideProps };
-
-export default PersonProfile;
+export { default, getServerSideProps } from '@/pages/PersonProfile';

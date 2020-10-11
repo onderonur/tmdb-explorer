@@ -42,7 +42,7 @@ function PopularMovies({ initialData }: PopularMoviesProps) {
   );
 }
 
-export const getServerSidePropsFn: GetServerSideProps<PopularMoviesProps> = async () => {
+const getServerSidePropsFn: GetServerSideProps<PopularMoviesProps> = async () => {
   const data = await api.get<InfiniteFetchResponse<Movie>>(
     createUrl('/movie/popular'),
   );
