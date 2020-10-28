@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles, Link } from '@material-ui/core';
 import { Maybe } from '@/types';
+import Image from 'next/image';
 
 export enum ImdbProfileType {
   MOVIE,
@@ -38,7 +39,12 @@ function ImdbLink({ type, imdbId }: ImdbLinkProps) {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <img className={classes.logo} src="/imdb-logo.svg" alt="IMDB Logo" />
+      <Image
+        className={classes.logo}
+        src="/imdb-logo.svg"
+        alt="IMDB Logo"
+        unsized
+      />
     </Link>
   );
 }

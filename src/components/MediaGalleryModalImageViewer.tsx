@@ -20,7 +20,6 @@ function MediaGalleryModalImageViewer({
       src={getImageUrl(filePath, {
         original: true,
       })}
-      lazyLoad={false}
       aspectRatio={getAspectRatioString(16, 9)}
       objectFit="contain"
       showFallbackWhileLoading={true}

@@ -23,11 +23,7 @@ function PersonCard({ person }: PersonCardProps) {
   const { getImageUrl } = useConfiguration();
 
   return (
-    <NextLink
-      className={classes.link}
-      href="/person/[personId]"
-      as={`/person/${person.id}`}
-    >
+    <NextLink className={classes.link} href={`/person/${person.id}`}>
       <BaseCard hasActionArea>
         <BaseImage
           src={getImageUrl(person.profile_path)}

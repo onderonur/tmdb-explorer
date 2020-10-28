@@ -9,14 +9,13 @@ interface MovieVideoListItemProps {
 }
 
 function MovieVideoListItem({ video }: MovieVideoListItemProps) {
-  const { href, asHref } = useRouterPaths();
+  const { asHref } = useRouterPaths();
   return (
     <ListItem
       button
       dense
       component={NextLink}
-      href={`${href}?watch=${video.key}`}
-      as={`${asHref}?watch=${video.key}`}
+      href={`${asHref}?watch=${video.key}`}
       shallow
     >
       <ListItemText primary={video.name} secondary={video.type} />

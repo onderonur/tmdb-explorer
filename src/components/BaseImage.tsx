@@ -1,12 +1,11 @@
-import React, { useState, useEffect, CSSProperties } from 'react';
+import React, { useState, CSSProperties } from 'react';
 import { Box, useTheme, makeStyles, Theme } from '@material-ui/core';
 import LoadingIndicator from './LoadingIndicator';
-import { useTrackVisibility } from 'react-intersection-observer-hook';
 import AspectRatio, { getAspectRatioString } from './AspectRatio';
 import { Maybe } from '@/types';
+import Image from 'next/image';
 
 const ORIGINAL = 'original';
-const DEFAULT_ALT = 'Not Loaded';
 const DEFAULT_ASPECT_RATIO = getAspectRatioString(1, 1);
 
 interface BaseImageStyleProps {
@@ -22,6 +21,8 @@ const useStyles = makeStyles<Theme, BaseImageStyleProps>((theme) => ({
     width: '100%',
     height: '100%',
     objectFit: ({ objectFit }) => objectFit,
+    // To make next/image work with AspectRatio
+    position: 'absolute',
   },
 }));
 
@@ -29,16 +30,14 @@ type BaseImageProps = BaseImageStyleProps & {
   src: string;
   alt?: string;
   aspectRatio?: string;
-  lazyLoad?: boolean;
   objectFit?: string;
   showFallbackWhileLoading?: boolean;
 };
 
 function BaseImage({
   src,
-  alt = DEFAULT_ALT,
+  alt,
   aspectRatio = ORIGINAL,
-  lazyLoad = true,
   objectFit = 'cover',
   showFallbackWhileLoading,
 }: BaseImageProps) {
@@ -46,8 +45,6 @@ function BaseImage({
   const theme = useTheme();
   const [imgHeight, setImgHeight] = useState<Maybe<number>>();
   const [imgWidth, setImgWidth] = useState<Maybe<number>>();
-  const [ref, { isVisible }] = useTrackVisibility();
-  const [lazyLoaded, setLazyLoaded] = useState(isVisible);
   const [isImgLoaded, setIsImgLoaded] = useState(false);
 
   const isOriginalAspectRatio = aspectRatio === ORIGINAL;
@@ -63,15 +60,17 @@ function BaseImage({
     setIsImgLoaded(true);
   }
 
-  useEffect(() => {
-    if (isVisible) {
-      setLazyLoaded(true);
-    }
-  }, [isVisible]);
-
   return (
     <AspectRatio
-      ref={lazyLoad ? ref : undefined}
+      // TODO: Let's say we view a movie (/movie/123).
+      // When we navigate to another movie (/movie/456) from recommendations
+      // or by using searchbar, the main poster of the movie does not change.
+      // So, to reset the component based on the image URL,
+      // we use this "key" prop here.
+      // This is probably a bug of next/image of Next.js 10.0.0.
+      // If we use regular img, this bug doesn't happen.
+      // Will check this behavior with further releases of Next.js.
+      key={src}
       aspectRatio={
         isOriginalAspectRatio
           ? typeof imgWidth === 'number' && typeof imgHeight === 'number'
@@ -80,26 +79,23 @@ function BaseImage({
           : aspectRatio
       }
     >
-      {lazyLoad && !lazyLoaded ? null : (
-        <>
-          <Box className={classes.imgWrapper}>
-            <img
-              className={classes.img}
-              src={src || '/placeholder.png'}
-              alt={alt}
-              onLoad={handleLoad}
-            />
-          </Box>
-          {!isImgLoaded && showFallbackWhileLoading && (
-            <Box
-              display="flex"
-              alignItems="center"
-              bgcolor={theme.palette.grey[900]}
-            >
-              <LoadingIndicator loading />
-            </Box>
-          )}
-        </>
+      <Box className={classes.imgWrapper}>
+        <Image
+          className={classes.img}
+          src={src ?? '/placeholder.png'}
+          alt={alt}
+          unsized
+          onLoad={handleLoad}
+        />
+      </Box>
+      {!isImgLoaded && showFallbackWhileLoading && (
+        <Box
+          display="flex"
+          alignItems="center"
+          bgcolor={theme.palette.grey[900]}
+        >
+          <LoadingIndicator loading />
+        </Box>
       )}
     </AspectRatio>
   );

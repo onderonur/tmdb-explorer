@@ -15,11 +15,7 @@ function ImageGridListItem({ filePath, aspectRatio }: ImageGridListItemProps) {
   const query = `?view=${filePath}`;
   return (
     <li>
-      <NextLink
-        href={`${router.pathname}${query}`}
-        as={`${router.asPath}${query}`}
-        shallow
-      >
+      <NextLink href={`${router.asPath}${query}`}>
         <BaseImage
           src={getImageUrl(filePath)}
           aspectRatio={aspectRatio}

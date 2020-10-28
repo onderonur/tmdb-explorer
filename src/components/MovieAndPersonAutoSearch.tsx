@@ -77,13 +77,10 @@ function MovieAndPersonAutoSearch({
       if (selectedSuggestion) {
         switch (selectedSuggestion.suggestionType) {
           case 'movie':
-            router.push('/movie/[movieId]', `/movie/${selectedSuggestion.id}`);
+            router.push(`/movie/${selectedSuggestion.id}`);
             break;
           case 'person':
-            router.push(
-              '/person/[personId]',
-              `/person/${selectedSuggestion.id}`,
-            );
+            router.push(`/person/${selectedSuggestion.id}`);
             break;
           default:
             return;

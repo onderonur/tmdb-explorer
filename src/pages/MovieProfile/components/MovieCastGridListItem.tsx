@@ -15,8 +15,7 @@ function MovieCastGridListItem({ castCredit }: MovieCastGridListItemProps) {
       person={person}
       secondaryText={castCredit.character}
       button
-      href="/person/[personId]"
-      as={`/person/${person.id}`}
+      href={`/person/${person.id}`}
       component={NextLink}
     />
   );

@@ -73,7 +73,7 @@ function MyApp({ Component, pageProps, configuration }: MyAppProps) {
   const router = useRouter();
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>TMDb Explorer</title>
         {/* Import CSS for nprogress */}
@@ -91,7 +91,7 @@ function MyApp({ Component, pageProps, configuration }: MyAppProps) {
           </ConfigurationProvider>
         </ThemeProvider>
       </SWRConfig>
-    </React.Fragment>
+    </>
   );
 }
 

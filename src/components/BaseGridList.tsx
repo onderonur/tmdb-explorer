@@ -60,7 +60,7 @@ function BaseGridList<Item>({
   }
 
   return (
-    <React.Fragment>
+    <>
       <ul className={classes.flexList}>
         {items?.map((item, index) => {
           const key = extractItemKey(item, index);
@@ -70,7 +70,7 @@ function BaseGridList<Item>({
         })}
       </ul>
       <LoadingIndicator loading={loading} />
-    </React.Fragment>
+    </>
   );
 }
 

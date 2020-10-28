@@ -24,11 +24,7 @@ function MovieCard({ movie, subheader }: MovieCardProps) {
   const classes = useStyles();
   const { getImageUrl } = useConfiguration();
   return (
-    <NextLink
-      className={classes.link}
-      href="/movie/[movieId]"
-      as={`/movie/${movie.id}`}
-    >
+    <NextLink className={classes.link} href={`/movie/${movie.id}`}>
       <BaseCard hasActionArea>
         <BaseImage
           src={getImageUrl(movie.poster_path)}
