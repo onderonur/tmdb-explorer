@@ -10,6 +10,7 @@ const DEFAULT_ASPECT_RATIO = getAspectRatioString(1, 1);
 
 interface BaseImageStyleProps {
   objectFit?: CSSProperties['objectFit'];
+  aspectRatio?: string;
 }
 
 const useStyles = makeStyles<Theme, BaseImageStyleProps>((theme) => ({
@@ -22,15 +23,13 @@ const useStyles = makeStyles<Theme, BaseImageStyleProps>((theme) => ({
     height: '100%',
     objectFit: ({ objectFit }) => objectFit,
     // To make next/image work with AspectRatio
-    position: 'absolute',
+    position: ({ aspectRatio }) => (aspectRatio ? 'absolute' : 'initial'),
   },
 }));
 
 type BaseImageProps = BaseImageStyleProps & {
   src: string;
   alt?: string;
-  aspectRatio?: string;
-  objectFit?: string;
   showFallbackWhileLoading?: boolean;
 };
 
