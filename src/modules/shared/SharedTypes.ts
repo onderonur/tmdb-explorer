@@ -2,8 +2,6 @@ export type Maybe<T> = T | null | undefined;
 
 export type ID = number;
 
-type DateString = string;
-
 export interface ItemWithId {
   id: ID;
 }
@@ -12,6 +10,8 @@ export interface Genre {
   id: ID;
   name: string;
 }
+
+type DateString = string;
 
 export interface Movie extends ItemWithId {
   title: string;
@@ -32,7 +32,6 @@ export interface BasePerson extends ItemWithId {
 
 export interface Person extends BasePerson {
   biography: Maybe<string>;
-
   gender: number;
   known_for_department: string;
   birthday: DateString;
@@ -42,21 +41,11 @@ export interface Person extends BasePerson {
   imdb_id: Maybe<string>;
 }
 
-export type MovieCast = BasePerson & {
-  character: string;
-};
-
 export interface MovieImage {
   file_path: string;
 }
 
 export type PersonImage = MovieImage;
-
-export interface MovieVideo extends ItemWithId {
-  key: string;
-  name: string;
-  type: string;
-}
 
 export interface InfiniteFetchResponse<Data> {
   results: Data[];

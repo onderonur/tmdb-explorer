@@ -2,7 +2,7 @@ import React from 'react';
 import { ListItem, ListItemText } from '@material-ui/core';
 import NextLink from '@/modules/shared/NextLink';
 import useRouterPaths from '@/modules/shared/useRouterPaths';
-import { MovieVideo } from '@/modules/shared/SharedTypes';
+import { MovieVideo } from '@/modules/media-gallery/MediaGalleryTypes';
 
 interface MovieVideoListItemProps {
   video: MovieVideo;

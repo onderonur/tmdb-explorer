@@ -3,8 +3,9 @@ import BaseGridList from '@/modules/shared/BaseGridList';
 import PersonCastingGridListItem from './PersonCastingGridListItem';
 import useFetch from '@/modules/shared/useFetch';
 import { ID } from '@/modules/shared/SharedTypes';
+import { PersonCasting, PersonCredits } from './PersonProfileTypes';
 
-function renderItem(casting: any) {
+function renderItem(casting: PersonCasting) {
   return <PersonCastingGridListItem castCredit={casting} />;
 }
 
@@ -13,8 +14,10 @@ interface PersonCastingGridListProps {
 }
 
 function PersonCastingGridList({ personId }: PersonCastingGridListProps) {
-  const { data, loading } = useFetch<any>(`/person/${personId}/movie_credits`);
-  const castings = data?.cast || [];
+  const { data, loading } = useFetch<PersonCredits>(
+    `/person/${personId}/movie_credits`,
+  );
+  const castings = data?.cast ?? [];
 
   return (
     <BaseGridList

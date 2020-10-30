@@ -1,7 +1,7 @@
 import React from 'react';
 import NextLink from '@/modules/shared/NextLink';
-import { MovieCast } from '@/modules/shared/SharedTypes';
 import PersonListItem from '../people-listing/PersonListItem';
+import { MovieCast } from './MovieProfileTypes';
 
 interface MovieCastGridListItemProps {
   castCredit: MovieCast;

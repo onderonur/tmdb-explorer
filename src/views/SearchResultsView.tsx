@@ -1,4 +1,4 @@
-import SearchResults from '@/modules/search-results/SearchResults';
+import SearchResults from '@/modules/searcher/SearchResults';
 
 const SearchResultsView = SearchResults;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs, Tab, Box } from '@material-ui/core';
-import SearchResultsHeader from '../../modules/search-results/SearchResultsHeader';
+import SearchResultsHeader from '@/modules/searcher/SearchResultsHeader';
 import InfiniteGridList from '@/modules/shared/InfiniteGridList';
 import MovieCard from '@/modules/movies-listing/MovieCard';
 import PersonCard from '@/modules/people-listing/PersonCard';

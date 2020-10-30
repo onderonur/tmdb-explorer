@@ -2,7 +2,8 @@ import React from 'react';
 import BaseGridList from '@/modules/shared/BaseGridList';
 import MovieCastGridListItem from './MovieCastGridListItem';
 import useFetch from '@/modules/shared/useFetch';
-import { MovieCast, ID } from '@/modules/shared/SharedTypes';
+import { ID } from '@/modules/shared/SharedTypes';
+import { MovieCast } from './MovieProfileTypes';
 
 function renderItem(castCredit: MovieCast) {
   return <MovieCastGridListItem castCredit={castCredit} />;

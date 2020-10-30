@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { MovieVideo } from '@/modules/shared/SharedTypes';
 import MediaGalleryModal from '@/modules/media-gallery/MediaGalleryModal';
+import { MovieVideo } from './MediaGalleryTypes';
 
 interface VideoPlayerModalProps {
   videos: MovieVideo[];

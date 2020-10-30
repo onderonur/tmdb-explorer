@@ -1,8 +1,9 @@
 import React from 'react';
 import MovieCard from '@/modules/movies-listing/MovieCard';
+import { PersonCasting } from './PersonProfileTypes';
 
 interface PersonCastingGridListItemProps {
-  castCredit: any;
+  castCredit: PersonCasting;
 }
 
 function PersonCastingGridListItem({

@@ -4,11 +4,8 @@ import LoadingIndicator from '@/modules/shared/LoadingIndicator';
 import MovieVideoListItem from './MovieVideoListItem';
 import MovieVideoPlayerModal from '@/modules/media-gallery/VideoPlayerModal';
 import useFetch from '@/modules/shared/useFetch';
-import {
-  ID,
-  InfiniteFetchResponse,
-  MovieVideo,
-} from '@/modules/shared/SharedTypes';
+import { ID, InfiniteFetchResponse } from '@/modules/shared/SharedTypes';
+import { MovieVideo } from '../media-gallery/MediaGalleryTypes';
 
 interface MovieVideoListProps {
   movieId: ID;
