@@ -1,1 +1,1 @@
-export { default, getServerSideProps } from '@/pages/PopularPeople';
+export { default, getServerSideProps } from '@/views/PopularPeopleView';

@@ -1,59 +1,24 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '@/theme';
 import ConfigurationProvider, {
-  fetchConfiguration,
-} from '@/contexts/ConfigurationContext';
+  fetchApiConfiguration,
+} from '@/modules/api-configuration/ApiConfigurationContext';
 import App, { AppProps, AppContext } from 'next/app';
-import AppLayout from '@/components/AppLayout';
+import AppLayout from '@/modules/layout/AppLayout';
 import NProgress from 'nprogress';
-import { Router, useRouter } from 'next/router';
+import { Router } from 'next/router';
 import { SWRConfig, ConfigInterface } from 'swr';
-import { api } from '@/utils';
-import { appTitle } from '@/constants';
-import { DefaultSeo } from 'next-seo';
-import { APIConfiguration } from '@/types';
+import { api } from '@/modules/shared/SharedUtils';
+import { APIConfiguration } from '@/modules/api-configuration/ApiConfigurationTypes';
+import BaseDefaultSeo from '@/modules/seo/BaseDefaultSeo';
+import { appTitle } from '@/modules/shared/SharedConstants';
+import BaseThemeProvider from '@/modules/theme/BaseThemeProvider';
 
 Router.events.on('routeChangeStart', () => {
   NProgress.start();
 });
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-const getDefaultSeoConfig = (pathname: string) => {
-  const url = `${baseUrl}${pathname}`;
-  const description = `${appTitle} is a client application for TMDb API. It's created with Next.js.`;
-  return {
-    titleTemplate: `%s | ${appTitle}`,
-    description,
-    canonical: url,
-    openGraph: {
-      title: appTitle,
-      description,
-      type: 'website',
-      locale: 'en_IE',
-      url,
-      site_name: appTitle,
-      images: [
-        // TODO
-      ],
-    },
-    additionalMetaTags: [
-      {
-        property: 'dc:creator',
-        content: 'Onur ÖNDER',
-      },
-      {
-        name: 'application-name',
-        content: appTitle,
-      },
-    ],
-  };
-};
 
 const swrConfig: ConfigInterface = { fetcher: api.get };
 
@@ -70,26 +35,22 @@ function MyApp({ Component, pageProps, configuration }: MyAppProps) {
     }
   }, []);
 
-  const router = useRouter();
-
   return (
     <>
       <Head>
-        <title>TMDb Explorer</title>
+        <title>{appTitle}</title>
         {/* Import CSS for nprogress */}
         <link rel="stylesheet" type="text/css" href="/nprogress.css" />
       </Head>
-      <DefaultSeo {...getDefaultSeoConfig(router.asPath)} />
+      <BaseDefaultSeo />
       <SWRConfig value={swrConfig}>
-        <ThemeProvider theme={theme}>
+        <BaseThemeProvider>
           <ConfigurationProvider configuration={configuration}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
             <AppLayout>
               <Component {...pageProps} />
             </AppLayout>
           </ConfigurationProvider>
-        </ThemeProvider>
+        </BaseThemeProvider>
       </SWRConfig>
     </>
   );
@@ -99,7 +60,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   // calls page's `getInitialProps` and fills `appProps.pageProps`
   const [appProps, configuration] = await Promise.all([
     App.getInitialProps(appContext),
-    fetchConfiguration(),
+    fetchApiConfiguration(),
   ]);
 
   return { ...appProps, configuration };

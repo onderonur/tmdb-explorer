@@ -1,3 +1,3 @@
-import ErrorPage from '@/pages/Error';
+import ErrorView from '@/views/ErrorView';
 
-export default ErrorPage;
+export default ErrorView;

@@ -1,4 +1,4 @@
-import proxy from '@/api/middlewares/proxy';
+import proxy from '@/modules/api/proxy';
 import queryString from 'query-string';
 
 // Note about CORS:

@@ -1,1 +1,1 @@
-export { default, getServerSideProps } from '@/pages/MovieProfile';
+export { default, getServerSideProps } from '@/views/MovieProfileView';
