@@ -6,9 +6,9 @@ interface ApiConfigurationContextValue {
   getImageUrl: (path: string, options?: { original?: boolean }) => string;
 }
 
-const ApiConfigurationContext = React.createContext<
-  ApiConfigurationContextValue
->({} as ApiConfigurationContextValue);
+const ApiConfigurationContext = React.createContext<ApiConfigurationContextValue>(
+  {} as ApiConfigurationContextValue,
+);
 
 // For "getServerSideProps"
 export const fetchApiConfiguration = () =>

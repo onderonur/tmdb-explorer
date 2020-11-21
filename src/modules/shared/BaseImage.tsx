@@ -83,7 +83,7 @@ function BaseImage({
           className={classes.img}
           src={src ?? '/placeholder.png'}
           alt={alt}
-          unsized
+          layout="fill"
           onLoad={handleLoad}
         />
       </Box>

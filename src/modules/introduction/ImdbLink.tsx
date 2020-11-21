@@ -15,9 +15,8 @@ export function getImdbProfileUrl(type: ImdbProfileType, imdbId: string) {
 }
 
 const useStyles = makeStyles(() => ({
-  logo: {
-    width: 70,
-    display: 'block',
+  link: {
+    display: 'flex',
   },
 }));
 
@@ -35,15 +34,17 @@ function ImdbLink({ type, imdbId }: ImdbLinkProps) {
 
   return (
     <Link
+      className={classes.link}
       href={getImdbProfileUrl(type, imdbId)}
       target="_blank"
       rel="noopener noreferrer"
     >
       <Image
-        className={classes.logo}
         src="/imdb-logo.svg"
         alt="IMDB Logo"
-        unsized
+        height={35}
+        width={70}
+        layout="fixed"
       />
     </Link>
   );
