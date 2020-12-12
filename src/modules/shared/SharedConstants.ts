@@ -1,1 +1,1 @@
-export const appTitle = 'TMDb Explorer';
+export const APP_TITLE = 'TMDb Explorer';

@@ -7,11 +7,11 @@ import App, { AppProps, AppContext } from 'next/app';
 import AppLayout from '@/modules/layout/AppLayout';
 import NProgress from 'nprogress';
 import { Router } from 'next/router';
-import { SWRConfig, ConfigInterface } from 'swr';
+import { SWRConfig } from 'swr';
 import { api } from '@/modules/shared/SharedUtils';
 import { APIConfiguration } from '@/modules/api-configuration/ApiConfigurationTypes';
 import BaseDefaultSeo from '@/modules/seo/BaseDefaultSeo';
-import { appTitle } from '@/modules/shared/SharedConstants';
+import { APP_TITLE } from '@/modules/shared/SharedConstants';
 import BaseThemeProvider from '@/modules/theme/BaseThemeProvider';
 
 Router.events.on('routeChangeStart', () => {
@@ -20,7 +20,10 @@ Router.events.on('routeChangeStart', () => {
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-const swrConfig: ConfigInterface = { fetcher: api.get };
+type SWRConfigProps = React.ComponentProps<typeof SWRConfig>;
+const swrConfig: SWRConfigProps['value'] = {
+  fetcher: api.get,
+};
 
 type MyAppProps = AppProps & {
   configuration: APIConfiguration;
@@ -38,7 +41,7 @@ function MyApp({ Component, pageProps, configuration }: MyAppProps) {
   return (
     <>
       <Head>
-        <title>{appTitle}</title>
+        <title>{APP_TITLE}</title>
         {/* Import CSS for nprogress */}
         <link rel="stylesheet" type="text/css" href="/nprogress.css" />
       </Head>

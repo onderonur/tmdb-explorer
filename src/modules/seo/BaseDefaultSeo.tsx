@@ -1,24 +1,24 @@
 import React from 'react';
 import { DefaultSeo } from 'next-seo';
 import { useRouter } from 'next/router';
-import { appTitle } from '../shared/SharedConstants';
+import { APP_TITLE } from '../shared/SharedConstants';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const getDefaultSeoConfig = (pathname: string) => {
   const url = `${baseUrl}${pathname}`;
-  const description = `${appTitle} is a client application for TMDb API. It's created with Next.js.`;
+  const description = `${APP_TITLE} is a client application for TMDb API. It's created with Next.js.`;
   return {
-    titleTemplate: `%s | ${appTitle}`,
+    titleTemplate: `%s | ${APP_TITLE}`,
     description,
     canonical: url,
     openGraph: {
-      title: appTitle,
+      title: APP_TITLE,
       description,
       type: 'website',
       locale: 'en_IE',
       url,
-      site_name: appTitle,
+      site_name: APP_TITLE,
       images: [
         // TODO
       ],
@@ -30,7 +30,7 @@ const getDefaultSeoConfig = (pathname: string) => {
       },
       {
         name: 'application-name',
-        content: appTitle,
+        content: APP_TITLE,
       },
     ],
   };
