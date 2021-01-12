@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type AppLayoutProps = React.PropsWithChildren<{}>;
+type AppLayoutProps = React.PropsWithChildren<unknown>;
 
 function AppLayout({ children }: AppLayoutProps) {
   const classes = useStyles();

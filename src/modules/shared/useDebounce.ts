@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import debounce from 'lodash/debounce';
 
-function useDebounce<Value>(value: Value, wait: number = 250) {
+function useDebounce<Value>(value: Value, wait = 250) {
   const [debouncedValue, setDebouncedValue] = useState<Value>(value);
   const changeHandlerRef = useRef<ReturnType<typeof debounce>>();
 

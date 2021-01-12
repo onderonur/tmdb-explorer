@@ -23,7 +23,7 @@ export function useAppDrawer() {
   return value;
 }
 
-type AppDrawerProviderProps = React.PropsWithChildren<{}>;
+type AppDrawerProviderProps = React.PropsWithChildren<unknown>;
 
 function AppDrawerProvider({ children }: AppDrawerProviderProps) {
   const [isOpen, setIsOpen] = useState(false);

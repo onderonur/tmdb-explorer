@@ -21,14 +21,14 @@ function useFetchInfinite<Data, Error = any>(
   const results: Data[] = data?.flatMap((page) => page.results) || [];
   const lastPage = data ? getLastOfArray(data) : null;
   const totalPages = lastPage?.total_pages || 0;
-  const hasNextPage = size! < totalPages && !error;
+  const hasNextPage = size < totalPages && !error;
   const isLoadingInitialData = !data && !error;
   const isLoadingMore =
     isLoadingInitialData ||
-    (size! > 0 && data && typeof data[size! - 1] === 'undefined');
+    (size > 0 && data && typeof data[size - 1] === 'undefined');
 
   function loadMore() {
-    setSize?.(size! + 1);
+    setSize?.(size + 1);
   }
 
   const totalCount = lastPage?.total_results || 0;

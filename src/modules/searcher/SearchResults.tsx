@@ -38,7 +38,7 @@ function SearchResults() {
     totalCount: totalPeopleCount,
   } = useFetchInfinite<Person>('/search/person', params);
 
-  function handleChange(event: React.ChangeEvent<{}>, newValue: string) {
+  function handleChange(event: React.ChangeEvent<unknown>, newValue: string) {
     router.push(
       { pathname: '/search', query: { ...router.query, searchType: newValue } },
       undefined,

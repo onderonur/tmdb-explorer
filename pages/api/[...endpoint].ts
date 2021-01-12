@@ -17,7 +17,7 @@ export default proxy({
   changeOrigin: true,
   logLevel: 'silent',
   pathRewrite: async function (path) {
-    let formattedPath = path.replace('/api', '');
+    const formattedPath = path.replace('/api', '');
     const [base, query] = formattedPath.split('?');
     let parsedQuery = {};
     if (query) {

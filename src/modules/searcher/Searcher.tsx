@@ -90,7 +90,7 @@ function MovieAndPersonAutoSearch({
     [router],
   );
 
-  let suggestions = useMemo<Suggestion[]>(
+  const suggestions = useMemo<Suggestion[]>(
     () =>
       [
         ...(movies?.results.map((movie) => ({
