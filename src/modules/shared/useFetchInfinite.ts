@@ -1,20 +1,24 @@
-import { useSWRInfinite, SWRInfiniteConfigInterface } from 'swr';
-import { UrlParams } from '@/modules/shared/SharedUtils';
+import { useSWRInfinite, SWRInfiniteConfiguration } from 'swr';
+import { api, UrlParams } from '@/modules/shared/SharedUtils';
 import { createUrl, getLastOfArray } from '@/modules/shared/SharedUtils';
 import { InfiniteFetchResponse } from '@/modules/shared/SharedTypes';
+import { useCallback } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function useFetchInfinite<Data, Error = any>(
   url: string,
   params: UrlParams = {},
-  config?: SWRInfiniteConfigInterface<InfiniteFetchResponse<Data>, Error>,
+  config?: SWRInfiniteConfiguration<InfiniteFetchResponse<Data>, Error>,
 ) {
   const { data, error, size, setSize } = useSWRInfinite<
     InfiniteFetchResponse<Data>,
     Error
   >(
     (index: number) => createUrl(url, { page: index + 1, ...params }),
-    undefined,
+    // Global "fetcher" provided by SWRConfig is not working for some reason.
+    // It can be a bug in swr@0.5.5.
+    // For now, we used fetcher function here too.
+    api.get,
     config,
   );
 
@@ -27,9 +31,9 @@ function useFetchInfinite<Data, Error = any>(
     isLoadingInitialData ||
     (size > 0 && data && typeof data[size - 1] === 'undefined');
 
-  function loadMore() {
+  const loadMore = useCallback(() => {
     setSize?.(size + 1);
-  }
+  }, [setSize, size]);
 
   const totalCount = lastPage?.total_results || 0;
 

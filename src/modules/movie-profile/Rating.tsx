@@ -29,7 +29,7 @@ function Rating({ value }: RatingProps) {
     <Avatar className={classes.avatar}>
       <CircularProgress
         style={{ position: 'absolute' }}
-        variant="static"
+        variant="determinate"
         value={value}
         color="primary"
         thickness={4}

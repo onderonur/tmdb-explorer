@@ -1,18 +1,27 @@
 import React from 'react';
-import { CircularProgress, Box } from '@material-ui/core';
+import { CircularProgress, Box, RootRef } from '@material-ui/core';
 
 type LoadingIndicatorProps = React.PropsWithChildren<{ loading: boolean }>;
 
-function LoadingIndicator({ loading, children }: LoadingIndicatorProps) {
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" my={2} flexGrow={1}>
-        <CircularProgress size={48} color="secondary" />
-      </Box>
-    );
+const LoadingIndicator = React.forwardRef<
+  HTMLDivElement,
+  LoadingIndicatorProps
+>(function LoadingIndicator({ loading, children }, ref) {
+  if (!loading) {
+    return <>{children}</>;
   }
 
-  return <>{children}</>;
-}
+  const content = (
+    <Box display="flex" justifyContent="center" my={2} flexGrow={1}>
+      <CircularProgress size={48} color="secondary" />
+    </Box>
+  );
+
+  if (!ref) {
+    return content;
+  }
+
+  return <RootRef rootRef={ref}>{content}</RootRef>;
+});
 
 export default LoadingIndicator;

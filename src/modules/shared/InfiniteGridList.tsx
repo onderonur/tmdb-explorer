@@ -1,8 +1,8 @@
 import React from 'react';
-import InfiniteScrollWrapper from '@/modules/shared/InfiniteScrollWrapper';
 import BaseGridList from './BaseGridList';
 import { idExtractor } from '@/modules/shared/SharedUtils';
 import { ItemWithId } from '@/modules/shared/SharedTypes';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 
 interface InfiniteGridListProps<Item extends ItemWithId> {
   items: Item[];
@@ -25,21 +25,23 @@ function InfiniteGridList<Item extends ItemWithId>({
   spacing,
   keyExtractor = idExtractor,
 }: InfiniteGridListProps<Item>) {
+  const [sentryRef] = useInfiniteScroll({
+    hasNextPage,
+    loading: !!loading,
+    onLoadMore,
+    rootMargin: '0px 0px 400px 0px',
+  });
+
   return (
-    <InfiniteScrollWrapper
-      hasNextPage={hasNextPage}
-      loading={!!loading}
-      onLoadMore={onLoadMore}
-    >
-      <BaseGridList
-        keyExtractor={keyExtractor}
-        items={items}
-        loading={loading || hasNextPage}
-        minItemWidth={minItemWidth}
-        spacing={spacing}
-        renderItem={renderItem}
-      />
-    </InfiniteScrollWrapper>
+    <BaseGridList
+      keyExtractor={keyExtractor}
+      items={items}
+      loading={loading || hasNextPage}
+      minItemWidth={minItemWidth}
+      spacing={spacing}
+      renderItem={renderItem}
+      loadingRef={sentryRef}
+    />
   );
 }
 

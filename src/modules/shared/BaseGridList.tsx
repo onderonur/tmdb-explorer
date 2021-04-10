@@ -31,6 +31,7 @@ interface BaseGridListProps<Item> {
   minItemWidth?: number;
   keyExtractor?: string | ((item: Item, index: number) => string | number);
   listEmptyMessage?: string;
+  loadingRef?: React.Ref<HTMLDivElement>;
 }
 
 function BaseGridList<Item>({
@@ -41,6 +42,7 @@ function BaseGridList<Item>({
   minItemWidth = 160,
   keyExtractor = idExtractor,
   listEmptyMessage = 'Nothing has been found',
+  loadingRef,
 }: BaseGridListProps<Item>) {
   const classes = useStyles({ minItemWidth, spacing });
 
@@ -69,7 +71,7 @@ function BaseGridList<Item>({
           );
         })}
       </ul>
-      <LoadingIndicator loading={loading} />
+      <LoadingIndicator ref={loadingRef} loading={loading} />
     </>
   );
 }
