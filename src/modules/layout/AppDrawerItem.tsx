@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListItemIcon, ListItemText, ListItem } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import NextLink from '@/modules/shared/NextLink';
+import NextLink from '@/modules/routing/NextLink';
 
 interface AppDrawerItemProps {
   href: string;

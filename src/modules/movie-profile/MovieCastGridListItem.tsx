@@ -1,5 +1,5 @@
 import React from 'react';
-import NextLink from '@/modules/shared/NextLink';
+import NextLink from '@/modules/routing/NextLink';
 import PersonListItem from '../people-listing/PersonListItem';
 import { MovieCast } from './MovieProfileTypes';
 

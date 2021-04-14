@@ -4,7 +4,7 @@ import BaseCard from '@/modules/shared/BaseCard';
 import BaseCardHeader from '@/modules/shared/BaseCardHeader';
 import { getAspectRatioString } from '../shared/AspectRatio';
 import { useApiConfiguration } from '@/modules/api-configuration/ApiConfigurationContext';
-import NextLink from '@/modules/shared/NextLink';
+import NextLink from '@/modules/routing/NextLink';
 import { makeStyles } from '@material-ui/core';
 import { Person } from '@/modules/shared/SharedTypes';
 

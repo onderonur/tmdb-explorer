@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Box, Typography, Toolbar } from '@material-ui/core';
-import NextLink from '@/modules/shared/NextLink';
+import NextLink from '@/modules/routing/NextLink';
 
 interface ErrorMessageProps {
   statusCode?: number;

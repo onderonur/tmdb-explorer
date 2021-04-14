@@ -9,7 +9,7 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import { HotKeys } from 'react-hotkeys';
 import { useRouter } from 'next/router';
-import useRouterPaths from '@/modules/shared/useRouterPaths';
+import useRouterPath from '@/modules/routing/useRouterPath';
 import { Maybe } from '@/modules/shared/SharedTypes';
 
 const keyMap = {
@@ -55,10 +55,10 @@ function MediaGalleryModal({
     setIsVisible(false);
   }, []);
 
-  const { href, asHref } = useRouterPaths();
+  const { asHref } = useRouterPath();
 
   function handleExited() {
-    router.push(href, asHref, { shallow: true });
+    router.push(asHref, undefined, { shallow: true });
   }
 
   const nextKey =
@@ -73,22 +73,14 @@ function MediaGalleryModal({
   function goToNextPath() {
     if (nextKey) {
       const query = { [queryParamName]: nextKey };
-      router.push(
-        { pathname: href, query },
-        { pathname: asHref, query },
-        { shallow: true },
-      );
+      router.push({ pathname: asHref, query }, undefined, { shallow: true });
     }
   }
 
   function goToPreviousPath() {
     if (previousKey) {
       const query = { [queryParamName]: previousKey };
-      router.push(
-        { pathname: href, query },
-        { pathname: asHref, query },
-        { shallow: true },
-      );
+      router.push({ pathname: asHref, query }, undefined, { shallow: true });
     }
   }
 

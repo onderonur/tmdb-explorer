@@ -14,7 +14,7 @@ import useDetectMobile from '@/modules/shared/useDetectMobile';
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import HideOnScroll from '@/modules/layout/HideOnScroll';
-import NextLink from '@/modules/shared/NextLink';
+import NextLink from '@/modules/routing/NextLink';
 
 const useStyles = makeStyles((theme) => ({
   titleLink: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListItem, ListItemText } from '@material-ui/core';
-import NextLink from '@/modules/shared/NextLink';
-import useRouterPaths from '@/modules/shared/useRouterPaths';
+import NextLink from '@/modules/routing/NextLink';
+import useRouterPath from '@/modules/routing/useRouterPath';
 import { MovieVideo } from '@/modules/media-gallery/MediaGalleryTypes';
 
 interface MovieVideoListItemProps {
@@ -9,7 +9,7 @@ interface MovieVideoListItemProps {
 }
 
 function MovieVideoListItem({ video }: MovieVideoListItemProps) {
-  const { asHref } = useRouterPaths();
+  const { asHref } = useRouterPath();
   return (
     <ListItem
       button

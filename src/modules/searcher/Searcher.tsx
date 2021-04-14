@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import AutoSearch from './AutoSearch';
 import useFetch from '@/modules/shared/useFetch';
 import useDebounce from '@/modules/shared/useDebounce';
@@ -36,7 +36,15 @@ function MovieAndPersonAutoSearch({
   className,
   autoFocus,
 }: MovieAndPersonAutoSearchProps) {
-  const [searchValue, setSearchValue] = useState('');
+  const router = useRouter();
+  const { query } = router.query;
+  const queryValue = typeof query === 'string' ? query : '';
+  const [searchValue, setSearchValue] = useState<string>(queryValue);
+
+  useEffect(() => {
+    setSearchValue(queryValue);
+  }, [queryValue]);
+
   const debouncedSearchValue = useDebounce(searchValue);
 
   const { data: movies, loading: isLoadingMovies } = useFetch<
@@ -57,8 +65,6 @@ function MovieAndPersonAutoSearch({
   const handleInputValueChange = useCallback((inputValue: string) => {
     setSearchValue(inputValue);
   }, []);
-
-  const router = useRouter();
 
   const handleRedirect = useCallback(
     (inputValue: string) => {

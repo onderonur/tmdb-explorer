@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseImage from '@/modules/shared/BaseImage';
 import { useApiConfiguration } from '@/modules/api-configuration/ApiConfigurationContext';
-import NextLink from '@/modules/shared/NextLink';
+import NextLink from '@/modules/routing/NextLink';
 import { useRouter } from 'next/router';
 
 interface ImageGridListItemProps {

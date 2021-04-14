@@ -6,7 +6,7 @@ import MovieRatingTag from './MovieRatingTag';
 import { getAspectRatioString } from '../shared/AspectRatio';
 import { useApiConfiguration } from '@/modules/api-configuration/ApiConfigurationContext';
 import { Box, makeStyles } from '@material-ui/core';
-import NextLink from '@/modules/shared/NextLink';
+import NextLink from '@/modules/routing/NextLink';
 import { Movie } from '@/modules/shared/SharedTypes';
 
 const useStyles = makeStyles(() => ({
