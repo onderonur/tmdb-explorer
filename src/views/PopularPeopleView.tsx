@@ -1,15 +1,15 @@
 import React from 'react';
-import PersonCard from '@/modules/people-listing/PersonCard';
-import InfiniteGridList from '@/modules/shared/InfiniteGridList';
-import useFetchInfinite from '@/modules/shared/useFetchInfinite';
-import { api, createUrl } from '@/modules/shared/SharedUtils';
-import BaseSeo from '@/modules/seo/BaseSeo';
-import { Person, InfiniteFetchResponse } from '@/modules/shared/SharedTypes';
+import PersonCard from '@/people-listing/PersonCard';
+import InfiniteGridList from '@/common/InfiniteGridList';
+import useFetchInfinite from '@/common/useFetchInfinite';
+import { api, createUrl } from '@/common/CommonUtils';
+import BaseSeo from '@/seo/BaseSeo';
+import { Person, InfiniteFetchResponse } from '@/common/CommonTypes';
 import { GetServerSideProps } from 'next';
 import withError, {
   ServerSideProps,
   withGetServerSideError,
-} from '@/modules/errors/withError';
+} from '@/errors/withError';
 
 function renderItem(person: Person) {
   return (
@@ -42,16 +42,17 @@ function PopularPeopleView({ initialData }: PopularPeopleViewProps) {
   );
 }
 
-const getServerSidePropsFn: GetServerSideProps<PopularPeopleViewProps> = async () => {
-  const data = await api.get<InfiniteFetchResponse<Person>>(
-    createUrl('/person/popular'),
-  );
-  return {
-    props: {
-      initialData: [data],
-    },
+const getServerSidePropsFn: GetServerSideProps<PopularPeopleViewProps> =
+  async () => {
+    const data = await api.get<InfiniteFetchResponse<Person>>(
+      createUrl('/person/popular'),
+    );
+    return {
+      props: {
+        initialData: [data],
+      },
+    };
   };
-};
 
 export const getServerSideProps = withGetServerSideError(getServerSidePropsFn);
 

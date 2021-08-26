@@ -1,16 +1,16 @@
 import React from 'react';
-import useFetch from '@/modules/shared/useFetch';
+import useFetch from '@/common/useFetch';
 import { useRouter } from 'next/router';
-import { api, createUrl } from '@/modules/shared/SharedUtils';
-import BaseSeo from '@/modules/seo/BaseSeo';
-import { useApiConfiguration } from '@/modules/api-configuration/ApiConfigurationContext';
-import { Person } from '@/modules/shared/SharedTypes';
+import { api, createUrl } from '@/common/CommonUtils';
+import BaseSeo from '@/seo/BaseSeo';
+import { useApiConfiguration } from '@/api-configuration/ApiConfigurationContext';
+import { Person } from '@/common/CommonTypes';
 import { GetServerSideProps } from 'next';
 import withError, {
   withGetServerSideError,
   ServerSideProps,
-} from '@/modules/errors/withError';
-import PersonProfile from '@/modules/people-profile/PersonProfile';
+} from '@/errors/withError';
+import PersonProfile from '@/people-profile/PersonProfile';
 
 type PersonProfileViewProps = ServerSideProps<Person>;
 

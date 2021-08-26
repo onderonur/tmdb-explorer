@@ -1,4 +1,4 @@
-import proxy from '@/modules/api/proxy';
+import proxy from '@/api/proxy';
 import queryString from 'query-string';
 
 // Note about CORS:
@@ -16,7 +16,7 @@ export default proxy({
   target: process.env.API_URL,
   changeOrigin: true,
   logLevel: 'silent',
-  pathRewrite: async function (path) {
+  async pathRewrite(path) {
     const formattedPath = path.replace('/api', '');
     const [base, query] = formattedPath.split('?');
     let parsedQuery = {};
