@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import BaseAutocomplete from './BaseAutocomplete';
+import BaseAutocomplete from '../common/BaseAutocomplete';
 import useFetch from '@/common/useFetch';
 import useDebounce from '@/common/useDebounce';
 import { useRouter } from 'next/router';

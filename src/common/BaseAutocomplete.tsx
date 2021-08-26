@@ -5,27 +5,20 @@ import LoadingIndicator from '@/common/LoadingIndicator';
 import SearchIcon from '@material-ui/icons/Search';
 import { IconButton } from '@material-ui/core';
 import { useState } from 'react';
+import { Omit } from './CommonTypes';
 
 type BaseAutocompleteProps<
   T,
   Multiple extends boolean | undefined,
   DisableClearable extends boolean | undefined,
   FreeSolo extends boolean | undefined,
-> = Pick<
+> = Omit<
   AutocompleteProps<T, Multiple, DisableClearable, FreeSolo>,
-  | 'options'
-  | 'renderOption'
-  | 'loading'
-  | 'placeholder'
-  | 'inputValue'
-  | 'onInputChange'
-  | 'getOptionLabel'
-  | 'getOptionSelected'
-  | 'freeSolo'
-  | 'value'
-  | 'onChange'
-  | 'className'
-> & { autoFocus?: boolean; onSearchClick: (inputValue: string) => void };
+  'renderInput'
+> & {
+  autoFocus?: boolean;
+  onSearchClick: (inputValue: string) => void;
+};
 
 function BaseAutocomplete<
   T,
