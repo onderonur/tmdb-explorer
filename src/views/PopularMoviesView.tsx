@@ -1,15 +1,15 @@
 import React from 'react';
-import MovieCard from '@/modules/movies-listing/MovieCard';
-import InfiniteGridList from '@/modules/shared/InfiniteGridList';
-import useFetchInfinite from '@/modules/shared/useFetchInfinite';
-import { api, createUrl } from '@/modules/shared/SharedUtils';
-import BaseSeo from '@/modules/seo/BaseSeo';
-import { Movie, InfiniteFetchResponse } from '@/modules/shared/SharedTypes';
+import MovieCard from '@/movies-listing/MovieCard';
+import InfiniteGridList from '@/common/InfiniteGridList';
+import useFetchInfinite from '@/common/useFetchInfinite';
+import { api, createUrl } from '@/common/CommonUtils';
+import BaseSeo from '@/seo/BaseSeo';
+import { Movie, InfiniteFetchResponse } from '@/common/CommonTypes';
 import { GetServerSideProps } from 'next';
 import withError, {
   withGetServerSideError,
   ServerSideProps,
-} from '@/modules/errors/withError';
+} from '@/errors/withError';
 
 function renderItem(movie: Movie) {
   return (
@@ -42,16 +42,17 @@ function PopularMoviesView({ initialData }: PopularMoviesViewProps) {
   );
 }
 
-const getServerSidePropsFn: GetServerSideProps<PopularMoviesViewProps> = async () => {
-  const data = await api.get<InfiniteFetchResponse<Movie>>(
-    createUrl('/movie/popular'),
-  );
-  return {
-    props: {
-      initialData: [data],
-    },
+const getServerSidePropsFn: GetServerSideProps<PopularMoviesViewProps> =
+  async () => {
+    const data = await api.get<InfiniteFetchResponse<Movie>>(
+      createUrl('/movie/popular'),
+    );
+    return {
+      props: {
+        initialData: [data],
+      },
+    };
   };
-};
 
 export const getServerSideProps = withGetServerSideError(getServerSidePropsFn);
 

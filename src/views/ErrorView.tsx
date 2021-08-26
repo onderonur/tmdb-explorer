@@ -1,6 +1,6 @@
 import React from 'react';
 import { NextPage } from 'next';
-import ErrorMessage from '@/modules/errors/ErrorMessage';
+import ErrorMessage from '@/errors/ErrorMessage';
 
 interface ErrorViewProps {
   statusCode?: number;

@@ -1,16 +1,16 @@
 import React from 'react';
-import useFetch from '@/modules/shared/useFetch';
-import { api, createUrl } from '@/modules/shared/SharedUtils';
+import useFetch from '@/common/useFetch';
+import { api, createUrl } from '@/common/CommonUtils';
 import { useRouter } from 'next/router';
-import BaseSeo from '@/modules/seo/BaseSeo';
-import { useApiConfiguration } from '@/modules/api-configuration/ApiConfigurationContext';
+import BaseSeo from '@/seo/BaseSeo';
+import { useApiConfiguration } from '@/api-configuration/ApiConfigurationContext';
 import { GetServerSideProps, NextPage } from 'next';
-import { Movie } from '@/modules/shared/SharedTypes';
+import { Movie } from '@/common/CommonTypes';
 import withError, {
   withGetServerSideError,
   ServerSideProps,
-} from '@/modules/errors/withError';
-import MovieProfile from '@/modules/movie-profile/MovieProfile';
+} from '@/errors/withError';
+import MovieProfile from '@/movie-profile/MovieProfile';
 
 type MovieProfileViewProps = ServerSideProps<Movie>;
 

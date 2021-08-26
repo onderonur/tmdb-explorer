@@ -2,23 +2,16 @@ import React, { useEffect } from 'react';
 import Head from 'next/head';
 import ConfigurationProvider, {
   fetchApiConfiguration,
-} from '@/modules/api-configuration/ApiConfigurationContext';
+} from '@/api-configuration/ApiConfigurationContext';
 import App, { AppProps, AppContext } from 'next/app';
-import AppLayout from '@/modules/layout/AppLayout';
-import NProgress from 'nprogress';
-import { Router } from 'next/router';
+import AppLayout from '@/layout/AppLayout';
 import { SWRConfig } from 'swr';
-import { api } from '@/modules/shared/SharedUtils';
-import { APIConfiguration } from '@/modules/api-configuration/ApiConfigurationTypes';
-import BaseDefaultSeo from '@/modules/seo/BaseDefaultSeo';
-import { APP_TITLE } from '@/modules/shared/SharedConstants';
-import BaseThemeProvider from '@/modules/theme/BaseThemeProvider';
-
-Router.events.on('routeChangeStart', () => {
-  NProgress.start();
-});
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+import { api } from '@/common/CommonUtils';
+import { APIConfiguration } from '@/api-configuration/ApiConfigurationTypes';
+import BaseDefaultSeo from '@/seo/BaseDefaultSeo';
+import { APP_TITLE } from '@/common/CommonConstants';
+import BaseThemeProvider from '@/theme/BaseThemeProvider';
+import PageProgressBar from '@/common/PageProgressBar';
 
 type SWRConfigProps = React.ComponentProps<typeof SWRConfig>;
 const swrConfig: SWRConfigProps['value'] = {
@@ -42,12 +35,11 @@ function MyApp({ Component, pageProps, configuration }: MyAppProps) {
     <>
       <Head>
         <title>{APP_TITLE}</title>
-        {/* Import CSS for nprogress */}
-        <link rel="stylesheet" type="text/css" href="/nprogress.css" />
       </Head>
       <BaseDefaultSeo />
       <SWRConfig value={swrConfig}>
         <BaseThemeProvider>
+          <PageProgressBar />
           <ConfigurationProvider configuration={configuration}>
             <AppLayout>
               <Component {...pageProps} />
