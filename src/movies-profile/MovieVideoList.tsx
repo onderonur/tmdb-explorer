@@ -3,9 +3,10 @@ import BaseList from '@/common/BaseList';
 import LoadingIndicator from '@/common/LoadingIndicator';
 import MovieVideoListItem from './MovieVideoListItem';
 import MovieVideoPlayerModal from '@/media-gallery/VideoPlayerModal';
-import useFetch from '@/common/useFetch';
-import { ID, InfiniteFetchResponse } from '@/common/CommonTypes';
+import { ID } from '@/common/CommonTypes';
 import { MovieVideo } from '../media-gallery/MediaGalleryTypes';
+import { useQuery } from 'react-query';
+import { apiQueries } from '@/http-client/apiQueries';
 
 interface MovieVideoListProps {
   movieId: ID;
@@ -16,12 +17,10 @@ function renderItem(video: MovieVideo) {
 }
 
 function MovieVideoList({ movieId }: MovieVideoListProps) {
-  const { data, loading } = useFetch<InfiniteFetchResponse<MovieVideo>>(
-    `/movie/${movieId}/videos`,
-  );
+  const { data, isLoading } = useQuery(apiQueries.movies.movieVideos(movieId));
   const videos = data?.results || [];
   return (
-    <LoadingIndicator loading={loading}>
+    <LoadingIndicator loading={isLoading}>
       <BaseList
         data={videos}
         renderItem={renderItem}

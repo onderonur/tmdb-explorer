@@ -1,9 +1,12 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import { Autocomplete, AutocompleteProps } from '@material-ui/lab';
 import LoadingIndicator from '@/common/LoadingIndicator';
-import SearchIcon from '@material-ui/icons/Search';
-import { IconButton } from '@material-ui/core';
+import SearchIcon from '@mui/icons-material/Search';
+import {
+  Autocomplete,
+  AutocompleteProps,
+  IconButton,
+  TextField,
+} from '@mui/material';
 import { useState } from 'react';
 import { Omit } from './CommonTypes';
 
@@ -45,6 +48,7 @@ function BaseAutocomplete<
       renderInput={(params) => (
         <TextField
           {...params}
+          variant="standard"
           autoFocus={autoFocus}
           placeholder={rest.placeholder}
           InputProps={{

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Box, Grid, makeStyles } from '@material-ui/core';
+import { Typography, Box, Grid, styled } from '@mui/material';
 import Rating from './Rating';
 import { getMovieReleaseYear } from '@/common/CommonUtils';
 import Introduction from '@/introduction/Introduction';
@@ -7,28 +7,23 @@ import MovieGenreChip from './MovieGenreChip';
 import { Movie } from '@/common/CommonTypes';
 import ImdbLink, { ImdbProfileType } from '../introduction/ImdbLink';
 
-const useStyles = makeStyles((theme) => ({
-  year: {
-    color: theme.palette.text.secondary,
-  },
-  tagline: {
-    fontStyle: 'italic',
-  },
-  genreChip: {
-    margin: theme.spacing(0.5),
-  },
-  overview: {
-    whiteSpace: 'pre-wrap',
-  },
+const Year = styled('span')(({ theme }) => ({
+  color: theme.palette.text.secondary,
 }));
+
+const StyledMovieGenreChip = styled(MovieGenreChip)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+}));
+
+const Overview = styled(Typography)({
+  whiteSpace: 'pre-wrap',
+});
 
 interface MovieIntroductionProps {
   movie: Movie;
 }
 
 function MovieIntroduction({ movie }: MovieIntroductionProps) {
-  const classes = useStyles();
-
   const releaseYear = getMovieReleaseYear(movie);
 
   if (!movie) {
@@ -40,28 +35,20 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
       backgroundImageSrc={movie.backdrop_path}
       imageSrc={movie.poster_path}
       title={
-        <>
+        <Box marginBottom={2}>
           <Typography variant="h5" gutterBottom={!movie.tagline}>
             {movie.title}
             {releaseYear && (
               <>
                 {' '}
-                <span className={classes.year}>{`(${getMovieReleaseYear(
-                  movie,
-                )})`}</span>
+                <Year>{`(${getMovieReleaseYear(movie)})`}</Year>
               </>
             )}
           </Typography>
           {movie.tagline && (
-            <Typography
-              className={classes.tagline}
-              color="textSecondary"
-              gutterBottom
-            >
-              {`"${movie.tagline}"`}
-            </Typography>
+            <Typography color="textSecondary">{movie.tagline}</Typography>
           )}
-        </>
+        </Box>
       }
       content={
         <>
@@ -81,21 +68,17 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
               <Typography variant="h6" gutterBottom>
                 Genres
               </Typography>
-              {movie.genres.map((genre) => (
-                <MovieGenreChip
-                  key={genre.id}
-                  className={classes.genreChip}
-                  genre={genre}
-                />
-              ))}
+              <Box display="flex" gap={0.75} flexWrap={'wrap'}>
+                {movie.genres.map((genre) => (
+                  <StyledMovieGenreChip key={genre.id} genre={genre} />
+                ))}
+              </Box>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h6" gutterBottom>
                 Overview
               </Typography>
-              <Typography className={classes.overview} variant="body2">
-                {movie.overview}
-              </Typography>
+              <Overview variant="body2">{movie.overview}</Overview>
             </Grid>
           </Grid>
         </>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Box, Typography, Toolbar } from '@material-ui/core';
+import { Button, Box, Typography, Toolbar } from '@mui/material';
 import NextLink from '@/routing/NextLink';
 
 interface ErrorMessageProps {
@@ -29,12 +29,7 @@ function ErrorMessage({ statusCode, message }: ErrorMessageProps) {
         {message || 'Something went wrong'}
       </Typography>
       <Box marginTop={2}>
-        <Button
-          href="/movie/popular"
-          color="primary"
-          variant="contained"
-          component={NextLink}
-        >
+        <Button href="/" variant="contained" component={NextLink}>
           Go to Homepage
         </Button>
       </Box>

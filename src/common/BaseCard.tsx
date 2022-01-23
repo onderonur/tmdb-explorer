@@ -4,39 +4,28 @@ import {
   CardActionArea,
   CardContent,
   CardProps,
-  makeStyles,
-} from '@material-ui/core';
-import clsx from 'clsx';
+  styled,
+} from '@mui/material';
 
-const useStyles = makeStyles(() => ({
-  card: {
-    backgroundColor: 'transparent',
-  },
-  cardContent: {
-    padding: 0,
-  },
-}));
+const StyledCard = styled(Card)({
+  backgroundColor: 'transparent',
+});
+
+const StyledCardContent = styled(CardContent)({
+  padding: 0,
+});
 
 type BaseCardProps = CardProps & {
   hasActionArea: boolean;
 };
 
-function BaseCard({
-  hasActionArea,
-  className,
-  children,
-  ...rest
-}: BaseCardProps) {
-  const classes = useStyles();
-
-  const content = (
-    <CardContent className={classes.cardContent}>{children}</CardContent>
-  );
+function BaseCard({ hasActionArea, children, ...rest }: BaseCardProps) {
+  const content = <StyledCardContent>{children}</StyledCardContent>;
 
   return (
-    <Card elevation={0} className={clsx(classes.card, className)} {...rest}>
+    <StyledCard elevation={0} {...rest}>
       {hasActionArea ? <CardActionArea>{content}</CardActionArea> : { content }}
-    </Card>
+    </StyledCard>
   );
 }
 

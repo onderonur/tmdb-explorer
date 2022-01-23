@@ -1,23 +1,24 @@
 import React from 'react';
 import ImageGridList from '@/common/ImageGridList';
 import ImageGalleryModal from '@/media-gallery/ImageGalleryModal';
-import useFetch from '@/common/useFetch';
-import { Person, PersonImage } from '@/common/CommonTypes';
+import { Person } from '@/common/CommonTypes';
+import { useQuery } from 'react-query';
+import { apiQueries } from '@/http-client/apiQueries';
 
 interface PersonImageGridListProps {
   person: Person;
 }
 
 function PersonImageGridList({ person }: PersonImageGridListProps) {
-  const { data, loading } = useFetch<{ profiles: PersonImage[] }>(
-    `/person/${person.id}/images`,
+  const { data, isLoading } = useQuery(
+    apiQueries.people.personImages(person.id),
   );
   const filePaths = data?.profiles.map((profile) => profile.file_path) || [];
   return (
     <>
       <ImageGridList
         filePaths={filePaths}
-        isFetching={loading}
+        isFetching={isLoading}
         minItemWidth={80}
         imgSize={{
           width: 2,

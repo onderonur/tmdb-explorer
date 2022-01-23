@@ -3,16 +3,10 @@ import BaseImage from '@/common/BaseImage';
 import BaseCard from '@/common/BaseCard';
 import BaseCardHeader from '@/common/BaseCardHeader';
 import MovieRatingTag from './MovieRatingTag';
-import { useApiConfiguration } from '@/api-configuration/ApiConfigurationContext';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box } from '@mui/material';
 import NextLink from '@/routing/NextLink';
 import { Movie } from '@/common/CommonTypes';
-
-const useStyles = makeStyles(() => ({
-  link: {
-    textDecoration: 'none',
-  },
-}));
+import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 
 interface MovieCardProps {
   movie: Movie;
@@ -20,10 +14,9 @@ interface MovieCardProps {
 }
 
 function MovieCard({ movie, subheader }: MovieCardProps) {
-  const classes = useStyles();
   const { getImageUrl } = useApiConfiguration();
   return (
-    <NextLink className={classes.link} href={`/movie/${movie.id}`}>
+    <NextLink href={`/movie/${movie.id}`}>
       <BaseCard hasActionArea>
         <BaseImage
           src={getImageUrl(movie.poster_path)}

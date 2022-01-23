@@ -1,20 +1,20 @@
 import React from 'react';
 import {
-  ListItem,
   ListItemAvatar,
   Avatar,
   ListItemText,
   ListItemProps,
-  makeStyles,
-} from '@material-ui/core';
-import { useApiConfiguration } from '@/api-configuration/ApiConfigurationContext';
+  styled,
+  ListItemButton,
+} from '@mui/material';
 import { Maybe } from '@/common/CommonTypes';
+import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 
-const useStyles = makeStyles(() => ({
-  secondaryText: {
+const StyledListItemText = styled(ListItemText)({
+  '.MuiListItemText-secondary': {
     wordBreak: 'break-word',
   },
-}));
+});
 
 export type ListItemWithAvatarProps<C extends React.ElementType> =
   ListItemProps<
@@ -27,29 +27,22 @@ export type ListItemWithAvatarProps<C extends React.ElementType> =
     }
   >;
 
-function ListItemWithAvatar<C extends React.ElementType>({
+function ListItemButtonWithAvatar<C extends React.ElementType>({
   avatarUrl,
   primaryText,
   secondaryText,
   ...rest
 }: ListItemWithAvatarProps<C>) {
-  const classes = useStyles();
   const { getImageUrl } = useApiConfiguration();
 
   return (
-    <ListItem alignItems="flex-start" dense {...rest}>
+    <ListItemButton alignItems="flex-start" dense {...rest}>
       <ListItemAvatar>
         <Avatar src={getImageUrl(avatarUrl)} alt={'Avatar'} />
       </ListItemAvatar>
-      <ListItemText
-        classes={{
-          secondary: classes.secondaryText,
-        }}
-        primary={primaryText}
-        secondary={secondaryText}
-      />
-    </ListItem>
+      <StyledListItemText primary={primaryText} secondary={secondaryText} />
+    </ListItemButton>
   );
 }
 
-export default ListItemWithAvatar;
+export default ListItemButtonWithAvatar;

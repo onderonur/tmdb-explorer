@@ -1,10 +1,9 @@
 import React from 'react';
-import { Box, Typography, makeStyles } from '@material-ui/core';
+import { Box, Typography, styled } from '@mui/material';
 
-const useStyles = makeStyles((theme) => ({
-  bold: {
-    fontWeight: theme.typography.fontWeightBold,
-  },
+const Label = styled(Typography)(({ theme }) => ({
+  fontWeight: theme.typography.fontWeightBold,
+  color: theme.palette.text.disabled,
 }));
 
 interface TextWithLabelProps {
@@ -13,11 +12,9 @@ interface TextWithLabelProps {
 }
 
 function TextWithLabel({ label, text }: TextWithLabelProps) {
-  const classes = useStyles();
-
   return (
     <Box my={1}>
-      <Typography className={classes.bold}>{label}</Typography>
+      <Label>{label}</Label>
       {typeof text === 'string' ? (
         <Typography variant="body2">{text}</Typography>
       ) : (

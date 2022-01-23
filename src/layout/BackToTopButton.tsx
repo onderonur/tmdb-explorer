@@ -1,6 +1,6 @@
 import React from 'react';
-import { Fab, Grow, useScrollTrigger, makeStyles } from '@material-ui/core';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { Fab, Grow, useScrollTrigger, styled } from '@mui/material';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const THRESHOLD = 300;
 
@@ -12,17 +12,14 @@ function handleClick() {
   });
 }
 
-const useStyles = makeStyles((theme) => ({
-  fab: {
-    position: 'fixed',
-    bottom: 20,
-    right: 20,
-    zIndex: theme.zIndex.appBar,
-  },
+const StyledFab = styled(Fab)(({ theme }) => ({
+  position: 'fixed',
+  bottom: 20,
+  right: 20,
+  zIndex: theme.zIndex.appBar,
 }));
 
 function BackToTopButton() {
-  const classes = useStyles();
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: THRESHOLD,
@@ -30,9 +27,9 @@ function BackToTopButton() {
 
   return (
     <Grow in={trigger}>
-      <Fab className={classes.fab} color="secondary" onClick={handleClick}>
+      <StyledFab color="secondary" size="medium" onClick={handleClick}>
         <KeyboardArrowUpIcon fontSize="large" />
-      </Fab>
+      </StyledFab>
     </Grow>
   );
 }

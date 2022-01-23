@@ -1,25 +1,17 @@
 import React from 'react';
-import useFetch from '@/common/useFetch';
 import { useRouter } from 'next/router';
-import { api, createUrl } from '@/common/CommonUtils';
 import BaseSeo from '@/seo/BaseSeo';
-import { useApiConfiguration } from '@/api-configuration/ApiConfigurationContext';
-import { Person } from '@/common/CommonTypes';
-import { GetServerSideProps } from 'next';
-import withError, {
-  withGetServerSideError,
-  ServerSideProps,
-} from '@/errors/withError';
+import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
 import PersonProfile from '@/people-profile/PersonProfile';
+import { dehydrate, useQuery } from 'react-query';
+import { apiQueries } from '@/http-client/apiQueries';
+import { createQueryClient } from '@/http-client/queryClient';
+import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 
-type PersonProfileViewProps = ServerSideProps<Person>;
-
-function PersonProfileView({ initialData }: PersonProfileViewProps) {
+function PersonProfileView() {
   const router = useRouter();
-  const { personId } = router.query;
-  const { data, loading } = useFetch<Person>(`/person/${personId}`, undefined, {
-    initialData: initialData || undefined,
-  });
+  const personId = Number(router.query.personId);
+  const { data, isLoading } = useQuery(apiQueries.people.person(personId));
 
   const { getImageUrl } = useApiConfiguration();
 
@@ -32,26 +24,27 @@ function PersonProfileView({ initialData }: PersonProfileViewProps) {
           openGraph={{ images: [{ url: getImageUrl(data.profile_path) }] }}
         />
       )}
-      <PersonProfile person={data} loading={loading} />
+      <PersonProfile person={data} loading={isLoading} />
     </>
   );
 }
 
-const getServerSidePropsFn: GetServerSideProps<
-  PersonProfileViewProps,
-  // TODO
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  any
-> = async (context) => {
-  const { personId } = context.params;
-  const initialData = await api.get<Person>(createUrl(`/person/${personId}`));
+export const getServerSideProps = withGetServerSideError(async (context) => {
+  const personId = Number(context.params.personId);
+
+  const queryClient = createQueryClient();
+  await Promise.all([
+    queryClient.fetchQuery(apiQueries.common.configuration()),
+    queryClient.fetchQuery(apiQueries.people.person(personId)),
+    queryClient.fetchQuery(apiQueries.people.personImages(personId)),
+    queryClient.fetchQuery(apiQueries.people.personCredits(personId)),
+  ]);
+
   return {
     props: {
-      initialData,
+      dehydratedState: dehydrate(queryClient),
     },
   };
-};
+});
 
-export const getServerSideProps = withGetServerSideError(getServerSidePropsFn);
-
-export default withError(PersonProfileView);
+export default PersonProfileView;

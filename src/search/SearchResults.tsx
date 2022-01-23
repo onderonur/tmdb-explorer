@@ -1,14 +1,16 @@
 import React from 'react';
-import { Tabs, Tab, Box } from '@material-ui/core';
+import { Tabs, Tab, Box } from '@mui/material';
 import SearchResultsHeader from '@/search/SearchResultsHeader';
 import InfiniteGridList from '@/common/InfiniteGridList';
 import MovieCard from '@/movies-listing/MovieCard';
 import PersonCard from '@/people-listing/PersonCard';
-import useFetchInfinite from '@/common/useFetchInfinite';
 import { useRouter } from 'next/router';
 import BaseSeo from '@/seo/BaseSeo';
 import { Movie, Person } from '@/common/CommonTypes';
 import { SearchType } from '@/search/SearchEnums';
+import { useInfiniteQuery } from 'react-query';
+import { apiQueries } from '@/http-client/apiQueries';
+import { getAllPageResults, getLastOfArray } from '@/common/CommonUtils';
 
 function renderMovie(movie: Movie) {
   return <MovieCard movie={movie} />;
@@ -21,22 +23,24 @@ function renderPerson(person: Person) {
 function SearchResults() {
   const router = useRouter();
   const { searchType, query } = router.query;
-  const params = { query };
 
   const {
     data: movies,
-    isLoading: isLoadingMovies,
+    isFetching: isFetchingMovies,
     hasNextPage: hasNextPageMovies,
-    loadMore: loadMoreMovies,
-    totalCount: totalMoviesCount,
-  } = useFetchInfinite<Movie>('/search/movie', params);
+    fetchNextPage: fetchNextPageMovies,
+  } = useInfiniteQuery(
+    apiQueries.search.searchMovies(typeof query === 'string' ? query : ''),
+  );
+
   const {
     data: people,
-    isLoading: isLoadingPeople,
+    isFetching: isFetchingPeople,
     hasNextPage: hasNextPagePeople,
-    loadMore: loadMorePeople,
-    totalCount: totalPeopleCount,
-  } = useFetchInfinite<Person>('/search/person', params);
+    fetchNextPage: fetchNextPagePeople,
+  } = useInfiniteQuery(
+    apiQueries.search.searchPeople(typeof query === 'string' ? query : ''),
+  );
 
   function handleChange(event: React.ChangeEvent<unknown>, newValue: string) {
     router.push(
@@ -50,8 +54,8 @@ function SearchResults() {
   }
 
   const totalCounts: Record<SearchType, number> = {
-    movies: totalMoviesCount,
-    people: totalPeopleCount,
+    movies: getLastOfArray(movies?.pages ?? [])?.total_results ?? 0,
+    people: getLastOfArray(people?.pages ?? [])?.total_results ?? 0,
   };
 
   return (
@@ -61,8 +65,14 @@ function SearchResults() {
         description="Search movies and people by their name."
       />
       <Tabs value={searchType} onChange={handleChange}>
-        <Tab value={SearchType.MOVIES} label={`Movies (${totalMoviesCount})`} />
-        <Tab value={SearchType.PEOPLE} label={`People (${totalPeopleCount})`} />
+        <Tab
+          value={SearchType.MOVIES}
+          label={`Movies (${totalCounts.movies})`}
+        />
+        <Tab
+          value={SearchType.PEOPLE}
+          label={`People (${totalCounts.people})`}
+        />
       </Tabs>
       <Box marginTop={2}>
         <SearchResultsHeader
@@ -75,19 +85,19 @@ function SearchResults() {
         />
         {searchType === SearchType.MOVIES && (
           <InfiniteGridList
-            items={movies}
-            loading={isLoadingMovies}
-            hasNextPage={hasNextPageMovies}
-            onLoadMore={loadMoreMovies}
+            items={getAllPageResults(movies)}
+            loading={isFetchingMovies}
+            hasNextPage={!!hasNextPageMovies}
+            onLoadMore={fetchNextPageMovies}
             renderItem={renderMovie}
           />
         )}
         {searchType === SearchType.PEOPLE && (
           <InfiniteGridList
-            items={people}
-            loading={isLoadingPeople}
-            hasNextPage={hasNextPagePeople}
-            onLoadMore={loadMorePeople}
+            items={getAllPageResults(people)}
+            loading={isFetchingPeople}
+            hasNextPage={!!hasNextPagePeople}
+            onLoadMore={fetchNextPagePeople}
             renderItem={renderPerson}
           />
         )}

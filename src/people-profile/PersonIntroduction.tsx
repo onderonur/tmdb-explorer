@@ -1,22 +1,17 @@
 import React from 'react';
-import { Typography, Box, Grid, makeStyles } from '@material-ui/core';
+import { Typography, Box, Grid, styled } from '@mui/material';
 import Introduction from '@/introduction/Introduction';
 import { Person } from '@/common/CommonTypes';
 import ImdbLink, { ImdbProfileType } from '../introduction/ImdbLink';
 
-const useStyles = makeStyles(() => ({
-  biography: {
-    whiteSpace: 'pre-wrap',
-  },
-}));
-
+const Biography = styled(Typography)({
+  whiteSpace: 'pre-wrap',
+});
 interface PersonIntroductionProps {
   person: Person;
 }
 
 function PersonIntroduction({ person }: PersonIntroductionProps) {
-  const classes = useStyles();
-
   if (!person) {
     return null;
   }
@@ -43,9 +38,7 @@ function PersonIntroduction({ person }: PersonIntroductionProps) {
               <Typography variant="h6" gutterBottom>
                 Biography
               </Typography>
-              <Typography className={classes.biography} variant="body2">
-                {person.biography}
-              </Typography>
+              <Biography variant="body2">{person.biography}</Biography>
             </Grid>
           </Grid>
         </>

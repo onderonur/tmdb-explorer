@@ -1,38 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Link,
-  Box,
-  IconButton,
-  makeStyles,
-} from '@material-ui/core';
-import AppDrawerToggleButton from '@/layout/AppDrawerToggleButton';
-import useDetectMobile from '@/common/useDetectMobile';
-import SearchIcon from '@material-ui/icons/Search';
-import CloseIcon from '@material-ui/icons/Close';
+import { AppBar, Toolbar, Box, IconButton, styled } from '@mui/material';
+import useIsMobile from '@/common/useIsMobile';
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
 import HideOnScroll from '@/layout/HideOnScroll';
-import NextLink from '@/routing/NextLink';
 import MovieAndPersonAutocomplete from '@/search/MovieAndPersonAutocomplete';
+import AppTitle from './AppTitle';
 
-const useStyles = makeStyles((theme) => ({
-  titleLink: {
-    '&:hover': {
-      textDecoration: 'none',
-    },
-  },
-  closeMobileSearchButton: {
-    marginRight: theme.spacing(2),
-  },
-  search: {
-    maxWidth: 680,
-  },
+const CloseButton = styled(IconButton)(({ theme }) => ({
+  marginRight: theme.spacing(2),
 }));
 
-const AppHeader = React.forwardRef(function AppHeader(props, ref) {
-  const classes = useStyles();
-  const isMobile = useDetectMobile();
+const StyledMovieAndPersonAutocomplete = styled(MovieAndPersonAutocomplete)({
+  maxWidth: 680,
+});
+
+const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
+  props,
+  ref,
+) {
+  const isMobile = useIsMobile();
   const [isMobileSearch, setIsMobileSearch] = useState(false);
 
   useEffect(() => {
@@ -51,28 +38,20 @@ const AppHeader = React.forwardRef(function AppHeader(props, ref) {
 
   return (
     <HideOnScroll>
-      <AppBar ref={ref} color="default">
+      <AppBar
+        ref={ref}
+        color="default"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
         <Toolbar>
-          {(!isMobile || !isMobileSearch) && (
-            <Link
-              className={classes.titleLink}
-              color="inherit"
-              href="/movie/popular"
-              component={NextLink}
-            >
-              <Typography variant="h6">TMDb</Typography>
-            </Link>
-          )}
+          {!isMobileSearch && <AppTitle />}
 
           {isMobile ? (
             isMobileSearch ? (
               <>
-                <IconButton
-                  className={classes.closeMobileSearchButton}
-                  onClick={hideMobileSearch}
-                >
+                <CloseButton onClick={hideMobileSearch}>
                   <CloseIcon />
-                </IconButton>
+                </CloseButton>
                 <MovieAndPersonAutocomplete autoFocus />
               </>
             ) : (
@@ -85,11 +64,9 @@ const AppHeader = React.forwardRef(function AppHeader(props, ref) {
             )
           ) : (
             <Box flex={1} mx={2} display="flex" justifyContent="center">
-              <MovieAndPersonAutocomplete className={classes.search} />
+              <StyledMovieAndPersonAutocomplete />
             </Box>
           )}
-
-          {!isMobileSearch && <AppDrawerToggleButton />}
         </Toolbar>
       </AppBar>
     </HideOnScroll>

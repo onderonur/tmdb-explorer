@@ -1,9 +1,10 @@
 import React from 'react';
 import BaseGridList from '@/common/BaseGridList';
 import MovieCastGridListItem from './MovieCastGridListItem';
-import useFetch from '@/common/useFetch';
 import { ID } from '@/common/CommonTypes';
 import { MovieCast } from './MovieProfileTypes';
+import { useQuery } from 'react-query';
+import { apiQueries } from '@/http-client/apiQueries';
 
 function renderItem(castCredit: MovieCast) {
   return <MovieCastGridListItem castCredit={castCredit} />;
@@ -14,15 +15,13 @@ interface MovieCastGridListProps {
 }
 
 function MovieCastGridList({ movieId }: MovieCastGridListProps) {
-  const { data, loading } = useFetch<{ cast: MovieCast[] }>(
-    `/movie/${movieId}/credits`,
-  );
+  const { data, isLoading } = useQuery(apiQueries.movies.movieCast(movieId));
   const castCredits = data?.cast;
 
   return (
     <BaseGridList
       items={castCredits}
-      loading={loading}
+      loading={isLoading}
       minItemWidth={230}
       renderItem={renderItem}
       listEmptyMessage="No cast has been found"

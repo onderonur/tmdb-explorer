@@ -5,21 +5,21 @@ import {
   Typography,
   Box,
   IconButton,
-  makeStyles,
-} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+  styled,
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { Maybe } from '@/common/CommonTypes';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(1, 2),
-  },
-  title: {
-    flex: 1,
-  },
-  closeButton: {
-    marginRight: theme.spacing(1),
-  },
+const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
+  padding: theme.spacing(1, 2),
+}));
+
+const Title = styled(Typography)({
+  flex: 1,
+});
+
+const CloseButton = styled(IconButton)(({ theme }) => ({
+  marginRight: theme.spacing(1),
 }));
 
 interface BaseDialogTitleProps {
@@ -28,23 +28,22 @@ interface BaseDialogTitleProps {
 }
 
 function BaseDialogTitle({ title, titleRight }: BaseDialogTitleProps) {
-  const classes = useStyles();
   const { fullScreen, closeDialog } = useContext(DialogContext);
 
   return (
-    <DialogTitle className={classes.root}>
+    <StyledDialogTitle>
       <Box display="flex" alignItems="center">
         {fullScreen && (
-          <IconButton className={classes.closeButton} onClick={closeDialog}>
+          <CloseButton onClick={closeDialog}>
             <CloseIcon />
-          </IconButton>
+          </CloseButton>
         )}
-        <Typography className={classes.title} variant="h6" noWrap>
+        <Title variant="h6" noWrap>
           {title}
-        </Typography>
+        </Title>
         {titleRight}
       </Box>
-    </DialogTitle>
+    </StyledDialogTitle>
   );
 }
 

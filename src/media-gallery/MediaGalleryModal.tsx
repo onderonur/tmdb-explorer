@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { IconButton, Box, makeStyles } from '@material-ui/core';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { IconButton, Box, styled } from '@mui/material';
 import BaseDialog from '@/common/BaseDialog';
 import YouTubePlayer from './YouTubePlayer';
 import MediaGalleryModalStepper from './MediaGalleryModalStepper';
 import MediaGalleryModalImageViewer from './MediaGalleryModalImageViewer';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import FullscreenIcon from '@material-ui/icons/Fullscreen';
-import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import { HotKeys } from 'react-hotkeys';
 import { useRouter } from 'next/router';
 import useRouterPath from '@/routing/useRouterPath';
@@ -15,14 +15,13 @@ import { Maybe } from '@/common/CommonTypes';
 const keyMap = {
   NEXT: ['right', 'd'],
   PREVIOUS: ['left', 'a'],
+  FULLSCREEN: ['f'],
 };
 
-const useStyles = makeStyles((theme) => ({
-  fullScreenButton: {
-    position: 'absolute',
-    top: theme.spacing(1),
-    right: theme.spacing(1),
-  },
+const FullScreenButton = styled(IconButton)(({ theme }) => ({
+  position: 'absolute',
+  top: theme.spacing(1),
+  right: theme.spacing(1),
 }));
 
 interface MediaGalleryModalProps {
@@ -38,14 +37,13 @@ function MediaGalleryModal({
   queryParamName,
   isVideoPlayer = false,
 }: MediaGalleryModalProps) {
-  const classes = useStyles();
   const router = useRouter();
   const activeStep = router.query[queryParamName];
   const activeStepIndex = dataSource?.indexOf(activeStep as string);
 
   const [isVisible, setIsVisible] = useState(false);
 
-  const handle = useFullScreenHandle();
+  const fullScreenHandler = useFullScreenHandle();
 
   useEffect(() => {
     setIsVisible(!!activeStep);
@@ -56,10 +54,6 @@ function MediaGalleryModal({
   }, []);
 
   const { asHref } = useRouterPath();
-
-  function handleExited() {
-    router.push(asHref, undefined, { shallow: true });
-  }
 
   const nextKey =
     typeof activeStepIndex === 'number'
@@ -84,24 +78,51 @@ function MediaGalleryModal({
     }
   }
 
+  function toggleFullScreen() {
+    if (fullScreenHandler.active) {
+      fullScreenHandler.exit();
+    } else {
+      fullScreenHandler.enter();
+    }
+  }
+
   const keyHandlers = {
     NEXT: goToNextPath,
     PREVIOUS: goToPreviousPath,
+    FULLSCREEN: toggleFullScreen,
   };
 
   const currentMediaKey =
     typeof activeStepIndex === 'number' ? dataSource?.[activeStepIndex] : null;
+
+  const hotKeysRef = useRef<HTMLElement>(null);
+
+  function handleEntered() {
+    hotKeysRef.current?.focus();
+  }
+
+  function handleExited() {
+    router.push(asHref, undefined, { shallow: true });
+  }
 
   return (
     <BaseDialog
       title={title}
       open={!!isVisible}
       onClose={handleClose}
-      TransitionProps={{ onExited: handleExited }}
+      TransitionProps={{
+        onEntered: handleEntered,
+        onExited: handleExited,
+      }}
       zeroPaddingContent
     >
-      <FullScreen handle={handle}>
-        <HotKeys keyMap={keyMap} handlers={keyHandlers} allowChanges={true}>
+      <FullScreen handle={fullScreenHandler}>
+        <HotKeys
+          innerRef={hotKeysRef}
+          keyMap={keyMap}
+          handlers={keyHandlers}
+          allowChanges={true}
+        >
           <Box position="relative">
             {currentMediaKey ? (
               isVideoPlayer ? (
@@ -115,12 +136,13 @@ function MediaGalleryModal({
               onClickNext={nextKey ? goToNextPath : null}
             />
             {!isVideoPlayer && (
-              <IconButton
-                className={classes.fullScreenButton}
-                onClick={handle.active ? handle.exit : handle.enter}
-              >
-                {handle.active ? <FullscreenExitIcon /> : <FullscreenIcon />}
-              </IconButton>
+              <FullScreenButton onClick={toggleFullScreen}>
+                {fullScreenHandler.active ? (
+                  <FullscreenExitIcon />
+                ) : (
+                  <FullscreenIcon />
+                )}
+              </FullScreenButton>
             )}
           </Box>
         </HotKeys>

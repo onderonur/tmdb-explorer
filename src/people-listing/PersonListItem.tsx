@@ -1,9 +1,9 @@
 import React from 'react';
-import ListItemWithAvatar, {
+import ListItemButtonWithAvatar, {
   ListItemWithAvatarProps,
 } from '@/common/ListItemWithAvatar';
 import { BasePerson } from '@/common/CommonTypes';
-import { ListItemProps } from '@material-ui/core';
+import { ListItemProps } from '@mui/material';
 
 type PersonListItemProps<C extends React.ElementType> = ListItemProps<
   C,
@@ -20,13 +20,12 @@ function PersonListItem<C extends React.ElementType>({
   ...rest
 }: PersonListItemProps<C>) {
   return (
-    <ListItemWithAvatar
+    <ListItemButtonWithAvatar
       avatarUrl={person.profile_path}
       primaryText={person.name}
       secondaryText={secondaryText}
-      // TODO: Needs type fix
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      {...(rest as any)}
+      // Required for MovieAndPersonAutocomplete
+      {...rest}
     />
   );
 }

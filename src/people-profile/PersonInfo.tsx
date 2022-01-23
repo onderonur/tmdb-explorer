@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import TextWithLabel from '@/common/TextWithLabel';
 import { Person } from '@/common/CommonTypes';
 
@@ -28,23 +28,31 @@ function PersonInfo({ person }: PersonInfoProps) {
     return null;
   }
 
+  const gender = getGender();
+
   return (
     <>
-      <TextWithLabel label="Known For" text={person.known_for_department} />
-      <TextWithLabel label="Gender" text={getGender()} />
-      <TextWithLabel label="Birthday" text={person.birthday} />
-      <TextWithLabel label="Place of Birth" text={person.place_of_birth} />
+      {person.known_for_department && (
+        <TextWithLabel label="Known For" text={person.known_for_department} />
+      )}
+      {gender && <TextWithLabel label="Gender" text={gender} />}
+      {person.birthday && (
+        <TextWithLabel label="Birthday" text={person.birthday} />
+      )}
+      {person.place_of_birth && (
+        <TextWithLabel label="Place of Birth" text={person.place_of_birth} />
+      )}
       {person.official_site && (
         <TextWithLabel label="Official Site" text={person.official_site} />
       )}
-      {person.also_known_as?.length ? (
+      {!!person.also_known_as?.length && (
         <TextWithLabel
           label="Also Known As"
           text={person.also_known_as.map((alias) => (
             <Typography key={alias}>{alias}</Typography>
           ))}
         />
-      ) : null}
+      )}
     </>
   );
 }

@@ -49,6 +49,9 @@ export type PersonImage = MovieImage;
 
 export interface InfiniteFetchResponse<Data> {
   results: Data[];
+  page: number;
+  total_pages: number;
+  total_results: number;
 }
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;

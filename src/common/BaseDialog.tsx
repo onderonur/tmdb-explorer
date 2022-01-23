@@ -1,33 +1,37 @@
-import React, { useMemo, useCallback } from 'react';
 import {
   Dialog,
   DialogContent,
-  Box,
   DialogProps,
-  useTheme,
-  useMediaQuery,
-  makeStyles,
   IconButton,
-} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+  styled,
+} from '@mui/material';
+import React, { useMemo, useCallback } from 'react';
 import BaseDialogTitle from './BaseDialogTitle';
+import useIsMobile from './useIsMobile';
+import CloseIcon from '@mui/icons-material/Close';
+import isPropValid from '@emotion/is-prop-valid';
 
-const DEFAULT_CONTENT_PADDING_Y = 1;
-const DEFAULT_CONTENT_PADDING_X = 3;
-
-const useStyles = makeStyles((theme) => ({
-  closeButton: {
-    position: 'fixed',
-    top: theme.spacing(1),
-    right: theme.spacing(1),
-    cursor: 'pointer',
-  },
-}));
-
-type BaseDialogProps = DialogProps & {
-  titleRight?: React.ReactNode;
+type BaseDialogContentProps = {
   zeroPaddingContent: boolean;
 };
+
+const BaseDialogContent = styled(DialogContent, {
+  shouldForwardProp: (prop) => isPropValid(prop),
+})<BaseDialogContentProps>(({ zeroPaddingContent }) =>
+  zeroPaddingContent ? { padding: 0 } : {},
+);
+
+const CloseButton = styled(IconButton)(({ theme }) => ({
+  position: 'fixed',
+  top: theme.spacing(1),
+  right: theme.spacing(1),
+  cursor: 'pointer',
+}));
+
+type BaseDialogProps = DialogProps &
+  BaseDialogContentProps & {
+    titleRight?: React.ReactNode;
+  };
 
 interface DialogContextValue {
   fullScreen: BaseDialogProps['fullScreen'];
@@ -45,18 +49,15 @@ function BaseDialog({
   zeroPaddingContent,
   children,
 }: BaseDialogProps) {
-  const classes = useStyles();
-
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
 
   const closeDialog = useCallback(() => {
     onClose?.({}, 'backdropClick');
   }, [onClose]);
 
   const contextValue = useMemo(
-    () => ({ fullScreen, closeDialog }),
-    [closeDialog, fullScreen],
+    () => ({ fullScreen: isMobile, closeDialog }),
+    [closeDialog, isMobile],
   );
 
   return (
@@ -64,30 +65,21 @@ function BaseDialog({
       open={open}
       scroll="body"
       fullWidth
-      fullScreen={fullScreen}
+      fullScreen={isMobile}
       maxWidth="lg"
       onClose={onClose}
       TransitionProps={TransitionProps}
     >
       <DialogContext.Provider value={contextValue}>
-        {!fullScreen && (
-          <IconButton className={classes.closeButton} onClick={closeDialog}>
+        {!isMobile && (
+          <CloseButton onClick={closeDialog}>
             <CloseIcon />
-          </IconButton>
+          </CloseButton>
         )}
         <BaseDialogTitle title={title} titleRight={titleRight} />
-        <DialogContent>
-          {zeroPaddingContent ? (
-            <Box
-              marginY={-DEFAULT_CONTENT_PADDING_Y}
-              marginX={-DEFAULT_CONTENT_PADDING_X}
-            >
-              {children}
-            </Box>
-          ) : (
-            children
-          )}
-        </DialogContent>
+        <BaseDialogContent zeroPaddingContent={zeroPaddingContent}>
+          {children}
+        </BaseDialogContent>
       </DialogContext.Provider>
     </Dialog>
   );

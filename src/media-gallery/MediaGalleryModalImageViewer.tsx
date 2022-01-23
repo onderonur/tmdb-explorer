@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseImage from '@/common/BaseImage';
-import { useApiConfiguration } from '@/api-configuration/ApiConfigurationContext';
+import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 
 interface MediaGalleryModalImageViewerProps {
   filePath: string;

@@ -1,29 +1,31 @@
 import React from 'react';
-import { Container, makeStyles } from '@material-ui/core';
+import { Container, styled, Toolbar, Box } from '@mui/material';
 import AppHeader from './AppHeader';
 import BackToTopButton from '@/layout/BackToTopButton';
 import AppDrawerProvider from '@/layout/AppDrawerContext';
-import AppDrawer from '@/layout/AppDrawer';
+import AppDrawer, { APP_DRAWER_WIDTH } from '@/layout/AppDrawer';
+import useIsMobile from '@/common/useIsMobile';
 
-const useStyles = makeStyles((theme) => ({
-  toolbar: theme.mixins.toolbar,
-  main: {
-    padding: theme.spacing(2),
-  },
-}));
+const Main = styled(Container)(({ theme }) => ({
+  padding: theme.spacing(2),
+  flex: 1,
+})) as typeof Container;
 
 type AppLayoutProps = React.PropsWithChildren<unknown>;
 
 function AppLayout({ children }: AppLayoutProps) {
-  const classes = useStyles();
+  const isMobile = useIsMobile();
+
   return (
     <AppDrawerProvider>
       <AppHeader />
-      <AppDrawer />
-      <div className={classes.toolbar} />
-      <Container className={classes.main} component="main">
-        <>{children}</>
-      </Container>
+      <Toolbar />
+      <Box display="flex">
+        <Box component="nav" width={isMobile ? undefined : APP_DRAWER_WIDTH}>
+          <AppDrawer />
+        </Box>
+        <Main component="main">{children}</Main>
+      </Box>
       <BackToTopButton />
     </AppDrawerProvider>
   );

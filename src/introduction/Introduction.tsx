@@ -1,30 +1,32 @@
 import React from 'react';
 import BaseImage from '@/common/BaseImage';
-import { Box, Typography, Theme, makeStyles } from '@material-ui/core';
-import { useApiConfiguration } from '@/api-configuration/ApiConfigurationContext';
+import { Box, Typography, styled } from '@mui/material';
+import isPropValid from '@emotion/is-prop-valid';
+import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 
 interface IntroductionStyleProps {
   backgroundImageSrc: string;
 }
 
-const useStyles = makeStyles<Theme, IntroductionStyleProps>(() => ({
-  backdrop: {
-    backgroundImage: ({ backgroundImageSrc }) => `url(${backgroundImageSrc})`,
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    filter: 'opacity(100) grayscale(100%) contrast(130%)',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-  },
-  container: {
-    backgroundImage:
-      'radial-gradient(circle at 20% 50%, rgba(12.55%, 24.71%, 34.51%, 0.98) 0%, rgba(12.55%, 24.71%, 34.51%, 0.88) 100%)',
-  },
+const Backdrop = styled('div', {
+  shouldForwardProp: (prop) => isPropValid(prop),
+})<IntroductionStyleProps>(({ backgroundImageSrc }) => ({
+  backgroundImage: `url(${backgroundImageSrc})`,
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  filter: 'opacity(100) grayscale(100%) contrast(130%)',
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
 }));
+
+const Container = styled(Box)({
+  backgroundImage:
+    'radial-gradient(circle at 20% 50%, rgba(12.55%, 24.71%, 34.51%, 0.98) 0%, rgba(12.55%, 24.71%, 34.51%, 0.88) 100%)',
+});
 
 type IntroductionProps = IntroductionStyleProps & {
   imageSrc: string;
@@ -39,15 +41,11 @@ function Introduction({
   content,
 }: IntroductionProps) {
   const { getImageUrl } = useApiConfiguration();
-  const classes = useStyles({
-    backgroundImageSrc: getImageUrl(backgroundImageSrc),
-  });
 
   return (
     <Box position="relative">
-      <div className={classes.backdrop} />
-      <Box
-        className={classes.container}
+      <Backdrop backgroundImageSrc={getImageUrl(backgroundImageSrc)} />
+      <Container
         display="flex"
         flexWrap="wrap"
         justifyContent="center"
@@ -73,7 +71,7 @@ function Introduction({
           )}
           {content}
         </Box>
-      </Box>
+      </Container>
     </Box>
   );
 }

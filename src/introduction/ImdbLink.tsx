@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, makeStyles } from '@material-ui/core';
+import { Link, styled } from '@mui/material';
 import { Maybe } from '@/common/CommonTypes';
 import Image from 'next/image';
 
@@ -8,17 +8,15 @@ export enum ImdbProfileType {
   PERSON,
 }
 
-export function getImdbProfileUrl(type: ImdbProfileType, imdbId: string) {
+function getImdbProfileUrl(type: ImdbProfileType, imdbId: string) {
   return `https://www.imdb.com/${
     type === ImdbProfileType.MOVIE ? 'title' : 'name'
   }/${imdbId}`;
 }
 
-const useStyles = makeStyles(() => ({
-  link: {
-    display: 'flex',
-  },
-}));
+const StyledLink = styled(Link)({
+  display: 'flex',
+});
 
 interface ImdbLinkProps {
   type: ImdbProfileType;
@@ -26,15 +24,12 @@ interface ImdbLinkProps {
 }
 
 function ImdbLink({ type, imdbId }: ImdbLinkProps) {
-  const classes = useStyles();
-
   if (!imdbId) {
     return null;
   }
 
   return (
-    <Link
-      className={classes.link}
+    <StyledLink
       href={getImdbProfileUrl(type, imdbId)}
       target="_blank"
       rel="noopener noreferrer"
@@ -46,7 +41,7 @@ function ImdbLink({ type, imdbId }: ImdbLinkProps) {
         width={70}
         layout="fixed"
       />
-    </Link>
+    </StyledLink>
   );
 }
 

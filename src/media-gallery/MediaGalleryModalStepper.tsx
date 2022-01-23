@@ -1,17 +1,15 @@
 import React from 'react';
-import { Box, IconButton, makeStyles } from '@material-ui/core';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { Box, IconButton, styled } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Maybe } from '@/common/CommonTypes';
 
-const useStyles = makeStyles((theme) => ({
-  stepper: {
-    position: 'absolute',
-    top: '50%',
-    marginTop: theme.spacing(-4),
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
+const Stepper = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  top: '50%',
+  marginTop: theme.spacing(-4),
+  marginLeft: theme.spacing(1),
+  marginRight: theme.spacing(1),
 }));
 
 interface MediaGalleryModalStepperProps {
@@ -23,28 +21,21 @@ function MediaGalleryModalStepper({
   onClickPrevious,
   onClickNext,
 }: MediaGalleryModalStepperProps) {
-  const classes = useStyles();
-
   return (
     <>
       {onClickPrevious && (
-        <Box className={classes.stepper} left={0} justifyContent="flex-start">
-          <IconButton onClick={onClickPrevious}>
-            <ChevronLeftIcon />
+        <Stepper left={0} justifyContent="flex-start">
+          <IconButton size="large" onClick={onClickPrevious}>
+            <ChevronLeftIcon fontSize="large" />
           </IconButton>
-        </Box>
+        </Stepper>
       )}
       {onClickNext && (
-        <Box
-          className={classes.stepper}
-          right={0}
-          justifyContent="flex-end"
-          onClick={onClickNext}
-        >
-          <IconButton onClick={onClickNext}>
-            <ChevronRightIcon />
+        <Stepper right={0} justifyContent="flex-end" onClick={onClickNext}>
+          <IconButton size="large" onClick={onClickNext}>
+            <ChevronRightIcon fontSize="large" />
           </IconButton>
-        </Box>
+        </Stepper>
       )}
     </>
   );

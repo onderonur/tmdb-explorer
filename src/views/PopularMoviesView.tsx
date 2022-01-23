@@ -1,59 +1,36 @@
 import React from 'react';
-import MovieCard from '@/movies-listing/MovieCard';
-import InfiniteGridList from '@/common/InfiniteGridList';
-import useFetchInfinite from '@/common/useFetchInfinite';
-import { api, createUrl } from '@/common/CommonUtils';
-import BaseSeo from '@/seo/BaseSeo';
-import { Movie, InfiniteFetchResponse } from '@/common/CommonTypes';
-import { GetServerSideProps } from 'next';
-import withError, {
-  withGetServerSideError,
-  ServerSideProps,
-} from '@/errors/withError';
+import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
+import { dehydrate } from 'react-query';
+import { createQueryClient } from '@/http-client/queryClient';
+import { apiQueries } from '@/http-client/apiQueries';
+import MoviesListingView from './MoviesListingView';
 
-function renderItem(movie: Movie) {
+function PopularMoviesView() {
   return (
-    <li>
-      <MovieCard movie={movie} />
-    </li>
+    <MoviesListingView
+      title="Popular Movies"
+      description="Popular movies list"
+      apiQuery={apiQueries.movies.popularMovies()}
+    />
   );
 }
 
-type PopularMoviesViewProps = ServerSideProps<InfiniteFetchResponse<Movie>[]>;
+export const getServerSideProps = withGetServerSideError(async () => {
+  const queryClient = createQueryClient();
 
-function PopularMoviesView({ initialData }: PopularMoviesViewProps) {
-  const { data, hasNextPage, isLoading, loadMore } = useFetchInfinite<Movie>(
-    '/movie/popular',
-    undefined,
-    { initialData: initialData || undefined },
-  );
+  await Promise.all([
+    queryClient.fetchQuery(apiQueries.common.configuration()),
+    queryClient.fetchInfiniteQuery(apiQueries.movies.popularMovies()),
+  ]);
 
-  return (
-    <>
-      <BaseSeo title="Popular Movies" description="Popular movies list" />
-      <InfiniteGridList
-        items={data}
-        loading={isLoading}
-        hasNextPage={hasNextPage}
-        onLoadMore={loadMore}
-        renderItem={renderItem}
-      />
-    </>
-  );
-}
-
-const getServerSidePropsFn: GetServerSideProps<PopularMoviesViewProps> =
-  async () => {
-    const data = await api.get<InfiniteFetchResponse<Movie>>(
-      createUrl('/movie/popular'),
-    );
-    return {
-      props: {
-        initialData: [data],
-      },
-    };
+  return {
+    props: {
+      // There is an issue when we use infinite query while SSR.
+      // So, we use this workaround.
+      // https://github.com/tannerlinsley/react-query/issues/1458
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+    },
   };
+});
 
-export const getServerSideProps = withGetServerSideError(getServerSidePropsFn);
-
-export default withError(PopularMoviesView);
+export default PopularMoviesView;

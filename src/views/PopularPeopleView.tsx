@@ -1,15 +1,14 @@
 import React from 'react';
 import PersonCard from '@/people-listing/PersonCard';
 import InfiniteGridList from '@/common/InfiniteGridList';
-import useFetchInfinite from '@/common/useFetchInfinite';
-import { api, createUrl } from '@/common/CommonUtils';
 import BaseSeo from '@/seo/BaseSeo';
 import { Person, InfiniteFetchResponse } from '@/common/CommonTypes';
-import { GetServerSideProps } from 'next';
-import withError, {
-  ServerSideProps,
-  withGetServerSideError,
-} from '@/errors/withError';
+import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
+import { dehydrate, useInfiniteQuery } from 'react-query';
+import { getAllPageResults } from '@/common/CommonUtils';
+import { apiQueries } from '@/http-client/apiQueries';
+import { createQueryClient } from '@/http-client/queryClient';
+import PageTitle from '@/common/PageTitle';
 
 function renderItem(person: Person) {
   return (
@@ -19,41 +18,42 @@ function renderItem(person: Person) {
   );
 }
 
-type PopularPeopleViewProps = ServerSideProps<InfiniteFetchResponse<Person>[]>;
-
-function PopularPeopleView({ initialData }: PopularPeopleViewProps) {
-  const { data, hasNextPage, isLoading, loadMore } = useFetchInfinite<Person>(
-    '/person/popular',
-    undefined,
-    { initialData: initialData || undefined },
-  );
+function PopularPeopleView() {
+  const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery<
+    InfiniteFetchResponse<Person>
+  >(apiQueries.people.popularPeople());
 
   return (
     <>
       <BaseSeo title="Popular People" description="Popular people list" />
+      <PageTitle title="Popular People" />
       <InfiniteGridList
-        items={data}
-        loading={isLoading}
-        hasNextPage={hasNextPage}
-        onLoadMore={loadMore}
+        items={getAllPageResults(data)}
+        loading={isFetching}
+        hasNextPage={!!hasNextPage}
+        onLoadMore={fetchNextPage}
         renderItem={renderItem}
       />
     </>
   );
 }
 
-const getServerSidePropsFn: GetServerSideProps<PopularPeopleViewProps> =
-  async () => {
-    const data = await api.get<InfiniteFetchResponse<Person>>(
-      createUrl('/person/popular'),
-    );
-    return {
-      props: {
-        initialData: [data],
-      },
-    };
+export const getServerSideProps = withGetServerSideError(async () => {
+  const queryClient = createQueryClient();
+
+  await Promise.all([
+    queryClient.fetchQuery(apiQueries.common.configuration()),
+    queryClient.fetchInfiniteQuery(apiQueries.people.popularPeople()),
+  ]);
+
+  return {
+    props: {
+      // There is an issue when we use infinite query while SSR.
+      // So, we use this workaround.
+      // https://github.com/tannerlinsley/react-query/issues/1458
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+    },
   };
+});
 
-export const getServerSideProps = withGetServerSideError(getServerSidePropsFn);
-
-export default withError(PopularPeopleView);
+export default PopularPeopleView;

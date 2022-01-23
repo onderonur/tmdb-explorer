@@ -1,6 +1,7 @@
 import React from 'react';
-import { Theme, makeStyles } from '@material-ui/core';
+import { styled } from '@mui/material';
 import { Maybe } from '@/common/CommonTypes';
+import isPropValid from '@emotion/is-prop-valid';
 
 export const getAspectRatioString = (width: number, height: number) =>
   `${width}:${height}`;
@@ -9,19 +10,19 @@ interface AspectRatioStyleProps {
   paddingTop: Maybe<number | string>;
 }
 
-const useStyles = makeStyles<Theme, AspectRatioStyleProps>(() => ({
-  root: {
-    overflow: 'hidden',
-    position: 'relative',
-    height: ({ paddingTop }) => (paddingTop ? 0 : undefined),
-    paddingTop: ({ paddingTop }) => paddingTop || undefined,
-    '& > *': {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-    },
+const Root = styled('div', {
+  shouldForwardProp: (prop) => isPropValid(prop),
+})<AspectRatioStyleProps>(({ paddingTop }) => ({
+  overflow: 'hidden',
+  position: 'relative',
+  height: paddingTop ? 0 : undefined,
+  paddingTop: paddingTop || undefined,
+  '& > *': {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
   },
 }));
 
@@ -37,12 +38,10 @@ const AspectRatio = React.forwardRef<HTMLDivElement, AspectRatioProps>(
     const ratio = (100 * ratioY) / ratioX;
     const paddingTop = isNaN(ratio) ? undefined : `${ratio}%`;
 
-    const classes = useStyles({ paddingTop });
-
     return (
-      <div ref={ref} className={classes.root}>
+      <Root ref={ref} paddingTop={paddingTop}>
         {children}
-      </div>
+      </Root>
     );
   },
 );

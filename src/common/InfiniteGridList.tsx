@@ -13,6 +13,7 @@ interface InfiniteGridListProps<Item extends ItemWithId> {
   minItemWidth?: number;
   spacing?: number;
   keyExtractor?: (item: Item, index: number) => number;
+  listEmptyMessage?: string;
 }
 
 function InfiniteGridList<Item extends ItemWithId>({
@@ -24,6 +25,7 @@ function InfiniteGridList<Item extends ItemWithId>({
   minItemWidth,
   spacing,
   keyExtractor = idExtractor,
+  listEmptyMessage,
 }: InfiniteGridListProps<Item>) {
   const [sentryRef] = useInfiniteScroll({
     hasNextPage,
@@ -39,8 +41,10 @@ function InfiniteGridList<Item extends ItemWithId>({
       loading={loading || hasNextPage}
       minItemWidth={minItemWidth}
       spacing={spacing}
+      hasRowGutter
       renderItem={renderItem}
       loadingRef={sentryRef}
+      listEmptyMessage={listEmptyMessage}
     />
   );
 }

@@ -1,27 +1,25 @@
 import React from 'react';
-import { ListItemIcon, ListItemText, ListItem } from '@material-ui/core';
+import { ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 import { useRouter } from 'next/router';
-import NextLink from '@/routing/NextLink';
+import NextLink, { NextLinkProps } from '@/routing/NextLink';
 
-interface AppDrawerItemProps {
-  href: string;
-  icon: React.ReactNode;
+type AppDrawerItemProps = Pick<NextLinkProps, 'href'> & {
+  icon?: React.ReactNode;
   title: string;
-}
+};
 
 function AppDrawerItem({ href, icon, title }: AppDrawerItemProps) {
   const router = useRouter();
 
   return (
-    <ListItem
-      button
+    <ListItemButton
       href={href}
       component={NextLink}
       selected={router.pathname === href}
     >
-      <ListItemIcon>{icon}</ListItemIcon>
+      {icon && <ListItemIcon>{icon}</ListItemIcon>}
       <ListItemText primary={title} />
-    </ListItem>
+    </ListItemButton>
   );
 }
 

@@ -1,19 +1,15 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import BaseAutocomplete from '../common/BaseAutocomplete';
-import useFetch from '@/common/useFetch';
 import useDebounce from '@/common/useDebounce';
 import { useRouter } from 'next/router';
-import {
-  Movie,
-  Person,
-  InfiniteFetchResponse,
-  Maybe,
-} from '@/common/CommonTypes';
-import { isMovie } from '@/common/CommonUtils';
+import { Maybe } from '@/common/CommonTypes';
+import { getAllPageResults, isMovie } from '@/common/CommonUtils';
 import { Suggestion } from './SearchTypes';
 import MovieListItem from '../movies-listing/MovieListItem';
 import PersonListItem from '../people-listing/PersonListItem';
 import { SearchType } from './SearchEnums';
+import { useInfiniteQuery } from 'react-query';
+import { apiQueries } from '@/http-client/apiQueries';
 
 interface MovieAndPersonAutocompleteProps {
   className?: string;
@@ -35,19 +31,19 @@ function MovieAndPersonAutocomplete({
 
   const debouncedSearchValue = useDebounce(searchValue);
 
-  const { data: movies, loading: isLoadingMovies } = useFetch<
-    InfiniteFetchResponse<Movie>
-  >(debouncedSearchValue ? '/search/movie' : undefined, {
-    query: debouncedSearchValue,
-  });
-  const { data: people, loading: isLoadingPeople } = useFetch<
-    InfiniteFetchResponse<Person>
-  >(debouncedSearchValue ? '/search/person' : undefined, {
-    query: debouncedSearchValue,
+  const isSearchEnabled = !!debouncedSearchValue;
+  const { data: movies, isFetching: isFetchingMovies } = useInfiniteQuery({
+    ...apiQueries.search.searchMovies(debouncedSearchValue),
+    enabled: isSearchEnabled,
   });
 
-  const isLoading = Boolean(
-    debouncedSearchValue && (isLoadingMovies || isLoadingPeople),
+  const { data: people, isFetching: isFetchingPeople } = useInfiniteQuery({
+    ...apiQueries.search.searchPeople(debouncedSearchValue),
+    enabled: isSearchEnabled,
+  });
+
+  const isFetching = Boolean(
+    debouncedSearchValue && (isFetchingMovies || isFetchingPeople),
   );
 
   const handleRedirect = (inputValue: string) => {
@@ -77,11 +73,11 @@ function MovieAndPersonAutocomplete({
   const options = useMemo<Suggestion[]>(
     () =>
       [
-        ...(movies?.results.map((movie) => ({
+        ...(getAllPageResults(movies).map((movie) => ({
           ...movie,
           searchType: SearchType.MOVIES,
         })) || []),
-        ...(people?.results.map((person) => ({
+        ...(getAllPageResults(people).map((person) => ({
           ...person,
           searchType: SearchType.PEOPLE,
         })) || []),
@@ -98,13 +94,21 @@ function MovieAndPersonAutocomplete({
       className={className}
       placeholder="Search Movies & People"
       options={options}
-      renderOption={(option) =>
-        isMovie(option) ? (
-          <MovieListItem movie={option} />
+      renderOption={(props, option) => {
+        return isMovie(option) ? (
+          <MovieListItem
+            {...props}
+            key={`${SearchType.MOVIES}_${option.id}`}
+            movie={option}
+          />
         ) : (
-          <PersonListItem person={option} />
-        )
-      }
+          <PersonListItem
+            {...props}
+            key={`${SearchType.PEOPLE}_${option.id}`}
+            person={option}
+          />
+        );
+      }}
       getOptionLabel={(option) =>
         typeof option === 'string'
           ? // For freeSolo
@@ -113,7 +117,7 @@ function MovieAndPersonAutocomplete({
           ? option.title
           : option.name
       }
-      loading={isLoading}
+      loading={isFetching}
       inputValue={searchValue}
       onInputChange={(e, newInputValue) => setSearchValue(newInputValue)}
       onChange={(e, newValue) => {

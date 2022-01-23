@@ -1,29 +1,38 @@
-import proxy from '@/api/proxy';
+import { CustomError } from '@/error-handling/ErrorHandlingUtils';
+import { httpClient } from '@/http-client/httpClient';
+import { NextApiRequest, NextApiResponse } from 'next';
 import queryString from 'query-string';
 
-// Note about CORS:
-// https://nextjs.org/docs/api-routes/introduction
-// API Routes do not specify CORS headers, meaning they are same-origin only by default.
-// You can customize such behavior by wrapping the request handler with the cors middleware.
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+  let path = req.url ?? '/';
+  path = path.replace('/api', '');
+  const [base, query] = path.split('?');
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+  let parsedQuery = {};
+  if (query) {
+    parsedQuery = queryString.parse(query);
+  }
+  parsedQuery = { ...parsedQuery, api_key: process.env.API_KEY };
 
-export default proxy({
-  target: process.env.API_URL,
-  changeOrigin: true,
-  logLevel: 'silent',
-  async pathRewrite(path) {
-    const formattedPath = path.replace('/api', '');
-    const [base, query] = formattedPath.split('?');
-    let parsedQuery = {};
-    if (query) {
-      parsedQuery = queryString.parse(query);
+  const targetUrl = queryString.stringifyUrl({
+    url: `${process.env.API_URL}${base}`,
+    query: parsedQuery,
+  });
+
+  try {
+    const apiResponse = await httpClient.get(targetUrl);
+    return res.json(apiResponse);
+  } catch (err) {
+    if (err instanceof CustomError) {
+      return res
+        .status(err.statusCode)
+        .json({ statusCode: err.statusCode, message: err.message });
     }
-    parsedQuery = { ...parsedQuery, api_key: process.env.API_KEY };
-    return queryString.stringifyUrl({ url: base, query: parsedQuery });
-  },
-});
+    const statusCode = 500;
+    return res
+      .status(statusCode)
+      .json({ statusCode, message: 'Something went wrong' });
+  }
+}
+
+export default handler;

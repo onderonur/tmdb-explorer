@@ -1,64 +1,62 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
-import ConfigurationProvider, {
-  fetchApiConfiguration,
-} from '@/api-configuration/ApiConfigurationContext';
-import App, { AppProps, AppContext } from 'next/app';
+import { AppProps } from 'next/app';
 import AppLayout from '@/layout/AppLayout';
-import { SWRConfig } from 'swr';
-import { api } from '@/common/CommonUtils';
-import { APIConfiguration } from '@/api-configuration/ApiConfigurationTypes';
 import BaseDefaultSeo from '@/seo/BaseDefaultSeo';
 import { APP_TITLE } from '@/common/CommonConstants';
 import BaseThemeProvider from '@/theme/BaseThemeProvider';
 import PageProgressBar from '@/common/PageProgressBar';
+import ErrorMessage from '@/error-handling/ErrorMessage';
+import { ServerSideProps } from '@/error-handling/ErrorHandlingTypes';
+import createEmotionCache from '@/theme/createEmotionCache';
+import { EmotionCache } from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
+import { Hydrate, QueryClientProvider } from 'react-query';
+import { createQueryClient } from '@/http-client/queryClient';
 
-type SWRConfigProps = React.ComponentProps<typeof SWRConfig>;
-const swrConfig: SWRConfigProps['value'] = {
-  fetcher: api.get,
-};
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
 
 type MyAppProps = AppProps & {
-  configuration: APIConfiguration;
+  emotionCache?: EmotionCache;
 };
 
-function MyApp({ Component, pageProps, configuration }: MyAppProps) {
-  useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement?.removeChild(jssStyles);
-    }
-  }, []);
+function MyApp({
+  Component,
+  pageProps,
+  emotionCache = clientSideEmotionCache,
+}: MyAppProps) {
+  const [queryClient] = useState(() => createQueryClient());
+
+  let content = <Component {...pageProps} />;
+
+  const { error } = pageProps as ServerSideProps;
+  if (error) {
+    content = (
+      <ErrorMessage message={error.message} statusCode={error.statusCode} />
+    );
+  }
 
   return (
-    <>
-      <Head>
-        <title>{APP_TITLE}</title>
-      </Head>
-      <BaseDefaultSeo />
-      <SWRConfig value={swrConfig}>
-        <BaseThemeProvider>
-          <PageProgressBar />
-          <ConfigurationProvider configuration={configuration}>
-            <AppLayout>
-              <Component {...pageProps} />
-            </AppLayout>
-          </ConfigurationProvider>
-        </BaseThemeProvider>
-      </SWRConfig>
-    </>
+    <CacheProvider value={emotionCache}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Head>
+            <title>{APP_TITLE}</title>
+            <meta
+              name="viewport"
+              content="initial-scale=1, width=device-width"
+            />
+          </Head>
+          <BaseDefaultSeo />
+          <BaseThemeProvider>
+            <PageProgressBar />
+            <AppLayout>{content}</AppLayout>
+          </BaseThemeProvider>
+        </Hydrate>
+      </QueryClientProvider>
+    </CacheProvider>
   );
 }
-
-MyApp.getInitialProps = async (appContext: AppContext) => {
-  // calls page's `getInitialProps` and fills `appProps.pageProps`
-  const [appProps, configuration] = await Promise.all([
-    App.getInitialProps(appContext),
-    fetchApiConfiguration(),
-  ]);
-
-  return { ...appProps, configuration };
-};
 
 export default MyApp;

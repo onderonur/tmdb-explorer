@@ -1,51 +1,52 @@
 import React from 'react';
 import LoadingIndicator from '@/common/LoadingIndicator';
-import { Typography, Theme, makeStyles } from '@material-ui/core';
+import { Typography, styled } from '@mui/material';
 import { idExtractor } from '@/common/CommonUtils';
 import { Maybe } from '@/common/CommonTypes';
+import isPropValid from '@emotion/is-prop-valid';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DEFAULT_ITEMS: any[] = [];
 
 interface BaseGridListStyleProps {
-  spacing: number;
-  minItemWidth: number;
+  spacing?: number;
+  hasRowGutter?: boolean;
+  minItemWidth?: number;
 }
 
-const useStyles = makeStyles<Theme, BaseGridListStyleProps>((theme) => ({
-  flexList: {
+const List = styled('ul', {
+  shouldForwardProp: (prop) => isPropValid(prop),
+})<BaseGridListStyleProps>(
+  ({ theme, spacing = 1, hasRowGutter, minItemWidth }) => ({
     listStyle: 'none',
     padding: 0,
     display: 'grid',
-    gridGap: ({ spacing }) => theme.spacing(spacing),
-    gridTemplateColumns: ({ minItemWidth }) =>
-      `repeat(auto-fill, minmax(${minItemWidth}px, 1fr))`,
-  },
-}));
+    columnGap: theme.spacing(spacing),
+    rowGap: theme.spacing(hasRowGutter ? spacing * 2.5 : spacing),
+    gridTemplateColumns: `repeat(auto-fill, minmax(${minItemWidth}px, 1fr))`,
+  }),
+);
 
-interface BaseGridListProps<Item> {
+type BaseGridListProps<Item> = BaseGridListStyleProps & {
   items?: Maybe<Item[]>;
   loading: boolean;
   renderItem: (item: Item, index: number) => React.ReactNode;
-  spacing?: number;
-  minItemWidth?: number;
   keyExtractor?: string | ((item: Item, index: number) => string | number);
   listEmptyMessage?: string;
   loadingRef?: React.Ref<HTMLDivElement>;
-}
+};
 
 function BaseGridList<Item>({
   items = DEFAULT_ITEMS,
   loading,
   renderItem,
-  spacing = 1,
+  spacing,
+  hasRowGutter,
   minItemWidth = 160,
   keyExtractor = idExtractor,
   listEmptyMessage = 'Nothing has been found',
   loadingRef,
 }: BaseGridListProps<Item>) {
-  const classes = useStyles({ minItemWidth, spacing });
-
   function extractItemKey(item: Item, index: number) {
     return typeof keyExtractor === 'string'
       ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,14 +64,18 @@ function BaseGridList<Item>({
 
   return (
     <>
-      <ul className={classes.flexList}>
+      <List
+        spacing={spacing}
+        hasRowGutter={hasRowGutter}
+        minItemWidth={minItemWidth}
+      >
         {items?.map((item, index) => {
           const key = extractItemKey(item, index);
           return (
             <React.Fragment key={key}>{renderItem(item, index)}</React.Fragment>
           );
         })}
-      </ul>
+      </List>
       <LoadingIndicator ref={loadingRef} loading={loading} />
     </>
   );
