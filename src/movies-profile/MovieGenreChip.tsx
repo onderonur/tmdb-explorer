@@ -16,6 +16,7 @@ function MovieGenreChip({ className, genre }: MovieGenreChipProps) {
       href={{ pathname: '/movie/discover', query: { genreId: genre.id } }}
       component={NextLink}
       clickable
+      color="secondary"
     />
   );
 }

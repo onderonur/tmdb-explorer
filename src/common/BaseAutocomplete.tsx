@@ -8,16 +8,24 @@ import {
   TextField,
 } from '@mui/material';
 import { useState } from 'react';
-import { Omit } from './CommonTypes';
 
 type BaseAutocompleteProps<
   T,
   Multiple extends boolean | undefined,
   DisableClearable extends boolean | undefined,
   FreeSolo extends boolean | undefined,
-> = Omit<
+> = Pick<
   AutocompleteProps<T, Multiple, DisableClearable, FreeSolo>,
-  'renderInput'
+  | 'placeholder'
+  | 'loading'
+  | 'inputValue'
+  | 'options'
+  | 'className'
+  | 'getOptionLabel'
+  | 'renderOption'
+  | 'onInputChange'
+  | 'onChange'
+  | 'freeSolo'
 > & {
   autoFocus?: boolean;
   onSearchClick: (inputValue: string) => void;
@@ -43,8 +51,7 @@ function BaseAutocomplete<
       onClose={() => setIsOpen(false)}
       fullWidth
       loadingText={<LoadingIndicator loading={!!rest.loading} />}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      disableClearable={true as any}
+      disableClearable={true as DisableClearable}
       renderInput={(params) => (
         <TextField
           {...params}

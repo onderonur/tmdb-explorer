@@ -8,10 +8,13 @@ interface MovieRatingTagProps {
 
 function MovieRatingTag({ movie }: MovieRatingTagProps) {
   const theme = useTheme();
-
+  const bgColor = theme.palette.secondary.main;
   return (
-    <Box bgcolor={theme.palette.secondary.main} paddingY={0.25} paddingX={0.5}>
-      <Typography variant="caption">
+    <Box bgcolor={bgColor} paddingY={0.25} paddingX={0.5}>
+      <Typography
+        variant="caption"
+        color={theme.palette.getContrastText(bgColor)}
+      >
         {movie.vote_average.toFixed(2)} / 10
       </Typography>
     </Box>

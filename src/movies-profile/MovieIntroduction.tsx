@@ -11,10 +11,6 @@ const Year = styled('span')(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const StyledMovieGenreChip = styled(MovieGenreChip)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-}));
-
 const Overview = styled(Typography)({
   whiteSpace: 'pre-wrap',
 });
@@ -54,14 +50,9 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
         <>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Box display="flex" alignItems="center">
+              <Box display="flex" alignItems="center" gap={2}>
                 <Rating value={movie.vote_average * 10} />
-                <Box marginLeft={2}>
-                  <ImdbLink
-                    type={ImdbProfileType.MOVIE}
-                    imdbId={movie.imdb_id}
-                  />
-                </Box>
+                <ImdbLink type={ImdbProfileType.MOVIE} imdbId={movie.imdb_id} />
               </Box>
             </Grid>
             <Grid item xs={12}>
@@ -70,7 +61,7 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
               </Typography>
               <Box display="flex" gap={0.75} flexWrap={'wrap'}>
                 {movie.genres.map((genre) => (
-                  <StyledMovieGenreChip key={genre.id} genre={genre} />
+                  <MovieGenreChip key={genre.id} genre={genre} />
                 ))}
               </Box>
             </Grid>
