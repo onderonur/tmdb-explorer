@@ -1,13 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/material';
-import { Maybe } from '@/common/CommonTypes';
 import isPropValid from '@emotion/is-prop-valid';
 
-export const getAspectRatioString = (width: number, height: number) =>
-  `${width}:${height}`;
-
 interface AspectRatioStyleProps {
-  paddingTop: Maybe<number | string>;
+  paddingTop: string;
 }
 
 const Root = styled('div', {
@@ -15,8 +11,8 @@ const Root = styled('div', {
 })<AspectRatioStyleProps>(({ paddingTop }) => ({
   overflow: 'hidden',
   position: 'relative',
-  height: paddingTop ? 0 : undefined,
-  paddingTop: paddingTop || undefined,
+  height: 0,
+  paddingTop,
   '& > *': {
     position: 'absolute',
     top: 0,
@@ -27,16 +23,12 @@ const Root = styled('div', {
 }));
 
 type AspectRatioProps = React.PropsWithChildren<{
-  aspectRatio: string;
+  aspectRatio: number;
 }>;
 
 const AspectRatio = React.forwardRef<HTMLDivElement, AspectRatioProps>(
   function AspectRatio({ aspectRatio, children }, ref) {
-    const [ratioX, ratioY] = aspectRatio
-      .split(':')
-      .map((ratio) => parseInt(ratio));
-    const ratio = (100 * ratioY) / ratioX;
-    const paddingTop = isNaN(ratio) ? undefined : `${ratio}%`;
+    const paddingTop = `${Math.pow(aspectRatio, -1) * 100}%`;
 
     return (
       <Root ref={ref} paddingTop={paddingTop}>

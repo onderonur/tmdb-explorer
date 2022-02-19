@@ -1,13 +1,18 @@
 import React from 'react';
 import BaseGridList from '@/common/BaseGridList';
-import PersonCastingGridListItem from './PersonCastingGridListItem';
 import { ID } from '@/common/CommonTypes';
 import { PersonCasting } from './PersonProfileTypes';
 import { apiQueries } from '@/http-client/apiQueries';
 import { useQuery } from 'react-query';
+import { idExtractor } from '@/common/CommonUtils';
+import MovieCard from '@/movies/MovieCard';
 
 function renderItem(casting: PersonCasting) {
-  return <PersonCastingGridListItem castCredit={casting} />;
+  return (
+    <li>
+      <MovieCard movie={casting} subheader={casting.character} />
+    </li>
+  );
 }
 
 interface PersonCastingGridListProps {
@@ -24,9 +29,10 @@ function PersonCastingGridList({ personId }: PersonCastingGridListProps) {
     <BaseGridList
       items={castings}
       loading={isLoading}
+      keyExtractor={idExtractor}
       renderItem={renderItem}
       hasRowGutter
-      listEmptyMessage="No casting has been found"
+      listEmptyMessage="No casting has been found."
     />
   );
 }

@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { DialogContext } from './BaseDialog';
+import React from 'react';
 import {
   DialogTitle,
   Typography,
@@ -9,6 +8,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Maybe } from '@/common/CommonTypes';
+import { useBaseDialogContext } from './BaseDialogContext';
 
 const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
   padding: theme.spacing(1, 2),
@@ -18,30 +18,29 @@ const Title = styled(Typography)({
   flex: 1,
 });
 
-const CloseButton = styled(IconButton)(({ theme }) => ({
-  marginRight: theme.spacing(1),
-}));
-
 interface BaseDialogTitleProps {
   title: Maybe<string>;
   titleRight: React.ReactNode;
 }
 
 function BaseDialogTitle({ title, titleRight }: BaseDialogTitleProps) {
-  const { fullScreen, closeDialog } = useContext(DialogContext);
+  const { closeDialog } = useBaseDialogContext();
 
   return (
     <StyledDialogTitle>
-      <Box display="flex" alignItems="center">
-        {fullScreen && (
-          <CloseButton onClick={closeDialog}>
-            <CloseIcon />
-          </CloseButton>
-        )}
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        gap={1}
+      >
         <Title variant="h6" noWrap>
           {title}
         </Title>
         {titleRight}
+        <IconButton onClick={closeDialog}>
+          <CloseIcon />
+        </IconButton>
       </Box>
     </StyledDialogTitle>
   );

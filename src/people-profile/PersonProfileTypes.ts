@@ -1,4 +1,4 @@
-import { Movie } from '../common/CommonTypes';
+import { Movie } from '@/movies/MovieTypes';
 
 export type PersonCasting = Movie & { character: string };
 

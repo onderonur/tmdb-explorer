@@ -1,8 +1,10 @@
-import { UrlParams } from './HttpClientTypes';
 import queryString from 'query-string';
 import { IS_SERVER } from '@/common/CommonUtils';
 
-export const createUrl = (endpoint: string, params?: UrlParams) => {
+export const createUrl = (
+  endpoint: string,
+  params?: queryString.StringifiableRecord,
+) => {
   let query = params;
   // On the server side (getServerSideProps etc) we directly call the TMDb API.
   // So, we need to add api_key to our query params.

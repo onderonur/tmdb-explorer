@@ -1,7 +1,6 @@
 import React from 'react';
 import LoadingIndicator from '@/common/LoadingIndicator';
 import { Typography, styled } from '@mui/material';
-import { idExtractor } from '@/common/CommonUtils';
 import { Maybe } from '@/common/CommonTypes';
 import isPropValid from '@emotion/is-prop-valid';
 
@@ -22,16 +21,17 @@ const List = styled('ul', {
     padding: 0,
     display: 'grid',
     columnGap: theme.spacing(spacing),
-    rowGap: theme.spacing(hasRowGutter ? spacing * 2.5 : spacing),
+    rowGap: theme.spacing(hasRowGutter ? spacing * 3 : spacing),
     gridTemplateColumns: `repeat(auto-fill, minmax(${minItemWidth}px, 1fr))`,
+    margin: 0,
   }),
 );
 
 type BaseGridListProps<Item> = BaseGridListStyleProps & {
-  items?: Maybe<Item[]>;
+  items: Maybe<Item[]>;
   loading: boolean;
   renderItem: (item: Item, index: number) => React.ReactNode;
-  keyExtractor?: string | ((item: Item, index: number) => string | number);
+  keyExtractor: string | ((item: Item, index: number) => string | number);
   listEmptyMessage?: string;
   loadingRef?: React.Ref<HTMLDivElement>;
 };
@@ -43,7 +43,7 @@ function BaseGridList<Item>({
   spacing,
   hasRowGutter,
   minItemWidth = 160,
-  keyExtractor = idExtractor,
+  keyExtractor,
   listEmptyMessage = 'Nothing has been found',
   loadingRef,
 }: BaseGridListProps<Item>) {

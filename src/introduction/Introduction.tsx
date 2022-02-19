@@ -4,13 +4,13 @@ import { Box, Typography, styled } from '@mui/material';
 import isPropValid from '@emotion/is-prop-valid';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 
-interface IntroductionStyleProps {
+interface BackdropProps {
   backgroundImageSrc: string;
 }
 
 const Backdrop = styled('div', {
   shouldForwardProp: (prop) => isPropValid(prop),
-})<IntroductionStyleProps>(({ backgroundImageSrc }) => ({
+})<BackdropProps>(({ backgroundImageSrc }) => ({
   backgroundImage: `url(${backgroundImageSrc})`,
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
@@ -25,10 +25,10 @@ const Backdrop = styled('div', {
 
 const Container = styled(Box)({
   backgroundImage:
-    'radial-gradient(circle at 20% 50%, rgba(12.55%, 24.71%, 34.51%, 0.98) 0%, rgba(12.55%, 24.71%, 34.51%, 0.88) 100%)',
+    'radial-gradient(circle at 20% 50%, rgba(12.55%, 24.71%, 34.51%, 0.9) 0%, rgba(12.55%, 24.71%, 34.51%, 0.88) 100%)',
 });
 
-type IntroductionProps = IntroductionStyleProps & {
+type IntroductionProps = BackdropProps & {
   imageSrc: string;
   title: React.ReactNode;
   content: React.ReactNode;
@@ -43,8 +43,15 @@ function Introduction({
   const { getImageUrl } = useApiConfiguration();
 
   return (
-    <Box position="relative">
-      <Backdrop backgroundImageSrc={getImageUrl(backgroundImageSrc)} />
+    <Box
+      position="relative"
+      borderRadius={2}
+      overflow="hidden"
+      color={(theme) => theme.palette.grey[100]}
+    >
+      <Backdrop
+        backgroundImageSrc={getImageUrl(backgroundImageSrc, { original: true })}
+      />
       <Container
         display="flex"
         flexWrap="wrap"

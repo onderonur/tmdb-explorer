@@ -1,11 +1,11 @@
 import React from 'react';
-import { Typography } from '@mui/material';
-import Profile from '@/profile/Profile';
-import PersonInfo from './PersonInfo';
+import { Stack, Typography } from '@mui/material';
 import PersonIntroduction from './PersonIntroduction';
-import PersonImageGridList from './PersonImageGridList';
+import PersonImageCarousel from './PersonImageCarousel';
 import PersonCastingGridList from '@/people-profile/PersonCastingGridList';
-import { Maybe, Person } from '@/common/CommonTypes';
+import { Maybe } from '@/common/CommonTypes';
+import LoadingIndicator from '@/common/LoadingIndicator';
+import { Person } from '@/people/PeopleTypes';
 
 interface PersonProfileProps {
   person: Maybe<Person>;
@@ -13,40 +13,26 @@ interface PersonProfileProps {
 }
 
 function PersonProfile({ person, loading }: PersonProfileProps) {
-  const personId = person?.id;
-
   return (
-    <Profile
-      loading={loading}
-      introduction={person && <PersonIntroduction person={person} />}
-      leftSide={
-        person && (
-          <>
-            <Typography variant="h6" gutterBottom>
-              Personal Info
-            </Typography>
-            <PersonInfo person={person} />
-          </>
-        )
-      }
-      main={
-        person && (
-          <>
+    <LoadingIndicator loading={loading}>
+      {person && (
+        <Stack spacing={2}>
+          <PersonIntroduction person={person} />
+          <div>
             <Typography variant="h6" gutterBottom>
               Images
             </Typography>
-            <PersonImageGridList person={person} />
-
+            <PersonImageCarousel person={person} />
+          </div>
+          <div>
             <Typography variant="h6" gutterBottom>
               Castings
             </Typography>
-            {typeof personId === 'number' && (
-              <PersonCastingGridList personId={personId} />
-            )}
-          </>
-        )
-      }
-    />
+            <PersonCastingGridList personId={person.id} />
+          </div>
+        </Stack>
+      )}
+    </LoadingIndicator>
   );
 }
 

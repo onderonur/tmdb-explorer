@@ -1,14 +1,15 @@
 import React from 'react';
-import PersonCard from '@/people-listing/PersonCard';
+import PersonCard from '@/people/PersonCard';
 import InfiniteGridList from '@/common/InfiniteGridList';
 import BaseSeo from '@/seo/BaseSeo';
-import { Person, InfiniteFetchResponse } from '@/common/CommonTypes';
+import { PaginationResponse } from '@/common/CommonTypes';
 import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
 import { dehydrate, useInfiniteQuery } from 'react-query';
-import { getAllPageResults } from '@/common/CommonUtils';
+import { getAllPageResults, idExtractor } from '@/common/CommonUtils';
 import { apiQueries } from '@/http-client/apiQueries';
 import { createQueryClient } from '@/http-client/queryClient';
 import PageTitle from '@/common/PageTitle';
+import { Person } from '@/people/PeopleTypes';
 
 function renderItem(person: Person) {
   return (
@@ -20,7 +21,7 @@ function renderItem(person: Person) {
 
 function PopularPeopleView() {
   const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery<
-    InfiniteFetchResponse<Person>
+    PaginationResponse<Person>
   >(apiQueries.people.popularPeople());
 
   return (
@@ -29,6 +30,7 @@ function PopularPeopleView() {
       <PageTitle title="Popular People" />
       <InfiniteGridList
         items={getAllPageResults(data)}
+        keyExtractor={idExtractor}
         loading={isFetching}
         hasNextPage={!!hasNextPage}
         onLoadMore={fetchNextPage}

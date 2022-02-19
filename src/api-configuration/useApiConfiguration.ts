@@ -9,7 +9,7 @@ function useApiConfiguration() {
   });
 
   const getImageUrl = useCallback(
-    (path, { original } = {}) => {
+    (path, config?: { original: boolean }) => {
       if (!path || !configuration) {
         return '/placeholder.png';
       }
@@ -17,7 +17,9 @@ function useApiConfiguration() {
       const { images } = configuration;
       const { secure_base_url } = images;
 
-      return `${secure_base_url}/${original ? 'original' : 'w500'}${path}`;
+      return `${secure_base_url}/${
+        config?.original ? 'original' : 'w500'
+      }${path}`;
     },
     [configuration],
   );

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import { AppProps } from 'next/app';
+import App, { AppContext, AppProps } from 'next/app';
 import AppLayout from '@/layout/AppLayout';
 import BaseDefaultSeo from '@/seo/BaseDefaultSeo';
 import { APP_TITLE } from '@/common/CommonConstants';
-import BaseThemeProvider from '@/theme/BaseThemeProvider';
+import BaseThemeProvider, {
+  getInitialPaletteMode,
+} from '@/theme/BaseThemeProvider';
 import PageProgressBar from '@/common/PageProgressBar';
 import ErrorMessage from '@/error-handling/ErrorMessage';
 import { ServerSideProps } from '@/error-handling/ErrorHandlingTypes';
@@ -13,18 +15,21 @@ import { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { Hydrate, QueryClientProvider } from 'react-query';
 import { createQueryClient } from '@/http-client/queryClient';
+import { PaletteMode } from '@mui/material';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 type MyAppProps = AppProps & {
   emotionCache?: EmotionCache;
+  initialPaletteMode: PaletteMode;
 };
 
 function MyApp({
   Component,
   pageProps,
   emotionCache = clientSideEmotionCache,
+  initialPaletteMode,
 }: MyAppProps) {
   const [queryClient] = useState(() => createQueryClient());
 
@@ -49,7 +54,7 @@ function MyApp({
             />
           </Head>
           <BaseDefaultSeo />
-          <BaseThemeProvider>
+          <BaseThemeProvider initialPaletteMode={initialPaletteMode}>
             <PageProgressBar />
             <AppLayout>{content}</AppLayout>
           </BaseThemeProvider>
@@ -58,5 +63,13 @@ function MyApp({
     </CacheProvider>
   );
 }
+
+MyApp.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await App.getInitialProps(appContext);
+  return {
+    ...appProps,
+    initialPaletteMode: getInitialPaletteMode(appContext.ctx),
+  };
+};
 
 export default MyApp;

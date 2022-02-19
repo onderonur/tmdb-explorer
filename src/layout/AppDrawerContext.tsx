@@ -27,7 +27,6 @@ type AppDrawerProviderProps = React.PropsWithChildren<unknown>;
 
 function AppDrawerProvider({ children }: AppDrawerProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
-  // const location = useLocation();
 
   const open = useCallback(() => {
     setIsOpen(true);

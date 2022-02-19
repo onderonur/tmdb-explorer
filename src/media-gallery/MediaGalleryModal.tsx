@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { IconButton, Box, styled } from '@mui/material';
+import { Box } from '@mui/material';
 import BaseDialog from '@/common/BaseDialog';
-import YouTubePlayer from './YouTubePlayer';
-import MediaGalleryModalStepper from './MediaGalleryModalStepper';
-import MediaGalleryModalImageViewer from './MediaGalleryModalImageViewer';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import FullscreenIcon from '@mui/icons-material/Fullscreen';
-import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import { HotKeys } from 'react-hotkeys';
 import { useRouter } from 'next/router';
 import useRouterPath from '@/routing/useRouterPath';
 import { Maybe } from '@/common/CommonTypes';
+import useIsMobile from '@/common/useIsMobile';
+import Steppers from '@/common/Steppers';
 
 const keyMap = {
   NEXT: ['right', 'd'],
@@ -18,24 +15,22 @@ const keyMap = {
   FULLSCREEN: ['f'],
 };
 
-const FullScreenButton = styled(IconButton)(({ theme }) => ({
-  position: 'absolute',
-  top: theme.spacing(1),
-  right: theme.spacing(1),
-}));
-
 interface MediaGalleryModalProps {
   title: string;
   dataSource: Maybe<string[]>;
   queryParamName: string;
-  isVideoPlayer?: boolean;
+  renderMedia: (props: {
+    mediaSrc: string;
+    isFullScreen: boolean;
+    toggleFullScreen: VoidFunction;
+  }) => React.ReactNode;
 }
 
 function MediaGalleryModal({
   title,
   dataSource = [],
   queryParamName,
-  isVideoPlayer = false,
+  renderMedia,
 }: MediaGalleryModalProps) {
   const router = useRouter();
   const activeStep = router.query[queryParamName];
@@ -64,18 +59,19 @@ function MediaGalleryModal({
       ? dataSource?.[activeStepIndex - 1]
       : null;
 
-  function goToNextPath() {
-    if (nextKey) {
-      const query = { [queryParamName]: nextKey };
+  function goToPath(toKey: Maybe<string>) {
+    if (toKey) {
+      const query = { [queryParamName]: toKey };
       router.push({ pathname: asHref, query }, undefined, { shallow: true });
     }
   }
 
+  function goToNextPath() {
+    goToPath(nextKey);
+  }
+
   function goToPreviousPath() {
-    if (previousKey) {
-      const query = { [queryParamName]: previousKey };
-      router.push({ pathname: asHref, query }, undefined, { shallow: true });
-    }
+    goToPath(previousKey);
   }
 
   function toggleFullScreen() {
@@ -105,6 +101,8 @@ function MediaGalleryModal({
     router.push(asHref, undefined, { shallow: true });
   }
 
+  const isMobile = useIsMobile();
+
   return (
     <BaseDialog
       title={title}
@@ -124,26 +122,18 @@ function MediaGalleryModal({
           allowChanges={true}
         >
           <Box position="relative">
-            {currentMediaKey ? (
-              isVideoPlayer ? (
-                <YouTubePlayer youTubeId={currentMediaKey} />
-              ) : (
-                <MediaGalleryModalImageViewer filePath={currentMediaKey} />
-              )
-            ) : null}
-            <MediaGalleryModalStepper
+            {currentMediaKey
+              ? renderMedia({
+                  mediaSrc: currentMediaKey,
+                  isFullScreen: fullScreenHandler.active,
+                  toggleFullScreen,
+                })
+              : null}
+            <Steppers
+              size={isMobile ? 'medium' : 'large'}
               onClickPrevious={previousKey ? goToPreviousPath : null}
               onClickNext={nextKey ? goToNextPath : null}
             />
-            {!isVideoPlayer && (
-              <FullScreenButton onClick={toggleFullScreen}>
-                {fullScreenHandler.active ? (
-                  <FullscreenExitIcon />
-                ) : (
-                  <FullscreenIcon />
-                )}
-              </FullScreenButton>
-            )}
           </Box>
         </HotKeys>
       </FullScreen>

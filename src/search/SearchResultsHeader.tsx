@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
-import useIsMobile from '@/common/useIsMobile';
 
 interface SearchResultsHeaderProps {
   query: string;
@@ -11,18 +10,17 @@ function SearchResultsHeader({
   query,
   totalResults,
 }: SearchResultsHeaderProps) {
-  const isMobile = useIsMobile();
-
   return (
     <Box
       display="flex"
-      flexDirection={isMobile ? 'column' : 'row'}
-      alignItems={isMobile ? 'flex-start' : 'center'}
-      justifyContent={isMobile ? 'flex-start' : 'space-between'}
+      flexDirection={{ md: 'row', xs: 'column' }}
+      alignItems={{ md: 'center', xs: 'flex-start' }}
+      justifyContent={{ md: 'space-between', xs: 'flex-start' }}
       flexWrap="wrap"
+      mb={1}
     >
       <Typography variant="h6">Search Results For: {query}</Typography>
-      <Typography color="textSecondary">
+      <Typography color={(theme) => theme.palette.text.secondary}>
         Total {totalResults} Results
       </Typography>
     </Box>

@@ -3,7 +3,7 @@ import { Box, Typography, styled } from '@mui/material';
 
 const Label = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,
-  color: theme.palette.text.disabled,
+  opacity: 0.55,
 }));
 
 interface TextWithLabelProps {
@@ -13,7 +13,7 @@ interface TextWithLabelProps {
 
 function TextWithLabel({ label, text }: TextWithLabelProps) {
   return (
-    <Box my={1}>
+    <Box>
       <Label>{label}</Label>
       {typeof text === 'string' ? (
         <Typography variant="body2">{text}</Typography>

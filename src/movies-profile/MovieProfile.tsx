@@ -1,12 +1,13 @@
 import React from 'react';
-import { Typography } from '@mui/material';
-import Profile from '@/profile/Profile';
+import { Stack, Typography } from '@mui/material';
 import MovieIntroduction from './MovieIntroduction';
-import MovieImageGridList from './MovieImageGridList';
-import MovieVideoList from './MovieVideoList';
-import MovieCastGridList from './MovieCastGridList';
+import MovieImageCarousel from './MovieImageCarousel';
+import MovieVideoCarousel from './MovieVideoCarousel';
+import MovieCastCarousel from './MovieCastCarousel';
 import MovieRecommendations from './MovieRecommendations';
-import { Maybe, Movie } from '@/common/CommonTypes';
+import { Maybe } from '@/common/CommonTypes';
+import LoadingIndicator from '@/common/LoadingIndicator';
+import { Movie } from '@/movies/MovieTypes';
 
 interface MovieProfileProps {
   movie: Maybe<Movie>;
@@ -14,46 +15,42 @@ interface MovieProfileProps {
 }
 
 function MovieProfile({ movie, loading }: MovieProfileProps) {
-  const movieId = movie?.id;
   return (
-    <Profile
-      loading={loading}
-      introduction={movie && <MovieIntroduction movie={movie} />}
-      main={
-        typeof movieId === 'number' && (
-          <>
+    <LoadingIndicator loading={loading}>
+      {movie && (
+        <Stack spacing={2}>
+          <MovieIntroduction movie={movie} />
+
+          <div>
             <Typography variant="h6" gutterBottom>
               Videos
             </Typography>
-            <MovieVideoList movieId={movieId} />
+            <MovieVideoCarousel movieId={movie.id} />
+          </div>
 
-            {movie && (
-              <>
-                <Typography variant="h6" gutterBottom>
-                  Images
-                </Typography>
-                <MovieImageGridList movie={movie} />
-              </>
-            )}
+          <div>
+            <Typography variant="h6" gutterBottom>
+              Images
+            </Typography>
+            <MovieImageCarousel movie={movie} />
+          </div>
 
+          <div>
             <Typography variant="h6" gutterBottom>
               Cast
             </Typography>
-            <MovieCastGridList movieId={movieId} />
-          </>
-        )
-      }
-      rightSide={
-        typeof movieId === 'number' && (
-          <>
+            <MovieCastCarousel movieId={movie.id} />
+          </div>
+
+          <div>
             <Typography variant="h6" gutterBottom>
               Recommendations
             </Typography>
-            <MovieRecommendations movieId={movieId} />
-          </>
-        )
-      }
-    />
+            <MovieRecommendations movieId={movie.id} />
+          </div>
+        </Stack>
+      )}
+    </LoadingIndicator>
   );
 }
 

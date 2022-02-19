@@ -2,12 +2,13 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import MediaGalleryModal from '@/media-gallery/MediaGalleryModal';
 import { MovieVideo } from './MediaGalleryTypes';
+import YouTubePlayer from './YouTubePlayer';
 
-interface VideoPlayerModalProps {
+interface VideoGalleryModalProps {
   videos: MovieVideo[];
 }
 
-function VideoPlayerModal({ videos }: VideoPlayerModalProps) {
+function VideoGalleryModal({ videos }: VideoGalleryModalProps) {
   const videoKeys = videos.map((video) => video.key);
   const router = useRouter();
   const { watch } = router.query;
@@ -18,9 +19,11 @@ function VideoPlayerModal({ videos }: VideoPlayerModalProps) {
       title={videoToWatch?.name || ''}
       dataSource={videoKeys}
       queryParamName="watch"
-      isVideoPlayer={true}
+      renderMedia={({ mediaSrc }) => {
+        return <YouTubePlayer youTubeId={mediaSrc} />;
+      }}
     />
   );
 }
 
-export default VideoPlayerModal;
+export default VideoGalleryModal;

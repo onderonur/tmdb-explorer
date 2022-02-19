@@ -1,22 +1,20 @@
 import React from 'react';
 import BaseGridList from './BaseGridList';
-import { idExtractor } from '@/common/CommonUtils';
-import { ItemWithId } from '@/common/CommonTypes';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 
-interface InfiniteGridListProps<Item extends ItemWithId> {
+interface InfiniteGridListProps<Item> {
   items: Item[];
-  loading?: boolean;
+  loading: boolean;
   hasNextPage: boolean;
   onLoadMore: VoidFunction;
   renderItem: (item: Item) => React.ReactNode;
   minItemWidth?: number;
   spacing?: number;
-  keyExtractor?: (item: Item, index: number) => number;
+  keyExtractor: (item: Item, index: number) => number;
   listEmptyMessage?: string;
 }
 
-function InfiniteGridList<Item extends ItemWithId>({
+function InfiniteGridList<Item>({
   items,
   loading,
   hasNextPage,
@@ -24,7 +22,7 @@ function InfiniteGridList<Item extends ItemWithId>({
   renderItem,
   minItemWidth,
   spacing,
-  keyExtractor = idExtractor,
+  keyExtractor,
   listEmptyMessage,
 }: InfiniteGridListProps<Item>) {
   const [sentryRef] = useInfiniteScroll({

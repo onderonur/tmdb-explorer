@@ -16,7 +16,6 @@ import UpdateIcon from '@mui/icons-material/Update';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { useQuery } from 'react-query';
 import { apiQueries } from '@/http-client/apiQueries';
-import useIsMobile from '@/common/useIsMobile';
 import AppTitle from './AppTitle';
 
 export const APP_DRAWER_WIDTH = 260;
@@ -30,18 +29,13 @@ const StyledDrawer = styled(Drawer)({
 
 function AppDrawer() {
   const { isOpen, close } = useAppDrawer();
-  const isMobile = useIsMobile();
 
   const { data: genresData, isLoading } = useQuery(
     apiQueries.genres.movieGenres(),
   );
 
-  return (
-    <StyledDrawer
-      open={isOpen}
-      onClose={close}
-      variant={isMobile ? 'temporary' : 'permanent'}
-    >
+  const drawerContent = (
+    <>
       <Toolbar>
         <AppTitle />
       </Toolbar>
@@ -88,7 +82,30 @@ function AppDrawer() {
           </>
         )}
       </Box>
-    </StyledDrawer>
+    </>
+  );
+
+  const drawerProps = { open: isOpen, onClose: close };
+
+  // If we use `useIsMobile` hook to render components responsively, it flickers especially on low-end mobile devices.
+  // So, instead of relying on JS, we rely on CSS to prevent this flickering.
+  return (
+    <>
+      <StyledDrawer
+        {...drawerProps}
+        variant={'permanent'}
+        sx={{ display: { xs: 'none', md: 'block' } }}
+      >
+        {drawerContent}
+      </StyledDrawer>
+      <StyledDrawer
+        {...drawerProps}
+        variant={'temporary'}
+        sx={{ display: { xs: 'block', md: 'none' } }}
+      >
+        {drawerContent}
+      </StyledDrawer>
+    </>
   );
 }
 

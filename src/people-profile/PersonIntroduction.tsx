@@ -1,8 +1,9 @@
 import React from 'react';
-import { Typography, Box, Grid, styled } from '@mui/material';
+import { Typography, Box, styled, Stack } from '@mui/material';
 import Introduction from '@/introduction/Introduction';
-import { Person } from '@/common/CommonTypes';
 import ImdbLink, { ImdbProfileType } from '../introduction/ImdbLink';
+import { Person } from '@/people/PeopleTypes';
+import PersonInfo from './PersonInfo';
 
 const Biography = styled(Typography)({
   whiteSpace: 'pre-wrap',
@@ -22,26 +23,30 @@ function PersonIntroduction({ person }: PersonIntroductionProps) {
       backgroundImageSrc={person.profile_path}
       title={person.name}
       content={
-        <>
-          <Grid container spacing={2}>
-            {person.imdb_id && (
-              <Grid item xs={12}>
-                <Box display="flex" alignItems="center">
-                  <ImdbLink
-                    type={ImdbProfileType.PERSON}
-                    imdbId={person.imdb_id}
-                  />
-                </Box>
-              </Grid>
-            )}
-            <Grid item xs={12}>
-              <Typography variant="h6" gutterBottom>
-                Biography
-              </Typography>
-              <Biography variant="body2">{person.biography}</Biography>
-            </Grid>
-          </Grid>
-        </>
+        <Stack spacing={2}>
+          {person.imdb_id && (
+            <div>
+              <Box display="flex" alignItems="center">
+                <ImdbLink
+                  type={ImdbProfileType.PERSON}
+                  imdbId={person.imdb_id}
+                />
+              </Box>
+            </div>
+          )}
+          <div>
+            <Typography variant="h6" gutterBottom>
+              Biography
+            </Typography>
+            <Biography variant="body2">{person.biography}</Biography>
+          </div>
+          <div>
+            <Typography variant="h6" gutterBottom>
+              Personal Info
+            </Typography>
+            <PersonInfo person={person} />
+          </div>
+        </Stack>
       }
     />
   );

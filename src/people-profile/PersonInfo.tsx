@@ -1,7 +1,7 @@
 import React from 'react';
-import { Typography } from '@mui/material';
 import TextWithLabel from '@/common/TextWithLabel';
-import { Person } from '@/common/CommonTypes';
+import { Person } from '@/people/PeopleTypes';
+import { Box } from '@mui/material';
 
 enum Genders {
   FEMALE = 1,
@@ -31,7 +31,7 @@ function PersonInfo({ person }: PersonInfoProps) {
   const gender = getGender();
 
   return (
-    <>
+    <Box display="flex" flexWrap={'wrap'} gap={4}>
       {person.known_for_department && (
         <TextWithLabel label="Known For" text={person.known_for_department} />
       )}
@@ -45,15 +45,7 @@ function PersonInfo({ person }: PersonInfoProps) {
       {person.official_site && (
         <TextWithLabel label="Official Site" text={person.official_site} />
       )}
-      {!!person.also_known_as?.length && (
-        <TextWithLabel
-          label="Also Known As"
-          text={person.also_known_as.map((alias) => (
-            <Typography key={alias}>{alias}</Typography>
-          ))}
-        />
-      )}
-    </>
+    </Box>
   );
 }
 

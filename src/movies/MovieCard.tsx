@@ -2,11 +2,16 @@ import React from 'react';
 import BaseImage from '@/common/BaseImage';
 import BaseCard from '@/common/BaseCard';
 import BaseCardHeader from '@/common/BaseCardHeader';
-import MovieRatingTag from './MovieRatingTag';
-import { Box } from '@mui/material';
+import MovieRating from './MovieRating';
+import { Box, styled, Typography } from '@mui/material';
 import NextLink from '@/routing/NextLink';
-import { Movie } from '@/common/CommonTypes';
+import { Movie } from '@/movies/MovieTypes';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import { getMovieReleaseYear } from '@/movies/MovieUtils';
+
+const MovieCardHeader = styled(BaseCardHeader)(({ theme }) => ({
+  paddingBottom: theme.spacing(0.25),
+}));
 
 interface MovieCardProps {
   movie: Movie;
@@ -26,10 +31,16 @@ function MovieCard({ movie, subheader }: MovieCardProps) {
           layout="responsive"
           objectFit="cover"
         />
-        <Box position="absolute" top={0} left={0}>
-          <MovieRatingTag movie={movie} />
+        <MovieCardHeader title={movie.title} subheader={subheader} />
+        <Box display="flex" justifyContent={'space-between'} pb={1} px={1}>
+          <Typography
+            color={(theme) => theme.palette.text.secondary}
+            variant="subtitle2"
+          >
+            {getMovieReleaseYear(movie)}
+          </Typography>
+          <MovieRating movie={movie} size="small" />
         </Box>
-        <BaseCardHeader title={movie.title} subheader={subheader} />
       </BaseCard>
     </NextLink>
   );

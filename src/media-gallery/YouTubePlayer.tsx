@@ -1,5 +1,5 @@
 import React from 'react';
-import AspectRatio, { getAspectRatioString } from '../common/AspectRatio';
+import AspectRatio from '../common/AspectRatio';
 
 interface YouTubePlayerProps {
   youTubeId: string;
@@ -7,7 +7,7 @@ interface YouTubePlayerProps {
 
 function YouTubePlayer({ youTubeId }: YouTubePlayerProps) {
   return (
-    <AspectRatio aspectRatio={getAspectRatioString(16, 9)}>
+    <AspectRatio aspectRatio={16 / 9}>
       <iframe
         // Key is added to unmount the iframe everytime youTubeId changes.
         // Otherwise, iframe messes up with the browser history.

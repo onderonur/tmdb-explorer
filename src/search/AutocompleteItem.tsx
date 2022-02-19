@@ -16,7 +16,7 @@ const StyledListItemText = styled(ListItemText)({
   },
 });
 
-export type ListItemWithAvatarProps<C extends React.ElementType> =
+export type AutocompleteItemProps<C extends React.ElementType = 'li'> =
   ListItemProps<
     C,
     {
@@ -27,12 +27,12 @@ export type ListItemWithAvatarProps<C extends React.ElementType> =
     }
   >;
 
-function ListItemButtonWithAvatar<C extends React.ElementType>({
+function AutocompleteItem<C extends React.ElementType>({
   avatarUrl,
   primaryText,
   secondaryText,
   ...rest
-}: ListItemWithAvatarProps<C>) {
+}: AutocompleteItemProps<C>) {
   const { getImageUrl } = useApiConfiguration();
 
   return (
@@ -45,4 +45,4 @@ function ListItemButtonWithAvatar<C extends React.ElementType>({
   );
 }
 
-export default ListItemButtonWithAvatar;
+export default AutocompleteItem;

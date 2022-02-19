@@ -1,11 +1,11 @@
 import React from 'react';
-import MovieCard from '@/movies-listing/MovieCard';
-import { useTheme } from '@mui/material';
-import { Movie, ID } from '@/common/CommonTypes';
+import MovieCard from '@/movies/MovieCard';
+import { ID } from '@/common/CommonTypes';
 import { useInfiniteQuery } from 'react-query';
 import { apiQueries } from '@/http-client/apiQueries';
 import InfiniteGridList from '@/common/InfiniteGridList';
-import { getAllPageResults } from '@/common/CommonUtils';
+import { getAllPageResults, idExtractor } from '@/common/CommonUtils';
+import { Movie } from '@/movies/MovieTypes';
 
 function renderItem(recommendation: Movie) {
   return (
@@ -20,19 +20,18 @@ interface RecommendationsProps {
 }
 
 function Recommendations({ movieId }: RecommendationsProps) {
-  const theme = useTheme();
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteQuery(
     apiQueries.movies.movieRecommendations(movieId),
   );
   return (
     <InfiniteGridList
       items={getAllPageResults(data)}
+      keyExtractor={idExtractor}
       loading={isFetching}
       hasNextPage={!!hasNextPage}
       onLoadMore={fetchNextPage}
       renderItem={renderItem}
-      minItemWidth={260 / 2 - parseInt(theme.spacing(2))}
-      listEmptyMessage="No recommendation has been found"
+      listEmptyMessage="No recommendation has been found."
     />
   );
 }

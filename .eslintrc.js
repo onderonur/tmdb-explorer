@@ -7,6 +7,7 @@ module.exports = {
   ],
   plugins: ['@typescript-eslint', 'prettier', 'deprecation'],
   parser: '@typescript-eslint/parser',
+  // For eslint-plugin-deprecation:
   // https://stackoverflow.com/a/64488474/10876256
   overrides: [
     {

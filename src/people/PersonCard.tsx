@@ -3,7 +3,7 @@ import BaseImage from '@/common/BaseImage';
 import BaseCard from '@/common/BaseCard';
 import BaseCardHeader from '@/common/BaseCardHeader';
 import NextLink from '@/routing/NextLink';
-import { Person } from '@/common/CommonTypes';
+import { Person } from '@/people/PeopleTypes';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 
 interface PersonCardProps {

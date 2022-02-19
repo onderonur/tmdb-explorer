@@ -3,13 +3,15 @@ import BaseAutocomplete from '../common/BaseAutocomplete';
 import useDebounce from '@/common/useDebounce';
 import { useRouter } from 'next/router';
 import { Maybe } from '@/common/CommonTypes';
-import { getAllPageResults, isMovie } from '@/common/CommonUtils';
+import { getAllPageResults } from '@/common/CommonUtils';
 import { Suggestion } from './SearchTypes';
-import MovieListItem from '../movies-listing/MovieListItem';
-import PersonListItem from '../people-listing/PersonListItem';
-import { SearchType } from './SearchEnums';
+import MovieAutocompleteItem from './MovieAutocompleteItem';
+import PersonAutocompleteItem from './PersonAutocompleteItem';
 import { useInfiniteQuery } from 'react-query';
 import { apiQueries } from '@/http-client/apiQueries';
+import { isMovie } from '@/movies/MovieUtils';
+import { MediaType } from '@/common/CommonEnums';
+import { isPerson } from '@/people/PeopleUtils';
 
 interface MovieAndPersonAutocompleteProps {
   className?: string;
@@ -32,37 +34,28 @@ function MovieAndPersonAutocomplete({
   const debouncedSearchValue = useDebounce(searchValue);
 
   const isSearchEnabled = !!debouncedSearchValue;
-  const { data: movies, isFetching: isFetchingMovies } = useInfiniteQuery({
-    ...apiQueries.search.searchMovies(debouncedSearchValue),
+  const { data, isFetching } = useInfiniteQuery({
+    ...apiQueries.search.searchMulti(debouncedSearchValue),
     enabled: isSearchEnabled,
   });
-
-  const { data: people, isFetching: isFetchingPeople } = useInfiniteQuery({
-    ...apiQueries.search.searchPeople(debouncedSearchValue),
-    enabled: isSearchEnabled,
-  });
-
-  const isFetching = Boolean(
-    debouncedSearchValue && (isFetchingMovies || isFetchingPeople),
-  );
 
   const handleRedirect = (inputValue: string) => {
     if (inputValue) {
       router.push({
         pathname: '/search',
-        query: { searchType: SearchType.MOVIES, query: inputValue },
+        query: { mediaType: MediaType.MOVIE, query: inputValue },
       });
     }
   };
 
-  const handleSelect = (seleectedOption: Maybe<Suggestion>) => {
-    if (seleectedOption) {
-      switch (seleectedOption.searchType) {
-        case SearchType.MOVIES:
-          router.push(`/movie/${seleectedOption.id}`);
+  const handleSelect = (selectedOption: Maybe<Suggestion>) => {
+    if (selectedOption) {
+      switch (selectedOption.media_type) {
+        case MediaType.MOVIE:
+          router.push(`/movie/${selectedOption.id}`);
           break;
-        case SearchType.PEOPLE:
-          router.push(`/person/${seleectedOption.id}`);
+        case MediaType.PERSON:
+          router.push(`/person/${selectedOption.id}`);
           break;
         default:
           return;
@@ -72,21 +65,10 @@ function MovieAndPersonAutocomplete({
 
   const options = useMemo<Suggestion[]>(
     () =>
-      [
-        ...(getAllPageResults(movies).map((movie) => ({
-          ...movie,
-          searchType: SearchType.MOVIES,
-        })) || []),
-        ...(getAllPageResults(people).map((person) => ({
-          ...person,
-          searchType: SearchType.PEOPLE,
-        })) || []),
-      ].sort((a, b) =>
-        (isMovie(a) ? a.title : a.name).localeCompare(
-          isMovie(b) ? b.title : b.name,
-        ),
+      getAllPageResults(data).filter(
+        (option) => isMovie(option) || isPerson(option),
       ),
-    [movies, people],
+    [data],
   );
 
   return (
@@ -96,27 +78,26 @@ function MovieAndPersonAutocomplete({
       options={options}
       renderOption={(props, option) => {
         return isMovie(option) ? (
-          <MovieListItem
+          <MovieAutocompleteItem
             {...props}
-            key={`${SearchType.MOVIES}_${option.id}`}
+            key={`${option.media_type}_${option.id}`}
             movie={option}
           />
         ) : (
-          <PersonListItem
+          <PersonAutocompleteItem
             {...props}
-            key={`${SearchType.PEOPLE}_${option.id}`}
+            key={`${option.media_type}_${option.id}`}
             person={option}
           />
         );
       }}
-      getOptionLabel={(option) =>
-        typeof option === 'string'
-          ? // For freeSolo
-            option
-          : isMovie(option)
-          ? option.title
-          : option.name
-      }
+      getOptionLabel={(option) => {
+        if (typeof option === 'string') {
+          // For freeSolo
+          return option;
+        }
+        return isMovie(option) ? option.title : option.name;
+      }}
       loading={isFetching}
       inputValue={searchValue}
       onInputChange={(e, newInputValue) => setSearchValue(newInputValue)}

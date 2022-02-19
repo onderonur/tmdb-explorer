@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, styled } from '@mui/material';
+import { Box, Link } from '@mui/material';
 import { Maybe } from '@/common/CommonTypes';
 import Image from 'next/image';
 
@@ -14,10 +14,6 @@ function getImdbProfileUrl(type: ImdbProfileType, imdbId: string) {
   }/${imdbId}`;
 }
 
-const StyledLink = styled(Link)({
-  display: 'flex',
-});
-
 interface ImdbLinkProps {
   type: ImdbProfileType;
   imdbId: Maybe<string>;
@@ -29,7 +25,9 @@ function ImdbLink({ type, imdbId }: ImdbLinkProps) {
   }
 
   return (
-    <StyledLink
+    <Box
+      component={Link}
+      display="flex"
       href={getImdbProfileUrl(type, imdbId)}
       target="_blank"
       rel="noopener noreferrer"
@@ -41,7 +39,7 @@ function ImdbLink({ type, imdbId }: ImdbLinkProps) {
         width={70}
         layout="fixed"
       />
-    </StyledLink>
+    </Box>
   );
 }
 

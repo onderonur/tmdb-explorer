@@ -1,18 +1,11 @@
 import { APIConfiguration } from '@/api-configuration/ApiConfigurationTypes';
-import {
-  Genre,
-  ID,
-  InfiniteFetchResponse,
-  Maybe,
-  Movie,
-  MovieImage,
-  Person,
-  PersonImage,
-} from '@/common/CommonTypes';
+import { ID, PaginationResponse, Maybe } from '@/common/CommonTypes';
 import { FIRST_PAGE, getNextPageParam } from '@/common/CommonUtils';
 import { MovieVideo } from '@/media-gallery/MediaGalleryTypes';
 import { MovieCast } from '@/movies-profile/MovieProfileTypes';
+import { Genre, Movie, MovieImage } from '@/movies/MovieTypes';
 import { PersonCredits } from '@/people-profile/PersonProfileTypes';
+import { Person, PersonImage } from '@/people/PeopleTypes';
 import { httpClient } from './httpClient';
 import { createUrl } from './HttpClientUtils';
 
@@ -32,7 +25,7 @@ export const apiQueries = {
     movieVideos: (movieId: ID) => ({
       queryKey: ['movies', movieId, 'videos'],
       queryFn: () =>
-        httpClient.get<InfiniteFetchResponse<MovieVideo>>(
+        httpClient.get<PaginationResponse<MovieVideo>>(
           createUrl(`/movie/${movieId}/videos`),
         ),
     }),
@@ -53,7 +46,7 @@ export const apiQueries = {
     movieRecommendations: (movieId: ID) => ({
       queryKey: ['movies', movieId, 'recommendations'],
       queryFn: ({ pageParam = FIRST_PAGE }) =>
-        httpClient.get<InfiniteFetchResponse<Movie>>(
+        httpClient.get<PaginationResponse<Movie>>(
           createUrl(`/movie/${movieId}/recommendations`, { page: pageParam }),
         ),
       getNextPageParam,
@@ -61,7 +54,7 @@ export const apiQueries = {
     popularMovies: () => ({
       queryKey: ['movies', 'popular'],
       queryFn: ({ pageParam = FIRST_PAGE }) =>
-        httpClient.get<InfiniteFetchResponse<Movie>>(
+        httpClient.get<PaginationResponse<Movie>>(
           createUrl('/movie/popular', { page: pageParam }),
         ),
       getNextPageParam,
@@ -69,7 +62,7 @@ export const apiQueries = {
     topRatedMovies: () => ({
       queryKey: ['movies', 'topRated'],
       queryFn: ({ pageParam = FIRST_PAGE }) =>
-        httpClient.get<InfiniteFetchResponse<Movie>>(
+        httpClient.get<PaginationResponse<Movie>>(
           createUrl('/movie/top_rated', { page: pageParam }),
         ),
       getNextPageParam,
@@ -77,7 +70,7 @@ export const apiQueries = {
     upcomingMovies: () => ({
       queryKey: ['movies', 'upcoming'],
       queryFn: ({ pageParam = FIRST_PAGE }) =>
-        httpClient.get<InfiniteFetchResponse<Movie>>(
+        httpClient.get<PaginationResponse<Movie>>(
           createUrl('/movie/upcoming', { page: pageParam, region: 'US' }),
         ),
       getNextPageParam,
@@ -105,17 +98,25 @@ export const apiQueries = {
     popularPeople: () => ({
       queryKey: ['people', 'popular'],
       queryFn: ({ pageParam = FIRST_PAGE }) =>
-        httpClient.get<InfiniteFetchResponse<Person>>(
+        httpClient.get<PaginationResponse<Person>>(
           createUrl('/person/popular', { page: pageParam }),
         ),
       getNextPageParam,
     }),
   },
   search: {
+    searchMulti: (query: string) => ({
+      queryKey: ['search', 'multi', query],
+      queryFn: ({ pageParam = FIRST_PAGE }) =>
+        httpClient.get<PaginationResponse<Movie | Person>>(
+          createUrl(`/search/multi`, { query, page: pageParam }),
+        ),
+      getNextPageParam,
+    }),
     searchMovies: (query: string) => ({
       queryKey: ['search', 'movies', query],
       queryFn: ({ pageParam = FIRST_PAGE }) =>
-        httpClient.get<InfiniteFetchResponse<Movie>>(
+        httpClient.get<PaginationResponse<Movie>>(
           createUrl(`/search/movie`, { query, page: pageParam }),
         ),
       getNextPageParam,
@@ -123,7 +124,7 @@ export const apiQueries = {
     searchPeople: (query: string) => ({
       queryKey: ['search', 'people', query],
       queryFn: ({ pageParam = FIRST_PAGE }) =>
-        httpClient.get<InfiniteFetchResponse<Person>>(
+        httpClient.get<PaginationResponse<Person>>(
           createUrl(`/search/person`, { query, page: pageParam }),
         ),
       getNextPageParam,
@@ -137,12 +138,13 @@ export const apiQueries = {
     }),
   },
   discover: {
-    discoverMovies: (args: { genreId: Maybe<ID> }) => ({
+    discoverMovies: (args: { genreId: Maybe<ID>; sortBy: string }) => ({
       queryKey: ['discover', 'movies', args],
       queryFn: ({ pageParam = FIRST_PAGE }) =>
-        httpClient.get<InfiniteFetchResponse<Movie>>(
+        httpClient.get<PaginationResponse<Movie>>(
           createUrl(`/discover/movie`, {
             with_genres: args.genreId ? [args.genreId] : [],
+            sort_by: args.sortBy,
             page: pageParam,
           }),
         ),

@@ -1,6 +1,5 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import theme from '@/theme/theme';
 import createEmotionCache from '@/theme/createEmotionCache';
 import createEmotionServer from '@emotion/server/create-instance';
 
@@ -9,9 +8,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* PWA primary color */}
-          {/* Same as the AppBar color */}
-          <meta name="theme-color" content={theme.palette.grey[900]} />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
