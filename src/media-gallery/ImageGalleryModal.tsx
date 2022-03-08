@@ -33,6 +33,7 @@ function ImageGalleryModal({ title, filePaths }: ImageGalleryModalProps) {
               src={getImageUrl(mediaSrc, {
                 original: true,
               })}
+              alt={title}
               width={16}
               height={9}
               layout="responsive"

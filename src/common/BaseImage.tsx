@@ -1,7 +1,9 @@
 import React from 'react';
 import Image, { ImageProps } from 'next/image';
+import { Omit } from './CommonTypes';
 
-type BaseImageProps = ImageProps;
+type BaseImageProps = Omit<ImageProps, 'alt'> &
+  Required<Pick<ImageProps, 'alt'>>;
 
 function BaseImage({ src, alt, ...rest }: BaseImageProps) {
   return (

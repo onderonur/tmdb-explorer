@@ -31,7 +31,7 @@ type BaseGridListProps<Item> = BaseGridListStyleProps & {
   items: Maybe<Item[]>;
   loading: boolean;
   renderItem: (item: Item, index: number) => React.ReactNode;
-  keyExtractor: string | ((item: Item, index: number) => string | number);
+  keyExtractor: (item: Item, index: number) => string | number;
   listEmptyMessage?: string;
   loadingRef?: React.Ref<HTMLDivElement>;
 };
@@ -47,13 +47,6 @@ function BaseGridList<Item>({
   listEmptyMessage = 'Nothing has been found',
   loadingRef,
 }: BaseGridListProps<Item>) {
-  function extractItemKey(item: Item, index: number) {
-    return typeof keyExtractor === 'string'
-      ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (item as any)[keyExtractor]
-      : keyExtractor(item, index);
-  }
-
   if (!items?.length && !loading) {
     if (typeof listEmptyMessage === 'string') {
       return <Typography>{listEmptyMessage}</Typography>;
@@ -70,7 +63,7 @@ function BaseGridList<Item>({
         minItemWidth={minItemWidth}
       >
         {items?.map((item, index) => {
-          const key = extractItemKey(item, index);
+          const key = keyExtractor(item, index);
           return (
             <React.Fragment key={key}>{renderItem(item, index)}</React.Fragment>
           );

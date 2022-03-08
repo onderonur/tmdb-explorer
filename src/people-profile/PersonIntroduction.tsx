@@ -20,6 +20,7 @@ function PersonIntroduction({ person }: PersonIntroductionProps) {
   return (
     <Introduction
       imageSrc={person.profile_path}
+      imageAlt={person.name}
       backgroundImageSrc={person.profile_path}
       title={person.name}
       content={

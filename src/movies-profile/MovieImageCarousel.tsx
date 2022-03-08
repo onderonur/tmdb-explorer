@@ -26,11 +26,12 @@ function MovieImageCarousel({ movie }: MovieImageCarouselProps) {
         slidesToShow={{ default: 4, md: 3, sm: 2 }}
         keyExtractor={(filePath) => filePath}
         listEmptyMessage="No image has been found."
-        renderItem={(filePath) => {
+        renderItem={(filePath, i) => {
           return (
             <ImageCarouselItem
               key={filePath}
               filePath={filePath}
+              imageAlt={`Movie Carousel Image ${i + 1}`}
               width={16}
               height={9}
             />

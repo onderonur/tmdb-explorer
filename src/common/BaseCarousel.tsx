@@ -66,7 +66,7 @@ type BaseCarouselProps<Item> = Pick<Settings, 'className'> & {
   listEmptyMessage?: string;
   slidesToShow: { default: number; md?: number; sm?: number };
   keyExtractor: (item: Item) => React.Key;
-  renderItem: (item: Item) => React.ReactNode;
+  renderItem: (item: Item, i: number) => React.ReactNode;
 };
 
 function BaseCarousel<Item>({
@@ -143,14 +143,14 @@ function BaseCarousel<Item>({
           infinite={false}
           arrows={false}
         >
-          {items?.map((item) => {
+          {items?.map((item, i) => {
             return (
               <Box
                 key={keyExtractor(item)}
                 onMouseDownCapture={handleMouseDown}
                 onClickCapture={handleChildClick}
               >
-                <Box m={CAROUSEL_ITEM_GAP}>{renderItem(item)}</Box>
+                <Box m={CAROUSEL_ITEM_GAP}>{renderItem(item, i)}</Box>
               </Box>
             );
           })}

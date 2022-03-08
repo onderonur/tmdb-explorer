@@ -31,6 +31,7 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
     <Introduction
       backgroundImageSrc={movie.backdrop_path}
       imageSrc={movie.poster_path}
+      imageAlt={movie.title}
       title={
         <Box marginBottom={2}>
           <Typography variant="h5" gutterBottom={!movie.tagline}>

@@ -30,6 +30,7 @@ const Container = styled(Box)({
 
 type IntroductionProps = BackdropProps & {
   imageSrc: string;
+  imageAlt: string;
   title: React.ReactNode;
   content: React.ReactNode;
 };
@@ -37,6 +38,7 @@ type IntroductionProps = BackdropProps & {
 function Introduction({
   backgroundImageSrc,
   imageSrc,
+  imageAlt,
   title,
   content,
 }: IntroductionProps) {
@@ -62,6 +64,7 @@ function Introduction({
         <Box flexBasis={300}>
           <BaseImage
             src={getImageUrl(imageSrc)}
+            alt={imageAlt}
             width={2}
             height={3}
             layout="responsive"

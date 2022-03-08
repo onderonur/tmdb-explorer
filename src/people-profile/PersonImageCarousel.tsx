@@ -26,8 +26,15 @@ function PersonImageCarousel({ person }: PersonImageCarouselProps) {
         slidesToShow={{ default: 7, md: 5, sm: 3 }}
         keyExtractor={(filePath) => filePath}
         listEmptyMessage="No image has been found."
-        renderItem={(filePath) => {
-          return <ImageCarouselItem filePath={filePath} width={2} height={3} />;
+        renderItem={(filePath, i) => {
+          return (
+            <ImageCarouselItem
+              filePath={filePath}
+              imageAlt={`Person Carousel Image ${i + 1}`}
+              width={2}
+              height={3}
+            />
+          );
         }}
       />
       <ImageGalleryModal title={person.name} filePaths={filePaths} />

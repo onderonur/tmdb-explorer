@@ -11,14 +11,16 @@ const Thumbnail = styled(BaseImage)(({ theme }) => ({
 
 interface ImageCarouselItemProps {
   filePath: string;
+  imageAlt: string;
   width: number;
   height: number;
 }
 
 function ImageCarouselItem({
+  filePath,
+  imageAlt,
   width,
   height,
-  filePath,
 }: ImageCarouselItemProps) {
   const { getImageUrl } = useApiConfiguration();
   const { asHref } = useRouterPath();
@@ -27,6 +29,7 @@ function ImageCarouselItem({
     <NextLink href={{ pathname: asHref, query: { view: filePath } }}>
       <Thumbnail
         src={getImageUrl(filePath)}
+        alt={imageAlt}
         width={width}
         height={height}
         layout="responsive"
