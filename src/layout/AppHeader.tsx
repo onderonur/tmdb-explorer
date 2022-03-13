@@ -57,7 +57,10 @@ const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
           <Box display={{ xs: 'flex', md: 'none' }} flex={1}>
             {isMobileSearch ? (
               <>
-                <CloseButton onClick={hideMobileSearch}>
+                <CloseButton
+                  aria-label="Hide search"
+                  onClick={hideMobileSearch}
+                >
                   <CloseIcon />
                 </CloseButton>
                 <MovieAndPersonAutocomplete autoFocus />
@@ -65,7 +68,7 @@ const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
             ) : (
               <>
                 <Box flex={1} />
-                <IconButton onClick={showMobileSearch}>
+                <IconButton aria-label="Show search" onClick={showMobileSearch}>
                   <SearchIcon />
                 </IconButton>
               </>
@@ -82,7 +85,7 @@ const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
           </Box>
 
           {!isMobileSearch && (
-            <IconButton onClick={toggleMode}>
+            <IconButton aria-label="Toggle theme" onClick={toggleMode}>
               {mode === 'light' ? (
                 <DarkModeIcon />
               ) : (

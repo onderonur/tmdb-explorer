@@ -13,7 +13,7 @@ const LoadingIndicator = React.forwardRef<
 
   return (
     <Box ref={ref} display="flex" justifyContent="center" my={2} flexGrow={1}>
-      <CircularProgress size={48} color="secondary" />
+      <CircularProgress aria-label="Loading..." size={48} color="secondary" />
     </Box>
   );
 });

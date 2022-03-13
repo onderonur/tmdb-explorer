@@ -1,10 +1,10 @@
 import React from 'react';
 import ImageGalleryModal from '@/media-gallery/ImageGalleryModal';
-import { Movie } from '@/movies/MovieTypes';
+import { Movie } from '@/movies/MoviesTypes';
 import { useQuery } from 'react-query';
-import { apiQueries } from '@/http-client/apiQueries';
 import BaseCarousel from '@/common/BaseCarousel';
 import ImageCarouselItem from '@/common/ImageCarouselItem';
+import { movieQueries } from '@/movies/movieQueries';
 
 interface MovieImageCarouselProps {
   movie: Movie;
@@ -12,9 +12,11 @@ interface MovieImageCarouselProps {
 
 function MovieImageCarousel({ movie }: MovieImageCarouselProps) {
   const movieId = movie.id;
-  const { data, isLoading } = useQuery(apiQueries.movies.movieImages(movieId));
+  const { data, isLoading } = useQuery(movieQueries.movieDetails(movieId));
 
-  const filePaths = data?.backdrops.map((backdrop) => backdrop.file_path);
+  const filePaths = data?.movieImages.backdrops.map(
+    (backdrop) => backdrop.file_path,
+  );
 
   return (
     <>

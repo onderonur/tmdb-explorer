@@ -29,7 +29,12 @@ function ErrorMessage({ statusCode, message }: ErrorMessageProps) {
         {message || 'Something went wrong'}
       </Typography>
       <Box marginTop={2}>
-        <Button href="/" variant="contained" component={NextLink}>
+        <Button
+          aria-label="Go to Homepage"
+          href="/"
+          variant="contained"
+          component={NextLink}
+        >
           Go to Homepage
         </Button>
       </Box>

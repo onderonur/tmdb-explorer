@@ -1,8 +1,8 @@
 import React from 'react';
 import NextLink from '@/routing/NextLink';
-import { MovieCast } from './MovieProfileTypes';
 import { Avatar, Box, Stack, Typography } from '@mui/material';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import { MovieCast } from '@/movies/MoviesTypes';
 
 const AVATAR_SIZE = 82;
 

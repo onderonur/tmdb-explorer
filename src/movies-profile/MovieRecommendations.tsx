@@ -2,10 +2,10 @@ import React from 'react';
 import MovieCard from '@/movies/MovieCard';
 import { ID } from '@/common/CommonTypes';
 import { useInfiniteQuery } from 'react-query';
-import { apiQueries } from '@/http-client/apiQueries';
 import InfiniteGridList from '@/common/InfiniteGridList';
 import { getAllPageResults, idExtractor } from '@/common/CommonUtils';
-import { Movie } from '@/movies/MovieTypes';
+import { Movie } from '@/movies/MoviesTypes';
+import { movieQueries } from '@/movies/movieQueries';
 
 function renderItem(recommendation: Movie) {
   return (
@@ -21,7 +21,7 @@ interface RecommendationsProps {
 
 function Recommendations({ movieId }: RecommendationsProps) {
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    apiQueries.movies.movieRecommendations(movieId),
+    movieQueries.movieRecommendations(movieId),
   );
   return (
     <InfiniteGridList

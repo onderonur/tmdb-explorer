@@ -5,13 +5,14 @@ import { withGetServerSideError } from '@/error-handling/withGetServerSideError'
 import MovieProfile from '@/movies-profile/MovieProfile';
 import { dehydrate, useQuery } from 'react-query';
 import { createQueryClient } from '@/http-client/queryClient';
-import { apiQueries } from '@/http-client/apiQueries';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import { movieQueries } from '@/movies/movieQueries';
+import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
 
 function MovieProfileView() {
   const router = useRouter();
   const movieId = Number(router.query.movieId);
-  const { data, isLoading } = useQuery(apiQueries.movies.movie(movieId));
+  const { data, isLoading } = useQuery(movieQueries.movieDetails(movieId));
 
   const { getImageUrl } = useApiConfiguration();
 
@@ -19,12 +20,12 @@ function MovieProfileView() {
     <>
       {data && (
         <BaseSeo
-          title={data.title}
-          description={data.overview}
-          openGraph={{ images: [{ url: getImageUrl(data.poster_path) }] }}
+          title={data.movie.title}
+          description={data.movie.overview}
+          openGraph={{ images: [{ url: getImageUrl(data.movie.poster_path) }] }}
         />
       )}
-      <MovieProfile movie={data} loading={isLoading} />
+      <MovieProfile movie={data?.movie} loading={isLoading} />
     </>
   );
 }
@@ -42,14 +43,8 @@ export const getServerSideProps = withGetServerSideError(async (context) => {
   // In those cases, use fetchQuery and catch any errors to handle those manually.
   // https://react-query.tanstack.com/guides/ssr#only-successful-queries-are-included-in-dehydration
   await Promise.all([
-    queryClient.fetchQuery(apiQueries.common.configuration()),
-    queryClient.fetchQuery(apiQueries.movies.movie(movieId)),
-    queryClient.fetchQuery(apiQueries.movies.movieVideos(movieId)),
-    queryClient.fetchQuery(apiQueries.movies.movieImages(movieId)),
-    queryClient.fetchQuery(apiQueries.movies.movieCast(movieId)),
-    queryClient.fetchInfiniteQuery(
-      apiQueries.movies.movieRecommendations(movieId),
-    ),
+    queryClient.fetchQuery(commonQueries.configuration()),
+    queryClient.fetchQuery(movieQueries.movieDetails(movieId)),
   ]);
 
   return {

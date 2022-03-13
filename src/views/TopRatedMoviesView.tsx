@@ -2,15 +2,16 @@ import React from 'react';
 import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
 import { dehydrate } from 'react-query';
 import { createQueryClient } from '@/http-client/queryClient';
-import { apiQueries } from '@/http-client/apiQueries';
 import MoviesListingView from './MoviesListingView';
+import { movieQueries } from '@/movies/movieQueries';
+import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
 
 function TopRatedMoviesView() {
   return (
     <MoviesListingView
       title="Top Rated Movies"
       description="Top rated movies list"
-      apiQuery={apiQueries.movies.topRatedMovies()}
+      apiQuery={movieQueries.topRatedMovies()}
     />
   );
 }
@@ -19,8 +20,8 @@ export const getServerSideProps = withGetServerSideError(async () => {
   const queryClient = createQueryClient();
 
   await Promise.all([
-    queryClient.fetchQuery(apiQueries.common.configuration()),
-    queryClient.fetchInfiniteQuery(apiQueries.movies.topRatedMovies()),
+    queryClient.fetchQuery(commonQueries.configuration()),
+    queryClient.fetchInfiniteQuery(movieQueries.topRatedMovies()),
   ]);
 
   return {

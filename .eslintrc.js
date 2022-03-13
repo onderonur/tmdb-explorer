@@ -4,8 +4,10 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
     'next/core-web-vitals',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
   ],
-  plugins: ['@typescript-eslint', 'prettier', 'deprecation'],
+  plugins: ['@typescript-eslint', 'prettier', 'deprecation', 'import'],
   parser: '@typescript-eslint/parser',
   // For eslint-plugin-deprecation:
   // https://stackoverflow.com/a/64488474/10876256

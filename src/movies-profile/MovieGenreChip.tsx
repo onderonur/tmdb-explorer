@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chip } from '@mui/material';
 import NextLink from '@/routing/NextLink';
-import { Genre } from '@/movies/MovieTypes';
+import { Genre } from '@/movies/MoviesTypes';
 
 interface MovieGenreChipProps {
   className?: string;

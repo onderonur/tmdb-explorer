@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import BaseAutocomplete from '../common/BaseAutocomplete';
+import BaseAutocomplete from '@/common/BaseAutocomplete';
 import useDebounce from '@/common/useDebounce';
 import { useRouter } from 'next/router';
 import { Maybe } from '@/common/CommonTypes';
@@ -8,10 +8,10 @@ import { Suggestion } from './SearchTypes';
 import MovieAutocompleteItem from './MovieAutocompleteItem';
 import PersonAutocompleteItem from './PersonAutocompleteItem';
 import { useInfiniteQuery } from 'react-query';
-import { apiQueries } from '@/http-client/apiQueries';
-import { isMovie } from '@/movies/MovieUtils';
+import { isMovie } from '@/movies/MoviesUtils';
 import { MediaType } from '@/common/CommonEnums';
 import { isPerson } from '@/people/PeopleUtils';
+import { searchQueries } from './searchQueries';
 
 interface MovieAndPersonAutocompleteProps {
   className?: string;
@@ -23,8 +23,8 @@ function MovieAndPersonAutocomplete({
   autoFocus,
 }: MovieAndPersonAutocompleteProps) {
   const router = useRouter();
-  const { query } = router.query;
-  const queryValue = typeof query === 'string' ? query : '';
+  const { searchQuery } = router.query;
+  const queryValue = typeof searchQuery === 'string' ? searchQuery : '';
   const [searchValue, setSearchValue] = useState<string>(queryValue);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function MovieAndPersonAutocomplete({
 
   const isSearchEnabled = !!debouncedSearchValue;
   const { data, isFetching } = useInfiniteQuery({
-    ...apiQueries.search.searchMulti(debouncedSearchValue),
+    ...searchQueries.searchMulti(debouncedSearchValue),
     enabled: isSearchEnabled,
   });
 
@@ -43,7 +43,7 @@ function MovieAndPersonAutocomplete({
     if (inputValue) {
       router.push({
         pathname: '/search',
-        query: { mediaType: MediaType.MOVIE, query: inputValue },
+        query: { mediaType: MediaType.MOVIE, searchQuery: inputValue },
       });
     }
   };

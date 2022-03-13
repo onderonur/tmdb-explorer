@@ -8,15 +8,14 @@ import {
   Toolbar,
   Box,
 } from '@mui/material';
-import AppDrawerItem from '@/layout/AppDrawerItem';
-import { useAppDrawer } from '@/layout/AppDrawerContext';
+import AppDrawerItem from './AppDrawerItem';
+import { useAppDrawer } from './AppDrawerContext';
 import PersonIcon from '@mui/icons-material/RecentActors';
 import StarIcon from '@mui/icons-material/StarRate';
-import UpdateIcon from '@mui/icons-material/Update';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { useQuery } from 'react-query';
-import { apiQueries } from '@/http-client/apiQueries';
 import AppTitle from './AppTitle';
+import { movieQueries } from '@/movies/movieQueries';
 
 export const APP_DRAWER_WIDTH = 260;
 
@@ -30,9 +29,7 @@ const StyledDrawer = styled(Drawer)({
 function AppDrawer() {
   const { isOpen, close } = useAppDrawer();
 
-  const { data: genresData, isLoading } = useQuery(
-    apiQueries.genres.movieGenres(),
-  );
+  const { data: genres, isLoading } = useQuery(movieQueries.genres());
 
   const drawerContent = (
     <>
@@ -52,11 +49,6 @@ function AppDrawer() {
             title="Top Rated Movies"
           />
           <AppDrawerItem
-            href="/movie/upcoming"
-            icon={<UpdateIcon />}
-            title="Upcoming Movies"
-          />
-          <AppDrawerItem
             href="/person/popular"
             icon={<PersonIcon />}
             title="Popular People"
@@ -66,7 +58,7 @@ function AppDrawer() {
           <>
             <Divider />
             <List subheader={<ListSubheader>Movie Genres</ListSubheader>}>
-              {genresData?.genres.map((genre) => {
+              {genres?.map((genre) => {
                 return (
                   <AppDrawerItem
                     key={genre.id}

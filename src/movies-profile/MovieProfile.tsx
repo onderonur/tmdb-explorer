@@ -7,7 +7,7 @@ import MovieCastCarousel from './MovieCastCarousel';
 import MovieRecommendations from './MovieRecommendations';
 import { Maybe } from '@/common/CommonTypes';
 import LoadingIndicator from '@/common/LoadingIndicator';
-import { Movie } from '@/movies/MovieTypes';
+import { Movie } from '@/movies/MoviesTypes';
 
 interface MovieProfileProps {
   movie: Maybe<Movie>;

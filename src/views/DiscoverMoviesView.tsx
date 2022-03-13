@@ -1,5 +1,4 @@
 import React from 'react';
-import { apiQueries } from '@/http-client/apiQueries';
 import MoviesListingView from './MoviesListingView';
 import { useRouter } from 'next/router';
 import { dehydrate, useQuery } from 'react-query';
@@ -8,13 +7,15 @@ import { withGetServerSideError } from '@/error-handling/withGetServerSideError'
 import MovieSortingSelect, {
   getSelectedSorting,
 } from '@/movies/MovieSortingSelect';
+import { movieQueries } from '@/movies/movieQueries';
+import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
 
 function DiscoverMoviesView() {
   const router = useRouter();
 
-  const { data: genresData } = useQuery(apiQueries.genres.movieGenres());
+  const { data: genres } = useQuery(movieQueries.genres());
   const genreId = Number(router.query.genreId);
-  const genre = genresData?.genres.find((genre) => genre.id === genreId);
+  const genre = genres?.find((genre) => genre.id === genreId);
 
   const sorting = getSelectedSorting(router.query.sortBy);
 
@@ -32,7 +33,7 @@ function DiscoverMoviesView() {
         />
       }
       description={genre ? `${genre.name} movies list` : 'Discover movies list'}
-      apiQuery={apiQueries.discover.discoverMovies({
+      apiQuery={movieQueries.discoverMovies({
         genreId,
         sortBy: sorting.id,
       })}
@@ -46,10 +47,10 @@ export const getServerSideProps = withGetServerSideError(async (ctx) => {
 
   const queryClient = createQueryClient();
   await Promise.all([
-    queryClient.fetchQuery(apiQueries.common.configuration()),
-    queryClient.fetchQuery(apiQueries.genres.movieGenres()),
+    queryClient.fetchQuery(commonQueries.configuration()),
+    queryClient.fetchQuery(movieQueries.genres()),
     queryClient.fetchInfiniteQuery(
-      apiQueries.discover.discoverMovies({
+      movieQueries.discoverMovies({
         genreId,
         sortBy: sorting.id,
       }),

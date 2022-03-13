@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LoadingIndicator from '@/common/LoadingIndicator';
 import SearchIcon from '@mui/icons-material/Search';
 import {
@@ -7,7 +7,6 @@ import {
   IconButton,
   TextField,
 } from '@mui/material';
-import { useState } from 'react';
 
 type BaseAutocompleteProps<
   T,
@@ -62,6 +61,7 @@ function BaseAutocomplete<
             ...params.InputProps,
             endAdornment: (
               <IconButton
+                aria-label="Search"
                 onClick={() => {
                   setIsOpen(false);
                   onSearchClick(rest.inputValue ?? '');

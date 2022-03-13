@@ -6,7 +6,7 @@ import { PaginationResponse } from '@/common/CommonTypes';
 import { useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query';
 import { getAllPageResults, idExtractor } from '@/common/CommonUtils';
 import PageTitle from '@/common/PageTitle';
-import { Movie } from '@/movies/MovieTypes';
+import { Movie } from '@/movies/MoviesTypes';
 
 function renderItem(movie: Movie) {
   return (

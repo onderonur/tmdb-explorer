@@ -2,12 +2,12 @@ import React from 'react';
 import { Typography, Box } from '@mui/material';
 
 interface SearchResultsHeaderProps {
-  query: string;
+  searchQuery: string;
   totalResults: number;
 }
 
 function SearchResultsHeader({
-  query,
+  searchQuery,
   totalResults,
 }: SearchResultsHeaderProps) {
   return (
@@ -19,7 +19,7 @@ function SearchResultsHeader({
       flexWrap="wrap"
       mb={1}
     >
-      <Typography variant="h6">Search Results For: {query}</Typography>
+      <Typography variant="h6">Search Results For: {searchQuery}</Typography>
       <Typography color={(theme) => theme.palette.text.secondary}>
         Total {totalResults} Results
       </Typography>

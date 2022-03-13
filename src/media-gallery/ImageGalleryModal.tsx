@@ -39,7 +39,10 @@ function ImageGalleryModal({ title, filePaths }: ImageGalleryModalProps) {
               layout="responsive"
               objectFit="contain"
             />
-            <FullScreenButton onClick={toggleFullScreen}>
+            <FullScreenButton
+              aria-label={isFullScreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+              onClick={toggleFullScreen}
+            >
               {isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
             </FullScreenButton>
           </>

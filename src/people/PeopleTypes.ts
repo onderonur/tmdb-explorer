@@ -1,15 +1,17 @@
 import { MediaType } from '@/common/CommonEnums';
 import { DateString, ItemWithId, Maybe } from '@/common/CommonTypes';
-import { MovieImage } from '@/movies/MovieTypes';
+import { Movie, MovieImage } from '@/movies/MoviesTypes';
 
 export interface BasePerson extends ItemWithId {
   name: string;
   profile_path: string;
+  gender: number;
+  adult: boolean;
+  popularity: number;
 }
 
 export interface Person extends BasePerson {
   biography: Maybe<string>;
-  gender: number;
   known_for_department: string;
   birthday: DateString;
   place_of_birth: string;
@@ -20,3 +22,15 @@ export interface Person extends BasePerson {
 }
 
 export type PersonImage = MovieImage;
+
+export type PersonCasting = Movie & { character: string };
+
+type PersonCrew = Movie & { job: string };
+
+export type PersonCredits = { cast: PersonCasting[]; crew: PersonCrew[] };
+
+export type PersonDetails = {
+  person: Person;
+  personImages: { profiles: PersonImage[] };
+  personCredits: PersonCredits;
+};

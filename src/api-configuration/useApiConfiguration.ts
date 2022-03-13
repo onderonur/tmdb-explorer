@@ -1,10 +1,10 @@
-import { apiQueries } from '@/http-client/apiQueries';
+import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
 import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 
 function useApiConfiguration() {
   const { data: configuration } = useQuery({
-    ...apiQueries.common.configuration(),
+    ...commonQueries.configuration(),
     staleTime: Infinity,
   });
 

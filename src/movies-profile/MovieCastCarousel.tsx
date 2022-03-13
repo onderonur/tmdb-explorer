@@ -1,17 +1,17 @@
 import React from 'react';
 import { ID } from '@/common/CommonTypes';
 import { useQuery } from 'react-query';
-import { apiQueries } from '@/http-client/apiQueries';
 import BaseCarousel from '@/common/BaseCarousel';
 import MovieCastCarouselItem from './MovieCastCarouselItem';
+import { movieQueries } from '@/movies/movieQueries';
 
 interface MovieCastCarouselProps {
   movieId: ID;
 }
 
 function MovieCastCarousel({ movieId }: MovieCastCarouselProps) {
-  const { data, isLoading } = useQuery(apiQueries.movies.movieCast(movieId));
-  const castCredits = data?.cast;
+  const { data, isLoading } = useQuery(movieQueries.movieDetails(movieId));
+  const castCredits = data?.movieCast.cast;
 
   return (
     <BaseCarousel

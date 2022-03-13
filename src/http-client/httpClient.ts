@@ -1,4 +1,5 @@
-import { CustomError } from '@/error-handling/ErrorHandlingUtils';
+import { CustomError } from '@/error-handling/CustomError';
+import queryString from 'query-string';
 
 async function handleResponse(response: Response) {
   if (response.ok) {
@@ -17,5 +18,11 @@ async function handleResponse(response: Response) {
 }
 
 export const httpClient = {
-  get: <Data>(url: string): Promise<Data> => fetch(url).then(handleResponse),
+  get: <Data>(
+    url: string,
+    params?: queryString.StringifiableRecord,
+  ): Promise<Data> =>
+    fetch(queryString.stringifyUrl({ url, query: params })).then(
+      handleResponse,
+    ),
 };

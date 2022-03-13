@@ -1,7 +1,7 @@
 import React from 'react';
 import { DefaultSeo } from 'next-seo';
 import { useRouter } from 'next/router';
-import { APP_TITLE } from '../common/CommonConstants';
+import { APP_TITLE } from '@/common/CommonConstants';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { ListItemButton, ListItemText } from '@mui/material';
 import NextLink from '@/routing/NextLink';
 import useRouterPath from '@/routing/useRouterPath';
-import { MovieVideo } from '@/media-gallery/MediaGalleryTypes';
+import { MovieVideo } from '@/movies/MoviesTypes';
 
 interface MovieVideoCarouselItemProps {
   video: MovieVideo;

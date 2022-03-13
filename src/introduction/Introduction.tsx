@@ -25,7 +25,7 @@ const Backdrop = styled('div', {
 
 const Container = styled(Box)({
   backgroundImage:
-    'radial-gradient(circle at 20% 50%, rgba(12.55%, 24.71%, 34.51%, 0.9) 0%, rgba(12.55%, 24.71%, 34.51%, 0.88) 100%)',
+    'radial-gradient(circle at 20% 50%, rgba(12.55%, 24.71%, 34.51%, 0.95) 0%, rgba(12.55%, 24.71%, 34.51%, 0.88) 100%)',
 });
 
 type IntroductionProps = BackdropProps & {
@@ -69,6 +69,7 @@ function Introduction({
             height={3}
             layout="responsive"
             objectFit="cover"
+            priority
           />
         </Box>
         <Box padding={2} flex={1} flexBasis={300}>

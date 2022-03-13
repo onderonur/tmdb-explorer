@@ -2,19 +2,18 @@ import React from 'react';
 import ImageGalleryModal from '@/media-gallery/ImageGalleryModal';
 import { Person } from '@/people/PeopleTypes';
 import { useQuery } from 'react-query';
-import { apiQueries } from '@/http-client/apiQueries';
 import BaseCarousel from '@/common/BaseCarousel';
 import ImageCarouselItem from '@/common/ImageCarouselItem';
+import { peopleQueries } from '@/people/peopleQueries';
 
 interface PersonImageCarouselProps {
   person: Person;
 }
 
 function PersonImageCarousel({ person }: PersonImageCarouselProps) {
-  const { data, isLoading } = useQuery(
-    apiQueries.people.personImages(person.id),
-  );
-  const filePaths = data?.profiles.map((profile) => profile.file_path) || [];
+  const { data, isLoading } = useQuery(peopleQueries.personDetails(person.id));
+  const filePaths =
+    data?.personImages.profiles.map((profile) => profile.file_path) || [];
 
   return (
     <>

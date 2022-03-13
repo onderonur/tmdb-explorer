@@ -2,15 +2,9 @@ import React from 'react';
 import { Typography, Box, styled, Stack } from '@mui/material';
 import Introduction from '@/introduction/Introduction';
 import MovieGenreChip from './MovieGenreChip';
-import { Movie } from '@/movies/MovieTypes';
-import ImdbLink, { ImdbProfileType } from '../introduction/ImdbLink';
+import { Movie } from '@/movies/MoviesTypes';
 import MovieRating from '@/movies/MovieRating';
-import { getMovieReleaseYear } from '@/movies/MovieUtils';
-
-const Year = styled('span')(({ theme }) => ({
-  color: theme.palette.grey[400],
-  marginLeft: theme.spacing(1),
-}));
+import { getMovieReleaseYear } from '@/movies/MoviesUtils';
 
 const Overview = styled(Typography)({
   whiteSpace: 'pre-wrap',
@@ -33,31 +27,33 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
       imageSrc={movie.poster_path}
       imageAlt={movie.title}
       title={
-        <Box marginBottom={2}>
-          <Typography variant="h5" gutterBottom={!movie.tagline}>
-            {movie.title}
-            {releaseYear && <Year>{`(${getMovieReleaseYear(movie)})`}</Year>}
-          </Typography>
-          {movie.tagline && (
-            <Typography color={(theme) => theme.palette.grey[300]}>
-              {movie.tagline}
-            </Typography>
-          )}
+        <Box>
+          <Typography variant="h5">{movie.title}</Typography>
+          <Stack
+            direction="row"
+            spacing={0.5}
+            color={(theme) => theme.palette.grey[300]}
+          >
+            {releaseYear && <span>{getMovieReleaseYear(movie)}</span>}
+            <span>·</span>
+            <span>{movie.runtime} minutes</span>
+          </Stack>
         </Box>
       }
       content={
-        <Stack spacing={2}>
+        <Stack spacing={0.5} mt={1}>
+          <MovieRating movie={movie} size="medium" />
           <div>
-            <Box display="flex" alignItems="center" gap={2}>
-              <MovieRating movie={movie} size="medium" />
-              <ImdbLink type={ImdbProfileType.MOVIE} imdbId={movie.imdb_id} />
-            </Box>
-          </div>
-          <div>
-            <Typography variant="h6" gutterBottom>
-              Overview
-            </Typography>
-            <Overview variant="body2">{movie.overview}</Overview>
+            <Typography variant="h6">Overview</Typography>
+            {movie.tagline && (
+              <Typography
+                color={(theme) => theme.palette.grey[300]}
+                gutterBottom
+              >
+                &quot;{movie.tagline}&quot;
+              </Typography>
+            )}
+            <Overview>{movie.overview}</Overview>
           </div>
           <div>
             <Typography variant="h6" gutterBottom>

@@ -32,9 +32,6 @@ function PersonInfo({ person }: PersonInfoProps) {
 
   return (
     <Box display="flex" flexWrap={'wrap'} gap={4}>
-      {person.known_for_department && (
-        <TextWithLabel label="Known For" text={person.known_for_department} />
-      )}
       {gender && <TextWithLabel label="Gender" text={gender} />}
       {person.birthday && (
         <TextWithLabel label="Birthday" text={person.birthday} />

@@ -7,7 +7,7 @@ function AppDrawerToggleButton() {
   const { toggle } = useAppDrawer();
 
   return (
-    <IconButton onClick={toggle}>
+    <IconButton aria-label="Toggle drawer" onClick={toggle}>
       <MenuIcon />
     </IconButton>
   );

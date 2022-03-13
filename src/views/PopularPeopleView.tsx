@@ -6,10 +6,11 @@ import { PaginationResponse } from '@/common/CommonTypes';
 import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
 import { dehydrate, useInfiniteQuery } from 'react-query';
 import { getAllPageResults, idExtractor } from '@/common/CommonUtils';
-import { apiQueries } from '@/http-client/apiQueries';
 import { createQueryClient } from '@/http-client/queryClient';
 import PageTitle from '@/common/PageTitle';
 import { Person } from '@/people/PeopleTypes';
+import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
+import { peopleQueries } from '@/people/peopleQueries';
 
 function renderItem(person: Person) {
   return (
@@ -22,7 +23,7 @@ function renderItem(person: Person) {
 function PopularPeopleView() {
   const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery<
     PaginationResponse<Person>
-  >(apiQueries.people.popularPeople());
+  >(peopleQueries.popularPeople());
 
   return (
     <>
@@ -44,8 +45,8 @@ export const getServerSideProps = withGetServerSideError(async () => {
   const queryClient = createQueryClient();
 
   await Promise.all([
-    queryClient.fetchQuery(apiQueries.common.configuration()),
-    queryClient.fetchInfiniteQuery(apiQueries.people.popularPeople()),
+    queryClient.fetchQuery(commonQueries.configuration()),
+    queryClient.fetchInfiniteQuery(peopleQueries.popularPeople()),
   ]);
 
   return {

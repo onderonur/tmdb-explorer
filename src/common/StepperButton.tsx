@@ -35,7 +35,12 @@ function StepperButton({
   onClick,
 }: StepperButtonProps) {
   return (
-    <StyledIconButton className={className} size={size} onClick={onClick}>
+    <StyledIconButton
+      aria-label={direction}
+      className={className}
+      size={size}
+      onClick={onClick}
+    >
       {direction === 'previous' ? (
         <ChevronLeftIcon fontSize={size} sx={iconStyle} />
       ) : (

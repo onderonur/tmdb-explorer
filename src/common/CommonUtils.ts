@@ -1,6 +1,7 @@
 import { PaginationResponse, ItemWithId, Maybe } from '@/common/CommonTypes';
 import { InfiniteData } from 'react-query';
 import _ from 'lodash';
+import { CustomError } from '@/error-handling/CustomError';
 
 export const IS_SERVER = typeof window === 'undefined';
 
@@ -27,3 +28,15 @@ export function getAllPageResults<T extends ItemWithId>(
 }
 
 export const FIRST_PAGE = 1;
+
+export function isOfType<T>(obj: Object, keys: Array<keyof T>): obj is T {
+  return keys.every((key) => Object.prototype.hasOwnProperty.call(obj, key));
+}
+
+export function validateId(val: unknown) {
+  const id = Number(val);
+  if (!id) {
+    throw new CustomError(422, 'Bad Request');
+  }
+  return id;
+}

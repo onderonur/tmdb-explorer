@@ -1,7 +1,6 @@
 import React from 'react';
-import { Typography, Box, styled, Stack } from '@mui/material';
+import { Typography, styled, Stack } from '@mui/material';
 import Introduction from '@/introduction/Introduction';
-import ImdbLink, { ImdbProfileType } from '../introduction/ImdbLink';
 import { Person } from '@/people/PeopleTypes';
 import PersonInfo from './PersonInfo';
 
@@ -25,16 +24,6 @@ function PersonIntroduction({ person }: PersonIntroductionProps) {
       title={person.name}
       content={
         <Stack spacing={2}>
-          {person.imdb_id && (
-            <div>
-              <Box display="flex" alignItems="center">
-                <ImdbLink
-                  type={ImdbProfileType.PERSON}
-                  imdbId={person.imdb_id}
-                />
-              </Box>
-            </div>
-          )}
           <div>
             <Typography variant="h6" gutterBottom>
               Biography

@@ -38,7 +38,7 @@ function BaseDialogTitle({ title, titleRight }: BaseDialogTitleProps) {
           {title}
         </Title>
         {titleRight}
-        <IconButton onClick={closeDialog}>
+        <IconButton aria-label="Close dialog" onClick={closeDialog}>
           <CloseIcon />
         </IconButton>
       </Box>

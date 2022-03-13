@@ -7,15 +7,15 @@ import PersonCard from '@/people/PersonCard';
 import { useRouter } from 'next/router';
 import BaseSeo from '@/seo/BaseSeo';
 import { useInfiniteQuery } from 'react-query';
-import { apiQueries } from '@/http-client/apiQueries';
 import {
   getAllPageResults,
   getLastOfArray,
   idExtractor,
 } from '@/common/CommonUtils';
-import { Movie } from '@/movies/MovieTypes';
+import { Movie } from '@/movies/MoviesTypes';
 import { Person } from '@/people/PeopleTypes';
 import { MediaType } from '@/common/CommonEnums';
+import { searchQueries } from '@/search/searchQueries';
 
 function renderMovie(movie: Movie) {
   return <MovieCard movie={movie} />;
@@ -27,7 +27,7 @@ function renderPerson(person: Person) {
 
 function SearchResultsView() {
   const router = useRouter();
-  const { mediaType, query } = router.query;
+  const { mediaType, searchQuery } = router.query;
 
   const {
     data: movies,
@@ -35,7 +35,9 @@ function SearchResultsView() {
     hasNextPage: hasNextPageMovies,
     fetchNextPage: fetchNextPageMovies,
   } = useInfiniteQuery(
-    apiQueries.search.searchMovies(typeof query === 'string' ? query : ''),
+    searchQueries.searchMovies(
+      typeof searchQuery === 'string' ? searchQuery : '',
+    ),
   );
 
   const {
@@ -44,7 +46,9 @@ function SearchResultsView() {
     hasNextPage: hasNextPagePeople,
     fetchNextPage: fetchNextPagePeople,
   } = useInfiniteQuery(
-    apiQueries.search.searchPeople(typeof query === 'string' ? query : ''),
+    searchQueries.searchPeople(
+      typeof searchQuery === 'string' ? searchQuery : '',
+    ),
   );
 
   function handleChange(event: React.ChangeEvent<unknown>, mediaType: string) {
@@ -78,7 +82,7 @@ function SearchResultsView() {
       </Tabs>
       <Box marginTop={2}>
         <SearchResultsHeader
-          query={typeof query === 'string' ? query : ''}
+          searchQuery={typeof searchQuery === 'string' ? searchQuery : ''}
           totalResults={
             typeof mediaType === 'string'
               ? totalCounts[mediaType as MediaType]

@@ -5,9 +5,9 @@ import BaseCardHeader from '@/common/BaseCardHeader';
 import MovieRating from './MovieRating';
 import { Box, styled, Typography } from '@mui/material';
 import NextLink from '@/routing/NextLink';
-import { Movie } from '@/movies/MovieTypes';
+import { Movie } from '@/movies/MoviesTypes';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
-import { getMovieReleaseYear } from '@/movies/MovieUtils';
+import { getMovieReleaseYear } from '@/movies/MoviesUtils';
 
 const MovieCardHeader = styled(BaseCardHeader)(({ theme }) => ({
   paddingBottom: theme.spacing(0.25),
