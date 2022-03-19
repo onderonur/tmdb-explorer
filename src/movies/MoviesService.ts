@@ -8,10 +8,20 @@ import {
 } from '@/view-filters/ViewFiltersUtils';
 import { BaseService } from '../api/BaseService';
 import { MovieDetails, Genre, Movie } from './MoviesTypes';
+import queryString from 'query-string';
 
 class MoviesService extends BaseService {
-  getMovie = async (movieId: ID) => {
-    const movie = await this.get<Movie>(`/movie/${movieId}`);
+  getMovie = async <T extends Movie>(
+    movieId: ID,
+    args: {
+      appendToResponse: string[];
+      params?: queryString.StringifiableRecord;
+    },
+  ) => {
+    const movie = await this.get<T>(`/movie/${movieId}`, {
+      ...args.params,
+      append_to_response: args.appendToResponse.join(','),
+    });
     if (!shouldViewMovie(movie)) {
       throw new CustomError(
         404,
@@ -28,14 +38,14 @@ class MoviesService extends BaseService {
 
   getDiscoverMovies = async (
     page: number,
-    args: { genreId?: ID; sortBy?: string },
+    params: { genreId?: ID; sortBy?: string },
   ) => {
-    const genreId = Number(args.genreId);
+    const genreId = Number(params.genreId);
     const movies = await this.get<PaginationResponse<Movie>>(
       '/discover/movie',
       {
         with_genres: genreId ? [genreId] : [],
-        sort_by: args.sortBy,
+        sort_by: params.sortBy,
         page,
         'vote_count.gte': VIEW_FILTER_LIMIT.minVoteCount,
       },
@@ -64,29 +74,26 @@ class MoviesService extends BaseService {
   };
 
   getMovieDetails = async (movieId: ID): Promise<MovieDetails> => {
-    const movie = await this.getMovie(movieId);
+    const movie = await this.getMovie<MovieDetails>(movieId, {
+      appendToResponse: ['images,videos,credits'],
+    });
 
-    const [movieImages, movieVideos, movieCast] = await Promise.all([
-      this.get<MovieDetails['movieImages']>(`/movie/${movieId}/images`),
-      this.get<MovieDetails['movieVideos']>(`/movie/${movieId}/videos`),
-      this.get<MovieDetails['movieCast']>(`/movie/${movieId}/credits`),
-    ]);
+    movie.credits.cast = filterViewablePeople(movie.credits.cast);
+    movie.credits.crew = filterViewablePeople(movie.credits.crew);
 
-    movieCast.cast = filterViewablePeople(movieCast.cast);
-
-    return { movie, movieVideos, movieImages, movieCast };
+    return movie;
   };
 
-  getMovieRecommendations = async (movieId: ID, args: { page: number }) => {
-    // To be sure movie is viewable, we fetch it first
-    const movie = await this.getMovie(movieId);
+  getMovieRecommendations = async (movieId: ID, params: { page: number }) => {
+    // To be sure movie is viewable, we fetch it too
+    const movie = await this.getMovie<
+      Movie & { recommendations: PaginationResponse<Movie> }
+    >(movieId, {
+      appendToResponse: ['recommendations'],
+      params,
+    });
 
-    const movieRecommendations = await this.get<PaginationResponse<Movie>>(
-      `/movie/${movie.id}/recommendations`,
-      { page: args.page },
-    );
-
-    return filterViewablePageResults(movieRecommendations);
+    return filterViewablePageResults(movie.recommendations);
   };
 }
 

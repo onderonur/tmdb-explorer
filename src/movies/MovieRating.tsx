@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, colors, Typography } from '@mui/material';
 import { Movie } from '@/movies/MoviesTypes';
 import StarIcon from '@mui/icons-material/Star';

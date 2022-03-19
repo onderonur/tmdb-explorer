@@ -1,4 +1,3 @@
-import React from 'react';
 import { Typography, Link, Box } from '@mui/material';
 import AppDrawerToggleButton from '@/layout/AppDrawerToggleButton';
 import NextLink from '@/routing/NextLink';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
 import { dehydrate } from 'react-query';
 import { createQueryClient } from '@/http-client/queryClient';

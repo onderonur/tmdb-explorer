@@ -1,4 +1,3 @@
-import React from 'react';
 import { Fab, Grow, useScrollTrigger, styled } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 

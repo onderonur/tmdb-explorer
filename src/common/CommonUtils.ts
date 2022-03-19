@@ -5,11 +5,6 @@ import { CustomError } from '@/error-handling/CustomError';
 
 export const IS_SERVER = typeof window === 'undefined';
 
-export function getLastOfArray<T>(arr: T[]): Maybe<T> {
-  const { length, [length - 1]: last } = arr;
-  return last;
-}
-
 export function idExtractor<Item extends ItemWithId>(item: Item) {
   return item.id;
 }

@@ -1,5 +1,5 @@
 import { Dialog, DialogProps } from '@mui/material';
-import React, { useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import BaseDialogTitle from './BaseDialogTitle';
 import useIsMobile from './useIsMobile';
 import BaseDialogProvider from './BaseDialogContext';

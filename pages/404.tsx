@@ -1,4 +1,3 @@
-import React from 'react';
 import ErrorMessage from '@/error-handling/ErrorMessage';
 
 function NotFound404() {

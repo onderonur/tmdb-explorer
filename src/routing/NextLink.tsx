@@ -1,7 +1,7 @@
-import React from 'react';
 import Link, { LinkProps } from 'next/link';
 import { Omit } from '@/common/CommonTypes';
-import { styled } from '@mui/material';
+import { styled, SxProps, Theme } from '@mui/material';
+import React from 'react';
 
 const Anchor = styled('a')({
   textDecoration: 'none',
@@ -11,6 +11,7 @@ export type NextLinkProps = React.PropsWithChildren<
   Omit<LinkProps, 'passHref'>
 > & {
   className?: string;
+  sx?: SxProps<Theme>;
 };
 
 const NextLink = React.forwardRef<HTMLAnchorElement, NextLinkProps>(

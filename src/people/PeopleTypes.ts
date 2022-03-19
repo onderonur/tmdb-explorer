@@ -21,16 +21,13 @@ export interface Person extends BasePerson {
   media_type: MediaType;
 }
 
-export type PersonImage = MovieImage;
+type PersonImage = MovieImage;
 
 export type PersonCasting = Movie & { character: string };
-
 type PersonCrew = Movie & { job: string };
+type PersonCredits = { cast: PersonCasting[]; crew: PersonCrew[] };
 
-export type PersonCredits = { cast: PersonCasting[]; crew: PersonCrew[] };
-
-export type PersonDetails = {
-  person: Person;
-  personImages: { profiles: PersonImage[] };
-  personCredits: PersonCredits;
+export type PersonDetails = Person & {
+  images: { profiles: PersonImage[] };
+  credits: PersonCredits;
 };

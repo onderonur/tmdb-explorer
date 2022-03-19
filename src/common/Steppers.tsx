@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, styled, IconButtonProps } from '@mui/material';
 import { Maybe } from '@/common/CommonTypes';
 import StepperButton from './StepperButton';

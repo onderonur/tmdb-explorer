@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import LoadingIndicator from '@/common/LoadingIndicator';
 import SearchIcon from '@mui/icons-material/Search';
 import {

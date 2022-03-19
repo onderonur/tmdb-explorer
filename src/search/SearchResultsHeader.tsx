@@ -1,15 +1,10 @@
-import React from 'react';
 import { Typography, Box } from '@mui/material';
 
 interface SearchResultsHeaderProps {
   searchQuery: string;
-  totalResults: number;
 }
 
-function SearchResultsHeader({
-  searchQuery,
-  totalResults,
-}: SearchResultsHeaderProps) {
+function SearchResultsHeader({ searchQuery }: SearchResultsHeaderProps) {
   return (
     <Box
       display="flex"
@@ -17,12 +12,8 @@ function SearchResultsHeader({
       alignItems={{ md: 'center', xs: 'flex-start' }}
       justifyContent={{ md: 'space-between', xs: 'flex-start' }}
       flexWrap="wrap"
-      mb={1}
     >
       <Typography variant="h6">Search Results For: {searchQuery}</Typography>
-      <Typography color={(theme) => theme.palette.text.secondary}>
-        Total {totalResults} Results
-      </Typography>
     </Box>
   );
 }

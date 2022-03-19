@@ -1,11 +1,7 @@
-import React from 'react';
-import LoadingIndicator from '@/common/LoadingIndicator';
 import { Typography, styled } from '@mui/material';
-import { Maybe } from '@/common/CommonTypes';
 import isPropValid from '@emotion/is-prop-valid';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const DEFAULT_ITEMS: any[] = [];
+import React from 'react';
+import LoadingIndicator from './LoadingIndicator';
 
 interface BaseGridListStyleProps {
   spacing?: number;
@@ -27,32 +23,30 @@ const List = styled('ul', {
   }),
 );
 
-type BaseGridListProps<Item> = BaseGridListStyleProps & {
-  items: Maybe<Item[]>;
-  loading: boolean;
-  renderItem: (item: Item, index: number) => React.ReactNode;
-  keyExtractor: (item: Item, index: number) => string | number;
-  listEmptyMessage?: string;
-  loadingRef?: React.Ref<HTMLDivElement>;
-};
+export type BaseGridListProps = BaseGridListStyleProps &
+  React.PropsWithChildren<{
+    loading?: boolean;
+    listEmptyMessage?: string;
+  }>;
 
-function BaseGridList<Item>({
-  items = DEFAULT_ITEMS,
+function BaseGridList({
   loading,
-  renderItem,
   spacing,
   hasRowGutter,
   minItemWidth = 160,
-  keyExtractor,
   listEmptyMessage = 'Nothing has been found',
-  loadingRef,
-}: BaseGridListProps<Item>) {
-  if (!items?.length && !loading) {
-    if (typeof listEmptyMessage === 'string') {
-      return <Typography>{listEmptyMessage}</Typography>;
+  children,
+}: BaseGridListProps) {
+  if (!React.Children.count(children) && !loading) {
+    if (!listEmptyMessage) {
+      return null;
     }
 
-    return listEmptyMessage;
+    return typeof listEmptyMessage === 'string' ? (
+      <Typography>{listEmptyMessage}</Typography>
+    ) : (
+      listEmptyMessage
+    );
   }
 
   return (
@@ -62,14 +56,9 @@ function BaseGridList<Item>({
         hasRowGutter={hasRowGutter}
         minItemWidth={minItemWidth}
       >
-        {items?.map((item, index) => {
-          const key = keyExtractor(item, index);
-          return (
-            <React.Fragment key={key}>{renderItem(item, index)}</React.Fragment>
-          );
-        })}
+        {children}
       </List>
-      <LoadingIndicator ref={loadingRef} loading={loading} />
+      <LoadingIndicator loading={!!loading} />
     </>
   );
 }

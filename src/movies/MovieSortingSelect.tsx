@@ -1,23 +1,26 @@
-import React from 'react';
 import { Box, MenuItem, TextField } from '@mui/material';
 import { Maybe } from '@/common/CommonTypes';
 
 const MOVIE_SORTING = {
   popularity: {
     id: 'popularity.desc',
-    title: 'Popularity',
+    title: 'Most Popular',
   },
   voteCount: {
     id: 'vote_count.desc',
-    title: 'Vote Count',
+    title: 'Most Voted',
   },
   voteAverage: {
     id: 'vote_average.desc',
-    title: 'Vote Average',
+    title: 'Top Rated',
+  },
+  newToOld: {
+    id: 'release_date.desc',
+    title: 'New to Old',
   },
   releaseDate: {
-    id: 'release_date.desc',
-    title: 'Release Date',
+    id: 'release_date.asc',
+    title: 'Old to New',
   },
 };
 

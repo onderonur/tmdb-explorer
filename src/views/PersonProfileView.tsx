@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRouter } from 'next/router';
 import BaseSeo from '@/seo/BaseSeo';
 import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
@@ -12,11 +11,11 @@ import { peopleQueries } from '@/people/peopleQueries';
 function PersonProfileView() {
   const router = useRouter();
   const personId = Number(router.query.personId);
-  const { data, isLoading } = useQuery(peopleQueries.personDetails(personId));
+  const { data: person, isLoading } = useQuery(
+    peopleQueries.personDetails(personId),
+  );
 
   const { getImageUrl } = useApiConfiguration();
-
-  const person = data?.person;
 
   return (
     <>

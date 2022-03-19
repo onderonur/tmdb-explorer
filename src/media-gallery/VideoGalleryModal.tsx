@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRouter } from 'next/router';
 import MediaGalleryModal from '@/media-gallery/MediaGalleryModal';
 import YouTubePlayer from './YouTubePlayer';

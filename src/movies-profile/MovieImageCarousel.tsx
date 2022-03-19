@@ -1,4 +1,3 @@
-import React from 'react';
 import ImageGalleryModal from '@/media-gallery/ImageGalleryModal';
 import { Movie } from '@/movies/MoviesTypes';
 import { useQuery } from 'react-query';
@@ -14,7 +13,7 @@ function MovieImageCarousel({ movie }: MovieImageCarouselProps) {
   const movieId = movie.id;
   const { data, isLoading } = useQuery(movieQueries.movieDetails(movieId));
 
-  const filePaths = data?.movieImages.backdrops.map(
+  const filePaths = data?.images.backdrops.map(
     (backdrop) => backdrop.file_path,
   );
 
@@ -23,12 +22,11 @@ function MovieImageCarousel({ movie }: MovieImageCarouselProps) {
       <BaseCarousel
         // To reset the carousel as user redirects from movie to another movie
         key={movieId}
-        items={filePaths}
         loading={isLoading}
         slidesToShow={{ default: 4, md: 3, sm: 2 }}
-        keyExtractor={(filePath) => filePath}
         listEmptyMessage="No image has been found."
-        renderItem={(filePath, i) => {
+      >
+        {filePaths?.map((filePath, i) => {
           return (
             <ImageCarouselItem
               key={filePath}
@@ -38,8 +36,8 @@ function MovieImageCarousel({ movie }: MovieImageCarouselProps) {
               height={9}
             />
           );
-        }}
-      />
+        })}
+      </BaseCarousel>
       <ImageGalleryModal title={movie.title} filePaths={filePaths} />
     </>
   );

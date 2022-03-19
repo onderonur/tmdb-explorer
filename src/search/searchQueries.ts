@@ -7,7 +7,7 @@ import { httpClient } from '@/http-client/httpClient';
 
 export const searchQueries = {
   searchMulti: (searchQuery: string) => ({
-    queryKey: ['search', 'multi', searchQuery],
+    queryKey: ['searchMulti', searchQuery],
     queryFn: ({ pageParam = FIRST_PAGE }) =>
       IS_SERVER
         ? searchService.searchMulti({ searchQuery, page: pageParam })
@@ -21,7 +21,7 @@ export const searchQueries = {
     getNextPageParam,
   }),
   searchMovies: (searchQuery: string) => ({
-    queryKey: ['search', 'movies', searchQuery],
+    queryKey: ['searchMovies', searchQuery],
     queryFn: ({ pageParam = FIRST_PAGE }) =>
       IS_SERVER
         ? searchService.searchMovies({ searchQuery, page: pageParam })
@@ -32,7 +32,7 @@ export const searchQueries = {
     getNextPageParam,
   }),
   searchPeople: (searchQuery: string) => ({
-    queryKey: ['search', 'people', searchQuery],
+    queryKey: ['searchPeople', searchQuery],
     queryFn: ({ pageParam = FIRST_PAGE }) =>
       IS_SERVER
         ? searchService.searchPeople({ searchQuery, page: pageParam })

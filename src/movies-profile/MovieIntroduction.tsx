@@ -1,21 +1,23 @@
-import React from 'react';
-import { Typography, Box, styled, Stack } from '@mui/material';
+import { Typography, Box, styled, Stack, List, ListItem } from '@mui/material';
 import Introduction from '@/introduction/Introduction';
 import MovieGenreChip from './MovieGenreChip';
-import { Movie } from '@/movies/MoviesTypes';
+import { MovieDetails } from '@/movies/MoviesTypes';
 import MovieRating from '@/movies/MovieRating';
 import { getMovieReleaseYear } from '@/movies/MoviesUtils';
+import TextWithLabel from '@/common/TextWithLabel';
+import NextLink from '@/routing/NextLink';
 
 const Overview = styled(Typography)({
   whiteSpace: 'pre-wrap',
 });
 
 interface MovieIntroductionProps {
-  movie: Movie;
+  movie: MovieDetails;
 }
 
 function MovieIntroduction({ movie }: MovieIntroductionProps) {
   const releaseYear = getMovieReleaseYear(movie);
+  const crew = movie.credits.crew.filter((crew) => crew.job === 'Director');
 
   if (!movie) {
     return null;
@@ -35,7 +37,7 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
             color={(theme) => theme.palette.grey[300]}
           >
             {releaseYear && <span>{getMovieReleaseYear(movie)}</span>}
-            <span>·</span>
+            <span>&middot;</span>
             <span>{movie.runtime} minutes</span>
           </Stack>
         </Box>
@@ -50,20 +52,70 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
                 color={(theme) => theme.palette.grey[300]}
                 gutterBottom
               >
-                &quot;{movie.tagline}&quot;
+                {movie.tagline}
               </Typography>
             )}
             <Overview>{movie.overview}</Overview>
           </div>
+          {!!crew.length && (
+            <div>
+              <List
+                disablePadding
+                sx={{
+                  my: 1,
+                  display: 'flex',
+                  columnGap: 4,
+                  rowGap: 2,
+                  flexWrap: 'wrap',
+                }}
+              >
+                {crew.map((crewPerson) => {
+                  const allJobs = movie.credits.crew
+                    .filter((crew) => crew.id === crewPerson.id)
+                    .map((crewPerson) => crewPerson.job);
+                  return (
+                    <ListItem
+                      key={crewPerson.id}
+                      disablePadding
+                      sx={{ width: 'auto' }}
+                    >
+                      <TextWithLabel
+                        label={
+                          <NextLink
+                            href={`/person/${crewPerson.id}`}
+                            sx={{
+                              color: (theme) => theme.palette.common.white,
+                            }}
+                          >
+                            {crewPerson.name}
+                          </NextLink>
+                        }
+                        text={allJobs.join(', ')}
+                      />
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </div>
+          )}
           <div>
             <Typography variant="h6" gutterBottom>
               Genres
             </Typography>
-            <Box display="flex" gap={0.75} flexWrap={'wrap'}>
+            <List
+              disablePadding
+              sx={{
+                display: 'flex',
+                gap: 0.75,
+                flexWrap: 'wrap',
+              }}
+            >
               {movie.genres.map((genre) => (
-                <MovieGenreChip key={genre.id} genre={genre} />
+                <ListItem key={genre.id} disablePadding sx={{ width: 'auto' }}>
+                  <MovieGenreChip genre={genre} />
+                </ListItem>
               ))}
-            </Box>
+            </List>
           </div>
         </Stack>
       }

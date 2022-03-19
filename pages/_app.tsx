@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import App, { AppContext, AppProps } from 'next/app';
 import AppLayout from '@/layout/AppLayout';

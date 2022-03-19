@@ -6,14 +6,14 @@ import { httpClient } from '@/http-client/httpClient';
 
 export const peopleQueries = {
   personDetails: (personId: ID) => ({
-    queryKey: ['people', personId],
+    queryKey: ['personDetails', personId],
     queryFn: async () =>
       IS_SERVER
         ? peopleService.getPersonDetails(personId)
         : httpClient.get<PersonDetails>(`/api/person/${personId}`),
   }),
   popularPeople: () => ({
-    queryKey: ['people', 'popular'],
+    queryKey: 'popularPeople',
     queryFn: ({ pageParam = FIRST_PAGE }) =>
       IS_SERVER
         ? peopleService.getPopularPeople(pageParam)

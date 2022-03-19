@@ -1,4 +1,3 @@
-import React from 'react';
 import BaseImage from '@/common/BaseImage';
 import NextLink from '@/routing/NextLink';
 import useRouterPath from '@/routing/useRouterPath';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Box, Typography, Toolbar } from '@mui/material';
 import NextLink from '@/routing/NextLink';
 

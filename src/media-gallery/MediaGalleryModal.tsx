@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Box } from '@mui/material';
 import BaseDialog from '@/common/BaseDialog';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';

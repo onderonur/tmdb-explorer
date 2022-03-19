@@ -1,20 +1,11 @@
-import React from 'react';
 import MovieCard from '@/movies/MovieCard';
-import InfiniteGridList from '@/common/InfiniteGridList';
 import BaseSeo from '@/seo/BaseSeo';
 import { PaginationResponse } from '@/common/CommonTypes';
 import { useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query';
-import { getAllPageResults, idExtractor } from '@/common/CommonUtils';
+import { getAllPageResults } from '@/common/CommonUtils';
 import PageTitle from '@/common/PageTitle';
 import { Movie } from '@/movies/MoviesTypes';
-
-function renderItem(movie: Movie) {
-  return (
-    <li>
-      <MovieCard movie={movie} />
-    </li>
-  );
-}
+import InfiniteGridList from '@/common/InfiniteGridList';
 
 interface MoviesListingViewProps {
   title: string;
@@ -37,13 +28,18 @@ function MoviesListingView({
       <BaseSeo title={title} description={description} />
       <PageTitle title={title} extra={titleExtra} />
       <InfiniteGridList
-        items={getAllPageResults(data)}
-        keyExtractor={idExtractor}
         loading={isFetching}
         hasNextPage={!!hasNextPage}
         onLoadMore={fetchNextPage}
-        renderItem={renderItem}
-      />
+      >
+        {getAllPageResults(data).map((movie) => {
+          return (
+            <li key={movie.id}>
+              <MovieCard movie={movie} />
+            </li>
+          );
+        })}
+      </InfiniteGridList>
     </>
   );
 }

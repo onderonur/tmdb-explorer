@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   ListItemAvatar,
   Avatar,
@@ -6,6 +5,7 @@ import {
   ListItemProps,
   styled,
   ListItemButton,
+  ListItem,
 } from '@mui/material';
 import { Maybe } from '@/common/CommonTypes';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
@@ -36,12 +36,14 @@ function AutocompleteItem<C extends React.ElementType>({
   const { getImageUrl } = useApiConfiguration();
 
   return (
-    <ListItemButton alignItems="flex-start" dense {...rest}>
-      <ListItemAvatar>
-        <Avatar src={getImageUrl(avatarUrl)} alt={'Avatar'} />
-      </ListItemAvatar>
-      <StyledListItemText primary={primaryText} secondary={secondaryText} />
-    </ListItemButton>
+    <ListItem disablePadding>
+      <ListItemButton alignItems="flex-start" dense {...rest}>
+        <ListItemAvatar>
+          <Avatar src={getImageUrl(avatarUrl)} alt={'Avatar'} />
+        </ListItemAvatar>
+        <StyledListItemText primary={primaryText} secondary={secondaryText} />
+      </ListItemButton>
+    </ListItem>
   );
 }
 

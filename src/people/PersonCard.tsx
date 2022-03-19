@@ -1,4 +1,3 @@
-import React from 'react';
 import BaseImage from '@/common/BaseImage';
 import BaseCard from '@/common/BaseCard';
 import BaseCardHeader from '@/common/BaseCardHeader';

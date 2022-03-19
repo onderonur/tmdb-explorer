@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRouter } from 'next/router';
 import BaseSeo from '@/seo/BaseSeo';
 import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
@@ -20,12 +19,12 @@ function MovieProfileView() {
     <>
       {data && (
         <BaseSeo
-          title={data.movie.title}
-          description={data.movie.overview}
-          openGraph={{ images: [{ url: getImageUrl(data.movie.poster_path) }] }}
+          title={data.title}
+          description={data.overview}
+          openGraph={{ images: [{ url: getImageUrl(data.poster_path) }] }}
         />
       )}
-      <MovieProfile movie={data?.movie} loading={isLoading} />
+      <MovieProfile movie={data} loading={isLoading} />
     </>
   );
 }

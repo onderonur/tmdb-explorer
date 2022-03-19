@@ -1,4 +1,3 @@
-import React from 'react';
 import { Stack, Typography } from '@mui/material';
 import MovieIntroduction from './MovieIntroduction';
 import MovieImageCarousel from './MovieImageCarousel';
@@ -7,10 +6,10 @@ import MovieCastCarousel from './MovieCastCarousel';
 import MovieRecommendations from './MovieRecommendations';
 import { Maybe } from '@/common/CommonTypes';
 import LoadingIndicator from '@/common/LoadingIndicator';
-import { Movie } from '@/movies/MoviesTypes';
+import { MovieDetails } from '@/movies/MoviesTypes';
 
 interface MovieProfileProps {
-  movie: Maybe<Movie>;
+  movie: Maybe<MovieDetails>;
   loading: boolean;
 }
 

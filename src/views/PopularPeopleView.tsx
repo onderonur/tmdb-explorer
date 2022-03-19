@@ -1,24 +1,15 @@
-import React from 'react';
 import PersonCard from '@/people/PersonCard';
-import InfiniteGridList from '@/common/InfiniteGridList';
 import BaseSeo from '@/seo/BaseSeo';
 import { PaginationResponse } from '@/common/CommonTypes';
 import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
 import { dehydrate, useInfiniteQuery } from 'react-query';
-import { getAllPageResults, idExtractor } from '@/common/CommonUtils';
+import { getAllPageResults } from '@/common/CommonUtils';
 import { createQueryClient } from '@/http-client/queryClient';
 import PageTitle from '@/common/PageTitle';
 import { Person } from '@/people/PeopleTypes';
 import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
 import { peopleQueries } from '@/people/peopleQueries';
-
-function renderItem(person: Person) {
-  return (
-    <li>
-      <PersonCard person={person} />
-    </li>
-  );
-}
+import InfiniteGridList from '@/common/InfiniteGridList';
 
 function PopularPeopleView() {
   const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery<
@@ -30,13 +21,18 @@ function PopularPeopleView() {
       <BaseSeo title="Popular People" description="Popular people list" />
       <PageTitle title="Popular People" />
       <InfiniteGridList
-        items={getAllPageResults(data)}
-        keyExtractor={idExtractor}
         loading={isFetching}
         hasNextPage={!!hasNextPage}
         onLoadMore={fetchNextPage}
-        renderItem={renderItem}
-      />
+      >
+        {getAllPageResults(data).map((person) => {
+          return (
+            <li key={person.id}>
+              <PersonCard person={person} />
+            </li>
+          );
+        })}
+      </InfiniteGridList>
     </>
   );
 }

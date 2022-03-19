@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, styled, Toolbar, Box } from '@mui/material';
 import AppHeader from './AppHeader';
 import BackToTopButton from '@/layout/BackToTopButton';

@@ -1,4 +1,3 @@
-import React from 'react';
 import NextLink from '@/routing/NextLink';
 import { Avatar, Box, Stack, Typography } from '@mui/material';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';

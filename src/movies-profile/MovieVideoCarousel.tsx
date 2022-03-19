@@ -1,10 +1,8 @@
-import React from 'react';
 import MovieVideoCarouselItem from './MovieVideoCarouselItem';
 import VideoGalleryModal from '@/media-gallery/VideoGalleryModal';
 import { ID } from '@/common/CommonTypes';
 import { useQuery } from 'react-query';
 import BaseCarousel from '@/common/BaseCarousel';
-import { idExtractor } from '@/common/CommonUtils';
 import { movieQueries } from '@/movies/movieQueries';
 
 interface MovieVideoCarouselProps {
@@ -13,21 +11,20 @@ interface MovieVideoCarouselProps {
 
 function MovieVideoCarousel({ movieId }: MovieVideoCarouselProps) {
   const { data, isLoading } = useQuery(movieQueries.movieDetails(movieId));
-  const videos = data?.movieVideos.results || [];
+  const videos = data?.videos.results || [];
   return (
     <>
       <BaseCarousel
         // To reset the carousel as user redirects from movie to another movie
         key={movieId}
-        items={videos}
         loading={isLoading}
         slidesToShow={{ default: 5, md: 4, sm: 2 }}
-        keyExtractor={idExtractor}
         listEmptyMessage="No video has been found."
-        renderItem={(video) => {
-          return <MovieVideoCarouselItem video={video} />;
-        }}
-      />
+      >
+        {videos.map((video) => {
+          return <MovieVideoCarouselItem key={video.id} video={video} />;
+        })}
+      </BaseCarousel>
       <VideoGalleryModal videos={videos} />
     </>
   );

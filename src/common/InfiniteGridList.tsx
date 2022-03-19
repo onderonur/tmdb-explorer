@@ -1,49 +1,37 @@
-import React from 'react';
-import BaseGridList from './BaseGridList';
-import useInfiniteScroll from 'react-infinite-scroll-hook';
+import BaseGridList, { BaseGridListProps } from './BaseGridList';
+import InfiniteScrollSentry, {
+  InfiniteScrollSentryProps,
+} from './InfiniteScrollSentry';
 
-interface InfiniteGridListProps<Item> {
-  items: Item[];
-  loading: boolean;
-  hasNextPage: boolean;
-  onLoadMore: VoidFunction;
-  renderItem: (item: Item) => React.ReactNode;
-  minItemWidth?: number;
-  spacing?: number;
-  keyExtractor: (item: Item, index: number) => number;
-  listEmptyMessage?: string;
-}
+type InfiniteGridListProps = Pick<
+  BaseGridListProps,
+  'listEmptyMessage' | 'children'
+> &
+  InfiniteScrollSentryProps;
 
-function InfiniteGridList<Item>({
-  items,
-  loading,
-  hasNextPage,
-  onLoadMore,
-  renderItem,
-  minItemWidth,
-  spacing,
-  keyExtractor,
+function InfiniteGridList({
   listEmptyMessage,
-}: InfiniteGridListProps<Item>) {
-  const [sentryRef] = useInfiniteScroll({
-    hasNextPage,
-    loading: !!loading,
-    onLoadMore,
-    rootMargin: '0px 0px 400px 0px',
-  });
-
+  hasNextPage,
+  loading,
+  children,
+  onLoadMore,
+}: InfiniteGridListProps) {
   return (
-    <BaseGridList
-      keyExtractor={keyExtractor}
-      items={items}
-      loading={loading || hasNextPage}
-      minItemWidth={minItemWidth}
-      spacing={spacing}
-      hasRowGutter
-      renderItem={renderItem}
-      loadingRef={sentryRef}
-      listEmptyMessage={listEmptyMessage}
-    />
+    <>
+      <BaseGridList
+        // If list has next page, we keep loading shown
+        // to prevent flickering of loading indicator.
+        loading={loading || hasNextPage}
+        listEmptyMessage={listEmptyMessage}
+      >
+        {children}
+      </BaseGridList>
+      <InfiniteScrollSentry
+        loading={loading}
+        hasNextPage={!!hasNextPage}
+        onLoadMore={onLoadMore}
+      />
+    </>
   );
 }
 

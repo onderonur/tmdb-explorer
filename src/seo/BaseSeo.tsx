@@ -1,4 +1,3 @@
-import React from 'react';
 import { NextSeo, NextSeoProps } from 'next-seo';
 
 type BaseSeoProps = NextSeoProps;

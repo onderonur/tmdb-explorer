@@ -1,4 +1,3 @@
-import React from 'react';
 import { CardHeader, CardHeaderProps, styled } from '@mui/material';
 
 const StyledCardHeader = styled(CardHeader)(({ theme }) => ({

@@ -42,9 +42,12 @@ export type MovieCast = BasePerson & {
   character: string;
 };
 
-export type MovieDetails = {
-  movie: Movie;
-  movieImages: { backdrops: MovieImage[] };
-  movieVideos: PaginationResponse<MovieVideo>;
-  movieCast: { cast: MovieCast[] };
+type MovieCrew = BasePerson & {
+  job: string;
+};
+
+export type MovieDetails = Movie & {
+  images: { backdrops: MovieImage[] };
+  videos: PaginationResponse<MovieVideo>;
+  credits: { cast: MovieCast[]; crew: MovieCrew[] };
 };

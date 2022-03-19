@@ -1,4 +1,3 @@
-import React from 'react';
 import { getMovieReleaseYear } from '@/movies/MoviesUtils';
 import { Movie } from '@/movies/MoviesTypes';
 import AutocompleteItem from './AutocompleteItem';

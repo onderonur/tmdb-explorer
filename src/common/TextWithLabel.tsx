@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography, styled } from '@mui/material';
 
 const Label = styled(Typography)(({ theme }) => ({

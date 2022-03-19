@@ -1,4 +1,3 @@
-import React from 'react';
 import MediaGalleryModal from './MediaGalleryModal';
 import { Maybe } from '@/common/CommonTypes';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
@@ -31,7 +30,7 @@ function ImageGalleryModal({ title, filePaths }: ImageGalleryModalProps) {
           <>
             <BaseImage
               src={getImageUrl(mediaSrc, {
-                original: true,
+                quality: 'original',
               })}
               alt={title}
               width={16}

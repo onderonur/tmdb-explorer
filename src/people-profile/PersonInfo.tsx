@@ -1,4 +1,3 @@
-import React from 'react';
 import TextWithLabel from '@/common/TextWithLabel';
 import { Person } from '@/people/PeopleTypes';
 import { Box } from '@mui/material';

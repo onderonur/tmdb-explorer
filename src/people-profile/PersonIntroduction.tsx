@@ -1,4 +1,3 @@
-import React from 'react';
 import { Typography, styled, Stack } from '@mui/material';
 import Introduction from '@/introduction/Introduction';
 import { Person } from '@/people/PeopleTypes';

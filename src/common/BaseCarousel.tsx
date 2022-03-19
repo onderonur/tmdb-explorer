@@ -1,10 +1,9 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Box, styled, Typography, useTheme } from '@mui/material';
-import { Maybe } from './CommonTypes';
 import LoadingIndicator from './LoadingIndicator';
 import Slider, { Settings, ResponsiveObject } from 'react-slick';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Steppers from './Steppers';
 
 const MOVE_DRAG_THRESHOLD = 10;
@@ -60,24 +59,20 @@ const StyledSlider = styled(Slider)({
   },
 });
 
-type BaseCarouselProps<Item> = Pick<Settings, 'className'> & {
-  items: Maybe<Item[]>;
-  loading: boolean;
-  listEmptyMessage?: string;
-  slidesToShow: { default: number; md?: number; sm?: number };
-  keyExtractor: (item: Item) => React.Key;
-  renderItem: (item: Item, i: number) => React.ReactNode;
-};
+type BaseCarouselProps = Pick<Settings, 'className'> &
+  React.PropsWithChildren<{
+    loading: boolean;
+    listEmptyMessage?: string;
+    slidesToShow: { default: number; md?: number; sm?: number };
+  }>;
 
-function BaseCarousel<Item>({
+function BaseCarousel({
   className,
-  items,
   loading,
   listEmptyMessage = 'Nothing has been found',
   slidesToShow,
-  renderItem,
-  keyExtractor,
-}: BaseCarouselProps<Item>) {
+  children,
+}: BaseCarouselProps) {
   const theme = useTheme();
   const slickRef = useRef<Slider>(null);
 
@@ -121,7 +116,7 @@ function BaseCarousel<Item>({
     }
   }
 
-  if (!items?.length && !loading) {
+  if (!React.Children.count(children) && !loading) {
     return <Typography>{listEmptyMessage}</Typography>;
   }
 
@@ -143,14 +138,18 @@ function BaseCarousel<Item>({
           infinite={false}
           arrows={false}
         >
-          {items?.map((item, i) => {
+          {React.Children.map(children, (child) => {
+            if (!React.isValidElement(child)) {
+              return null;
+            }
+
             return (
               <Box
-                key={keyExtractor(item)}
+                key={child.key}
                 onMouseDownCapture={handleMouseDown}
                 onClickCapture={handleChildClick}
               >
-                <Box m={CAROUSEL_ITEM_GAP}>{renderItem(item, i)}</Box>
+                <Box m={CAROUSEL_ITEM_GAP}>{child}</Box>
               </Box>
             );
           })}

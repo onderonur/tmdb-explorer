@@ -1,4 +1,3 @@
-import React from 'react';
 import BaseImage from '@/common/BaseImage';
 import { Box, Typography, styled } from '@mui/material';
 import isPropValid from '@emotion/is-prop-valid';
@@ -52,7 +51,9 @@ function Introduction({
       color={(theme) => theme.palette.grey[100]}
     >
       <Backdrop
-        backgroundImageSrc={getImageUrl(backgroundImageSrc, { original: true })}
+        backgroundImageSrc={getImageUrl(backgroundImageSrc, {
+          quality: 'original',
+        })}
       />
       <Container
         display="flex"

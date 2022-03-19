@@ -1,4 +1,3 @@
-import React from 'react';
 import { BasePerson } from '@/people/PeopleTypes';
 import AutocompleteItem, { AutocompleteItemProps } from './AutocompleteItem';
 

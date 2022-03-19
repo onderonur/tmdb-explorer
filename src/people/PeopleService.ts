@@ -20,8 +20,10 @@ class PeopleService extends BaseService {
     return filterViewablePageResults(people);
   };
 
-  getPerson = async (personId: ID) => {
-    const person = await this.get<Person>(`/person/${personId}`);
+  getPersonDetails = async (personId: ID): Promise<PersonDetails> => {
+    const person = await this.get<PersonDetails>(`/person/${personId}`, {
+      append_to_response: 'images,credits',
+    });
 
     if (!shouldViewPerson(person)) {
       throw new CustomError(
@@ -30,23 +32,10 @@ class PeopleService extends BaseService {
       );
     }
 
+    person.credits.cast = filterViewableMovies(person.credits.cast);
+    person.credits.crew = filterViewableMovies(person.credits.crew);
+
     return person;
-  };
-
-  getPersonDetails = async (personId: ID): Promise<PersonDetails> => {
-    const person = await this.getPerson(personId);
-
-    const [personImages, personCredits] = await Promise.all([
-      this.get<PersonDetails['personImages']>(`/person/${personId}/images`),
-      this.get<PersonDetails['personCredits']>(
-        `/person/${personId}/movie_credits`,
-      ),
-    ]);
-
-    personCredits.cast = filterViewableMovies(personCredits.cast);
-    personCredits.crew = filterViewableMovies(personCredits.crew);
-
-    return { person, personImages, personCredits };
   };
 }
 

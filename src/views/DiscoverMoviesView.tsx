@@ -1,4 +1,3 @@
-import React from 'react';
 import MoviesListingView from './MoviesListingView';
 import { useRouter } from 'next/router';
 import { dehydrate, useQuery } from 'react-query';

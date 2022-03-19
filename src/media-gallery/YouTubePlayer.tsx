@@ -1,5 +1,4 @@
 import AspectRatio from '@/common/AspectRatio';
-import React from 'react';
 
 interface YouTubePlayerProps {
   youTubeId: string;

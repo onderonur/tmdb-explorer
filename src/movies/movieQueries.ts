@@ -6,14 +6,14 @@ import { httpClient } from '@/http-client/httpClient';
 
 export const movieQueries = {
   movieDetails: (movieId: ID) => ({
-    queryKey: ['movies', movieId],
+    queryKey: ['movieDetails', movieId],
     queryFn: () =>
       IS_SERVER
         ? moviesService.getMovieDetails(movieId)
         : httpClient.get<MovieDetails>(`/api/movies/${movieId}`),
   }),
   movieRecommendations: (movieId: ID) => ({
-    queryKey: ['movies', movieId, 'recommendations'],
+    queryKey: ['movieRecommendations', movieId],
     queryFn: ({ pageParam = FIRST_PAGE }) =>
       IS_SERVER
         ? moviesService.getMovieRecommendations(movieId, { page: pageParam })
@@ -26,7 +26,7 @@ export const movieQueries = {
     getNextPageParam,
   }),
   discoverMovies: (args: { genreId?: ID; sortBy: string }) => ({
-    queryKey: ['discover', 'movies', args],
+    queryKey: ['discoverMovies', args],
     queryFn: ({ pageParam = FIRST_PAGE }) =>
       IS_SERVER
         ? moviesService.getDiscoverMovies(pageParam, args)
@@ -37,7 +37,7 @@ export const movieQueries = {
     getNextPageParam,
   }),
   popularMovies: () => ({
-    queryKey: ['movies', 'popular'],
+    queryKey: 'popularMovies',
     queryFn: ({ pageParam = FIRST_PAGE }) =>
       IS_SERVER
         ? moviesService.getPopularMovies(pageParam)
@@ -47,7 +47,7 @@ export const movieQueries = {
     getNextPageParam,
   }),
   topRatedMovies: () => ({
-    queryKey: ['movies', 'topRated'],
+    queryKey: 'topRatedMovies',
     queryFn: ({ pageParam = FIRST_PAGE }) =>
       IS_SERVER
         ? moviesService.getTopRatedMovies(pageParam)
@@ -57,7 +57,7 @@ export const movieQueries = {
     getNextPageParam,
   }),
   genres: () => ({
-    queryKey: ['movies', 'genres'],
+    queryKey: 'genres',
     queryFn: () =>
       IS_SERVER
         ? moviesService.getMovieGenres()
