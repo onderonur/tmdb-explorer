@@ -9,16 +9,18 @@ import { getAllPageResults } from '@/common/CommonUtils';
 import { MediaType } from '@/common/CommonEnums';
 import { searchQueries } from '@/search/searchQueries';
 import InfiniteGridList from '@/common/InfiniteGridList';
+import LoadingIndicator from '@/common/LoadingIndicator';
 
 function SearchResultsView() {
   const router = useRouter();
-  const { mediaType, searchQuery } = router.query;
+  const { searchQuery } = router.query;
 
   const {
     data: movies,
     isFetching: isFetchingMovies,
     hasNextPage: hasNextPageMovies,
     fetchNextPage: fetchNextPageMovies,
+    isFetched: isFetchedMovies,
   } = useInfiniteQuery(
     searchQueries.searchMovies(
       typeof searchQuery === 'string' ? searchQuery : '',
@@ -30,6 +32,7 @@ function SearchResultsView() {
     isFetching: isFetchingPeople,
     hasNextPage: hasNextPagePeople,
     fetchNextPage: fetchNextPagePeople,
+    isFetched: isFetchedPeople,
   } = useInfiniteQuery(
     searchQueries.searchPeople(
       typeof searchQuery === 'string' ? searchQuery : '',
@@ -40,15 +43,21 @@ function SearchResultsView() {
     router.replace(
       { pathname: '/search', query: { ...router.query, mediaType } },
       undefined,
-      // To prevent page to be replaced and change route
-      // without losing current state.
-      // https://nextjs.org/docs/routing/shallow-routing
       { shallow: true },
     );
   }
 
   const allMovies = getAllPageResults(movies);
   const allPeople = getAllPageResults(people);
+
+  let { mediaType } = router.query;
+  if (!mediaType && isFetchedMovies && isFetchedPeople) {
+    if (allMovies.length) {
+      mediaType = MediaType.MOVIE;
+    } else if (allPeople.length) {
+      mediaType = MediaType.PERSON;
+    }
+  }
 
   return (
     <>
@@ -59,12 +68,16 @@ function SearchResultsView() {
       <SearchResultsHeader
         searchQuery={typeof searchQuery === 'string' ? searchQuery : ''}
       />
-      <Tabs value={mediaType} onChange={handleChange}>
-        {!!allMovies.length && <Tab value={MediaType.MOVIE} label={'Movies'} />}
-        {!!allPeople.length && (
-          <Tab value={MediaType.PERSON} label={'People'} />
-        )}
-      </Tabs>
+      <LoadingIndicator loading={!mediaType}>
+        <Tabs value={mediaType} onChange={handleChange}>
+          {!!allMovies.length && (
+            <Tab value={MediaType.MOVIE} label={'Movies'} />
+          )}
+          {!!allPeople.length && (
+            <Tab value={MediaType.PERSON} label={'People'} />
+          )}
+        </Tabs>
+      </LoadingIndicator>
       <Box marginTop={2}>
         {mediaType === MediaType.MOVIE && (
           <InfiniteGridList

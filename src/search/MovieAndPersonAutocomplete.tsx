@@ -43,7 +43,7 @@ function MovieAndPersonAutocomplete({
     if (inputValue) {
       router.push({
         pathname: '/search',
-        query: { mediaType: MediaType.MOVIE, searchQuery: inputValue },
+        query: { searchQuery: inputValue },
       });
     }
   };
