@@ -16,7 +16,6 @@ function PersonCrewGridList({ personId }: PersonCrewGridListProps) {
   return (
     <BaseGridList
       loading={isLoading}
-      hasRowGutter
       listEmptyMessage="No crew info has been found."
     >
       {crewList.map((personCrew) => {

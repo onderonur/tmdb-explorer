@@ -15,7 +15,6 @@ function PersonCastingGridList({ personId }: PersonCastingGridListProps) {
   return (
     <BaseGridList
       loading={isLoading}
-      hasRowGutter
       listEmptyMessage="No casting has been found."
     >
       {castings.map((casting) => {

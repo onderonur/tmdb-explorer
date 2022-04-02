@@ -23,7 +23,7 @@ export interface Person extends BasePerson {
 
 type PersonImage = MovieImage;
 
-export type PersonCasting = Movie & { character: string };
+type PersonCasting = Movie & { character: string };
 type PersonCrew = Movie & { job: string };
 type PersonCredits = { cast: PersonCasting[]; crew: PersonCrew[] };
 

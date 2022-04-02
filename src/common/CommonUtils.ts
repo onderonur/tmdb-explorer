@@ -5,10 +5,6 @@ import { CustomError } from '@/error-handling/CustomError';
 
 export const IS_SERVER = typeof window === 'undefined';
 
-export function idExtractor<Item extends ItemWithId>(item: Item) {
-  return item.id;
-}
-
 export function getNextPageParam(pageData: PaginationResponse<unknown>) {
   return pageData.total_pages > pageData.page ? pageData.page + 1 : undefined;
 }
