@@ -8,6 +8,7 @@ import useRouterPath from '@/routing/useRouterPath';
 import { Maybe } from '@/common/CommonTypes';
 import useIsMobile from '@/common/useIsMobile';
 import Steppers from '@/common/Steppers';
+import BaseSeo from '@/seo/BaseSeo';
 
 const keyMap = {
   NEXT: ['right', 'd'],
@@ -36,9 +37,7 @@ function MediaGalleryModal({
   const activeStep = router.query[queryParamName];
   const activeStepIndex = dataSource?.indexOf(activeStep as string);
 
-  const [isVisible, setIsVisible] = useState(false);
-
-  const fullScreenHandler = useFullScreenHandle();
+  const [isVisible, setIsVisible] = useState(!!activeStep);
 
   useEffect(() => {
     setIsVisible(!!activeStep);
@@ -74,6 +73,8 @@ function MediaGalleryModal({
     goToPath(previousKey);
   }
 
+  const fullScreenHandler = useFullScreenHandle();
+
   function toggleFullScreen() {
     if (fullScreenHandler.active) {
       fullScreenHandler.exit();
@@ -104,40 +105,43 @@ function MediaGalleryModal({
   const isMobile = useIsMobile();
 
   return (
-    <BaseDialog
-      title={title}
-      open={!!isVisible}
-      onClose={handleClose}
-      TransitionProps={{
-        onEntered: handleEntered,
-        onExited: handleExited,
-      }}
-      zeroPaddingContent
-    >
-      <FullScreen handle={fullScreenHandler}>
-        <HotKeys
-          innerRef={hotKeysRef}
-          keyMap={keyMap}
-          handlers={keyHandlers}
-          allowChanges={true}
-        >
-          <Box position="relative">
-            {currentMediaKey
-              ? renderMedia({
-                  mediaSrc: currentMediaKey,
-                  isFullScreen: fullScreenHandler.active,
-                  toggleFullScreen,
-                })
-              : null}
-            <Steppers
-              size={isMobile ? 'medium' : 'large'}
-              onClickPrevious={previousKey ? goToPreviousPath : null}
-              onClickNext={nextKey ? goToNextPath : null}
-            />
-          </Box>
-        </HotKeys>
-      </FullScreen>
-    </BaseDialog>
+    <>
+      {isVisible && <BaseSeo title={title} />}
+      <BaseDialog
+        title={title}
+        open={!!isVisible}
+        onClose={handleClose}
+        TransitionProps={{
+          onEntered: handleEntered,
+          onExited: handleExited,
+        }}
+        zeroPaddingContent
+      >
+        <FullScreen handle={fullScreenHandler}>
+          <HotKeys
+            innerRef={hotKeysRef}
+            keyMap={keyMap}
+            handlers={keyHandlers}
+            allowChanges={true}
+          >
+            <Box position="relative">
+              {currentMediaKey
+                ? renderMedia({
+                    mediaSrc: currentMediaKey,
+                    isFullScreen: fullScreenHandler.active,
+                    toggleFullScreen,
+                  })
+                : null}
+              <Steppers
+                size={isMobile ? 'medium' : 'large'}
+                onClickPrevious={previousKey ? goToPreviousPath : null}
+                onClickNext={nextKey ? goToNextPath : null}
+              />
+            </Box>
+          </HotKeys>
+        </FullScreen>
+      </BaseDialog>
+    </>
   );
 }
 
