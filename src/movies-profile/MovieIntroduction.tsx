@@ -30,7 +30,9 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
       imageAlt={movie.title}
       title={
         <Box>
-          <Typography variant="h5">{movie.title}</Typography>
+          <Typography variant="h5" component="h1">
+            {movie.title}
+          </Typography>
           <Stack
             direction="row"
             spacing={0.5}

@@ -75,7 +75,7 @@ function Introduction({
         </Box>
         <Box padding={2} flex={1} flexBasis={300}>
           {typeof title === 'string' ? (
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h5" component="h1" gutterBottom>
               {title}
             </Typography>
           ) : (
