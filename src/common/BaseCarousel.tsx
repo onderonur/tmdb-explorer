@@ -87,7 +87,6 @@ function BaseCarousel({
         breakpoint: breakpoints.md,
         settings: {
           slidesToShow: slidesToShow.md + 0.5,
-          slidesToScroll: slidesToShow.md,
         },
       },
     ];
@@ -100,7 +99,6 @@ function BaseCarousel({
         breakpoint: breakpoints.sm,
         settings: {
           slidesToShow: slidesToShow.sm + 0.5,
-          slidesToScroll: slidesToShow.sm,
         },
       },
     ];
@@ -131,7 +129,8 @@ function BaseCarousel({
           speed={500}
           initialSlide={0}
           slidesToShow={slidesToShow.default + 0.5}
-          slidesToScroll={slidesToShow.default}
+          // Enable drag/swipe irrespective of `slidesToScroll`
+          swipeToSlide
           // This also fixes item duplication when there are
           // less item than "slidesToShow"
           // https://github.com/akiran/react-slick/issues/1553
