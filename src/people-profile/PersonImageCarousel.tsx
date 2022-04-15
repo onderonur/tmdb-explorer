@@ -20,7 +20,7 @@ function PersonImageCarousel({ person }: PersonImageCarouselProps) {
         // To reset the carousel as user redirects from person to another person
         key={person.id}
         loading={isLoading}
-        slidesToShow={{ default: 7, md: 5, sm: 3 }}
+        slidesPerView={{ default: 2, md: 5, lg: 7 }}
         listEmptyMessage="No image has been found."
       >
         {filePaths.map((filePath, i) => {

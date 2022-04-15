@@ -18,7 +18,7 @@ function MovieVideoCarousel({ movieId }: MovieVideoCarouselProps) {
         // To reset the carousel as user redirects from movie to another movie
         key={movieId}
         loading={isLoading}
-        slidesToShow={{ default: 5, md: 4, sm: 2 }}
+        slidesPerView={{ default: 2, md: 4, lg: 5 }}
         listEmptyMessage="No video has been found."
       >
         {videos.map((video) => {

@@ -16,9 +16,9 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-type StepperButtonProps = Pick<
+export type StepperButtonProps = Pick<
   IconButtonProps,
-  'className' | 'size' | 'onClick'
+  'className' | 'size' | 'disabled' | 'onClick'
 > & {
   direction: 'next' | 'previous';
 };
@@ -31,6 +31,7 @@ function StepperButton({
   className,
   direction,
   size,
+  disabled,
   onClick,
 }: StepperButtonProps) {
   return (
@@ -38,6 +39,7 @@ function StepperButton({
       aria-label={direction}
       className={className}
       size={size}
+      disabled={disabled}
       onClick={onClick}
     >
       {direction === 'previous' ? (

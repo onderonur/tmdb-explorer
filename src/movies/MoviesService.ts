@@ -14,13 +14,13 @@ class MoviesService extends BaseService {
   getMovie = async <T extends Movie>(
     movieId: ID,
     args: {
-      appendToResponse: string[];
+      appendToResponse?: string[];
       params?: queryString.StringifiableRecord;
     },
   ) => {
     const movie = await this.get<T>(`/movie/${movieId}`, {
       ...args.params,
-      append_to_response: args.appendToResponse.join(','),
+      append_to_response: args.appendToResponse?.join(),
     });
     if (!shouldViewMovie(movie)) {
       throw new CustomError(

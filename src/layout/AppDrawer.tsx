@@ -15,6 +15,8 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { useQuery } from 'react-query';
 import AppTitle from './AppTitle';
 import { movieQueries } from '@/movies/movieQueries';
+import { useRouter } from 'next/router';
+import TmdbAttribution from './TmdbAttribution';
 
 export const APP_DRAWER_WIDTH = 260;
 
@@ -27,7 +29,7 @@ const StyledDrawer = styled(Drawer)({
 
 function AppDrawer() {
   const { isOpen, close } = useAppDrawer();
-
+  const router = useRouter();
   const { data: genres, isLoading } = useQuery(movieQueries.genres());
 
   const drawerContent = (
@@ -39,16 +41,19 @@ function AppDrawer() {
         <List subheader={<ListSubheader>Discover</ListSubheader>}>
           <AppDrawerItem
             href="/movie/popular"
+            selected={router.pathname === '/movie/popular'}
             icon={<TrendingUpIcon />}
             title="Popular Movies"
           />
           <AppDrawerItem
             href="/movie/top-rated"
+            selected={router.pathname === '/movie/top-rated'}
             icon={<StarIcon />}
             title="Top Rated Movies"
           />
           <AppDrawerItem
             href="/person/popular"
+            selected={router.pathname === '/person/popular'}
             icon={<PersonIcon />}
             title="Popular People"
           />
@@ -66,6 +71,10 @@ function AppDrawer() {
                       query: { genreId: genre.id },
                     }}
                     title={genre.name}
+                    selected={
+                      router.pathname === '/movie/discover' &&
+                      Number(router.query.genreId) === genre.id
+                    }
                   />
                 );
               })}
@@ -73,6 +82,7 @@ function AppDrawer() {
           </>
         )}
       </Box>
+      <TmdbAttribution />
     </>
   );
 

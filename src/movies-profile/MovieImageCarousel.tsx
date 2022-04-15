@@ -23,7 +23,7 @@ function MovieImageCarousel({ movie }: MovieImageCarouselProps) {
         // To reset the carousel as user redirects from movie to another movie
         key={movieId}
         loading={isLoading}
-        slidesToShow={{ default: 4, md: 3, sm: 2 }}
+        slidesPerView={{ default: 2, md: 3, lg: 4 }}
         listEmptyMessage="No image has been found."
       >
         {filePaths?.map((filePath, i) => {

@@ -18,6 +18,7 @@ type BaseAutocompleteProps<
   | 'placeholder'
   | 'loading'
   | 'inputValue'
+  | 'value'
   | 'options'
   | 'className'
   | 'getOptionLabel'

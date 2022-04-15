@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Box, IconButton, styled } from '@mui/material';
+import { AppBar, Toolbar, Box, IconButton, styled, Stack } from '@mui/material';
 import useIsMobile from '@/common/useIsMobile';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import HideOnScroll from '@/layout/HideOnScroll';
-import MovieAndPersonAutocomplete from '@/search/MovieAndPersonAutocomplete';
+import SearchAutocomplete from '@/search/SearchAutocomplete';
 import AppTitle from './AppTitle';
 import { usePaletteMode } from '@/theme/BaseThemeProvider';
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import Brightness5OutlinedIcon from '@mui/icons-material/Brightness5Outlined';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { externalLinkProps } from '@/routing/ExternalLink';
 
 const CloseButton = styled(IconButton)(({ theme }) => ({
   marginRight: theme.spacing(2),
 }));
 
-const StyledMovieAndPersonAutocomplete = styled(MovieAndPersonAutocomplete)({
+const StyledSearchAutocomplete = styled(SearchAutocomplete)({
   maxWidth: 680,
 });
 
@@ -55,7 +57,7 @@ const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
           {!isMobileSearch && <AppTitle />}
 
           <Box display={{ xs: 'flex', md: 'none' }} flex={1}>
-            {isMobileSearch ? (
+            {isMobileSearch && (
               <>
                 <CloseButton
                   aria-label="Hide search"
@@ -63,14 +65,7 @@ const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
                 >
                   <CloseIcon />
                 </CloseButton>
-                <MovieAndPersonAutocomplete autoFocus />
-              </>
-            ) : (
-              <>
-                <Box flex={1} />
-                <IconButton aria-label="Show search" onClick={showMobileSearch}>
-                  <SearchIcon />
-                </IconButton>
+                <SearchAutocomplete autoFocus />
               </>
             )}
           </Box>
@@ -81,17 +76,33 @@ const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
             justifyContent="center"
             display={{ xs: 'none', md: 'flex' }}
           >
-            <StyledMovieAndPersonAutocomplete />
+            <StyledSearchAutocomplete />
           </Box>
 
           {!isMobileSearch && (
-            <IconButton aria-label="Toggle theme" onClick={toggleMode}>
-              {mode === 'light' ? (
-                <DarkModeIcon />
-              ) : (
-                <Brightness5OutlinedIcon />
-              )}
-            </IconButton>
+            <Stack spacing={1} direction="row">
+              <IconButton
+                aria-label="Show search"
+                onClick={showMobileSearch}
+                sx={{ display: { md: 'none' } }}
+              >
+                <SearchIcon />
+              </IconButton>
+              <IconButton aria-label="Toggle theme" onClick={toggleMode}>
+                {mode === 'light' ? (
+                  <DarkModeIcon />
+                ) : (
+                  <Brightness5OutlinedIcon />
+                )}
+              </IconButton>
+              <IconButton
+                aria-label="Toggle theme"
+                href="https://github.com/onderonur/tmdb-explorer"
+                {...externalLinkProps}
+              >
+                <GitHubIcon />
+              </IconButton>
+            </Stack>
           )}
         </Toolbar>
       </AppBar>

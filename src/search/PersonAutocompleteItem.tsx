@@ -16,7 +16,7 @@ function PersonAutocompleteItem({
       avatarUrl={person.profile_path}
       primaryText={person.name}
       secondaryText={secondaryText}
-      // Required for MovieAndPersonAutocomplete
+      // Required for SearchAutocomplete
       {...rest}
     />
   );

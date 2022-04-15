@@ -13,15 +13,12 @@ import { MediaType } from '@/common/CommonEnums';
 import { isPerson } from '@/people/PeopleUtils';
 import { searchQueries } from './searchQueries';
 
-interface MovieAndPersonAutocompleteProps {
+interface SearchAutocompleteProps {
   className?: string;
   autoFocus?: boolean;
 }
 
-function MovieAndPersonAutocomplete({
-  className,
-  autoFocus,
-}: MovieAndPersonAutocompleteProps) {
+function SearchAutocomplete({ className, autoFocus }: SearchAutocompleteProps) {
   const router = useRouter();
   const { searchQuery } = router.query;
   const queryValue = typeof searchQuery === 'string' ? searchQuery : '';
@@ -32,7 +29,6 @@ function MovieAndPersonAutocomplete({
   }, [queryValue]);
 
   const debouncedSearchValue = useDebounce(searchValue);
-
   const isSearchEnabled = !!debouncedSearchValue;
   const { data, isFetching } = useInfiniteQuery({
     ...searchQueries.searchMulti(debouncedSearchValue),
@@ -99,8 +95,14 @@ function MovieAndPersonAutocomplete({
         return isMovie(option) ? option.title : option.name;
       }}
       loading={isFetching}
-      inputValue={searchValue}
+      inputValue={searchValue ?? ''}
       onInputChange={(e, newInputValue) => setSearchValue(newInputValue)}
+      freeSolo
+      autoFocus={autoFocus}
+      // To make repeatedly hitting Enter work, we set the value as empty string.
+      // Otherwise, after user selects an option or hits enter, `onChange` does not get triggered
+      // by hitting Enter again without changing the input text value.
+      value=""
       onChange={(e, newValue) => {
         // Because we set freeSolo as true,
         // newValue can be a string too.
@@ -111,10 +113,8 @@ function MovieAndPersonAutocomplete({
         }
       }}
       onSearchClick={handleRedirect}
-      freeSolo
-      autoFocus={autoFocus}
     />
   );
 }
 
-export default MovieAndPersonAutocomplete;
+export default SearchAutocomplete;
