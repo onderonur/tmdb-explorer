@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import BaseAutocomplete from '@/common/BaseAutocomplete';
 import useDebounce from '@/common/useDebounce';
 import { useRouter } from 'next/router';
@@ -12,6 +12,7 @@ import { isMovie } from '@/movies/MoviesUtils';
 import { MediaType } from '@/common/CommonEnums';
 import { isPerson } from '@/people/PeopleUtils';
 import { searchQueries } from './searchQueries';
+import useHasChanged from '@/common/useHasChanged';
 
 interface SearchAutocompleteProps {
   className?: string;
@@ -22,11 +23,10 @@ function SearchAutocomplete({ className, autoFocus }: SearchAutocompleteProps) {
   const router = useRouter();
   const { searchQuery } = router.query;
   const queryValue = typeof searchQuery === 'string' ? searchQuery : '';
-  const [searchValue, setSearchValue] = useState<string>(queryValue);
-
-  useEffect(() => {
+  const [searchValue, setSearchValue] = useState(queryValue);
+  if (useHasChanged(queryValue)) {
     setSearchValue(queryValue);
-  }, [queryValue]);
+  }
 
   const debouncedSearchValue = useDebounce(searchValue);
   const isSearchEnabled = !!debouncedSearchValue;

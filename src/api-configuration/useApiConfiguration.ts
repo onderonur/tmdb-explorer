@@ -9,7 +9,7 @@ function useApiConfiguration() {
   });
 
   const getImageUrl = useCallback(
-    (path, config?: { quality: 'w500' | 'original' }) => {
+    (path: string, config?: { quality: 'w500' | 'original' }) => {
       if (!path || !configuration) {
         return '/placeholder.png';
       }

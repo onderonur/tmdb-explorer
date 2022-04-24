@@ -1,1 +1,1 @@
-export { default } from '@/views/SearchResultsView';
+export { default, getServerSideProps } from '@/views/SearchResultsView';

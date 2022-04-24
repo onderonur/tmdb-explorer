@@ -40,11 +40,10 @@ class MoviesService extends BaseService {
     page: number,
     params: { genreId?: ID; sortBy?: string },
   ) => {
-    const genreId = Number(params.genreId);
     const movies = await this.get<PaginationResponse<Movie>>(
       '/discover/movie',
       {
-        with_genres: genreId ? [genreId] : [],
+        with_genres: params.genreId,
         sort_by: params.sortBy,
         page,
         'vote_count.gte': VIEW_FILTER_LIMIT.minVoteCount,

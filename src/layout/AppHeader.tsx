@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AppBar, Toolbar, Box, IconButton, styled, Stack } from '@mui/material';
 import useIsMobile from '@/common/useIsMobile';
 import SearchIcon from '@mui/icons-material/Search';
@@ -27,11 +27,9 @@ const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
   const isMobile = useIsMobile();
   const [isMobileSearch, setIsMobileSearch] = useState(false);
 
-  useEffect(() => {
-    if (!isMobile) {
-      setIsMobileSearch(false);
-    }
-  }, [isMobile]);
+  if (!isMobile && isMobileSearch) {
+    setIsMobileSearch(false);
+  }
 
   function showMobileSearch() {
     setIsMobileSearch(true);

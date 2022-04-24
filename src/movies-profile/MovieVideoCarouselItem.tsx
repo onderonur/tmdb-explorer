@@ -1,26 +1,28 @@
 import { ListItem, ListItemButton, ListItemText } from '@mui/material';
 import NextLink from '@/routing/NextLink';
-import useRouterPath from '@/routing/useRouterPath';
 import { MovieVideo } from '@/movies/MoviesTypes';
+import { useRouter } from 'next/router';
 
 interface MovieVideoCarouselItemProps {
   video: MovieVideo;
 }
 
 function MovieVideoCarouselItem({ video }: MovieVideoCarouselItemProps) {
-  const { asHref } = useRouterPath();
+  const router = useRouter();
+
   return (
     <ListItem disablePadding sx={{ display: 'block' }}>
       <ListItemButton
         dense
         component={NextLink}
-        href={`${asHref}?watch=${video.key}`}
+        href={{ query: { ...router.query, watch: video.key } }}
         shallow
         sx={{
           border: 1,
           borderColor: (theme) => theme.palette.text.secondary,
           borderRadius: (theme) => Number(theme.shape.borderRadius) * 0.5,
         }}
+        scroll={false}
       >
         <ListItemText
           primary={video.name}

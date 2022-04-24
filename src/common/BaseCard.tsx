@@ -23,7 +23,11 @@ function BaseCard({ hasActionArea, children, ...rest }: BaseCardProps) {
 
   return (
     <StyledCard elevation={0} {...rest}>
-      {hasActionArea ? <CardActionArea>{content}</CardActionArea> : { content }}
+      {hasActionArea ? (
+        <CardActionArea>{content}</CardActionArea>
+      ) : (
+        <>{content}</>
+      )}
     </StyledCard>
   );
 }

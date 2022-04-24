@@ -17,6 +17,7 @@ import AppTitle from './AppTitle';
 import { movieQueries } from '@/movies/movieQueries';
 import { useRouter } from 'next/router';
 import TmdbAttribution from './TmdbAttribution';
+import LoadingIndicator from '@/common/LoadingIndicator';
 
 export const APP_DRAWER_WIDTH = 260;
 
@@ -37,7 +38,7 @@ function AppDrawer() {
       <Toolbar>
         <AppTitle />
       </Toolbar>
-      <Box overflow="auto" display="flex" flexDirection="column">
+      <Box overflow="auto" display="flex" flexDirection="column" height="100%">
         <List subheader={<ListSubheader>Discover</ListSubheader>}>
           <AppDrawerItem
             href="/movie/popular"
@@ -58,29 +59,27 @@ function AppDrawer() {
             title="Popular People"
           />
         </List>
-        {isLoading ? null : (
-          <>
-            <Divider />
-            <List subheader={<ListSubheader>Movie Genres</ListSubheader>}>
-              {genres?.map((genre) => {
-                return (
-                  <AppDrawerItem
-                    key={genre.id}
-                    href={{
-                      pathname: '/movie/discover',
-                      query: { genreId: genre.id },
-                    }}
-                    title={genre.name}
-                    selected={
-                      router.pathname === '/movie/discover' &&
-                      Number(router.query.genreId) === genre.id
-                    }
-                  />
-                );
-              })}
-            </List>
-          </>
-        )}
+        <Divider />
+        <LoadingIndicator loading={isLoading}>
+          <List subheader={<ListSubheader>Movie Genres</ListSubheader>}>
+            {genres?.map((genre) => {
+              return (
+                <AppDrawerItem
+                  key={genre.id}
+                  href={{
+                    pathname: '/movie/discover',
+                    query: { genreId: genre.id },
+                  }}
+                  title={genre.name}
+                  selected={
+                    router.pathname === '/movie/discover' &&
+                    Number(router.query.genreId) === genre.id
+                  }
+                />
+              );
+            })}
+          </List>
+        </LoadingIndicator>
       </Box>
       <TmdbAttribution />
     </>

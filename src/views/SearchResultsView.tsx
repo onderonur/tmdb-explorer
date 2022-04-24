@@ -4,16 +4,25 @@ import MovieCard from '@/movies/MovieCard';
 import PersonCard from '@/people/PersonCard';
 import { useRouter } from 'next/router';
 import BaseSeo from '@/seo/BaseSeo';
-import { useInfiniteQuery } from 'react-query';
+import { dehydrate, useInfiniteQuery } from 'react-query';
 import { getAllPageResults } from '@/common/CommonUtils';
 import { MediaType } from '@/common/CommonEnums';
 import { searchQueries } from '@/search/searchQueries';
 import InfiniteGridList from '@/common/InfiniteGridList';
 import LoadingIndicator from '@/common/LoadingIndicator';
+import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
+import { createQueryClient } from '@/http-client/queryClient';
+import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
+import { ParsedUrlQuery } from 'querystring';
+
+function getSearchQuery(query: ParsedUrlQuery) {
+  const { searchQuery } = query;
+  return typeof searchQuery === 'string' ? searchQuery : '';
+}
 
 function SearchResultsView() {
   const router = useRouter();
-  const { searchQuery } = router.query;
+  const searchQuery = getSearchQuery(router.query);
 
   const {
     data: movies,
@@ -21,11 +30,7 @@ function SearchResultsView() {
     hasNextPage: hasNextPageMovies,
     fetchNextPage: fetchNextPageMovies,
     isFetched: isFetchedMovies,
-  } = useInfiniteQuery(
-    searchQueries.searchMovies(
-      typeof searchQuery === 'string' ? searchQuery : '',
-    ),
-  );
+  } = useInfiniteQuery(searchQueries.searchMovies(searchQuery));
 
   const {
     data: people,
@@ -33,18 +38,15 @@ function SearchResultsView() {
     hasNextPage: hasNextPagePeople,
     fetchNextPage: fetchNextPagePeople,
     isFetched: isFetchedPeople,
-  } = useInfiniteQuery(
-    searchQueries.searchPeople(
-      typeof searchQuery === 'string' ? searchQuery : '',
-    ),
-  );
+  } = useInfiniteQuery(searchQueries.searchPeople(searchQuery));
 
-  function handleChange(event: React.ChangeEvent<unknown>, mediaType: string) {
-    router.replace(
-      { pathname: '/search', query: { ...router.query, mediaType } },
-      undefined,
-      { shallow: true },
-    );
+  function handleTabChange(
+    event: React.ChangeEvent<unknown>,
+    mediaType: string,
+  ) {
+    router.replace({ query: { ...router.query, mediaType } }, undefined, {
+      shallow: true,
+    });
   }
 
   const allMovies = getAllPageResults(movies);
@@ -69,7 +71,7 @@ function SearchResultsView() {
         searchQuery={typeof searchQuery === 'string' ? searchQuery : ''}
       />
       <LoadingIndicator loading={!mediaType}>
-        <Tabs value={mediaType} onChange={handleChange}>
+        <Tabs value={mediaType} onChange={handleTabChange}>
           {!!allMovies.length && (
             <Tab value={MediaType.MOVIE} label={'Movies'} />
           )}
@@ -105,5 +107,25 @@ function SearchResultsView() {
     </>
   );
 }
+
+export const getServerSideProps = withGetServerSideError(async (ctx) => {
+  const searchQuery = getSearchQuery(ctx.query);
+  const queryClient = createQueryClient();
+
+  await Promise.all([
+    queryClient.fetchQuery(commonQueries.configuration()),
+    queryClient.fetchInfiniteQuery(searchQueries.searchMovies(searchQuery)),
+    queryClient.fetchInfiniteQuery(searchQueries.searchPeople(searchQuery)),
+  ]);
+
+  return {
+    props: {
+      // There is an issue when we use infinite query while SSR.
+      // So, we use this workaround.
+      // https://github.com/tannerlinsley/react-query/issues/1458
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
+    },
+  };
+});
 
 export default SearchResultsView;

@@ -7,10 +7,15 @@ import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 import PersonProfile from '@/people-profile/PersonProfile';
 import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
 import { peopleQueries } from '@/people/peopleQueries';
+import { ParsedUrlQuery } from 'querystring';
+
+function getPersonId(query: ParsedUrlQuery) {
+  return Number(query.personId);
+}
 
 function PersonProfileView() {
   const router = useRouter();
-  const personId = Number(router.query.personId);
+  const personId = getPersonId(router.query);
   const { data: person, isLoading } = useQuery(
     peopleQueries.personDetails(personId),
   );
@@ -33,8 +38,8 @@ function PersonProfileView() {
   );
 }
 
-export const getServerSideProps = withGetServerSideError(async (context) => {
-  const personId = Number(context.params.personId);
+export const getServerSideProps = withGetServerSideError(async (ctx) => {
+  const personId = getPersonId(ctx.params);
 
   const queryClient = createQueryClient();
   await Promise.all([

@@ -1,8 +1,8 @@
 import BaseImage from '@/common/BaseImage';
 import NextLink from '@/routing/NextLink';
-import useRouterPath from '@/routing/useRouterPath';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 import { styled } from '@mui/material';
+import { useRouter } from 'next/router';
 
 const Thumbnail = styled(BaseImage)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
@@ -22,10 +22,13 @@ function ImageCarouselItem({
   height,
 }: ImageCarouselItemProps) {
   const { getImageUrl } = useApiConfiguration();
-  const { asHref } = useRouterPath();
+  const router = useRouter();
 
   return (
-    <NextLink href={{ pathname: asHref, query: { view: filePath } }}>
+    <NextLink
+      href={{ query: { ...router.query, view: filePath } }}
+      scroll={false}
+    >
       <Thumbnail
         src={getImageUrl(filePath)}
         alt={imageAlt}

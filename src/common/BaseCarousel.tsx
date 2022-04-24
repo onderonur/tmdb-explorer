@@ -11,6 +11,7 @@ import {
 import 'swiper/css';
 import Steppers from './Steppers';
 import { Swiper as SwiperClass } from 'swiper';
+import { Maybe } from './CommonTypes';
 
 const CAROUSEL_ITEM_GAP = 8;
 
@@ -59,7 +60,7 @@ function BaseCarousel({
     };
   }
 
-  const swiperRef = useRef<SwiperClass | null>(null);
+  const swiperRef = useRef<Maybe<SwiperClass>>(null);
   const [isBeginning, setIsBeginning] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
 

@@ -8,15 +8,20 @@ import MovieSortingSelect, {
 } from '@/movies/MovieSortingSelect';
 import { movieQueries } from '@/movies/movieQueries';
 import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
+import { ParsedUrlQuery } from 'querystring';
+
+function getFilterValues(query: ParsedUrlQuery) {
+  const sorting = getSelectedSorting(query.sortBy);
+  const genreId = Number(query.genreId) || undefined;
+  return { sorting, genreId };
+}
 
 function DiscoverMoviesView() {
   const router = useRouter();
 
   const { data: genres } = useQuery(movieQueries.genres());
-  const genreId = Number(router.query.genreId);
+  const { genreId, sorting } = getFilterValues(router.query);
   const genre = genres?.find((genre) => genre.id === genreId);
-
-  const sorting = getSelectedSorting(router.query.sortBy);
 
   return (
     <MoviesListingView
@@ -41,8 +46,7 @@ function DiscoverMoviesView() {
 }
 
 export const getServerSideProps = withGetServerSideError(async (ctx) => {
-  const genreId = Number(ctx.query.genreId);
-  const sorting = getSelectedSorting(ctx.query.sortBy);
+  const { genreId, sorting } = getFilterValues(ctx.query);
 
   const queryClient = createQueryClient();
   await Promise.all([

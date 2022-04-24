@@ -15,6 +15,7 @@ import { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { Hydrate, QueryClientProvider } from 'react-query';
 import { createQueryClient } from '@/http-client/queryClient';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { PaletteMode } from '@mui/material';
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -52,12 +53,19 @@ function MyApp({
               name="viewport"
               content="initial-scale=1, width=device-width"
             />
+            {process.env.GOOGLE_SITE_VERIFICATION && (
+              <meta
+                name="google-site-verification"
+                content={process.env.GOOGLE_SITE_VERIFICATION}
+              />
+            )}
           </Head>
           <BaseDefaultSeo />
           <BaseThemeProvider initialPaletteMode={initialPaletteMode}>
             <PageProgressBar />
             <AppLayout>{content}</AppLayout>
           </BaseThemeProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>
       </QueryClientProvider>
     </CacheProvider>

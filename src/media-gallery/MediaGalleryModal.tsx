@@ -1,14 +1,14 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Box } from '@mui/material';
 import BaseDialog from '@/common/BaseDialog';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { HotKeys } from 'react-hotkeys';
 import { useRouter } from 'next/router';
-import useRouterPath from '@/routing/useRouterPath';
 import { Maybe } from '@/common/CommonTypes';
 import useIsMobile from '@/common/useIsMobile';
 import Steppers from '@/common/Steppers';
 import BaseSeo from '@/seo/BaseSeo';
+import useHasChanged from '@/common/useHasChanged';
 
 const keyMap = {
   NEXT: ['right', 'd'],
@@ -37,17 +37,11 @@ function MediaGalleryModal({
   const activeStep = router.query[queryParamName];
   const activeStepIndex = dataSource?.indexOf(activeStep as string);
 
-  const [isVisible, setIsVisible] = useState(!!activeStep);
-
-  useEffect(() => {
-    setIsVisible(!!activeStep);
-  }, [activeStep]);
-
-  const handleClose = useCallback(() => {
-    setIsVisible(false);
-  }, []);
-
-  const { asHref } = useRouterPath();
+  const shouldBeVisible = !!activeStep;
+  const [isVisible, setIsVisible] = useState(shouldBeVisible);
+  if (useHasChanged(shouldBeVisible)) {
+    setIsVisible(shouldBeVisible);
+  }
 
   const nextKey =
     typeof activeStepIndex === 'number'
@@ -60,8 +54,11 @@ function MediaGalleryModal({
 
   function goToPath(toKey: Maybe<string>) {
     if (toKey) {
-      const query = { [queryParamName]: toKey };
-      router.push({ pathname: asHref, query }, undefined, { shallow: true });
+      router.push(
+        { query: { ...router.query, [queryParamName]: toKey } },
+        undefined,
+        { shallow: true },
+      );
     }
   }
 
@@ -99,7 +96,12 @@ function MediaGalleryModal({
   }
 
   function handleExited() {
-    router.push(asHref, undefined, { shallow: true });
+    const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      [queryParamName]: omitted,
+      ...restQuery
+    } = router.query;
+    router.push({ query: restQuery }, undefined, { shallow: true });
   }
 
   const isMobile = useIsMobile();
@@ -110,7 +112,7 @@ function MediaGalleryModal({
       <BaseDialog
         title={title}
         open={!!isVisible}
-        onClose={handleClose}
+        onClose={() => setIsVisible(false)}
         TransitionProps={{
           onEntered: handleEntered,
           onExited: handleExited,

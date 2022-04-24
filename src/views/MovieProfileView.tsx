@@ -7,10 +7,15 @@ import { createQueryClient } from '@/http-client/queryClient';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 import { movieQueries } from '@/movies/movieQueries';
 import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
+import { ParsedUrlQuery } from 'querystring';
+
+function getMovieId(query: ParsedUrlQuery) {
+  return Number(query.movieId);
+}
 
 function MovieProfileView() {
   const router = useRouter();
-  const movieId = Number(router.query.movieId);
+  const movieId = getMovieId(router.query);
   const { data, isLoading } = useQuery(movieQueries.movieDetails(movieId));
 
   const { getImageUrl } = useApiConfiguration();
@@ -29,8 +34,8 @@ function MovieProfileView() {
   );
 }
 
-export const getServerSideProps = withGetServerSideError(async (context) => {
-  const movieId = Number(context.params.movieId);
+export const getServerSideProps = withGetServerSideError(async (ctx) => {
+  const movieId = getMovieId(ctx.params);
 
   const queryClient = createQueryClient();
   // Any query with an error is automatically excluded from dehydration.
@@ -44,6 +49,7 @@ export const getServerSideProps = withGetServerSideError(async (context) => {
   await Promise.all([
     queryClient.fetchQuery(commonQueries.configuration()),
     queryClient.fetchQuery(movieQueries.movieDetails(movieId)),
+    queryClient.fetchInfiniteQuery(movieQueries.movieRecommendations(movieId)),
   ]);
 
   return {

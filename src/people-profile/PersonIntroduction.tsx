@@ -23,12 +23,14 @@ function PersonIntroduction({ person }: PersonIntroductionProps) {
       title={person.name}
       content={
         <Stack spacing={2}>
-          <div>
-            <Typography variant="h6" gutterBottom>
-              Biography
-            </Typography>
-            <Biography variant="body2">{person.biography}</Biography>
-          </div>
+          {person.biography && (
+            <div>
+              <Typography variant="h6" gutterBottom>
+                Biography
+              </Typography>
+              <Biography variant="body2">{person.biography}</Biography>
+            </div>
+          )}
           <div>
             <Typography variant="h6" gutterBottom>
               Personal Info
