@@ -1,6 +1,6 @@
 import BaseGridList from '@/common/BaseGridList';
 import { ID } from '@/common/CommonTypes';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import MovieCard from '@/movies/MovieCard';
 import { peopleQueries } from '@/people/peopleQueries';
 

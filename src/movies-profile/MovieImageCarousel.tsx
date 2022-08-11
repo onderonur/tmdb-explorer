@@ -1,6 +1,6 @@
 import ImageGalleryModal from '@/media-gallery/ImageGalleryModal';
 import { Movie } from '@/movies/MoviesTypes';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import BaseCarousel from '@/common/BaseCarousel';
 import ImageCarouselItem from '@/common/ImageCarouselItem';
 import { movieQueries } from '@/movies/movieQueries';

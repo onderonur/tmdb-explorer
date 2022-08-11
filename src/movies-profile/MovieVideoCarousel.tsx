@@ -1,7 +1,7 @@
 import MovieVideoCarouselItem from './MovieVideoCarouselItem';
 import VideoGalleryModal from '@/media-gallery/VideoGalleryModal';
 import { ID } from '@/common/CommonTypes';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import BaseCarousel from '@/common/BaseCarousel';
 import { movieQueries } from '@/movies/movieQueries';
 

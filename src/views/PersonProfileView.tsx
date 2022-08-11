@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import BaseSeo from '@/seo/BaseSeo';
 import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
-import { dehydrate, useQuery } from 'react-query';
+import { dehydrate, useQuery } from '@tanstack/react-query';
 import { createQueryClient } from '@/http-client/queryClient';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 import PersonProfile from '@/people-profile/PersonProfile';

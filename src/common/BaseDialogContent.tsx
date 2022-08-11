@@ -6,7 +6,7 @@ export type BaseDialogContentProps = {
 };
 
 const BaseDialogContent = styled(DialogContent, {
-  shouldForwardProp: (prop) => isPropValid(prop),
+  shouldForwardProp: (prop) => isPropValid(prop as string),
 })<BaseDialogContentProps>(({ zeroPaddingContent }) => ({
   padding: zeroPaddingContent ? 0 : undefined,
 }));

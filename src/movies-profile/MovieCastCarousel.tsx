@@ -1,5 +1,5 @@
 import { ID } from '@/common/CommonTypes';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import BaseCarousel from '@/common/BaseCarousel';
 import MovieCastCarouselItem from './MovieCastCarouselItem';
 import { movieQueries } from '@/movies/movieQueries';

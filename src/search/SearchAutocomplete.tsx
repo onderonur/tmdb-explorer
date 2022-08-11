@@ -7,7 +7,7 @@ import { getAllPageResults } from '@/common/CommonUtils';
 import { Suggestion } from './SearchTypes';
 import MovieAutocompleteItem from './MovieAutocompleteItem';
 import PersonAutocompleteItem from './PersonAutocompleteItem';
-import { useInfiniteQuery } from 'react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { isMovie } from '@/movies/MoviesUtils';
 import { MediaType } from '@/common/CommonEnums';
 import { isPerson } from '@/people/PeopleUtils';

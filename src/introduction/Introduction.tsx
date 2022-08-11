@@ -8,7 +8,7 @@ interface BackdropProps {
 }
 
 const Backdrop = styled('div', {
-  shouldForwardProp: (prop) => isPropValid(prop),
+  shouldForwardProp: (prop) => isPropValid(prop as string),
 })<BackdropProps>(({ backgroundImageSrc }) => ({
   backgroundImage: `url(${backgroundImageSrc})`,
   backgroundPosition: 'center',

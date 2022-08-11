@@ -1,5 +1,5 @@
-import { styled } from '@mui/material';
 import isPropValid from '@emotion/is-prop-valid';
+import { styled } from '@mui/material';
 import React from 'react';
 
 interface AspectRatioStyleProps {
@@ -7,7 +7,7 @@ interface AspectRatioStyleProps {
 }
 
 const Root = styled('div', {
-  shouldForwardProp: (prop) => isPropValid(prop),
+  shouldForwardProp: (prop) => isPropValid(prop as string),
 })<AspectRatioStyleProps>(({ paddingTop }) => ({
   overflow: 'hidden',
   position: 'relative',

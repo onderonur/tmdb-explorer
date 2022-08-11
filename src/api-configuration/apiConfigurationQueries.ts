@@ -5,7 +5,7 @@ import { httpClient } from '@/http-client/httpClient';
 
 export const commonQueries = {
   configuration: () => ({
-    queryKey: 'configuration',
+    queryKey: ['configuration'],
     queryFn: () =>
       IS_SERVER
         ? apiConfigurationService.getApiConfiguration()

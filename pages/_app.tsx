@@ -13,9 +13,9 @@ import { ServerSideProps } from '@/error-handling/ErrorHandlingTypes';
 import createEmotionCache from '@/theme/createEmotionCache';
 import { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { Hydrate, QueryClientProvider } from 'react-query';
+import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
 import { createQueryClient } from '@/http-client/queryClient';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { PaletteMode } from '@mui/material';
 
 // Client-side cache, shared for the whole session of the user in the browser.

@@ -1,5 +1,5 @@
 import { PaginationResponse, ItemWithId, Maybe } from '@/common/CommonTypes';
-import { InfiniteData } from 'react-query';
+import { InfiniteData } from '@tanstack/react-query';
 import _ from 'lodash';
 import { CustomError } from '@/error-handling/CustomError';
 

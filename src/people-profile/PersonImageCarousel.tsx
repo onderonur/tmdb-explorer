@@ -1,6 +1,6 @@
 import ImageGalleryModal from '@/media-gallery/ImageGalleryModal';
 import { Person } from '@/people/PeopleTypes';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import BaseCarousel from '@/common/BaseCarousel';
 import ImageCarouselItem from '@/common/ImageCarouselItem';
 import { peopleQueries } from '@/people/peopleQueries';

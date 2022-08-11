@@ -22,8 +22,8 @@ export type AutocompleteItemProps<C extends React.ElementType = 'li'> =
     {
       component?: C;
       avatarUrl: string;
-      primaryText: React.ReactText;
-      secondaryText?: Maybe<React.ReactText>;
+      primaryText: string;
+      secondaryText?: Maybe<string>;
     }
   >;
 

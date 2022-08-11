@@ -12,7 +12,7 @@ import { useAppDrawer } from './AppDrawerContext';
 import PersonIcon from '@mui/icons-material/RecentActors';
 import StarIcon from '@mui/icons-material/StarRate';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import AppTitle from './AppTitle';
 import { movieQueries } from '@/movies/movieQueries';
 import { useRouter } from 'next/router';

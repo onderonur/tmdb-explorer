@@ -1,7 +1,10 @@
 import MovieCard from '@/movies/MovieCard';
 import BaseSeo from '@/seo/BaseSeo';
 import { PaginationResponse } from '@/common/CommonTypes';
-import { useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query';
+import {
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
+} from '@tanstack/react-query';
 import { getAllPageResults } from '@/common/CommonUtils';
 import PageTitle from '@/common/PageTitle';
 import { Movie } from '@/movies/MoviesTypes';

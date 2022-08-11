@@ -1,10 +1,9 @@
 import ExternalLink from '@/routing/ExternalLink';
 import { SvgIcon, Box, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useId } from 'react';
 
 function TmdbAttribution() {
-  // TODO: Use useId after migrating to React 18
-  const [linearGradientId] = useState<string>(Date.now().toString());
+  const linearGradientId = useId();
 
   return (
     <Box padding={2} textAlign="center">

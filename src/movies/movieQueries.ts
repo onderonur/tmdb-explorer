@@ -37,7 +37,7 @@ export const movieQueries = {
     getNextPageParam,
   }),
   popularMovies: () => ({
-    queryKey: 'popularMovies',
+    queryKey: ['popularMovies'],
     queryFn: ({ pageParam = FIRST_PAGE }) =>
       IS_SERVER
         ? moviesService.getPopularMovies(pageParam)
@@ -47,7 +47,7 @@ export const movieQueries = {
     getNextPageParam,
   }),
   topRatedMovies: () => ({
-    queryKey: 'topRatedMovies',
+    queryKey: ['topRatedMovies'],
     queryFn: ({ pageParam = FIRST_PAGE }) =>
       IS_SERVER
         ? moviesService.getTopRatedMovies(pageParam)
@@ -57,7 +57,7 @@ export const movieQueries = {
     getNextPageParam,
   }),
   genres: () => ({
-    queryKey: 'genres',
+    queryKey: ['genres'],
     queryFn: () =>
       IS_SERVER
         ? moviesService.getMovieGenres()

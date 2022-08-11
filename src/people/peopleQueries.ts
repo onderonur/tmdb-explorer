@@ -13,7 +13,7 @@ export const peopleQueries = {
         : httpClient.get<PersonDetails>(`/api/person/${personId}`),
   }),
   popularPeople: () => ({
-    queryKey: 'popularPeople',
+    queryKey: ['popularPeople'],
     queryFn: ({ pageParam = FIRST_PAGE }) =>
       IS_SERVER
         ? peopleService.getPopularPeople(pageParam)

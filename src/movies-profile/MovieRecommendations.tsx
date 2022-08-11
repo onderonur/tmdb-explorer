@@ -1,6 +1,6 @@
 import MovieCard from '@/movies/MovieCard';
 import { ID } from '@/common/CommonTypes';
-import { useInfiniteQuery } from 'react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { getAllPageResults } from '@/common/CommonUtils';
 import { movieQueries } from '@/movies/movieQueries';
 import InfiniteGridList from '@/common/InfiniteGridList';

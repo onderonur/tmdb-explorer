@@ -4,7 +4,7 @@ import MovieCard from '@/movies/MovieCard';
 import PersonCard from '@/people/PersonCard';
 import { useRouter } from 'next/router';
 import BaseSeo from '@/seo/BaseSeo';
-import { dehydrate, useInfiniteQuery } from 'react-query';
+import { dehydrate, useInfiniteQuery } from '@tanstack/react-query';
 import { getAllPageResults } from '@/common/CommonUtils';
 import { MediaType } from '@/common/CommonEnums';
 import { searchQueries } from '@/search/searchQueries';
@@ -122,7 +122,7 @@ export const getServerSideProps = withGetServerSideError(async (ctx) => {
     props: {
       // There is an issue when we use infinite query while SSR.
       // So, we use this workaround.
-      // https://github.com/tannerlinsley/react-query/issues/1458
+      // https://github.com/tannerlinsley/@tanstack/react-query/issues/1458
       dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
     },
   };

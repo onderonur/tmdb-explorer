@@ -9,7 +9,7 @@ interface BaseGridListStyleProps {
 }
 
 const List = styled('ul', {
-  shouldForwardProp: (prop) => isPropValid(prop),
+  shouldForwardProp: (prop) => isPropValid(prop as string),
 })<BaseGridListStyleProps>(({ theme, spacing = 1, minItemWidth }) => ({
   listStyle: 'none',
   padding: 0,
