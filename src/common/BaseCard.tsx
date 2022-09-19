@@ -1,3 +1,4 @@
+import NextLink from '@/routing/NextLink';
 import {
   Card,
   CardActionArea,
@@ -15,16 +16,18 @@ const StyledCardContent = styled(CardContent)({
 });
 
 type BaseCardProps = CardProps & {
-  hasActionArea: boolean;
+  href?: string;
 };
 
-function BaseCard({ hasActionArea, children, ...rest }: BaseCardProps) {
+function BaseCard({ href, children, ...rest }: BaseCardProps) {
   const content = <StyledCardContent>{children}</StyledCardContent>;
 
   return (
     <StyledCard elevation={0} {...rest}>
-      {hasActionArea ? (
-        <CardActionArea>{content}</CardActionArea>
+      {href ? (
+        <CardActionArea LinkComponent={NextLink} href={href}>
+          {content}
+        </CardActionArea>
       ) : (
         <>{content}</>
       )}

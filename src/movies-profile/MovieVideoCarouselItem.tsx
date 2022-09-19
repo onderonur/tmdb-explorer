@@ -11,7 +11,7 @@ function MovieVideoCarouselItem({ video }: MovieVideoCarouselItemProps) {
   const router = useRouter();
 
   return (
-    <ListItem disablePadding sx={{ display: 'block' }}>
+    <ListItem component="div" disablePadding sx={{ display: 'block' }}>
       <ListItemButton
         dense
         component={NextLink}
