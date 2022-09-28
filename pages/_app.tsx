@@ -13,7 +13,11 @@ import { ServerSideProps } from '@/error-handling/ErrorHandlingTypes';
 import createEmotionCache from '@/theme/createEmotionCache';
 import { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
+import {
+  DehydratedState,
+  Hydrate,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import { createQueryClient } from '@/http-client/queryClient';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { PaletteMode } from '@mui/material';
@@ -21,7 +25,9 @@ import { PaletteMode } from '@mui/material';
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-type MyAppProps = AppProps & {
+type PageProps = ServerSideProps & { dehydratedState: DehydratedState };
+
+type MyAppProps = AppProps<PageProps> & {
   emotionCache?: EmotionCache;
   initialPaletteMode: PaletteMode;
 };
@@ -36,7 +42,7 @@ function MyApp({
 
   let content = <Component {...pageProps} />;
 
-  const { error } = pageProps as ServerSideProps;
+  const { error } = pageProps;
   if (error) {
     content = (
       <ErrorMessage message={error.message} statusCode={error.statusCode} />

@@ -5,9 +5,9 @@ import { ServerSideError } from './ErrorHandlingTypes';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Q = any;
 
-export function withGetServerSideError<P /* Q */>(
-  getServerSideFn: GetServerSideProps<P, Q>,
-) {
+export function withGetServerSideError<
+  P extends Record<string, unknown> /* Q */,
+>(getServerSideFn: GetServerSideProps<P, Q>) {
   return async function wrappedGetServerSideProps(
     ctx: GetServerSidePropsContext<Q>,
   ) {
