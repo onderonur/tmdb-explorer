@@ -29,7 +29,7 @@ function BaseCard({ href, children, ...rest }: BaseCardProps) {
           {content}
         </CardActionArea>
       ) : (
-        <>{content}</>
+        content
       )}
     </StyledCard>
   );

@@ -3,16 +3,16 @@ import { styled } from '@mui/material';
 import React from 'react';
 
 interface AspectRatioStyleProps {
-  paddingTop: string;
+  aspectRatio: number;
 }
 
 const Root = styled('div', {
   shouldForwardProp: (prop) => isPropValid(prop as string),
-})<AspectRatioStyleProps>(({ paddingTop }) => ({
+})<AspectRatioStyleProps>(({ aspectRatio }) => ({
   overflow: 'hidden',
   position: 'relative',
   height: 0,
-  paddingTop,
+  paddingTop: `${Math.pow(aspectRatio, -1) * 100}%`,
   '& > *': {
     position: 'absolute',
     inset: 0,
@@ -21,16 +21,12 @@ const Root = styled('div', {
   },
 }));
 
-type AspectRatioProps = React.PropsWithChildren<{
-  aspectRatio: number;
-}>;
+type AspectRatioProps = React.PropsWithChildren<AspectRatioStyleProps>;
 
 const AspectRatio = React.forwardRef<HTMLDivElement, AspectRatioProps>(
   function AspectRatio({ aspectRatio, children }, ref) {
-    const paddingTop = `${Math.pow(aspectRatio, -1) * 100}%`;
-
     return (
-      <Root ref={ref} paddingTop={paddingTop}>
+      <Root ref={ref} aspectRatio={aspectRatio}>
         {children}
       </Root>
     );
