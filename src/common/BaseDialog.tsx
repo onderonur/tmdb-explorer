@@ -5,15 +5,11 @@ import useIsMobile from './useIsMobile';
 import BaseDialogProvider from './BaseDialogContext';
 import BaseDialogContent, { BaseDialogContentProps } from './BaseDialogContent';
 
-export type BaseDialogProps = DialogProps &
-  BaseDialogContentProps & {
-    titleRight?: React.ReactNode;
-  };
+export type BaseDialogProps = DialogProps & BaseDialogContentProps;
 
 function BaseDialog({
   open,
   title,
-  titleRight,
   onClose,
   TransitionProps,
   zeroPaddingContent,
@@ -41,7 +37,7 @@ function BaseDialog({
       TransitionProps={TransitionProps}
     >
       <BaseDialogProvider value={contextValue}>
-        <BaseDialogTitle title={title} titleRight={titleRight} />
+        <BaseDialogTitle title={title} />
         <BaseDialogContent zeroPaddingContent={zeroPaddingContent}>
           {children}
         </BaseDialogContent>
