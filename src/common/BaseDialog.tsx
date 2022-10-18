@@ -1,19 +1,15 @@
 import { Dialog, DialogProps } from '@mui/material';
 import { useMemo, useCallback } from 'react';
-import BaseDialogTitle from './BaseDialogTitle';
 import useIsMobile from './useIsMobile';
 import BaseDialogProvider from './BaseDialogContext';
-import BaseDialogContent, { BaseDialogContentProps } from './BaseDialogContent';
 
-export type BaseDialogProps = DialogProps & BaseDialogContentProps;
+export type BaseDialogProps = DialogProps;
 
 function BaseDialog({
   open,
-  title,
-  onClose,
   TransitionProps,
-  zeroPaddingContent,
   children,
+  onClose,
 }: BaseDialogProps) {
   const isMobile = useIsMobile();
 
@@ -21,10 +17,7 @@ function BaseDialog({
     onClose?.({}, 'backdropClick');
   }, [onClose]);
 
-  const contextValue = useMemo(
-    () => ({ fullScreen: isMobile, closeDialog }),
-    [closeDialog, isMobile],
-  );
+  const contextValue = useMemo(() => ({ closeDialog }), [closeDialog]);
 
   return (
     <Dialog
@@ -36,12 +29,7 @@ function BaseDialog({
       onClose={onClose}
       TransitionProps={TransitionProps}
     >
-      <BaseDialogProvider value={contextValue}>
-        <BaseDialogTitle title={title} />
-        <BaseDialogContent zeroPaddingContent={zeroPaddingContent}>
-          {children}
-        </BaseDialogContent>
-      </BaseDialogProvider>
+      <BaseDialogProvider value={contextValue}>{children}</BaseDialogProvider>
     </Dialog>
   );
 }

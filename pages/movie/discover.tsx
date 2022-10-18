@@ -1,14 +1,14 @@
-import MoviesListingView from './MoviesListingView';
+import MoviesListTemplate from '@/page-templates/MoviesListTemplate';
 import { useRouter } from 'next/router';
 import { dehydrate, useQuery } from '@tanstack/react-query';
 import { createQueryClient } from '@/http-client/queryClient';
-import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
 import MovieSortingSelect, {
   getSelectedSorting,
 } from '@/movies/MovieSortingSelect';
-import { movieQueries } from '@/movies/movieQueries';
-import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
+import { moviesAPI } from '@/movies/moviesAPI';
+import { apiConfigurationAPI } from '@/api-configuration/apiConfigurationAPI';
 import { ParsedUrlQuery } from 'querystring';
+import { GetServerSideProps } from 'next';
 
 function getFilterValues(query: ParsedUrlQuery) {
   const sorting = getSelectedSorting(query.sortBy);
@@ -16,15 +16,15 @@ function getFilterValues(query: ParsedUrlQuery) {
   return { sorting, genreId };
 }
 
-function DiscoverMoviesView() {
+function DiscoverMoviesPage() {
   const router = useRouter();
 
-  const { data: genres } = useQuery(movieQueries.genres());
+  const { data: genres } = useQuery(moviesAPI.genres());
   const { genreId, sorting } = getFilterValues(router.query);
   const genre = genres?.find((genre) => genre.id === genreId);
 
   return (
-    <MoviesListingView
+    <MoviesListTemplate
       title={genre ? `${genre.name} Movies` : 'Discover Movies'}
       titleExtra={
         <MovieSortingSelect
@@ -37,7 +37,7 @@ function DiscoverMoviesView() {
         />
       }
       description={genre ? `${genre.name} movies list` : 'Discover movies list'}
-      apiQuery={movieQueries.discoverMovies({
+      apiQuery={moviesAPI.discoverMovies({
         genreId,
         sortBy: sorting.id,
       })}
@@ -45,15 +45,15 @@ function DiscoverMoviesView() {
   );
 }
 
-export const getServerSideProps = withGetServerSideError(async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { genreId, sorting } = getFilterValues(ctx.query);
-
   const queryClient = createQueryClient();
+
   await Promise.all([
-    queryClient.fetchQuery(commonQueries.configuration()),
-    queryClient.fetchQuery(movieQueries.genres()),
+    queryClient.fetchQuery(apiConfigurationAPI.configuration()),
+    queryClient.fetchQuery(moviesAPI.genres()),
     queryClient.fetchInfiniteQuery(
-      movieQueries.discoverMovies({
+      moviesAPI.discoverMovies({
         genreId,
         sortBy: sorting.id,
       }),
@@ -68,6 +68,6 @@ export const getServerSideProps = withGetServerSideError(async (ctx) => {
       dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
     },
   };
-});
+};
 
-export default DiscoverMoviesView;
+export default DiscoverMoviesPage;

@@ -1,20 +1,20 @@
 import PersonCard from '@/people/PersonCard';
 import BaseSeo from '@/seo/BaseSeo';
 import { PaginationResponse } from '@/common/CommonTypes';
-import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
 import { dehydrate, useInfiniteQuery } from '@tanstack/react-query';
 import { getAllPageResults } from '@/common/CommonUtils';
 import { createQueryClient } from '@/http-client/queryClient';
 import PageTitle from '@/common/PageTitle';
 import { Person } from '@/people/PeopleTypes';
-import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
-import { peopleQueries } from '@/people/peopleQueries';
+import { apiConfigurationAPI } from '@/api-configuration/apiConfigurationAPI';
+import { peopleAPI } from '@/people/peopleAPI';
 import InfiniteGridList from '@/common/InfiniteGridList';
+import { GetServerSideProps } from 'next';
 
-function PopularPeopleView() {
+function PopularPeoplePage() {
   const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery<
     PaginationResponse<Person>
-  >(peopleQueries.popularPeople());
+  >(peopleAPI.popularPeople());
 
   return (
     <>
@@ -37,12 +37,12 @@ function PopularPeopleView() {
   );
 }
 
-export const getServerSideProps = withGetServerSideError(async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const queryClient = createQueryClient();
 
   await Promise.all([
-    queryClient.fetchQuery(commonQueries.configuration()),
-    queryClient.fetchInfiniteQuery(peopleQueries.popularPeople()),
+    queryClient.fetchQuery(apiConfigurationAPI.configuration()),
+    queryClient.fetchInfiniteQuery(peopleAPI.popularPeople()),
   ]);
 
   return {
@@ -53,6 +53,6 @@ export const getServerSideProps = withGetServerSideError(async () => {
       dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
     },
   };
-});
+};
 
-export default PopularPeopleView;
+export default PopularPeoplePage;

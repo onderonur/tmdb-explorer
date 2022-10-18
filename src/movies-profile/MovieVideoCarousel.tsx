@@ -3,14 +3,14 @@ import VideoGalleryModal from '@/media-gallery/VideoGalleryModal';
 import { ID } from '@/common/CommonTypes';
 import { useQuery } from '@tanstack/react-query';
 import BaseCarousel from '@/common/BaseCarousel';
-import { movieQueries } from '@/movies/movieQueries';
+import { moviesAPI } from '@/movies/moviesAPI';
 
 interface MovieVideoCarouselProps {
   movieId: ID;
 }
 
 function MovieVideoCarousel({ movieId }: MovieVideoCarouselProps) {
-  const { data, isLoading } = useQuery(movieQueries.movieDetails(movieId));
+  const { data, isLoading } = useQuery(moviesAPI.movieDetails(movieId));
   const videos = data?.videos.results || [];
   return (
     <>

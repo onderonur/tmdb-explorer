@@ -4,7 +4,7 @@ import { FIRST_PAGE, getNextPageParam, IS_SERVER } from '@/common/CommonUtils';
 import { moviesService } from '@/movies/MoviesService';
 import { httpClient } from '@/http-client/httpClient';
 
-export const movieQueries = {
+export const moviesAPI = {
   movieDetails: (movieId: ID) => ({
     queryKey: ['movieDetails', movieId],
     queryFn: () =>

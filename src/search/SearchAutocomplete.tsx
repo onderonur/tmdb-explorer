@@ -11,15 +11,16 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { isMovie } from '@/movies/MoviesUtils';
 import { MediaType } from '@/common/CommonEnums';
 import { isPerson } from '@/people/PeopleUtils';
-import { searchQueries } from './searchQueries';
+import { searchAPI } from './searchAPI';
 import useHasChanged from '@/common/useHasChanged';
+import { SxProps, Theme } from '@mui/material';
 
 interface SearchAutocompleteProps {
-  className?: string;
   autoFocus?: boolean;
+  sx?: SxProps<Theme>;
 }
 
-function SearchAutocomplete({ className, autoFocus }: SearchAutocompleteProps) {
+function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
   const router = useRouter();
   const { searchQuery } = router.query;
   const queryValue = typeof searchQuery === 'string' ? searchQuery : '';
@@ -31,7 +32,7 @@ function SearchAutocomplete({ className, autoFocus }: SearchAutocompleteProps) {
   const debouncedSearchValue = useDebounce(searchValue);
   const isSearchEnabled = !!debouncedSearchValue;
   const { data, isFetching } = useInfiniteQuery({
-    ...searchQueries.searchMulti(debouncedSearchValue),
+    ...searchAPI.searchMulti(debouncedSearchValue),
     enabled: isSearchEnabled,
   });
 
@@ -69,7 +70,7 @@ function SearchAutocomplete({ className, autoFocus }: SearchAutocompleteProps) {
 
   return (
     <BaseAutocomplete<Suggestion, false, true, true>
-      className={className}
+      sx={sx}
       placeholder="Search Movies & People"
       options={options}
       renderOption={(props, option) => {

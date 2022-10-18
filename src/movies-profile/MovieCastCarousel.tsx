@@ -2,14 +2,14 @@ import { ID } from '@/common/CommonTypes';
 import { useQuery } from '@tanstack/react-query';
 import BaseCarousel from '@/common/BaseCarousel';
 import MovieCastCarouselItem from './MovieCastCarouselItem';
-import { movieQueries } from '@/movies/movieQueries';
+import { moviesAPI } from '@/movies/moviesAPI';
 
 interface MovieCastCarouselProps {
   movieId: ID;
 }
 
 function MovieCastCarousel({ movieId }: MovieCastCarouselProps) {
-  const { data, isLoading } = useQuery(movieQueries.movieDetails(movieId));
+  const { data, isLoading } = useQuery(moviesAPI.movieDetails(movieId));
   const castCredits = data?.credits.cast;
 
   return (

@@ -3,14 +3,14 @@ import { Person } from '@/people/PeopleTypes';
 import { useQuery } from '@tanstack/react-query';
 import BaseCarousel from '@/common/BaseCarousel';
 import ImageCarouselItem from '@/common/ImageCarouselItem';
-import { peopleQueries } from '@/people/peopleQueries';
+import { peopleAPI } from '@/people/peopleAPI';
 
 interface PersonImageCarouselProps {
   person: Person;
 }
 
 function PersonImageCarousel({ person }: PersonImageCarouselProps) {
-  const { data, isLoading } = useQuery(peopleQueries.personDetails(person.id));
+  const { data, isLoading } = useQuery(peopleAPI.personDetails(person.id));
   const filePaths =
     data?.images.profiles.map((profile) => profile.file_path) || [];
 

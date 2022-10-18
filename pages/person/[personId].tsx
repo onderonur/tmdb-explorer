@@ -1,23 +1,23 @@
 import { useRouter } from 'next/router';
 import BaseSeo from '@/seo/BaseSeo';
-import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
 import { dehydrate, useQuery } from '@tanstack/react-query';
 import { createQueryClient } from '@/http-client/queryClient';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 import PersonProfile from '@/people-profile/PersonProfile';
-import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
-import { peopleQueries } from '@/people/peopleQueries';
+import { apiConfigurationAPI } from '@/api-configuration/apiConfigurationAPI';
+import { peopleAPI } from '@/people/peopleAPI';
 import { ParsedUrlQuery } from 'querystring';
+import { GetServerSideProps } from 'next';
 
 function getPersonId(query: ParsedUrlQuery) {
   return Number(query.personId);
 }
 
-function PersonProfileView() {
+function PersonProfilePage() {
   const router = useRouter();
   const personId = getPersonId(router.query);
   const { data: person, isLoading } = useQuery(
-    peopleQueries.personDetails(personId),
+    peopleAPI.personDetails(personId),
   );
 
   const { getImageUrl } = useApiConfiguration();
@@ -38,13 +38,13 @@ function PersonProfileView() {
   );
 }
 
-export const getServerSideProps = withGetServerSideError(async (ctx) => {
-  const personId = getPersonId(ctx.params);
-
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const personId = getPersonId(ctx.params ?? {});
   const queryClient = createQueryClient();
+
   await Promise.all([
-    queryClient.fetchQuery(commonQueries.configuration()),
-    queryClient.fetchQuery(peopleQueries.personDetails(personId)),
+    queryClient.fetchQuery(apiConfigurationAPI.configuration()),
+    queryClient.fetchQuery(peopleAPI.personDetails(personId)),
   ]);
 
   return {
@@ -52,6 +52,6 @@ export const getServerSideProps = withGetServerSideError(async (ctx) => {
       dehydratedState: dehydrate(queryClient),
     },
   };
-});
+};
 
-export default PersonProfileView;
+export default PersonProfilePage;

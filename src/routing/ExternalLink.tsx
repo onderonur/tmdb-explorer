@@ -1,18 +1,20 @@
-import { Link } from '@mui/material';
+import React from 'react';
+import { Link, LinkProps } from '@mui/material';
 
-type ExternalLinkProps = React.PropsWithChildren<{ href: string }>;
+type ExternalLinkProps = LinkProps;
 
-export const externalLinkProps = {
-  target: '_blank',
-  rel: 'noopener noreferrer',
-};
-
-function ExternalLink({ href, children }: ExternalLinkProps) {
-  return (
-    <Link href={href} {...externalLinkProps}>
-      {children}
-    </Link>
-  );
-}
+const ExternalLink = React.forwardRef<HTMLAnchorElement, ExternalLinkProps>(
+  function ExternalLink({ href, ...rest }, ref) {
+    return (
+      <Link
+        ref={ref}
+        {...rest}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+      />
+    );
+  },
+);
 
 export default ExternalLink;

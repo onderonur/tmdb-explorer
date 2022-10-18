@@ -2,7 +2,7 @@ import MovieCard from '@/movies/MovieCard';
 import { ID } from '@/common/CommonTypes';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getAllPageResults } from '@/common/CommonUtils';
-import { movieQueries } from '@/movies/movieQueries';
+import { moviesAPI } from '@/movies/moviesAPI';
 import InfiniteGridList from '@/common/InfiniteGridList';
 
 interface RecommendationsProps {
@@ -11,7 +11,7 @@ interface RecommendationsProps {
 
 function Recommendations({ movieId }: RecommendationsProps) {
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    movieQueries.movieRecommendations(movieId),
+    moviesAPI.movieRecommendations(movieId),
   );
 
   return (

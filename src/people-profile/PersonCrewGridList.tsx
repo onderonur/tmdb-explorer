@@ -2,7 +2,7 @@ import BaseGridList from '@/common/BaseGridList';
 import { ID } from '@/common/CommonTypes';
 import { useQuery } from '@tanstack/react-query';
 import MovieCard from '@/movies/MovieCard';
-import { peopleQueries } from '@/people/peopleQueries';
+import { peopleAPI } from '@/people/peopleAPI';
 import _ from 'lodash';
 
 interface PersonCrewGridListProps {
@@ -10,7 +10,7 @@ interface PersonCrewGridListProps {
 }
 
 function PersonCrewGridList({ personId }: PersonCrewGridListProps) {
-  const { data, isLoading } = useQuery(peopleQueries.personDetails(personId));
+  const { data, isLoading } = useQuery(peopleAPI.personDetails(personId));
   const crewList = _.uniqBy(data?.credits.crew ?? [], (crew) => crew.id);
 
   return (

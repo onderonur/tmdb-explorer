@@ -23,6 +23,11 @@ const Backdrop = styled('div', {
 }));
 
 const Container = styled(Box)({
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  position: 'relative',
+  zIndex: 1,
   backgroundImage:
     'radial-gradient(circle at 20% 50%, rgba(12.55%, 24.71%, 34.51%, 0.95) 0%, rgba(12.55%, 24.71%, 34.51%, 0.88) 100%)',
 });
@@ -45,24 +50,20 @@ function Introduction({
 
   return (
     <Box
-      position="relative"
-      borderRadius={2}
-      overflow="hidden"
-      color={(theme) => theme.palette.grey[100]}
+      sx={{
+        position: 'relative',
+        borderRadius: 2,
+        overflow: 'hidden',
+        color: (theme) => theme.palette.grey[100],
+      }}
     >
       <Backdrop
         backgroundImageSrc={getImageUrl(backgroundImageSrc, {
           quality: 'original',
         })}
       />
-      <Container
-        display="flex"
-        flexWrap="wrap"
-        justifyContent="center"
-        position="relative"
-        zIndex={1}
-      >
-        <Box flexBasis={300}>
+      <Container>
+        <Box sx={{ flexBasis: 300 }}>
           <BaseImage
             src={getImageUrl(imageSrc)}
             alt={imageAlt}
@@ -73,7 +74,7 @@ function Introduction({
             priority
           />
         </Box>
-        <Box padding={2} flex={1} flexBasis={300}>
+        <Box sx={{ padding: 2, flex: 1, flexBasis: 300 }}>
           {typeof title === 'string' ? (
             <Typography variant="h5" component="h1" gutterBottom>
               {title}

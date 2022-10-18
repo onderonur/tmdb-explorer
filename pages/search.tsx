@@ -7,20 +7,20 @@ import BaseSeo from '@/seo/BaseSeo';
 import { dehydrate, useInfiniteQuery } from '@tanstack/react-query';
 import { getAllPageResults } from '@/common/CommonUtils';
 import { MediaType } from '@/common/CommonEnums';
-import { searchQueries } from '@/search/searchQueries';
+import { searchAPI } from '@/search/searchAPI';
 import InfiniteGridList from '@/common/InfiniteGridList';
 import LoadingIndicator from '@/common/LoadingIndicator';
-import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
 import { createQueryClient } from '@/http-client/queryClient';
-import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
+import { apiConfigurationAPI } from '@/api-configuration/apiConfigurationAPI';
 import { ParsedUrlQuery } from 'querystring';
+import { GetServerSideProps } from 'next';
 
 function getSearchQuery(query: ParsedUrlQuery) {
   const { searchQuery } = query;
   return typeof searchQuery === 'string' ? searchQuery : '';
 }
 
-function SearchResultsView() {
+function SearchResultsPage() {
   const router = useRouter();
   const searchQuery = getSearchQuery(router.query);
 
@@ -30,7 +30,7 @@ function SearchResultsView() {
     hasNextPage: hasNextPageMovies,
     fetchNextPage: fetchNextPageMovies,
     isFetched: isFetchedMovies,
-  } = useInfiniteQuery(searchQueries.searchMovies(searchQuery));
+  } = useInfiniteQuery(searchAPI.searchMovies(searchQuery));
 
   const {
     data: people,
@@ -38,7 +38,7 @@ function SearchResultsView() {
     hasNextPage: hasNextPagePeople,
     fetchNextPage: fetchNextPagePeople,
     isFetched: isFetchedPeople,
-  } = useInfiniteQuery(searchQueries.searchPeople(searchQuery));
+  } = useInfiniteQuery(searchAPI.searchPeople(searchQuery));
 
   function handleTabChange(
     event: React.ChangeEvent<unknown>,
@@ -108,14 +108,14 @@ function SearchResultsView() {
   );
 }
 
-export const getServerSideProps = withGetServerSideError(async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const searchQuery = getSearchQuery(ctx.query);
   const queryClient = createQueryClient();
 
   await Promise.all([
-    queryClient.fetchQuery(commonQueries.configuration()),
-    queryClient.fetchInfiniteQuery(searchQueries.searchMovies(searchQuery)),
-    queryClient.fetchInfiniteQuery(searchQueries.searchPeople(searchQuery)),
+    queryClient.fetchQuery(apiConfigurationAPI.configuration()),
+    queryClient.fetchInfiniteQuery(searchAPI.searchMovies(searchQuery)),
+    queryClient.fetchInfiniteQuery(searchAPI.searchPeople(searchQuery)),
   ]);
 
   return {
@@ -126,6 +126,6 @@ export const getServerSideProps = withGetServerSideError(async (ctx) => {
       dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
     },
   };
-});
+};
 
-export default SearchResultsView;
+export default SearchResultsPage;

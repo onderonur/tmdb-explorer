@@ -37,7 +37,7 @@ function AutocompleteItem<C extends React.ElementType>({
 
   return (
     <ListItem disablePadding>
-      <ListItemButton alignItems="flex-start" dense {...rest}>
+      <ListItemButton dense sx={{ alignItems: 'flex-start' }} {...rest}>
         <ListItemAvatar>
           <Avatar src={getImageUrl(avatarUrl)} alt={'Avatar'} />
         </ListItemAvatar>

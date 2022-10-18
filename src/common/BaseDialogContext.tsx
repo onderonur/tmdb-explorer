@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
-import { BaseDialogProps } from './BaseDialog';
 
 interface BaseDialogContextValue {
-  fullScreen: BaseDialogProps['fullScreen'];
   closeDialog: VoidFunction;
 }
 

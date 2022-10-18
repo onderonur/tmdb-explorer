@@ -3,7 +3,7 @@ import { Movie } from '@/movies/MoviesTypes';
 import { useQuery } from '@tanstack/react-query';
 import BaseCarousel from '@/common/BaseCarousel';
 import ImageCarouselItem from '@/common/ImageCarouselItem';
-import { movieQueries } from '@/movies/movieQueries';
+import { moviesAPI } from '@/movies/moviesAPI';
 
 interface MovieImageCarouselProps {
   movie: Movie;
@@ -11,7 +11,7 @@ interface MovieImageCarouselProps {
 
 function MovieImageCarousel({ movie }: MovieImageCarouselProps) {
   const movieId = movie.id;
-  const { data, isLoading } = useQuery(movieQueries.movieDetails(movieId));
+  const { data, isLoading } = useQuery(moviesAPI.movieDetails(movieId));
 
   const filePaths = data?.images.backdrops.map(
     (backdrop) => backdrop.file_path,

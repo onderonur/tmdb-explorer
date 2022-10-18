@@ -19,7 +19,7 @@ type SteppersProps = Pick<StepperButtonProps, 'size' | 'onClick'> & {
 function Steppers({ size, onClickPrevious, onClickNext }: SteppersProps) {
   return (
     <>
-      <StepperRoot left={0} justifyContent="flex-start">
+      <StepperRoot sx={{ left: 0, justifyContent: 'flex-start' }}>
         <StepperButton
           size={size}
           disabled={!onClickPrevious}
@@ -27,7 +27,7 @@ function Steppers({ size, onClickPrevious, onClickNext }: SteppersProps) {
           onClick={onClickPrevious ?? undefined}
         />
       </StepperRoot>
-      <StepperRoot right={0} justifyContent="flex-end">
+      <StepperRoot sx={{ right: 0, justifyContent: 'flex-end' }}>
         <StepperButton
           size={size}
           disabled={!onClickNext}

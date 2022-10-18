@@ -11,7 +11,10 @@ const LoadingIndicator = React.forwardRef<any, LoadingIndicatorProps>(
     }
 
     return (
-      <Box ref={ref} display="flex" justifyContent="center" my={2} flexGrow={1}>
+      <Box
+        ref={ref}
+        sx={{ display: 'flex', justifyContent: 'center', my: 2, flexGrow: 1 }}
+      >
         <CircularProgress aria-label="Loading..." size={48} color="secondary" />
       </Box>
     );

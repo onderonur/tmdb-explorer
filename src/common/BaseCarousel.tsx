@@ -1,12 +1,7 @@
 import { Typography, useTheme } from '@mui/material';
 import LoadingIndicator from './LoadingIndicator';
 import React, { useRef, useState } from 'react';
-import {
-  Swiper,
-  SwiperProps,
-  SwiperSlide,
-  // eslint-disable-next-line import/no-unresolved
-} from 'swiper/react';
+import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
 // eslint-disable-next-line import/no-unresolved
 import 'swiper/css';
 import Steppers from './Steppers';

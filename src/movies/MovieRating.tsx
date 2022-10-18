@@ -10,14 +10,15 @@ interface MovieRatingProps {
 function MovieRating({ movie, size }: MovieRatingProps) {
   return (
     <Box
-      display="flex"
-      gap={0.5}
-      alignItems="center"
-      fontSize={(theme) =>
-        size === 'small'
-          ? theme.typography.subtitle2.fontSize
-          : theme.typography.h6.fontSize
-      }
+      sx={{
+        display: 'flex',
+        gap: 0.5,
+        alignItems: 'center',
+        fontSize: (theme) =>
+          size === 'small'
+            ? theme.typography.subtitle2.fontSize
+            : theme.typography.h6.fontSize,
+      }}
     >
       <StarIcon
         fontSize={size}

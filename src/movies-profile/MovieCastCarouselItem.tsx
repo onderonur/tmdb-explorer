@@ -20,7 +20,7 @@ function MovieCastCarouselItem({ castCredit }: MovieCastCarouselItemProps) {
           alt={castCredit.name}
           sx={{ height: AVATAR_SIZE, width: AVATAR_SIZE }}
         />
-        <Box textAlign="center">
+        <Box sx={{ textAlign: 'center' }}>
           <Typography
             variant="subtitle1"
             color={(theme) => theme.palette.text.primary}

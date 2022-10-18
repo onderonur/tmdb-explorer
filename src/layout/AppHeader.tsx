@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Box, IconButton, styled, Stack } from '@mui/material';
+import { AppBar, Toolbar, Box, IconButton, Stack } from '@mui/material';
 import useIsMobile from '@/common/useIsMobile';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,15 +10,7 @@ import { usePaletteMode } from '@/theme/BaseThemeProvider';
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import Brightness5OutlinedIcon from '@mui/icons-material/Brightness5Outlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { externalLinkProps } from '@/routing/ExternalLink';
-
-const CloseButton = styled(IconButton)(({ theme }) => ({
-  marginRight: theme.spacing(2),
-}));
-
-const StyledSearchAutocomplete = styled(SearchAutocomplete)({
-  maxWidth: 680,
-});
+import ExternalLink from '@/routing/ExternalLink';
 
 const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
   props,
@@ -54,27 +46,30 @@ const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
         <Toolbar>
           {!isMobileSearch && <AppTitle />}
 
-          <Box display={{ xs: 'flex', md: 'none' }} flex={1}>
+          <Box sx={{ display: { xs: 'flex', md: 'none', flex: 1 } }}>
             {isMobileSearch && (
               <>
-                <CloseButton
+                <IconButton
                   aria-label="Hide search"
+                  sx={{ marginRight: 2 }}
                   onClick={hideMobileSearch}
                 >
                   <CloseIcon />
-                </CloseButton>
+                </IconButton>
                 <SearchAutocomplete autoFocus />
               </>
             )}
           </Box>
 
           <Box
-            flex={1}
-            mx={2}
-            justifyContent="center"
-            display={{ xs: 'none', md: 'flex' }}
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              flex: 1,
+              mx: 2,
+              justifyContent: 'center',
+            }}
           >
-            <StyledSearchAutocomplete />
+            <SearchAutocomplete sx={{ maxWidth: 680 }} />
           </Box>
 
           {!isMobileSearch && (
@@ -96,7 +91,7 @@ const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
               <IconButton
                 aria-label="Toggle theme"
                 href="https://github.com/onderonur/tmdb-explorer"
-                {...externalLinkProps}
+                LinkComponent={ExternalLink}
               >
                 <GitHubIcon />
               </IconButton>

@@ -8,12 +8,14 @@ interface PageTitleProps {
 function PageTitle({ title, extra }: PageTitleProps) {
   return (
     <Box
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-      flexWrap="wrap"
-      gap={1}
-      mb={2}
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: 1,
+        mb: 2,
+      }}
     >
       <Typography variant="h5" component="h1">
         {title}

@@ -5,7 +5,7 @@ import { Person } from '@/people/PeopleTypes';
 import { searchService } from '@/search/SearchService';
 import { httpClient } from '@/http-client/httpClient';
 
-export const searchQueries = {
+export const searchAPI = {
   searchMulti: (searchQuery: string) => ({
     queryKey: ['searchMulti', searchQuery],
     queryFn: ({ pageParam = FIRST_PAGE }) =>

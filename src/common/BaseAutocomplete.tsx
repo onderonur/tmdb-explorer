@@ -20,7 +20,7 @@ type BaseAutocompleteProps<
   | 'inputValue'
   | 'value'
   | 'options'
-  | 'className'
+  | 'sx'
   | 'getOptionLabel'
   | 'renderOption'
   | 'onInputChange'

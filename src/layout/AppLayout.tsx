@@ -9,6 +9,7 @@ const Main = styled(Container)(({ theme }) => ({
   flex: 1,
   // To not let content of "main" to exceed it horizontally.
   minWidth: 0,
+  minHeight: '100%',
 })) as typeof Container;
 
 type AppLayoutProps = React.PropsWithChildren<unknown>;
@@ -16,19 +17,29 @@ type AppLayoutProps = React.PropsWithChildren<unknown>;
 function AppLayout({ children }: AppLayoutProps) {
   return (
     <AppDrawerProvider>
-      <AppHeader />
-      <Toolbar />
-      <Box display="flex">
-        <Box
-          component="nav"
-          width={{ xs: 0, md: APP_DRAWER_WIDTH }}
-          flexShrink={0}
-        >
-          <AppDrawer />
+      <Box
+        sx={{
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <AppHeader />
+        <Toolbar />
+        <Box sx={{ flex: 1, display: 'flex' }}>
+          <Box
+            component="nav"
+            sx={{
+              width: { xs: 0, md: APP_DRAWER_WIDTH },
+              flex: 'none',
+            }}
+          >
+            <AppDrawer />
+          </Box>
+          <Main component="main">{children}</Main>
         </Box>
-        <Main component="main">{children}</Main>
+        <BackToTopButton />
       </Box>
-      <BackToTopButton />
     </AppDrawerProvider>
   );
 }

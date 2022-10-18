@@ -30,7 +30,7 @@ function PersonInfo({ person }: PersonInfoProps) {
   const gender = getGender();
 
   return (
-    <Box display="flex" flexWrap={'wrap'} gap={4}>
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
       {gender && <TextWithLabel label="Gender" text={gender} />}
       {person.birthday && (
         <TextWithLabel label="Birthday" text={person.birthday} />

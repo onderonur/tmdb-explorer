@@ -1,10 +1,10 @@
-import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
+import { apiConfigurationAPI } from '@/api-configuration/apiConfigurationAPI';
 import { useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 function useApiConfiguration() {
   const { data: configuration } = useQuery({
-    ...commonQueries.configuration(),
+    ...apiConfigurationAPI.configuration(),
     staleTime: Infinity,
   });
 

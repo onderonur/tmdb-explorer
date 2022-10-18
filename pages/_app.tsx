@@ -8,8 +8,6 @@ import BaseThemeProvider, {
   getInitialPaletteMode,
 } from '@/theme/BaseThemeProvider';
 import PageProgressBar from '@/common/PageProgressBar';
-import ErrorMessage from '@/error-handling/ErrorMessage';
-import { ServerSideProps } from '@/error-handling/ErrorHandlingTypes';
 import createEmotionCache from '@/theme/createEmotionCache';
 import { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
@@ -25,7 +23,7 @@ import { PaletteMode } from '@mui/material';
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-type PageProps = ServerSideProps & { dehydratedState: DehydratedState };
+type PageProps = { dehydratedState: DehydratedState };
 
 type MyAppProps = AppProps<PageProps> & {
   emotionCache?: EmotionCache;
@@ -39,15 +37,6 @@ function MyApp({
   initialPaletteMode,
 }: MyAppProps) {
   const [queryClient] = useState(() => createQueryClient());
-
-  let content = <Component {...pageProps} />;
-
-  const { error } = pageProps;
-  if (error) {
-    content = (
-      <ErrorMessage message={error.message} statusCode={error.statusCode} />
-    );
-  }
 
   return (
     <CacheProvider value={emotionCache}>
@@ -69,7 +58,9 @@ function MyApp({
           <BaseDefaultSeo />
           <BaseThemeProvider initialPaletteMode={initialPaletteMode}>
             <PageProgressBar />
-            <AppLayout>{content}</AppLayout>
+            <AppLayout>
+              <Component {...pageProps} />
+            </AppLayout>
           </BaseThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </Hydrate>

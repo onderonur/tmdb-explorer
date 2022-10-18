@@ -4,7 +4,7 @@ import { Person, PersonDetails } from '@/people/PeopleTypes';
 import { peopleService } from '@/people/PeopleService';
 import { httpClient } from '@/http-client/httpClient';
 
-export const peopleQueries = {
+export const peopleAPI = {
   personDetails: (personId: ID) => ({
     queryKey: ['personDetails', personId],
     queryFn: async () =>

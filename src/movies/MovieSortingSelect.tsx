@@ -46,7 +46,7 @@ interface MovieSortingSelectProps {
 
 function MovieSortingSelect({ value, onChange }: MovieSortingSelectProps) {
   return (
-    <Box minWidth={220}>
+    <Box sx={{ minWidth: 220 }}>
       <TextField
         label="Sort by"
         select

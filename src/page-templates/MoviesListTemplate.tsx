@@ -10,19 +10,19 @@ import PageTitle from '@/common/PageTitle';
 import { Movie } from '@/movies/MoviesTypes';
 import InfiniteGridList from '@/common/InfiniteGridList';
 
-interface MoviesListingViewProps {
+interface MoviesListTemplateProps {
   title: string;
   titleExtra?: React.ReactNode;
   description: string;
   apiQuery: UseInfiniteQueryOptions<PaginationResponse<Movie>>;
 }
 
-function MoviesListingView({
+function MoviesListTemplate({
   title,
   titleExtra,
   description,
   apiQuery,
-}: MoviesListingViewProps) {
+}: MoviesListTemplateProps) {
   const { data, hasNextPage, isFetching, fetchNextPage } =
     useInfiniteQuery<PaginationResponse<Movie>>(apiQuery);
 
@@ -47,4 +47,4 @@ function MoviesListingView({
   );
 }
 
-export default MoviesListingView;
+export default MoviesListTemplate;

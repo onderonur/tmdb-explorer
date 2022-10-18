@@ -2,14 +2,10 @@ import BaseImage from '@/common/BaseImage';
 import BaseCard from '@/common/BaseCard';
 import BaseCardHeader from '@/common/BaseCardHeader';
 import MovieRating from './MovieRating';
-import { Box, styled, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Movie } from '@/movies/MoviesTypes';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
 import { getMovieReleaseYear } from '@/movies/MoviesUtils';
-
-const MovieCardHeader = styled(BaseCardHeader)(({ theme }) => ({
-  paddingBottom: theme.spacing(0.25),
-}));
 
 interface MovieCardProps {
   movie: Movie;
@@ -29,8 +25,19 @@ function MovieCard({ movie, subheader }: MovieCardProps) {
         layout="responsive"
         objectFit="cover"
       />
-      <MovieCardHeader title={movie.title} subheader={subheader} />
-      <Box display="flex" justifyContent={'space-between'} pb={1} px={1}>
+      <BaseCardHeader
+        title={movie.title}
+        subheader={subheader}
+        sx={{ paddingBottom: 0.25 }}
+      />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          paddingBottom: 1,
+          paddingX: 1,
+        }}
+      >
         <Typography
           color={(theme) => theme.palette.text.secondary}
           variant="subtitle2"

@@ -6,7 +6,7 @@ function TmdbAttribution() {
   const linearGradientId = useId();
 
   return (
-    <Box padding={2} textAlign="center">
+    <Box sx={{ padding: 2, textAlign: 'center' }}>
       <ExternalLink href="https://www.themoviedb.org/">
         <SvgIcon viewBox="0 0 185.04 133.4" sx={{ fontSize: 48 }}>
           <defs>

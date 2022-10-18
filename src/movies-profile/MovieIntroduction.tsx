@@ -45,7 +45,7 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
         </Box>
       }
       content={
-        <Stack spacing={0.5} mt={1}>
+        <Stack spacing={0.5} sx={{ marginTop: 1 }}>
           <MovieRating movie={movie} size="medium" />
           <div>
             <Typography variant="h6">Overview</Typography>

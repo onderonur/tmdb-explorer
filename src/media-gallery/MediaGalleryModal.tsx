@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, DialogContent } from '@mui/material';
 import BaseDialog from '@/common/BaseDialog';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { HotKeys } from 'react-hotkeys';
@@ -9,6 +9,7 @@ import useIsMobile from '@/common/useIsMobile';
 import Steppers from '@/common/Steppers';
 import BaseSeo from '@/seo/BaseSeo';
 import useHasChanged from '@/common/useHasChanged';
+import BaseDialogTitle from '@/common/BaseDialogTitle';
 
 const keyMap = {
   NEXT: ['right', 'd'],
@@ -117,7 +118,6 @@ function MediaGalleryModal({
           onEntered: handleEntered,
           onExited: handleExited,
         }}
-        zeroPaddingContent
       >
         <FullScreen handle={fullScreenHandler}>
           <HotKeys
@@ -126,20 +126,23 @@ function MediaGalleryModal({
             handlers={keyHandlers}
             allowChanges={true}
           >
-            <Box position="relative">
-              {currentMediaKey
-                ? renderMedia({
-                    mediaSrc: currentMediaKey,
-                    isFullScreen: fullScreenHandler.active,
-                    toggleFullScreen,
-                  })
-                : null}
-              <Steppers
-                size={isMobile ? 'medium' : 'large'}
-                onClickPrevious={previousKey ? goToPreviousPath : null}
-                onClickNext={nextKey ? goToNextPath : null}
-              />
-            </Box>
+            <BaseDialogTitle>{title}</BaseDialogTitle>
+            <DialogContent sx={{ padding: 0 }}>
+              <Box position="relative">
+                {currentMediaKey
+                  ? renderMedia({
+                      mediaSrc: currentMediaKey,
+                      isFullScreen: fullScreenHandler.active,
+                      toggleFullScreen,
+                    })
+                  : null}
+                <Steppers
+                  size={isMobile ? 'medium' : 'large'}
+                  onClickPrevious={previousKey ? goToPreviousPath : null}
+                  onClickNext={nextKey ? goToNextPath : null}
+                />
+              </Box>
+            </DialogContent>
           </HotKeys>
         </FullScreen>
       </BaseDialog>

@@ -7,9 +7,11 @@ import { NextPageContext } from 'next';
 
 export function getInitialPaletteMode(ctx: NextPageContext) {
   const { paletteMode } = nookies.get(ctx);
+
   if (['light', 'dark'].includes(paletteMode)) {
     return paletteMode;
   }
+
   return 'dark';
 }
 

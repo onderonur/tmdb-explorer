@@ -1,11 +1,8 @@
-import { Typography, styled, Stack } from '@mui/material';
+import { Typography, Stack } from '@mui/material';
 import Introduction from '@/introduction/Introduction';
 import { Person } from '@/people/PeopleTypes';
 import PersonInfo from './PersonInfo';
 
-const Biography = styled(Typography)({
-  whiteSpace: 'pre-wrap',
-});
 interface PersonIntroductionProps {
   person: Person;
 }
@@ -28,7 +25,14 @@ function PersonIntroduction({ person }: PersonIntroductionProps) {
               <Typography variant="h6" gutterBottom>
                 Biography
               </Typography>
-              <Biography variant="body2">{person.biography}</Biography>
+              <Typography
+                variant="body2"
+                sx={{
+                  whiteSpace: 'pre-wrap',
+                }}
+              >
+                {person.biography}
+              </Typography>
             </div>
           )}
           <div>

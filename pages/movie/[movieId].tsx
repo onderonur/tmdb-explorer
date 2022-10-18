@@ -1,22 +1,22 @@
 import { useRouter } from 'next/router';
 import BaseSeo from '@/seo/BaseSeo';
-import { withGetServerSideError } from '@/error-handling/withGetServerSideError';
 import MovieProfile from '@/movies-profile/MovieProfile';
 import { dehydrate, useQuery } from '@tanstack/react-query';
 import { createQueryClient } from '@/http-client/queryClient';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
-import { movieQueries } from '@/movies/movieQueries';
-import { commonQueries } from '@/api-configuration/apiConfigurationQueries';
+import { moviesAPI } from '@/movies/moviesAPI';
+import { apiConfigurationAPI } from '@/api-configuration/apiConfigurationAPI';
 import { ParsedUrlQuery } from 'querystring';
+import { GetServerSideProps } from 'next';
 
 function getMovieId(query: ParsedUrlQuery) {
   return Number(query.movieId);
 }
 
-function MovieProfileView() {
+function MovieProfilePage() {
   const router = useRouter();
   const movieId = getMovieId(router.query);
-  const { data, isLoading } = useQuery(movieQueries.movieDetails(movieId));
+  const { data, isLoading } = useQuery(moviesAPI.movieDetails(movieId));
 
   const { getImageUrl } = useApiConfiguration();
 
@@ -34,10 +34,10 @@ function MovieProfileView() {
   );
 }
 
-export const getServerSideProps = withGetServerSideError(async (ctx) => {
-  const movieId = getMovieId(ctx.params);
-
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const movieId = getMovieId(ctx.params ?? {});
   const queryClient = createQueryClient();
+
   // Any query with an error is automatically excluded from dehydration.
   // This means that the default behavior is to pretend these queries were never loaded on the server,
   // usually showing a loading state instead, and retrying the queries on the queryClient.
@@ -47,9 +47,9 @@ export const getServerSideProps = withGetServerSideError(async (ctx) => {
   // In those cases, use fetchQuery and catch any errors to handle those manually.
   // https://@tanstack/react-query.tanstack.com/guides/ssr#only-successful-queries-are-included-in-dehydration
   await Promise.all([
-    queryClient.fetchQuery(commonQueries.configuration()),
-    queryClient.fetchQuery(movieQueries.movieDetails(movieId)),
-    queryClient.fetchInfiniteQuery(movieQueries.movieRecommendations(movieId)),
+    queryClient.fetchQuery(apiConfigurationAPI.configuration()),
+    queryClient.fetchQuery(moviesAPI.movieDetails(movieId)),
+    queryClient.fetchInfiniteQuery(moviesAPI.movieRecommendations(movieId)),
   ]);
 
   return {
@@ -60,6 +60,6 @@ export const getServerSideProps = withGetServerSideError(async (ctx) => {
       dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
     },
   };
-});
+};
 
-export default MovieProfileView;
+export default MovieProfilePage;

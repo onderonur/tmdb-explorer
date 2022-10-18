@@ -14,7 +14,6 @@ const handler: NextApiHandler<PaginationResponse<Movie>> = async (req, res) => {
       page,
     },
   );
-
   res.status(200).json(movieRecommendations);
 };
 

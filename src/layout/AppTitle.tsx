@@ -5,8 +5,8 @@ import { APP_TITLE } from '@/common/CommonConstants';
 
 function AppTitle() {
   return (
-    <Box display="flex" gap={1} alignItems="center">
-      <Box display={{ xs: 'block', md: 'none' }}>
+    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+      <Box sx={{ display: { xs: 'block', md: 'none' } }}>
         <AppDrawerToggleButton />
       </Box>
       <Link color="inherit" href="/" component={NextLink} underline="none">

@@ -14,7 +14,7 @@ import StarIcon from '@mui/icons-material/StarRate';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { useQuery } from '@tanstack/react-query';
 import AppTitle from './AppTitle';
-import { movieQueries } from '@/movies/movieQueries';
+import { moviesAPI } from '@/movies/moviesAPI';
 import { useRouter } from 'next/router';
 import TmdbAttribution from './TmdbAttribution';
 import LoadingIndicator from '@/common/LoadingIndicator';
@@ -31,14 +31,21 @@ const StyledDrawer = styled(Drawer)({
 function AppDrawer() {
   const { isOpen, close } = useAppDrawer();
   const router = useRouter();
-  const { data: genres, isLoading } = useQuery(movieQueries.genres());
+  const { data: genres, isLoading } = useQuery(moviesAPI.genres());
 
   const drawerContent = (
     <>
       <Toolbar>
         <AppTitle />
       </Toolbar>
-      <Box overflow="auto" display="flex" flexDirection="column" height="100%">
+      <Box
+        sx={{
+          overflow: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+        }}
+      >
         <List subheader={<ListSubheader>Discover</ListSubheader>}>
           <AppDrawerItem
             href="/movie/popular"

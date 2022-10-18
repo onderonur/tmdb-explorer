@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import ErrorMessage from '@/error-handling/ErrorMessage';
 
-interface ErrorViewProps {
+interface ErrorPageProps {
   statusCode?: number;
   message?: string;
 }
@@ -10,13 +10,13 @@ interface ErrorViewProps {
 // In development you’ll get an error with the call
 // stack to know where the error originated from.
 // https://nextjs.org/docs/advanced-features/custom-error-page#customizing-the-error-page
-const ErrorView: NextPage<ErrorViewProps> = ({ statusCode, message }) => {
+const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode, message }) => {
   return <ErrorMessage statusCode={statusCode} message={message} />;
 };
 
 const notFoundStatusCode = 404;
 
-ErrorView.getInitialProps = async ({ res, err }) => {
+ErrorPage.getInitialProps = async ({ res, err }) => {
   // When an error occurs in a "getServerSideProps" etc, both the "res" and "err" has a value.
   // If there is a client-side error, only "err" has a value.
   // If we open a non-existing path, "res" has a value but "err" not etc.
@@ -28,4 +28,4 @@ ErrorView.getInitialProps = async ({ res, err }) => {
   return { statusCode, message };
 };
 
-export default ErrorView;
+export default ErrorPage;

@@ -7,7 +7,6 @@ import { validateId } from '@/common/CommonUtils';
 const handler: NextApiHandler<MovieDetails> = async (req, res) => {
   const movieId = validateId(req.query.movieId);
   const movieDetails = await moviesService.getMovieDetails(movieId);
-
   res.status(200).json(movieDetails);
 };
 
