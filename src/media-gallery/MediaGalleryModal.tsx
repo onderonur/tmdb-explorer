@@ -137,7 +137,7 @@ function MediaGalleryModal({
                     })
                   : null}
                 <Steppers
-                  size={isMobile ? 'medium' : 'large'}
+                  fontSize={isMobile ? 'medium' : 'large'}
                   onClickPrevious={previousKey ? goToPreviousPath : null}
                   onClickNext={nextKey ? goToNextPath : null}
                 />

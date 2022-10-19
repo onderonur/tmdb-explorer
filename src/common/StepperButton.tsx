@@ -18,19 +18,20 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 
 export type StepperButtonProps = Pick<
   IconButtonProps,
-  'className' | 'size' | 'disabled' | 'onClick'
-> & {
-  direction: 'next' | 'previous';
-};
+  'className' | 'disabled' | 'onClick'
+> &
+  Pick<React.ComponentPropsWithoutRef<typeof ChevronLeftIcon>, 'fontSize'> & {
+    direction: 'next' | 'previous';
+  };
 
-const iconStyle: SxProps<Theme> = {
+const iconSx: SxProps<Theme> = {
   color: (theme) => theme.palette.grey[300],
 };
 
 function StepperButton({
   className,
   direction,
-  size,
+  fontSize,
   disabled,
   onClick,
 }: StepperButtonProps) {
@@ -38,14 +39,13 @@ function StepperButton({
     <StyledIconButton
       aria-label={direction}
       className={className}
-      size={size}
       disabled={disabled}
       onClick={onClick}
     >
       {direction === 'previous' ? (
-        <ChevronLeftIcon fontSize={size} sx={iconStyle} />
+        <ChevronLeftIcon fontSize={fontSize} sx={iconSx} />
       ) : (
-        <ChevronRightIcon fontSize={size} sx={iconStyle} />
+        <ChevronRightIcon fontSize={fontSize} sx={iconSx} />
       )}
     </StyledIconButton>
   );

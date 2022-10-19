@@ -11,17 +11,17 @@ const StepperRoot = styled(Box)(({ theme }) => ({
   zIndex: theme.zIndex.fab,
 }));
 
-type SteppersProps = Pick<StepperButtonProps, 'size' | 'onClick'> & {
+type SteppersProps = Pick<StepperButtonProps, 'fontSize'> & {
   onClickPrevious: Maybe<VoidFunction>;
   onClickNext: Maybe<VoidFunction>;
 };
 
-function Steppers({ size, onClickPrevious, onClickNext }: SteppersProps) {
+function Steppers({ fontSize, onClickPrevious, onClickNext }: SteppersProps) {
   return (
     <>
       <StepperRoot sx={{ left: 0, justifyContent: 'flex-start' }}>
         <StepperButton
-          size={size}
+          fontSize={fontSize}
           disabled={!onClickPrevious}
           direction="previous"
           onClick={onClickPrevious ?? undefined}
@@ -29,7 +29,7 @@ function Steppers({ size, onClickPrevious, onClickNext }: SteppersProps) {
       </StepperRoot>
       <StepperRoot sx={{ right: 0, justifyContent: 'flex-end' }}>
         <StepperButton
-          size={size}
+          fontSize={fontSize}
           disabled={!onClickNext}
           direction="next"
           onClick={onClickNext ?? undefined}
