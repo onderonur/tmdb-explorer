@@ -1,10 +1,10 @@
-import { DefaultSeo } from 'next-seo';
+import { DefaultSeo, DefaultSeoProps } from 'next-seo';
 import { useRouter } from 'next/router';
 import { APP_TITLE } from '@/common/CommonConstants';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-const getDefaultSeoConfig = (pathname: string) => {
+const getDefaultSeoConfig = (pathname: string): DefaultSeoProps => {
   const url = `${baseUrl}${pathname}`;
   const description = `${APP_TITLE} is a client application for TMDb API. It's created with Next.js.`;
   return {
@@ -19,8 +19,11 @@ const getDefaultSeoConfig = (pathname: string) => {
       url,
       site_name: APP_TITLE,
       images: [
-        // TODO
+        { url: `${baseUrl}/tmdb-explorer.jpg`, width: 640, height: 422 },
       ],
+    },
+    twitter: {
+      cardType: 'summary_large_image',
     },
     additionalMetaTags: [
       {

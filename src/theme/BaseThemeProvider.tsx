@@ -61,7 +61,7 @@ function BaseThemeProvider({
     <PaletteModeContext.Provider value={paletteModeContextValue}>
       <ThemeProvider theme={currentTheme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
+        <CssBaseline enableColorScheme />
         <Head>
           {/* PWA primary color */}
           <meta

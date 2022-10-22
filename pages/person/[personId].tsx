@@ -29,7 +29,13 @@ function PersonProfilePage() {
           title={person.name}
           description={person.biography || undefined}
           openGraph={{
-            images: [{ url: getImageUrl(person.profile_path) }],
+            images: [
+              {
+                url: getImageUrl(person.profile_path),
+                width: 500,
+                height: 750,
+              },
+            ],
           }}
         />
       )}

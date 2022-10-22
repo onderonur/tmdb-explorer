@@ -26,7 +26,16 @@ function MovieProfilePage() {
         <BaseSeo
           title={data.title}
           description={data.overview}
-          openGraph={{ images: [{ url: getImageUrl(data.poster_path) }] }}
+          openGraph={{
+            images: [
+              {
+                url: getImageUrl(data.poster_path),
+                width: 500,
+                height: 750,
+                alt: data.title,
+              },
+            ],
+          }}
         />
       )}
       <MovieProfile movie={data} loading={isLoading} />

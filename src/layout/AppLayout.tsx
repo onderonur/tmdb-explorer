@@ -17,29 +17,21 @@ type AppLayoutProps = React.PropsWithChildren<unknown>;
 function AppLayout({ children }: AppLayoutProps) {
   return (
     <AppDrawerProvider>
-      <Box
-        sx={{
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <AppHeader />
-        <Toolbar />
-        <Box sx={{ flex: 1, display: 'flex' }}>
-          <Box
-            component="nav"
-            sx={{
-              width: { xs: 0, md: APP_DRAWER_WIDTH },
-              flex: 'none',
-            }}
-          >
-            <AppDrawer />
-          </Box>
-          <Main component="main">{children}</Main>
+      <AppHeader />
+      <Toolbar />
+      <Box sx={{ flex: 1, display: 'flex' }}>
+        <Box
+          component="nav"
+          sx={{
+            width: { xs: 0, md: APP_DRAWER_WIDTH },
+            flex: 'none',
+          }}
+        >
+          <AppDrawer />
         </Box>
-        <BackToTopButton />
+        <Main component="main">{children}</Main>
       </Box>
+      <BackToTopButton />
     </AppDrawerProvider>
   );
 }
