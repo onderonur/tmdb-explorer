@@ -1,11 +1,13 @@
 import { APIConfiguration } from '@/api-configuration/ApiConfigurationTypes';
-import { BaseService } from '../api/BaseService';
+import { tmdbClient } from '@/tmdb-client/tmdbClient';
 
-class ApiConfigurationService extends BaseService {
-  getApiConfiguration = async () => {
-    const apiConfiguration = await this.get<APIConfiguration>('/configuration');
-    return apiConfiguration;
-  };
-}
+const getApiConfiguration = async () => {
+  const apiConfiguration = await tmdbClient.get<APIConfiguration>(
+    '/configuration',
+  );
+  return apiConfiguration;
+};
 
-export const apiConfigurationService = new ApiConfigurationService();
+export const apiConfigurationService = {
+  getApiConfiguration,
+};

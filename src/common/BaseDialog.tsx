@@ -3,7 +3,7 @@ import { useMemo, useCallback } from 'react';
 import useIsMobile from './useIsMobile';
 import BaseDialogProvider from './BaseDialogContext';
 
-export type BaseDialogProps = DialogProps;
+type BaseDialogProps = DialogProps;
 
 function BaseDialog({
   open,

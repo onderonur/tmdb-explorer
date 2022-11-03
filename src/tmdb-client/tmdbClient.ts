@@ -1,8 +1,8 @@
 import { httpClient } from '@/http-client/httpClient';
 import queryString from 'query-string';
 
-export class BaseService {
-  get = async <T>(
+export const tmdbClient = {
+  get: async <T>(
     endpoint: string,
     params?: queryString.StringifiableRecord,
   ): Promise<T> => {
@@ -11,5 +11,5 @@ export class BaseService {
       { ...params, api_key: process.env.API_KEY },
     );
     return response;
-  };
-}
+  },
+};

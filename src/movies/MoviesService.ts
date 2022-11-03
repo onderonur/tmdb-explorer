@@ -6,94 +6,108 @@ import {
   shouldViewMovie,
   VIEW_FILTER_LIMIT,
 } from '@/view-filters/ViewFiltersUtils';
-import { BaseService } from '../api/BaseService';
 import { MovieDetails, Genre, Movie } from './MoviesTypes';
 import queryString from 'query-string';
+import { tmdbClient } from '@/tmdb-client/tmdbClient';
 
-class MoviesService extends BaseService {
-  getMovie = async <T extends Movie>(
-    movieId: ID,
-    args: {
-      appendToResponse?: string[];
-      params?: queryString.StringifiableRecord;
-    },
-  ) => {
-    const movie = await this.get<T>(`/movie/${movieId}`, {
-      ...args.params,
-      append_to_response: args.appendToResponse?.join(),
-    });
-    if (!shouldViewMovie(movie)) {
-      throw new CustomError(
-        404,
-        'The resource you requested could not be found.',
-      );
-    }
-    return movie;
-  };
-
-  getMovieGenres = async () => {
-    const { genres } = await this.get<{ genres: Genre[] }>('/genre/movie/list');
-    return genres;
-  };
-
-  getDiscoverMovies = async (
-    page: number,
-    params: { genreId?: ID; sortBy?: string },
-  ) => {
-    const movies = await this.get<PaginationResponse<Movie>>(
-      '/discover/movie',
-      {
-        with_genres: params.genreId,
-        sort_by: params.sortBy,
-        page,
-        'vote_count.gte': VIEW_FILTER_LIMIT.minVoteCount,
-      },
+const getMovie = async <T extends Movie>(
+  movieId: ID,
+  args: {
+    appendToResponse?: string[];
+    params?: queryString.StringifiableRecord;
+  },
+) => {
+  const movie = await tmdbClient.get<T>(`/movie/${movieId}`, {
+    ...args.params,
+    append_to_response: args.appendToResponse?.join(),
+  });
+  if (!shouldViewMovie(movie)) {
+    throw new CustomError(
+      404,
+      'The resource you requested could not be found.',
     );
+  }
+  return movie;
+};
 
-    return filterViewablePageResults(movies);
-  };
+const getMovieGenres = async () => {
+  const { genres } = await tmdbClient.get<{ genres: Genre[] }>(
+    '/genre/movie/list',
+  );
+  return genres;
+};
 
-  getPopularMovies = async (page: number) => {
-    const movies = await this.get<PaginationResponse<Movie>>('/movie/popular', {
+const getDiscoverMovies = async (
+  page: number,
+  params: { genreId?: ID; sortBy?: string },
+) => {
+  const movies = await tmdbClient.get<PaginationResponse<Movie>>(
+    '/discover/movie',
+    {
+      with_genres: params.genreId,
+      sort_by: params.sortBy,
       page,
-    });
+      'vote_count.gte': VIEW_FILTER_LIMIT.minVoteCount,
+    },
+  );
 
-    return filterViewablePageResults(movies);
-  };
+  return filterViewablePageResults(movies);
+};
 
-  getTopRatedMovies = async (page: number) => {
-    const movies = await this.get<PaginationResponse<Movie>>(
-      '/movie/top_rated',
-      {
-        page,
-      },
-    );
+const getPopularMovies = async (page: number) => {
+  const movies = await tmdbClient.get<PaginationResponse<Movie>>(
+    '/movie/popular',
+    {
+      page,
+    },
+  );
 
-    return filterViewablePageResults(movies);
-  };
+  return filterViewablePageResults(movies);
+};
 
-  getMovieDetails = async (movieId: ID): Promise<MovieDetails> => {
-    const movie = await this.getMovie<MovieDetails>(movieId, {
-      appendToResponse: ['images,videos,credits'],
-    });
+const getTopRatedMovies = async (page: number) => {
+  const movies = await tmdbClient.get<PaginationResponse<Movie>>(
+    '/movie/top_rated',
+    {
+      page,
+    },
+  );
 
-    movie.credits.cast = filterViewablePeople(movie.credits.cast);
-    movie.credits.crew = filterViewablePeople(movie.credits.crew);
+  return filterViewablePageResults(movies);
+};
 
-    return movie;
-  };
+const getMovieDetails = async (movieId: ID): Promise<MovieDetails> => {
+  const movie = await getMovie<MovieDetails>(movieId, {
+    appendToResponse: ['images,videos,credits'],
+  });
 
-  getMovieRecommendations = async (movieId: ID, params: { page: number }) => {
-    // To be sure movie is viewable, we fetch it too
-    const movie = await this.getMovie<
-      Movie & { recommendations: PaginationResponse<Movie> }
-    >(movieId, {
-      appendToResponse: ['recommendations'],
-      params,
-    });
+  movie.credits.cast = filterViewablePeople(movie.credits.cast);
+  movie.credits.crew = filterViewablePeople(movie.credits.crew);
 
-    return filterViewablePageResults(movie.recommendations);
-  };
-}
+  return movie;
+};
 
-export const moviesService = new MoviesService();
+const getMovieRecommendations = async (
+  movieId: ID,
+  params: { page: number },
+) => {
+  // To be sure movie is viewable, we fetch it too
+  const movie = await getMovie<
+    Movie & { recommendations: PaginationResponse<Movie> }
+  >(movieId, {
+    appendToResponse: ['recommendations'],
+    params,
+  });
+
+  return filterViewablePageResults(movie.recommendations);
+};
+
+export const moviesService = {
+  getMovie,
+  getMovieGenres,
+  getDiscoverMovies,
+  getPopularMovies,
+  getTopRatedMovies,
+  getMovieDetails,
+  getMovieRecommendations,
+};
