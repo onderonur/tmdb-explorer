@@ -63,6 +63,8 @@ function BaseCarousel({
     return <Typography>{listEmptyMessage}</Typography>;
   }
 
+  const shouldShowSteppers = !isBeginning || !isEnd;
+
   return (
     <LoadingIndicator loading={loading}>
       <Swiper
@@ -87,12 +89,14 @@ function BaseCarousel({
 
           return <SwiperSlide key={child.key}>{child}</SwiperSlide>;
         })}
-        <Steppers
-          onClickPrevious={
-            !isBeginning ? () => swiperRef.current?.slidePrev() : null
-          }
-          onClickNext={!isEnd ? () => swiperRef.current?.slideNext() : null}
-        />
+        {shouldShowSteppers && (
+          <Steppers
+            onClickPrevious={
+              !isBeginning ? () => swiperRef.current?.slidePrev() : null
+            }
+            onClickNext={!isEnd ? () => swiperRef.current?.slideNext() : null}
+          />
+        )}
       </Swiper>
     </LoadingIndicator>
   );

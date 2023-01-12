@@ -19,24 +19,23 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
   const releaseYear = getMovieReleaseYear(movie);
   const crew = movie.credits.crew.filter((crew) => crew.job === 'Director');
 
-  if (!movie) {
-    return null;
-  }
-
   return (
     <Introduction
-      backgroundImageSrc={movie.backdrop_path}
       imageSrc={movie.poster_path}
       imageAlt={movie.title}
       title={
         <Box>
-          <Typography variant="h5" component="h1">
+          <Typography
+            variant="h5"
+            component="h1"
+            sx={{ fontWeight: (theme) => theme.typography.fontWeightBold }}
+          >
             {movie.title}
           </Typography>
           <Stack
             direction="row"
             spacing={0.5}
-            color={(theme) => theme.palette.grey[300]}
+            sx={{ color: (theme) => theme.palette.text.secondary }}
           >
             {releaseYear && <span>{getMovieReleaseYear(movie)}</span>}
             <span>&middot;</span>
@@ -50,12 +49,7 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
           <div>
             <Typography variant="h6">Overview</Typography>
             {movie.tagline && (
-              <Typography
-                color={(theme) => theme.palette.grey[300]}
-                gutterBottom
-              >
-                {movie.tagline}
-              </Typography>
+              <Typography gutterBottom>{movie.tagline}</Typography>
             )}
             <Overview>{movie.overview}</Overview>
           </div>
@@ -86,7 +80,7 @@ function MovieIntroduction({ movie }: MovieIntroductionProps) {
                           <NextLink
                             href={`/person/${crewPerson.id}`}
                             sx={{
-                              color: (theme) => theme.palette.common.white,
+                              color: (theme) => theme.palette.text.secondary,
                             }}
                           >
                             {crewPerson.name}

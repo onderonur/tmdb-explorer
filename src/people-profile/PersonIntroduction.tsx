@@ -8,15 +8,10 @@ interface PersonIntroductionProps {
 }
 
 function PersonIntroduction({ person }: PersonIntroductionProps) {
-  if (!person) {
-    return null;
-  }
-
   return (
     <Introduction
       imageSrc={person.profile_path}
       imageAlt={person.name}
-      backgroundImageSrc={person.profile_path}
       title={person.name}
       content={
         <Stack spacing={2}>
@@ -26,7 +21,6 @@ function PersonIntroduction({ person }: PersonIntroductionProps) {
                 Biography
               </Typography>
               <Typography
-                variant="body2"
                 sx={{
                   whiteSpace: 'pre-wrap',
                 }}

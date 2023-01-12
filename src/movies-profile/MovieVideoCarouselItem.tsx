@@ -20,7 +20,7 @@ function MovieVideoCarouselItem({ video }: MovieVideoCarouselItemProps) {
         sx={{
           border: 1,
           borderColor: (theme) => theme.palette.text.secondary,
-          borderRadius: (theme) => Number(theme.shape.borderRadius) * 0.5,
+          borderRadius: 2,
         }}
         scroll={false}
       >

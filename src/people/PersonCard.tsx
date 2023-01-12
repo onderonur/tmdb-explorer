@@ -1,4 +1,4 @@
-import BaseImage from '@/common/BaseImage';
+import BaseImage, { imageProps } from '@/common/BaseImage';
 import BaseCard from '@/common/BaseCard';
 import BaseCardHeader from '@/common/BaseCardHeader';
 import { Person } from '@/people/PeopleTypes';
@@ -16,10 +16,7 @@ function PersonCard({ person }: PersonCardProps) {
       <BaseImage
         src={getImageUrl(person.profile_path)}
         alt={person.name}
-        width={2}
-        height={3}
-        layout="responsive"
-        objectFit="cover"
+        {...imageProps.responsive({ aspectRatio: '2 / 3' })}
       />
       <BaseCardHeader title={person.name} />
     </BaseCard>

@@ -1,54 +1,23 @@
 import Link, { LinkProps } from 'next/link';
-import { Omit } from '@/common/CommonTypes';
-import { styled, SxProps, Theme } from '@mui/material';
+import { SxProps, Theme, Link as MuiLink } from '@mui/material';
 import React from 'react';
 
-const Anchor = styled('a')({
-  textDecoration: 'none',
-});
-
-export type NextLinkProps = React.PropsWithChildren<
-  Omit<LinkProps, 'passHref'>
-> & {
+export type NextLinkProps = React.PropsWithChildren<LinkProps> & {
   className?: string;
   sx?: SxProps<Theme>;
 };
 
-const NextLink = React.forwardRef<HTMLAnchorElement, NextLinkProps>(
-  function NextLink(
-    {
-      children,
-      href,
-      prefetch,
-      replace,
-      scroll,
-      shallow,
-      // To pass the any other props like "className" etc to anchor.
-      className,
-      as,
-      ...rest
-    },
-    ref,
-  ) {
+const NextLink = React.forwardRef<React.ElementRef<typeof Link>, NextLinkProps>(
+  function NextLink({ href, ...rest }, ref) {
     return (
-      <Link
-        // If any other prop is passed to next/link,
-        // it gives a propType warning.
-        {...{ href, as, prefetch, replace, scroll, shallow }}
-        // If the child of Link is a custom component that wraps an <a> tag, you must add passHref to Link.
-        // https://nextjs.org/docs/api-reference/next/link#if-the-child-is-a-custom-component-that-wraps-an-a-tag
-        passHref={true}
-      >
-        <Anchor
-          ref={ref}
-          // Material UI passes classes sometimes.
-          // So, we need "className" prop here.
-          className={className}
-          {...rest}
-        >
-          {children}
-        </Anchor>
-      </Link>
+      <MuiLink
+        ref={ref}
+        component={Link}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        href={href as any}
+        underline="none"
+        {...rest}
+      />
     );
   },
 );

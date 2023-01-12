@@ -1,4 +1,4 @@
-import BaseImage from '@/common/BaseImage';
+import BaseImage, { imageProps } from '@/common/BaseImage';
 import BaseCard from '@/common/BaseCard';
 import BaseCardHeader from '@/common/BaseCardHeader';
 import MovieRating from './MovieRating';
@@ -20,10 +20,7 @@ function MovieCard({ movie, subheader }: MovieCardProps) {
       <BaseImage
         src={getImageUrl(movie.poster_path)}
         alt={movie.title}
-        width={2}
-        height={3}
-        layout="responsive"
-        objectFit="cover"
+        {...imageProps.responsive({ aspectRatio: '2 / 3' })}
       />
       <BaseCardHeader
         title={movie.title}

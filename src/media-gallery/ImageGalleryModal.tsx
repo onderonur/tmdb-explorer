@@ -1,7 +1,7 @@
 import MediaGalleryModal from './MediaGalleryModal';
 import { Maybe } from '@/common/CommonTypes';
 import useApiConfiguration from '@/api-configuration/useApiConfiguration';
-import BaseImage from '@/common/BaseImage';
+import BaseImage, { imageProps } from '@/common/BaseImage';
 import { IconButton, styled } from '@mui/material';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
@@ -33,10 +33,7 @@ function ImageGalleryModal({ title, filePaths }: ImageGalleryModalProps) {
                 quality: 'original',
               })}
               alt={title}
-              width={16}
-              height={9}
-              layout="responsive"
-              objectFit="contain"
+              {...imageProps.responsive({ aspectRatio: '16 / 9' })}
             />
             <FullScreenButton
               aria-label={isFullScreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}

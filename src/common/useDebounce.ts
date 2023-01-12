@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 function useDebounce<Value>(value: Value, wait = 250) {
   const [debouncedValue, setDebouncedValue] = useState<Value>(value);
-  const changeHandlerRef = useRef<ReturnType<typeof _['debounce']>>();
+  const changeHandlerRef = useRef<ReturnType<(typeof _)['debounce']>>();
 
   useEffect(() => {
     changeHandlerRef.current = _.debounce(

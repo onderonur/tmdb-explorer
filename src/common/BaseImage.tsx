@@ -1,6 +1,26 @@
 import Image, { ImageProps } from 'next/image';
 import { Omit } from './CommonTypes';
 
+export const imageProps = {
+  responsive: ({
+    aspectRatio,
+    objectFit,
+  }: {
+    aspectRatio: string;
+    objectFit?: 'contain' | 'cover';
+  }): Partial<ImageProps> => ({
+    width: 0,
+    height: 0,
+    style: {
+      width: '100%',
+      height: 'auto',
+      display: 'block',
+      aspectRatio,
+      objectFit: objectFit ?? 'cover',
+    },
+  }),
+};
+
 type BaseImageProps = Omit<ImageProps, 'alt'> &
   Required<Pick<ImageProps, 'alt'>>;
 
