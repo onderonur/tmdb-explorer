@@ -2,13 +2,11 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier',
+    // https://github.com/prettier/eslint-plugin-prettier#recommended-configuration
+    'plugin:prettier/recommended',
     'next/core-web-vitals',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
   ],
-  plugins: ['@typescript-eslint', 'prettier', 'deprecation', 'import'],
-  parser: '@typescript-eslint/parser',
+  plugins: ['deprecation'],
   // For eslint-plugin-deprecation:
   // https://stackoverflow.com/a/64488474/10876256
   overrides: [
@@ -25,9 +23,10 @@ module.exports = {
     'deprecation/deprecation': 'warn',
     'no-console': 'warn',
     'no-alert': 'warn',
+    'prefer-destructuring': 'warn',
+    'prefer-const': 'warn',
     'object-shorthand': 'warn',
     curly: 'warn',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/ban-types': 'off',
   },
 };
