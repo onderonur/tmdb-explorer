@@ -2,7 +2,7 @@ import BaseImage, { imageProps } from '@/common/BaseImage';
 import BaseCard from '@/common/BaseCard';
 import BaseCardHeader from '@/common/BaseCardHeader';
 import { Person } from '@/people/PeopleTypes';
-import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
 
 interface PersonCardProps {
   person: Person;

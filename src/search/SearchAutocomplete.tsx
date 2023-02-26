@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import BaseAutocomplete from '@/common/BaseAutocomplete';
-import useDebounce from '@/common/useDebounce';
 import { useRouter } from 'next/router';
 import { Maybe } from '@/common/CommonTypes';
 import { getAllPageResults } from '@/common/CommonUtils';
@@ -12,8 +11,8 @@ import { isMovie } from '@/movies/MoviesUtils';
 import { MediaType } from '@/common/CommonEnums';
 import { isPerson } from '@/people/PeopleUtils';
 import { searchAPI } from './searchAPI';
-import useHasChanged from '@/common/useHasChanged';
 import { SxProps, Theme } from '@mui/material';
+import { useDebounce, useHasChanged } from '@/common/CommonHooks';
 
 interface SearchAutocompleteProps {
   autoFocus?: boolean;

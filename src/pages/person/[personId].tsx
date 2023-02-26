@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import BaseSeo from '@/seo/BaseSeo';
 import { dehydrate, useQuery } from '@tanstack/react-query';
 import { createQueryClient } from '@/http-client/queryClient';
-import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
 import PersonProfile from '@/people-profile/PersonProfile';
 import { apiConfigurationAPI } from '@/api-configuration/apiConfigurationAPI';
 import { peopleAPI } from '@/people/peopleAPI';

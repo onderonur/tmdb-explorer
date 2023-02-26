@@ -4,7 +4,7 @@ import BaseCardHeader from '@/common/BaseCardHeader';
 import MovieRating from './MovieRating';
 import { Box, Typography } from '@mui/material';
 import { Movie } from '@/movies/MoviesTypes';
-import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
 import { getMovieReleaseYear } from '@/movies/MoviesUtils';
 
 interface MovieCardProps {

@@ -8,7 +8,7 @@ import {
   ListItem,
 } from '@mui/material';
 import { Maybe } from '@/common/CommonTypes';
-import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
 
 const StyledListItemText = styled(ListItemText)({
   '.MuiListItemText-secondary': {

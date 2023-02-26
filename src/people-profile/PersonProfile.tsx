@@ -7,7 +7,7 @@ import LoadingIndicator from '@/common/LoadingIndicator';
 import { Person } from '@/people/PeopleTypes';
 import PersonCrewGridList from './PersonCrewGridList';
 import FullSizeBackgroundImage from '@/common/FullSizeBackgroundImage';
-import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
 
 interface PersonProfileProps {
   person: Maybe<Person>;

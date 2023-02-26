@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Box, IconButton, Stack } from '@mui/material';
-import useIsMobile from '@/common/useIsMobile';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import HideOnScroll from '@/layout/HideOnScroll';
@@ -11,6 +10,7 @@ import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import Brightness5OutlinedIcon from '@mui/icons-material/Brightness5Outlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ExternalLink from '@/routing/ExternalLink';
+import { useIsMobile } from '@/common/CommonHooks';
 
 const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
   props,

@@ -1,6 +1,6 @@
 import MediaGalleryModal from './MediaGalleryModal';
 import { Maybe } from '@/common/CommonTypes';
-import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
 import BaseImage, { imageProps } from '@/common/BaseImage';
 import { IconButton, styled } from '@mui/material';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';

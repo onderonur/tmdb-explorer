@@ -3,7 +3,7 @@ import BaseSeo from '@/seo/BaseSeo';
 import MovieProfile from '@/movies-profile/MovieProfile';
 import { dehydrate, useQuery } from '@tanstack/react-query';
 import { createQueryClient } from '@/http-client/queryClient';
-import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
 import { moviesAPI } from '@/movies/moviesAPI';
 import { apiConfigurationAPI } from '@/api-configuration/apiConfigurationAPI';
 import { ParsedUrlQuery } from 'querystring';

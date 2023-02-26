@@ -1,6 +1,6 @@
 import BaseImage, { imageProps } from '@/common/BaseImage';
 import { Box, Typography, styled } from '@mui/material';
-import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
 
 const Container = styled(Box)(({ theme }) => ({
   display: 'flex',

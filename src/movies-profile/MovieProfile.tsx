@@ -7,7 +7,7 @@ import MovieRecommendations from './MovieRecommendations';
 import { Maybe } from '@/common/CommonTypes';
 import LoadingIndicator from '@/common/LoadingIndicator';
 import { MovieDetails } from '@/movies/MoviesTypes';
-import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
 import FullSizeBackgroundImage from '@/common/FullSizeBackgroundImage';
 
 interface MovieProfileProps {

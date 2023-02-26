@@ -1,6 +1,6 @@
 import BaseImage, { imageProps } from '@/common/BaseImage';
 import NextLink from '@/routing/NextLink';
-import useApiConfiguration from '@/api-configuration/useApiConfiguration';
+import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
 import { styled } from '@mui/material';
 import { useRouter } from 'next/router';
 

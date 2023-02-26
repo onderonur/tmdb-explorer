@@ -5,11 +5,10 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { HotKeys } from 'react-hotkeys';
 import { useRouter } from 'next/router';
 import { Maybe } from '@/common/CommonTypes';
-import useIsMobile from '@/common/useIsMobile';
 import Steppers from '@/common/Steppers';
 import BaseSeo from '@/seo/BaseSeo';
-import useHasChanged from '@/common/useHasChanged';
 import BaseDialogTitle from '@/common/BaseDialogTitle';
+import { useHasChanged, useIsMobile } from '@/common/CommonHooks';
 
 const keyMap = {
   NEXT: ['right', 'd'],
