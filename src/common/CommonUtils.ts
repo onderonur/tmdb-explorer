@@ -20,8 +20,8 @@ export function getAllPageResults<T extends ItemWithId>(
 
 export const FIRST_PAGE = 1;
 
-export function isOfType<T extends Object>(
-  obj: Object,
+export function isOfType<T extends object>(
+  obj: object,
   keys: Array<keyof T>,
 ): obj is T {
   return keys.every((key) => Object.prototype.hasOwnProperty.call(obj, key));

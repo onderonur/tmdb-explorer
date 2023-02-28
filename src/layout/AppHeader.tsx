@@ -12,7 +12,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import ExternalLink from '@/routing/ExternalLink';
 import { useIsMobile } from '@/common/CommonHooks';
 
-const AppHeader = React.forwardRef<HTMLDivElement, {}>(function AppHeader(
+const AppHeader = React.forwardRef<HTMLDivElement>(function AppHeader(
   props,
   ref,
 ) {

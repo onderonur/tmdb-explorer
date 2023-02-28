@@ -27,6 +27,5 @@ module.exports = {
     'prefer-const': 'warn',
     'object-shorthand': 'warn',
     curly: 'warn',
-    '@typescript-eslint/ban-types': 'off',
   },
 };
