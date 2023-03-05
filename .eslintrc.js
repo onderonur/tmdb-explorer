@@ -27,5 +27,6 @@ module.exports = {
     'prefer-const': 'warn',
     'object-shorthand': 'warn',
     curly: 'warn',
+    eqeqeq: 'warn',
   },
 };
