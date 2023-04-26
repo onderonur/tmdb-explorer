@@ -23,7 +23,13 @@ export default function FullSizeBackgroundImage({
         opacity: 0.1,
       }}
     >
-      <BaseImage src={src} alt={alt} layout="fill" objectFit="cover" />
+      <BaseImage
+        src={src}
+        alt={alt}
+        fill
+        style={{ objectFit: 'cover' }}
+        priority
+      />
     </Box>
   );
 }

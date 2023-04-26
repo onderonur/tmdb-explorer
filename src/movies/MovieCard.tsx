@@ -1,4 +1,4 @@
-import BaseImage, { imageProps } from '@/common/BaseImage';
+import BaseImage from '@/common/BaseImage';
 import BaseCard from '@/common/BaseCard';
 import BaseCardHeader from '@/common/BaseCardHeader';
 import MovieRating from './MovieRating';
@@ -17,11 +17,14 @@ function MovieCard({ movie, subheader }: MovieCardProps) {
 
   return (
     <BaseCard href={`/movie/${movie.id}`}>
-      <BaseImage
-        src={getImageUrl(movie.poster_path)}
-        alt={movie.title}
-        {...imageProps.responsive({ aspectRatio: '2 / 3' })}
-      />
+      <Box sx={{ position: 'relative', aspectRatio: '2 / 3' }}>
+        <BaseImage
+          src={getImageUrl(movie.poster_path)}
+          alt={movie.title}
+          fill
+          style={{ objectFit: 'cover' }}
+        />
+      </Box>
       <BaseCardHeader
         title={movie.title}
         subheader={subheader}

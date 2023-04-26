@@ -1,7 +1,7 @@
 import { Typography, styled } from '@mui/material';
 import isPropValid from '@emotion/is-prop-valid';
-import React from 'react';
 import LoadingIndicator from './LoadingIndicator';
+import { Children } from 'react';
 
 interface BaseGridListStyleProps {
   spacing?: number;
@@ -33,7 +33,7 @@ function BaseGridList({
   listEmptyMessage = 'Nothing has been found',
   children,
 }: BaseGridListProps) {
-  if (!React.Children.count(children) && !loading) {
+  if (!Children.count(children) && !loading) {
     if (!listEmptyMessage) {
       return null;
     }

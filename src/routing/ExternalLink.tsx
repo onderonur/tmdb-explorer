@@ -1,9 +1,9 @@
-import React from 'react';
 import { Link, LinkProps } from '@mui/material';
+import { forwardRef } from 'react';
 
 type ExternalLinkProps = LinkProps;
 
-const ExternalLink = React.forwardRef<HTMLAnchorElement, ExternalLinkProps>(
+const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
   function ExternalLink({ href, ...rest }, ref) {
     return (
       <Link

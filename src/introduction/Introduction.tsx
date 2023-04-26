@@ -1,4 +1,4 @@
-import BaseImage, { imageProps } from '@/common/BaseImage';
+import BaseImage from '@/common/BaseImage';
 import { Box, Typography, styled } from '@mui/material';
 import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
 
@@ -33,15 +33,15 @@ function Introduction({
           overflow: 'hidden',
         }}
       >
-        <BaseImage
-          src={getImageUrl(imageSrc)}
-          alt={imageAlt}
-          {...imageProps.responsive({
-            aspectRatio: '2 / 3',
-            objectFit: 'cover',
-          })}
-          priority
-        />
+        <Box sx={{ position: 'relative', width: '100%', aspectRatio: '2 / 3' }}>
+          <BaseImage
+            src={getImageUrl(imageSrc)}
+            alt={imageAlt}
+            fill
+            style={{ objectFit: 'cover' }}
+            priority
+          />
+        </Box>
       </Box>
       <Box sx={{ flex: 1, flexBasis: 300 }}>
         {typeof title === 'string' ? (

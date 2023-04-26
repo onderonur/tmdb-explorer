@@ -1,11 +1,12 @@
-import BaseImage, { imageProps } from '@/common/BaseImage';
+import BaseImage from '@/common/BaseImage';
 import NextLink from '@/routing/NextLink';
 import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
-import { styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import { useRouter } from 'next/router';
 
 const Thumbnail = styled(BaseImage)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
+  objectFit: 'cover',
 }));
 
 interface ImageCarouselItemProps {
@@ -29,11 +30,9 @@ function ImageCarouselItem({
       href={{ query: { ...router.query, view: filePath } }}
       scroll={false}
     >
-      <Thumbnail
-        src={getImageUrl(filePath)}
-        alt={imageAlt}
-        {...imageProps.responsive({ aspectRatio: `${width} / ${height}` })}
-      />
+      <Box sx={{ position: 'relative', aspectRatio: `${width} / ${height}` }}>
+        <Thumbnail src={getImageUrl(filePath)} alt={imageAlt} fill />
+      </Box>
     </NextLink>
   );
 }

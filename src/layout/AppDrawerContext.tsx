@@ -1,9 +1,10 @@
-import React, {
+import {
   useState,
   useCallback,
   useEffect,
   useMemo,
   useContext,
+  createContext,
 } from 'react';
 import { useRouter } from 'next/router';
 
@@ -14,7 +15,7 @@ interface AppDrawerContextValue {
   toggle: VoidFunction;
 }
 
-const AppDrawerContext = React.createContext<AppDrawerContextValue>(
+const AppDrawerContext = createContext<AppDrawerContextValue>(
   {} as AppDrawerContextValue,
 );
 

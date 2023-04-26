@@ -1,8 +1,8 @@
 import MediaGalleryModal from './MediaGalleryModal';
 import { Maybe } from '@/common/CommonTypes';
 import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
-import BaseImage, { imageProps } from '@/common/BaseImage';
-import { IconButton, styled } from '@mui/material';
+import BaseImage from '@/common/BaseImage';
+import { Box, IconButton, styled } from '@mui/material';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 
@@ -28,13 +28,16 @@ function ImageGalleryModal({ title, filePaths }: ImageGalleryModalProps) {
       renderMedia={({ mediaSrc, isFullScreen, toggleFullScreen }) => {
         return (
           <>
-            <BaseImage
-              src={getImageUrl(mediaSrc, {
-                quality: 'original',
-              })}
-              alt={title}
-              {...imageProps.responsive({ aspectRatio: '16 / 9' })}
-            />
+            <Box sx={{ position: 'relative', aspectRatio: '16 / 9' }}>
+              <BaseImage
+                src={getImageUrl(mediaSrc, {
+                  quality: 'original',
+                })}
+                alt={title}
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </Box>
             <FullScreenButton
               aria-label={isFullScreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
               onClick={toggleFullScreen}

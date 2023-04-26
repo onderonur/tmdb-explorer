@@ -1,10 +1,9 @@
 import { Box, CircularProgress } from '@mui/material';
-import React from 'react';
+import { forwardRef } from 'react';
 
 type LoadingIndicatorProps = React.PropsWithChildren<{ loading: boolean }>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const LoadingIndicator = React.forwardRef<any, LoadingIndicatorProps>(
+const LoadingIndicator = forwardRef<HTMLDivElement, LoadingIndicatorProps>(
   function LoadingIndicator({ loading, children }, ref) {
     if (!loading) {
       return <>{children}</>;

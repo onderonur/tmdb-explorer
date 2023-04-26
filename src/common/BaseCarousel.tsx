@@ -1,12 +1,9 @@
 import { Typography, useTheme } from '@mui/material';
 import LoadingIndicator from './LoadingIndicator';
-import React, { useRef, useState } from 'react';
-import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react';
-// eslint-disable-next-line import/no-unresolved
+import { Children, isValidElement, useRef, useState } from 'react';
+import { Swiper, SwiperProps, SwiperRef, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Steppers from './Steppers';
-import { Swiper as SwiperClass } from 'swiper';
-import { Maybe } from './CommonTypes';
 
 const CAROUSEL_ITEM_GAP = 8;
 
@@ -55,11 +52,11 @@ function BaseCarousel({
     };
   }
 
-  const swiperRef = useRef<Maybe<SwiperClass>>(null);
-  const [isBeginning, setIsBeginning] = useState(false);
+  const swiperRef = useRef<SwiperRef>(null);
+  const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
 
-  if (!React.Children.count(children) && !loading) {
+  if (!Children.count(children) && !loading) {
     return <Typography>{listEmptyMessage}</Typography>;
   }
 
@@ -68,22 +65,21 @@ function BaseCarousel({
   return (
     <LoadingIndicator loading={loading}>
       <Swiper
+        ref={swiperRef}
         spaceBetween={CAROUSEL_ITEM_GAP}
         slidesPerView={slidesPerView.default + 0.5}
         breakpoints={swiperBreakpoints}
         onInit={(swiper) => {
-          swiperRef.current = swiper;
           setIsBeginning(swiper.isBeginning);
           setIsEnd(swiper.isEnd);
         }}
         onSlideChange={(swiper) => {
-          swiperRef.current = swiper;
           setIsBeginning(swiper.isBeginning);
           setIsEnd(swiper.isEnd);
         }}
       >
-        {React.Children.map(children, (child) => {
-          if (!React.isValidElement(child)) {
+        {Children.map(children, (child) => {
+          if (!isValidElement(child)) {
             return null;
           }
 
@@ -92,9 +88,11 @@ function BaseCarousel({
         {shouldShowSteppers && (
           <Steppers
             onClickPrevious={
-              !isBeginning ? () => swiperRef.current?.slidePrev() : null
+              !isBeginning ? () => swiperRef.current?.swiper.slidePrev() : null
             }
-            onClickNext={!isEnd ? () => swiperRef.current?.slideNext() : null}
+            onClickNext={
+              !isEnd ? () => swiperRef.current?.swiper.slideNext() : null
+            }
           />
         )}
       </Swiper>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { createAppTheme } from '@/theme/createAppTheme';
 import { CssBaseline, PaletteMode, ThemeProvider } from '@mui/material';
 import Head from 'next/head';
@@ -20,7 +20,7 @@ interface PaletteModeContextValue {
   toggleMode: VoidFunction;
 }
 
-const PaletteModeContext = React.createContext<PaletteModeContextValue>(
+const PaletteModeContext = createContext<PaletteModeContextValue>(
   {} as PaletteModeContextValue,
 );
 
