@@ -10,7 +10,6 @@ function AppLayout({ children }: AppLayoutProps) {
   return (
     <AppDrawerProvider>
       <AppHeader />
-      {/* <Toolbar /> */}
       <Box sx={{ flex: 1, display: 'flex' }}>
         <Box
           component="nav"
@@ -30,7 +29,7 @@ function AppLayout({ children }: AppLayoutProps) {
             // To not let content of "main" to exceed it horizontally.
             minWidth: 0,
             minHeight: '100%',
-            paddingBottom: 4,
+            paddingBottom: 6,
           }}
         >
           {children}

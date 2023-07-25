@@ -1,7 +1,8 @@
 import PageTitle from '@/common/PageTitle';
 import { getPopularPeople } from '@/people/people-fetchers';
 import PeopleInfiniteGridList from '@/people/people-infinite-list';
-import PageRoot from '@/common/page-root';
+import { pagePaddingX, pagePaddingY } from '@/theme/theme-utils';
+import { Box, Toolbar } from '@mui/material';
 
 export default async function PopularPeoplePage() {
   const firstPage = await getPopularPeople(1);
@@ -11,12 +12,15 @@ export default async function PopularPeoplePage() {
 
   // TODO: Bu container'ın bi anlamı var mı maxWidth olmadan bi bak. Başka page'lerde de var.
   return (
-    <PageRoot hasHeaderGutter>
-      <PageTitle title="Popular People" />
-      <PeopleInfiniteGridList
-        pageKeyTemplate={`/people/popular/api?${infiniteListSearchParams.toString()}`}
-        firstPage={firstPage}
-      />
-    </PageRoot>
+    <>
+      <Toolbar />
+      <Box sx={{ ...pagePaddingX, ...pagePaddingY }}>
+        <PageTitle title="Popular People" />
+        <PeopleInfiniteGridList
+          pageKeyTemplate={`/people/popular/api?${infiniteListSearchParams.toString()}`}
+          firstPage={firstPage}
+        />
+      </Box>
+    </>
   );
 }

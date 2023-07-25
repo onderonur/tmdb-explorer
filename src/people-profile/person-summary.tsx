@@ -44,7 +44,6 @@ function PersonSummary({ person }: PersonSummaryProps) {
               <Typography
                 sx={{
                   whiteSpace: 'pre-wrap',
-                  maxWidth: '75ch',
                 }}
               >
                 {person.biography}

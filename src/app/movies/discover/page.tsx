@@ -3,7 +3,8 @@ import MovieSortingSelect from '@/movies/movie-sorting-select';
 import FeaturedMovie from '@/movies/featured-movie';
 import { getDiscoverMovies, getMovieGenres } from '@/movies/movie-fetchers';
 import MovieInfiniteGridList from '@/movies/movie-infinite-grid-list';
-import PageRoot from '@/common/page-root';
+import { Divider, Stack } from '@mui/material';
+import { pagePaddingX } from '@/theme/theme-utils';
 
 // TODO: Hem Next'in hem SWR'nin cache mantığını bi anla.
 
@@ -35,20 +36,21 @@ export default async function DiscoverMoviesPage({
   infiniteListSearchParams.set('page', '%pageIndex%');
 
   return (
-    <PageRoot
-      hero={<FeaturedMovie movie={featuredMovie} />}
-      sx={{ display: 'grid', gap: 2 }}
-    >
-      <PageTitle
-        // TODO: Fix title
-        title={genre ? `${genre.name} Movies` : 'Discover Movies'}
-        extra={<MovieSortingSelect />}
-      />
-      <MovieInfiniteGridList
-        pageKeyTemplate={`/movies/discover/api?${infiniteListSearchParams.toString()}`}
-        firstPage={firstPage}
-        skipFirstMovie
-      />
-    </PageRoot>
+    <>
+      <FeaturedMovie movie={featuredMovie} />
+      <Stack spacing={2} sx={pagePaddingX}>
+        <Divider />
+        <PageTitle
+          // TODO: Fix title
+          title={genre ? `${genre.name} Movies` : 'Discover Movies'}
+          extra={<MovieSortingSelect />}
+        />
+        <MovieInfiniteGridList
+          pageKeyTemplate={`/movies/discover/api?${infiniteListSearchParams.toString()}`}
+          firstPage={firstPage}
+          skipFirstMovie
+        />
+      </Stack>
+    </>
   );
 }

@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { MovieListItem } from './movie-types';
 import { getMovieReleaseYear } from './movie-utils';
 import { InfoOutlined } from '@mui/icons-material';
-import { lineClamp } from '@/theme/theme-utils';
+import { lineClamp, pagePaddingX, pagePaddingY } from '@/theme/theme-utils';
 import TmdbImage from '@/tmdb/tmdb-image';
 import ButtonLink from '@/common/button-link';
 
@@ -53,11 +53,12 @@ export default function FeaturedMovie({ movie }: FeaturedMovieProps) {
           sx={{
             position: 'relative',
             height: '100%',
-            padding: 3,
             display: 'grid',
             gap: 1,
             justifyItems: 'start',
             maxWidth: '75ch',
+            ...pagePaddingX,
+            ...pagePaddingY,
           }}
         >
           <div>

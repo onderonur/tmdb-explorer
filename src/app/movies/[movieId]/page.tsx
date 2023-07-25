@@ -1,7 +1,7 @@
 import FullSizeBackgroundImage from '@/common/full-size-background-image';
 import MovieSummary from '@/movies-profile/movie-summary';
 import { getMovieDetails } from '@/movies/movie-fetchers';
-import { Stack } from '@mui/material';
+import { Divider, Stack } from '@mui/material';
 import { Metadata } from 'next';
 import MovieRecommendations from '@/movies-profile/movie-recommendations';
 import MovieVideoCard from '@/movies/movie-video-card';
@@ -12,7 +12,7 @@ import SeeAllLink from '@/common/see-all-link';
 import SectionTitle from '@/common/section-title';
 import { notFound } from 'next/navigation';
 import { getMetadata } from '@/seo/seo-utils';
-import PageRoot from '@/common/page-root';
+import { pagePaddingX } from '@/theme/theme-utils';
 
 // TODO: Tüm file name'leri kebab-case yap ve github'dan kontrol et tek kelimelikleri vs.
 
@@ -53,7 +53,7 @@ export default async function MoviePage({
 
   // TODO: Belki Container kullanılabilir.
   return (
-    <PageRoot hero={<MovieSummary movie={movie} />}>
+    <>
       <FullSizeBackgroundImage
         src={movie.backdrop_path}
         alt={movie.title}
@@ -61,7 +61,11 @@ export default async function MoviePage({
         hasScrollBasedOpacity
         hasDimmer
       />
-      <Stack spacing={2}>
+      <Stack spacing={2} sx={pagePaddingX}>
+        <MovieSummary movie={movie} />
+
+        <Divider />
+
         <section>
           <SectionTitle title="Videos" />
           <SingleRowGridList itemCount={{ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 }}>
@@ -127,6 +131,6 @@ export default async function MoviePage({
           <MovieRecommendations movieId={movie.id} />
         </aside>
       </Stack>
-    </PageRoot>
+    </>
   );
 }

@@ -10,3 +10,12 @@ export function lineClamp(maxLines: number): SxProps {
     overflow: 'hidden',
   };
 }
+
+// TODO: Fix name
+export const pagePaddingX = {
+  paddingX: { xs: 2, sm: 3 },
+};
+
+export const pagePaddingY = {
+  paddingY: { xs: 2, sm: 3 },
+};
