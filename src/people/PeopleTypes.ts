@@ -1,7 +1,8 @@
-import { MediaType } from '@/common/CommonEnums';
+import { MediaType } from '@/medias/media-enums';
 import { DateString, ItemWithId, Maybe } from '@/common/CommonTypes';
-import { Movie, MovieImage } from '@/movies/MoviesTypes';
+import { Movie, MovieImage } from '@/movies/movie-types';
 
+// TODO: Bu belki daha iyi isimlendirilebilir.
 export interface BasePerson extends ItemWithId {
   name: string;
   profile_path: string;

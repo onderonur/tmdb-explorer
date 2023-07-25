@@ -1,27 +1,23 @@
 import BaseGridList from '@/common/BaseGridList';
-import { ID } from '@/common/CommonTypes';
-import { useQuery } from '@tanstack/react-query';
-import MovieCard from '@/movies/MovieCard';
-import { peopleAPI } from '@/people/peopleAPI';
+import MovieCard from '@/movies/movie-card';
 import _ from 'lodash';
+import { PersonDetails } from '@/people/PeopleTypes';
 
-interface PersonCrewGridListProps {
-  personId: ID;
-}
+type PersonCrewGridListProps = {
+  person: PersonDetails;
+};
 
-function PersonCrewGridList({ personId }: PersonCrewGridListProps) {
-  const { data, isLoading } = useQuery(peopleAPI.personDetails(personId));
-  const crewList = _.uniqBy(data?.credits.crew ?? [], (crew) => crew.id);
+function PersonCrewGridList({ person }: PersonCrewGridListProps) {
+  // TODO: Buna gerek var mı bak genel olarak kullanıldığı yerler vs.
+  const crewList = _.uniqBy(person.credits.crew, (crew) => crew.id);
 
   return (
-    <BaseGridList
-      loading={isLoading}
-      listEmptyMessage="No crew info has been found."
-    >
+    <BaseGridList listEmptyMessage="No crew info has been found.">
       {crewList.map((personCrew) => {
-        const allJobs = data?.credits.crew
+        const allJobs = person.credits.crew
           .filter((crew) => crew.id === personCrew.id)
           .map((crew) => crew.job);
+
         return (
           <li key={personCrew.id}>
             <MovieCard movie={personCrew} subheader={allJobs?.join(', ')} />

@@ -18,17 +18,12 @@ function InfiniteGridList({
 }: InfiniteGridListProps) {
   return (
     <>
-      <BaseGridList
-        // If list has next page, we keep loading shown
-        // to prevent flickering of loading indicator.
-        loading={loading || hasNextPage}
-        listEmptyMessage={listEmptyMessage}
-      >
+      <BaseGridList listEmptyMessage={listEmptyMessage}>
         {children}
       </BaseGridList>
       <InfiniteScrollSentry
         loading={loading}
-        hasNextPage={!!hasNextPage}
+        hasNextPage={hasNextPage}
         onLoadMore={onLoadMore}
       />
     </>

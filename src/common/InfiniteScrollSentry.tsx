@@ -1,4 +1,7 @@
+'use client';
+
 import useInfiniteScroll from 'react-infinite-scroll-hook';
+import LoadingIndicator from './loading-indicator';
 
 export type InfiniteScrollSentryProps = Pick<
   Parameters<typeof useInfiniteScroll>[0],
@@ -17,5 +20,16 @@ export default function InfiniteScrollSentry({
     rootMargin: '0px 0px 400px 0px',
   });
 
-  return <div ref={sentryRef} />;
+  if (!hasNextPage) {
+    return null;
+  }
+
+  return (
+    <LoadingIndicator
+      ref={sentryRef}
+      // If list has next page, we keep loading shown
+      // to prevent flickering of loading indicator.
+      loading
+    />
+  );
 }

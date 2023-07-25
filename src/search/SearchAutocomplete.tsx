@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo, useState } from 'react';
 import BaseAutocomplete from '@/common/BaseAutocomplete';
 import { useRouter } from 'next/router';
@@ -7,17 +9,17 @@ import { Suggestion } from './SearchTypes';
 import MovieAutocompleteItem from './MovieAutocompleteItem';
 import PersonAutocompleteItem from './PersonAutocompleteItem';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { isMovie } from '@/movies/MoviesUtils';
-import { MediaType } from '@/common/CommonEnums';
+import { isMovie } from '@/movies/movie-utils';
+import { MediaType } from '@/medias/media-enums';
 import { isPerson } from '@/people/PeopleUtils';
 import { searchAPI } from './searchAPI';
 import { SxProps, Theme } from '@mui/material';
 import { useDebounce, useHasChanged } from '@/common/CommonHooks';
 
-interface SearchAutocompleteProps {
+type SearchAutocompleteProps = {
   autoFocus?: boolean;
   sx?: SxProps<Theme>;
-}
+};
 
 function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
   const router = useRouter();
@@ -48,10 +50,10 @@ function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
     if (selectedOption) {
       switch (selectedOption.media_type) {
         case MediaType.MOVIE:
-          router.push(`/movie/${selectedOption.id}`);
+          router.push(`/movies/${selectedOption.id}`);
           break;
         case MediaType.PERSON:
-          router.push(`/person/${selectedOption.id}`);
+          router.push(`/people/${selectedOption.id}`);
           break;
         default:
           return;

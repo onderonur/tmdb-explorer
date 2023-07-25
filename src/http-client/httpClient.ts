@@ -21,8 +21,9 @@ export const httpClient = {
   get: <Data>(
     url: string,
     params?: queryString.StringifiableRecord,
-  ): Promise<Data> =>
-    fetch(queryString.stringifyUrl({ url, query: params })).then(
+  ): Promise<Data> => {
+    return fetch(queryString.stringifyUrl({ url, query: params })).then(
       handleResponse,
-    ),
+    );
+  },
 };

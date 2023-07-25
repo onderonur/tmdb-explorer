@@ -1,9 +1,9 @@
 import { IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useAppDrawer } from '@/layout/AppDrawerContext';
+import { useAppDrawerContext } from './AppDrawerContext';
 
 function AppDrawerToggleButton() {
-  const { toggle } = useAppDrawer();
+  const { toggle } = useAppDrawerContext();
 
   return (
     <IconButton aria-label="Toggle drawer" onClick={toggle}>

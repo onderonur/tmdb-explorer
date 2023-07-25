@@ -5,6 +5,7 @@ export const createHandler =
   (fn: NextApiHandler): NextApiHandler =>
   async (req, res) => {
     try {
+      // TODO: Buna bi bak app router'da nasıl yapılabilir vs.
       // For caching:
       // https://vercel.com/docs/concepts/functions/edge-caching
       const maxAgeInSeconds = 24 * 60 * 60;

@@ -1,9 +1,13 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { createAppTheme } from '@/theme/createAppTheme';
+import { createAppTheme } from '@/theme/create-app-theme';
 import { CssBaseline, PaletteMode, ThemeProvider } from '@mui/material';
 import Head from 'next/head';
 import nookies, { setCookie } from 'nookies';
 import { NextPageContext } from 'next';
+
+// TODO: Bi bak bu component'e gerek var mı
+
+// TODO: Safe context ekle.
 
 export function getInitialPaletteMode(ctx: NextPageContext) {
   const { paletteMode } = nookies.get(ctx);
@@ -15,10 +19,10 @@ export function getInitialPaletteMode(ctx: NextPageContext) {
   return 'dark';
 }
 
-interface PaletteModeContextValue {
+type PaletteModeContextValue = {
   mode: PaletteMode;
   toggleMode: VoidFunction;
-}
+};
 
 const PaletteModeContext = createContext<PaletteModeContextValue>(
   {} as PaletteModeContextValue,

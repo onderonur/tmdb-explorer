@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import LoadingIndicator from '@/common/LoadingIndicator';
+import LoadingIndicator from '@/common/loading-indicator';
 import SearchIcon from '@mui/icons-material/Search';
 import {
   Autocomplete,

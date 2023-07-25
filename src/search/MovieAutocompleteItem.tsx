@@ -1,10 +1,10 @@
-import { getMovieReleaseYear } from '@/movies/MoviesUtils';
-import { Movie } from '@/movies/MoviesTypes';
+import { getMovieReleaseYear } from '@/movies/movie-utils';
+import { Movie } from '@/movies/movie-types';
 import AutocompleteItem from './AutocompleteItem';
 
-interface MovieAutocompleteItemProps {
+type MovieAutocompleteItemProps = {
   movie: Movie;
-}
+};
 
 function MovieAutocompleteItem({ movie, ...rest }: MovieAutocompleteItemProps) {
   return (

@@ -2,9 +2,10 @@ export type Maybe<T> = T | null | undefined;
 
 export type ID = number;
 
-export interface ItemWithId {
+// TODO: Buna gerek olmayabilir
+export type ItemWithId = {
   id: ID;
-}
+};
 
 export type DateString = string;
 

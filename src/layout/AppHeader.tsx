@@ -1,9 +1,18 @@
-import { forwardRef, useState } from 'react';
-import { AppBar, Toolbar, Box, IconButton, Stack } from '@mui/material';
+'use client';
+
+// TODO: Refactor this
+
+import { useState } from 'react';
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  IconButton,
+  Stack,
+  useScrollTrigger,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
-import HideOnScroll from '@/layout/HideOnScroll';
-import SearchAutocomplete from '@/search/SearchAutocomplete';
 import AppTitle from './AppTitle';
 import { usePaletteMode } from '@/theme/BaseThemeProvider';
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
@@ -12,7 +21,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import ExternalLink from '@/routing/ExternalLink';
 import { useIsMobile } from '@/common/CommonHooks';
 
-const AppHeader = forwardRef<HTMLDivElement>(function AppHeader(props, ref) {
+export default function AppHeader() {
   const isMobile = useIsMobile();
   const [isMobileSearch, setIsMobileSearch] = useState(false);
 
@@ -30,74 +39,79 @@ const AppHeader = forwardRef<HTMLDivElement>(function AppHeader(props, ref) {
 
   const { mode, toggleMode } = usePaletteMode();
 
+  const scrollTrigger = useScrollTrigger({
+    disableHysteresis: true,
+  });
+
   return (
-    <HideOnScroll>
-      <AppBar
-        ref={ref}
-        color="default"
-        sx={{
-          // To make the drawer clipped
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}
-      >
-        <Toolbar>
-          {!isMobileSearch && <AppTitle />}
+    <AppBar
+      color="transparent"
+      sx={{
+        // To make the drawer clipped
+        // zIndex: 'modal',
+        // TODO: Buna bi bak
+        transition: 'background-color 300ms ease-in-out',
+        bgcolor: scrollTrigger ? 'background.default' : undefined,
+        boxShadow: 'none',
+        // backgroundImage:
+        //   'linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))',
+      }}
+    >
+      <Toolbar>
+        {!isMobileSearch && <AppTitle />}
 
-          <Box sx={{ display: { xs: 'flex', md: 'none', flex: 1 } }}>
-            {isMobileSearch && (
-              <>
-                <IconButton
-                  aria-label="Hide search"
-                  sx={{ marginRight: 2 }}
-                  onClick={hideMobileSearch}
-                >
-                  <CloseIcon />
-                </IconButton>
-                <SearchAutocomplete autoFocus />
-              </>
-            )}
-          </Box>
-
-          <Box
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              flex: 1,
-              mx: 2,
-              justifyContent: 'center',
-            }}
-          >
-            <SearchAutocomplete sx={{ maxWidth: 680 }} />
-          </Box>
-
-          {!isMobileSearch && (
-            <Stack spacing={1} direction="row">
+        <Box sx={{ display: { xs: 'flex', md: 'none', flex: 1 } }}>
+          {isMobileSearch && (
+            <>
               <IconButton
-                aria-label="Show search"
-                onClick={showMobileSearch}
-                sx={{ display: { md: 'none' } }}
+                aria-label="Hide search"
+                sx={{ marginRight: 2 }}
+                onClick={hideMobileSearch}
               >
-                <SearchIcon />
+                <CloseIcon />
               </IconButton>
-              <IconButton aria-label="Toggle theme" onClick={toggleMode}>
-                {mode === 'light' ? (
-                  <DarkModeIcon />
-                ) : (
-                  <Brightness5OutlinedIcon />
-                )}
-              </IconButton>
-              <IconButton
-                aria-label="Toggle theme"
-                href="https://github.com/onderonur/tmdb-explorer"
-                LinkComponent={ExternalLink}
-              >
-                <GitHubIcon />
-              </IconButton>
-            </Stack>
+              {/* <SearchAutocomplete autoFocus /> */}
+            </>
           )}
-        </Toolbar>
-      </AppBar>
-    </HideOnScroll>
-  );
-});
+        </Box>
 
-export default AppHeader;
+        <Box
+          sx={{
+            display: { xs: 'none', md: 'flex' },
+            flex: 1,
+            marginX: 2,
+            justifyContent: 'center',
+          }}
+        >
+          {/* <SearchAutocomplete sx={{ maxWidth: 'sm' }} /> */}
+        </Box>
+
+        {!isMobileSearch && (
+          <Stack spacing={1} direction="row">
+            <IconButton
+              aria-label="Show search"
+              onClick={showMobileSearch}
+              sx={{ display: { md: 'none' } }}
+            >
+              <SearchIcon />
+            </IconButton>
+            <IconButton aria-label="Toggle theme" onClick={toggleMode}>
+              {mode === 'light' ? (
+                <DarkModeIcon />
+              ) : (
+                <Brightness5OutlinedIcon />
+              )}
+            </IconButton>
+            <IconButton
+              aria-label="Toggle theme"
+              href="https://github.com/onderonur/tmdb-explorer"
+              LinkComponent={ExternalLink}
+            >
+              <GitHubIcon />
+            </IconButton>
+          </Stack>
+        )}
+      </Toolbar>
+    </AppBar>
+  );
+}

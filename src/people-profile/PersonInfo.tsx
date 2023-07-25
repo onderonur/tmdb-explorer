@@ -7,9 +7,9 @@ enum Genders {
   MALE = 2,
 }
 
-interface PersonInfoProps {
+type PersonInfoProps = {
   person: Person;
-}
+};
 
 function PersonInfo({ person }: PersonInfoProps) {
   function getGender() {

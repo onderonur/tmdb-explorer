@@ -1,28 +1,20 @@
-import {
-  useState,
-  useCallback,
-  useEffect,
-  useMemo,
-  useContext,
-  createContext,
-} from 'react';
-import { useRouter } from 'next/router';
+'use client';
 
-interface AppDrawerContextValue {
+import { createSafeContext } from '@/common/safe-context';
+import { usePathname } from 'next/navigation';
+import { useState, useCallback, useEffect, useMemo } from 'react';
+
+type AppDrawerContextValue = {
   isOpen: boolean;
   open: VoidFunction;
   close: VoidFunction;
   toggle: VoidFunction;
-}
+};
 
-const AppDrawerContext = createContext<AppDrawerContextValue>(
-  {} as AppDrawerContextValue,
-);
+const [AppDrawerContext, useAppDrawerContext] =
+  createSafeContext<AppDrawerContextValue>({ displayName: 'AppDrawerContext' });
 
-export function useAppDrawer() {
-  const value = useContext(AppDrawerContext);
-  return value;
-}
+export { useAppDrawerContext };
 
 type AppDrawerProviderProps = React.PropsWithChildren<unknown>;
 
@@ -41,18 +33,13 @@ function AppDrawerProvider({ children }: AppDrawerProviderProps) {
     setIsOpen((current) => !current);
   }, []);
 
-  const router = useRouter();
+  const pathname = usePathname();
 
-  // We close the drawer when a route change gets completed.
   useEffect(() => {
-    const eventType = 'routeChangeComplete';
-
-    router.events.on(eventType, close);
-
     return () => {
-      router.events.off(eventType, close);
+      close();
     };
-  }, [close, router.events]);
+  }, [pathname, close]);
 
   const contextValue = useMemo(
     () => ({ isOpen, open, close, toggle }),

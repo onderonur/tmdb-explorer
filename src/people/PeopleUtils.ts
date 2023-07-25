@@ -1,4 +1,4 @@
-import { MediaType } from '@/common/CommonEnums';
+import { MediaType } from '@/medias/media-enums';
 import { isOfType } from '@/common/CommonUtils';
 import { Person } from './PeopleTypes';
 

@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material';
 
-interface PageTitleProps {
+type PageTitleProps = {
   title: string;
   extra?: React.ReactNode;
-}
+};
 
 function PageTitle({ title, extra }: PageTitleProps) {
   return (
@@ -14,10 +14,10 @@ function PageTitle({ title, extra }: PageTitleProps) {
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: 1,
-        mb: 2,
+        marginBottom: 2,
       }}
     >
-      <Typography variant="h5" component="h1">
+      <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold' }}>
         {title}
       </Typography>
       {extra && <div>{extra}</div>}

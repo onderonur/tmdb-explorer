@@ -1,10 +1,10 @@
 import { Typography, Box } from '@mui/material';
 
-interface SearchResultsHeaderProps {
-  searchQuery: string;
-}
+type SearchResultsHeaderProps = {
+  query: string;
+};
 
-function SearchResultsHeader({ searchQuery }: SearchResultsHeaderProps) {
+function SearchResultsHeader({ query }: SearchResultsHeaderProps) {
   return (
     <Box
       sx={{
@@ -15,7 +15,7 @@ function SearchResultsHeader({ searchQuery }: SearchResultsHeaderProps) {
         flexWrap: 'wrap',
       }}
     >
-      <Typography variant="h6">Search Results For: {searchQuery}</Typography>
+      <Typography variant="h6">Search Results for: {query}</Typography>
     </Box>
   );
 }

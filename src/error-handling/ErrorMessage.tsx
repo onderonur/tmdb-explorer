@@ -1,10 +1,10 @@
 import { Button, Box, Typography } from '@mui/material';
 import NextLink from '@/routing/NextLink';
 
-interface ErrorMessageProps {
+type ErrorMessageProps = {
   statusCode?: number;
   message?: string;
-}
+};
 
 function ErrorMessage({ statusCode, message }: ErrorMessageProps) {
   return (

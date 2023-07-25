@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useSyncExternalStore } from 'react';
 import _ from 'lodash';
 import { useMediaQuery, useTheme } from '@mui/material';
 
@@ -39,4 +39,30 @@ export function useIsMobile() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return isMobile;
+}
+
+const windowScrollYStore = {
+  subcribe: (callback: VoidFunction) => {
+    window.addEventListener('scroll', callback);
+
+    return () => {
+      window.removeEventListener('scroll', callback);
+    };
+  },
+  getSnapshot: () => {
+    return window.scrollY;
+  },
+  getServerSnapshot: () => {
+    return 0;
+  },
+};
+
+export function useWindowScrollY() {
+  const windowScrollY = useSyncExternalStore(
+    windowScrollYStore.subcribe,
+    windowScrollYStore.getSnapshot,
+    windowScrollYStore.getServerSnapshot,
+  );
+
+  return windowScrollY;
 }
