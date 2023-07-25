@@ -1,8 +1,7 @@
-import { Toolbar, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import AppHeader from './AppHeader';
-import BackToTopButton from '@/layout/back-to-top-button';
 import AppDrawerProvider from '@/layout/AppDrawerContext';
-import AppDrawer, { APP_DRAWER_WIDTH } from '@/layout/AppDrawer';
+import AppDrawer from '@/layout/AppDrawer';
 import AppDrawerGenres from './AppDrawerGenres';
 
 type AppLayoutProps = React.PropsWithChildren<unknown>;
@@ -37,7 +36,6 @@ function AppLayout({ children }: AppLayoutProps) {
           {children}
         </Box>
       </Box>
-      <BackToTopButton />
     </AppDrawerProvider>
   );
 }

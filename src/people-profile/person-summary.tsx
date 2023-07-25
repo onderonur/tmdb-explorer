@@ -2,7 +2,7 @@ import { Typography, Stack, Box, Card, CardMedia } from '@mui/material';
 import { Person } from '@/people/PeopleTypes';
 import PersonInfo from './PersonInfo';
 import TmdbImage from '@/tmdb/tmdb-image';
-import SectionTitle from '@/common/movie-details-section-title';
+import SectionTitle from '@/common/section-title';
 
 type PersonSummaryProps = {
   person: Person;
@@ -40,11 +40,11 @@ function PersonSummary({ person }: PersonSummaryProps) {
         <Stack spacing={2}>
           {person.biography && (
             <section>
-              {/* TODO: Fix component name */}
-              <SectionTitle>Biography</SectionTitle>
+              <SectionTitle title="Biography" />
               <Typography
                 sx={{
                   whiteSpace: 'pre-wrap',
+                  maxWidth: '75ch',
                 }}
               >
                 {person.biography}
@@ -52,7 +52,7 @@ function PersonSummary({ person }: PersonSummaryProps) {
             </section>
           )}
           <section>
-            <SectionTitle>Personal Info</SectionTitle>
+            <SectionTitle title="Personal Info" />
             <PersonInfo person={person} />
           </section>
         </Stack>

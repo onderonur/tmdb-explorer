@@ -1,8 +1,10 @@
 import { Typography } from '@mui/material';
 
-type SectionTitle = React.PropsWithChildren;
+type SectionTitle = {
+  title: string;
+};
 
-export default function SectionTitle({ children }: SectionTitle) {
+export default function SectionTitle({ title }: SectionTitle) {
   return (
     <Typography
       variant="h6"
@@ -10,7 +12,7 @@ export default function SectionTitle({ children }: SectionTitle) {
       gutterBottom
       sx={{ fontWeight: 'bold' }}
     >
-      {children}
+      {title}
     </Typography>
   );
 }

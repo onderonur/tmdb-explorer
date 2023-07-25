@@ -16,6 +16,7 @@ export default function FeaturedMovie({ movie }: FeaturedMovieProps) {
       sx={{
         position: 'relative',
         minHeight: { xs: 460, sm: 560, md: 660 },
+        display: 'grid',
       }}
     >
       <TmdbImage
@@ -56,12 +57,7 @@ export default function FeaturedMovie({ movie }: FeaturedMovieProps) {
             display: 'grid',
             gap: 1,
             justifyItems: 'start',
-            maxWidth: {
-              sm: '100%',
-              md: '80%',
-              lg: '60%',
-              xl: '50%',
-            },
+            maxWidth: '75ch',
           }}
         >
           <div>

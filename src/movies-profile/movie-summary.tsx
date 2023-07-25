@@ -1,13 +1,20 @@
 'use client';
 
-import { Typography, Stack, List, ListItem, Box } from '@mui/material';
+import {
+  Typography,
+  Stack,
+  List,
+  ListItem,
+  Box,
+  Container,
+} from '@mui/material';
 import MovieRating from '@/movies/movie-rating';
 import { getMovieReleaseYear } from '@/movies/movie-utils';
 import TextWithLabel from '@/common/TextWithLabel';
 import NextLink from '@/routing/NextLink';
 import MovieGenreChip from './movie-genre-chip';
 import { Movie } from '@/movies/movie-types';
-import SectionTitle from '@/common/movie-details-section-title';
+import SectionTitle from '@/common/section-title';
 
 // TODO: styled yerine sx mi önerilio next için bi bak
 
@@ -20,99 +27,101 @@ function MovieSummary({ movie }: MovieSummaryProps) {
   const crew = movie.credits?.crew.filter((crew) => crew.job === 'Director');
 
   return (
-    <Box sx={{ paddingTop: 32, maxWidth: '75ch' }}>
-      <Stack spacing={0.8}>
-        <div>
-          <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold' }}>
-            {movie.title}
-          </Typography>
-          {/* TODO: Burada semantic header vs belki olabilir daha */}
-          {movie.tagline && (
-            <Typography
-              variant="h6"
-              component="p"
-              sx={{ color: 'text.secondary' }}
-            >
-              &quot;{movie.tagline}&quot;
+    <Container maxWidth={false}>
+      <Box sx={{ paddingTop: 32, maxWidth: '75ch' }}>
+        <Stack spacing={0.8}>
+          <div>
+            <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold' }}>
+              {movie.title}
             </Typography>
-          )}
-        </div>
+            {/* TODO: Burada semantic header vs belki olabilir daha */}
+            {movie.tagline && (
+              <Typography
+                variant="h6"
+                component="p"
+                sx={{ color: 'text.secondary' }}
+              >
+                &quot;{movie.tagline}&quot;
+              </Typography>
+            )}
+          </div>
 
-        <Stack direction="row" spacing={0.8} sx={{ color: 'text.secondary' }}>
-          {releaseYear && <span>{releaseYear}</span>}
-          <span>&middot;</span>
-          <span>{movie.runtime} minutes</span>
-          <span>&middot;</span>
-          <MovieRating movie={movie} />
-        </Stack>
+          <Stack direction="row" spacing={0.8} sx={{ color: 'text.secondary' }}>
+            {releaseYear && <span>{releaseYear}</span>}
+            <span>&middot;</span>
+            <span>{movie.runtime} minutes</span>
+            <span>&middot;</span>
+            <MovieRating movie={movie} />
+          </Stack>
 
-        <div>
-          <SectionTitle>Overview</SectionTitle>
-          <Typography
-            sx={{
-              whiteSpace: 'pre-wrap',
-              fontSize: 'h6.fontSize',
-            }}
-          >
-            {movie.overview}
-          </Typography>
-        </div>
+          <div>
+            <SectionTitle title="Overview" />
+            <Typography
+              sx={{
+                whiteSpace: 'pre-wrap',
+                fontSize: 'h6.fontSize',
+              }}
+            >
+              {movie.overview}
+            </Typography>
+          </div>
 
-        <div>
-          <SectionTitle>Genres</SectionTitle>
-          <List
-            disablePadding
-            sx={{
-              display: 'flex',
-              gap: 0.75,
-              flexWrap: 'wrap',
-            }}
-          >
-            {movie.genres.map((genre) => (
-              <ListItem key={genre.id} disablePadding sx={{ width: 'auto' }}>
-                <MovieGenreChip genre={genre} />
-              </ListItem>
-            ))}
-          </List>
-        </div>
-
-        {!!crew?.length && (
-          <List
-            sx={{
-              display: 'flex',
-              gap: 2,
-              flexWrap: 'wrap',
-            }}
-          >
-            {crew.map((crewPerson) => {
-              const allJobs = movie.credits?.crew
-                .filter((crew) => crew.id === crewPerson.id)
-                .map((crewPerson) => crewPerson.job);
-
-              return (
-                <ListItem
-                  key={crewPerson.id}
-                  disablePadding
-                  sx={{ width: 'auto' }}
-                >
-                  <TextWithLabel
-                    label={
-                      <NextLink
-                        href={`/people/${crewPerson.id}`}
-                        sx={{ color: 'inherit' }}
-                      >
-                        {crewPerson.name}
-                      </NextLink>
-                    }
-                    text={allJobs?.join(', ')}
-                  />
+          <div>
+            <SectionTitle title="Genres" />
+            <List
+              disablePadding
+              sx={{
+                display: 'flex',
+                gap: 0.75,
+                flexWrap: 'wrap',
+              }}
+            >
+              {movie.genres.map((genre) => (
+                <ListItem key={genre.id} disablePadding sx={{ width: 'auto' }}>
+                  <MovieGenreChip genre={genre} />
                 </ListItem>
-              );
-            })}
-          </List>
-        )}
-      </Stack>
-    </Box>
+              ))}
+            </List>
+          </div>
+
+          {!!crew?.length && (
+            <List
+              sx={{
+                display: 'flex',
+                gap: 2,
+                flexWrap: 'wrap',
+              }}
+            >
+              {crew.map((crewPerson) => {
+                const allJobs = movie.credits?.crew
+                  .filter((crew) => crew.id === crewPerson.id)
+                  .map((crewPerson) => crewPerson.job);
+
+                return (
+                  <ListItem
+                    key={crewPerson.id}
+                    disablePadding
+                    sx={{ width: 'auto' }}
+                  >
+                    <TextWithLabel
+                      label={
+                        <NextLink
+                          href={`/people/${crewPerson.id}`}
+                          sx={{ color: 'inherit' }}
+                        >
+                          {crewPerson.name}
+                        </NextLink>
+                      }
+                      text={allJobs?.join(', ')}
+                    />
+                  </ListItem>
+                );
+              })}
+            </List>
+          )}
+        </Stack>
+      </Box>
+    </Container>
   );
 }
 

@@ -1,10 +1,13 @@
 import BaseGridList from '@/common/BaseGridList';
 import { ID } from '@/common/CommonTypes';
 import MoviePersonCard from '@/movies-profile/movie-person-card';
-import SectionTitle from '@/common/movie-details-section-title';
+import SectionTitle from '@/common/section-title';
 import { getMovieDetails } from '@/movies/movie-fetchers';
 import { MovieCrew } from '@/movies/movie-types';
-import { Box, Divider, Toolbar, Typography } from '@mui/material';
+import { Box, Divider } from '@mui/material';
+import PageTitle from '@/common/PageTitle';
+import PageRoot from '@/common/page-root';
+import { notFound } from 'next/navigation';
 
 type MoviePeoplePageProps = {
   params: {
@@ -17,10 +20,14 @@ export default async function MoviePeoplePage({
 }: MoviePeoplePageProps) {
   const movie = await getMovieDetails(Number(movieId));
 
+  if (!movie) {
+    return notFound();
+  }
+
   const { credits } = movie;
 
   if (!credits) {
-    return null;
+    return notFound();
   }
 
   const crewById: Record<ID, MovieCrew[]> = {};
@@ -32,14 +39,12 @@ export default async function MoviePeoplePage({
   // TODO: Ayrı olarak "aside" main'in içinde olabilir mi dışında mı olmalı bi bak.
 
   return (
-    <>
-      <Toolbar />
-      <Box sx={{ padding: 2, display: 'grid', gap: 2 }}>
-        <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold' }}>
-          Full Cast & Crew
-        </Typography>
+    <PageRoot hasHeaderGutter>
+      <PageTitle title="Full Cast & Crew" />
+      <Box sx={{ display: 'grid', gap: 2 }}>
+        {/* TODO: PageTitle ve SectionTitle'ın prop API'ını aynı yap */}
         <section>
-          <SectionTitle>Cast</SectionTitle>
+          <SectionTitle title="Cast" />
           <BaseGridList>
             {credits.cast.map((castCredit) => {
               return (
@@ -57,7 +62,7 @@ export default async function MoviePeoplePage({
         </section>
         <Divider />
         <section>
-          <SectionTitle>Crew</SectionTitle>
+          <SectionTitle title="Crew" />
           <BaseGridList>
             {Object.values(crewById).map((crewCredits) => {
               const [first] = crewCredits;
@@ -78,6 +83,6 @@ export default async function MoviePeoplePage({
           </BaseGridList>
         </section>
       </Box>
-    </>
+    </PageRoot>
   );
 }

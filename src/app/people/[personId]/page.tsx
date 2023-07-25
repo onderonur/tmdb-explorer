@@ -1,6 +1,6 @@
 import { getPersonDetails } from '@/people/people-fetchers';
 import { notFound } from 'next/navigation';
-import { Box, Container, Divider, Stack, Toolbar } from '@mui/material';
+import { Container, Divider, Stack } from '@mui/material';
 import PersonSummary from '@/people-profile/person-summary';
 import SingleRowGridList from '@/common/single-row-grid-list';
 import ImageCard from '@/medias/image-card';
@@ -10,7 +10,8 @@ import PersonCastingGridList from '@/people-profile/PersonCastingGridList';
 import FullSizeBackgroundImage from '@/common/full-size-background-image';
 import { Metadata } from 'next';
 import { getMetadata } from '@/seo/seo-utils';
-import SectionTitle from '@/common/movie-details-section-title';
+import SectionTitle from '@/common/section-title';
+import PageRoot from '@/common/page-root';
 
 type PersonPageProps = {
   params: {
@@ -46,49 +47,46 @@ export default async function PersonPage({
   }
 
   return (
-    <>
-      <Toolbar />
-      <Box sx={{ padding: 2 }}>
-        <FullSizeBackgroundImage src={person.profile_path} alt={person.name} />
-        <Stack spacing={2}>
-          <Container>
-            <PersonSummary person={person} />
-          </Container>
-          <Divider />
-          <section>
-            <SectionTitle>Images</SectionTitle>
-            <SingleRowGridList itemCount={{ xs: 4, sm: 6, lg: 7, xl: 8 }}>
-              {person.images.profiles.slice(0, 8).map((image, i) => {
-                return (
-                  <li key={image.file_path}>
-                    <ImageCard
-                      href={`/people/${person.id}/images${image.file_path}`}
-                      imageSrc={image.file_path}
-                      alt={`${person.name} Image - ${i}`}
-                      aspectRatio="2 / 3"
-                    />
-                  </li>
-                );
-              })}
-            </SingleRowGridList>
-            <SeeAllLink
-              href={`/people/${person.id}/images${person.images.profiles[0].file_path}`}
-              isLinkVisible={!!person.images.profiles.length}
-            />
-          </section>
-          <section>
-            <SectionTitle>Castings</SectionTitle>
-            <PersonCastingGridList person={person} />
-          </section>
+    <PageRoot hasHeaderGutter>
+      <FullSizeBackgroundImage src={person.profile_path} alt={person.name} />
+      <Stack spacing={2}>
+        <Container>
+          <PersonSummary person={person} />
+        </Container>
+        <Divider />
+        <section>
+          <SectionTitle title="Images" />
+          <SingleRowGridList itemCount={{ xs: 4, sm: 6, lg: 7, xl: 8 }}>
+            {person.images.profiles.slice(0, 8).map((image, i) => {
+              return (
+                <li key={image.file_path}>
+                  <ImageCard
+                    href={`/people/${person.id}/images${image.file_path}`}
+                    imageSrc={image.file_path}
+                    alt={`${person.name} Image - ${i}`}
+                    aspectRatio="2 / 3"
+                  />
+                </li>
+              );
+            })}
+          </SingleRowGridList>
+          <SeeAllLink
+            href={`/people/${person.id}/images${person.images.profiles[0].file_path}`}
+            isLinkVisible={!!person.images.profiles.length}
+          />
+        </section>
+        <section>
+          <SectionTitle title="Castings" />
+          <PersonCastingGridList person={person} />
+        </section>
 
-          <Divider />
+        <Divider />
 
-          <section>
-            <SectionTitle>Crew</SectionTitle>
-            <PersonCrewGridList person={person} />
-          </section>
-        </Stack>
-      </Box>
-    </>
+        <section>
+          <SectionTitle title="Crew" />
+          <PersonCrewGridList person={person} />
+        </section>
+      </Stack>
+    </PageRoot>
   );
 }
