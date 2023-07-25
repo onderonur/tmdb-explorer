@@ -20,7 +20,7 @@ function MovieSummary({ movie }: MovieSummaryProps) {
   const crew = movie.credits?.crew.filter((crew) => crew.job === 'Director');
 
   return (
-    <Box sx={{ padding: 2, paddingTop: 32, maxWidth: '75ch' }}>
+    <Box sx={{ paddingTop: 32, maxWidth: '75ch' }}>
       <Stack spacing={0.8}>
         <div>
           <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold' }}>

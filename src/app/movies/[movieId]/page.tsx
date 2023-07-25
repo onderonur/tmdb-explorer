@@ -1,7 +1,7 @@
 import FullSizeBackgroundImage from '@/common/full-size-background-image';
 import MovieSummary from '@/movies-profile/movie-summary';
 import { getMovieDetails } from '@/movies/movie-fetchers';
-import { Box, Divider, Stack } from '@mui/material';
+import { Box, Container, Divider, Stack } from '@mui/material';
 import { Metadata } from 'next';
 import MovieRecommendations from '@/movies-profile/movie-recommendations';
 import MovieVideoCard from '@/movies/movie-video-card';
@@ -60,76 +60,84 @@ export default async function MoviePage({
         hasScrollBasedOpacity
         hasDimmer
       />
-      <Stack spacing={2}>
-        <MovieSummary movie={movie} />
+      <Container maxWidth={false}>
+        <Stack spacing={2}>
+          <MovieSummary movie={movie} />
 
-        <Divider />
+          <Divider />
 
-        <section>
-          <SectionTitle>Videos</SectionTitle>
-          <SingleRowGridList itemCount={{ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 }}>
-            {/* TODO: Çok zoom out yapınca vs noluyo bi bak. */}
-            {movie.videos?.results.slice(0, 6).map((video) => {
-              return (
-                <li key={video.id}>
-                  <MovieVideoCard movieId={movie.id} video={video} />
-                </li>
-              );
-            })}
-          </SingleRowGridList>
-          <SeeAllLink
-            // TODO: movies array'i için refactor (ilk item yoksa vs)
-            href={`/movies/${movie.id}/videos/${movie.videos?.results[0]?.id}`}
-            isLinkVisible={!!movie.videos?.results.length}
-          />
-        </section>
+          <section>
+            <SectionTitle>Videos</SectionTitle>
+            <SingleRowGridList
+              itemCount={{ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 }}
+            >
+              {/* TODO: Çok zoom out yapınca vs noluyo bi bak. */}
+              {movie.videos?.results.slice(0, 6).map((video) => {
+                return (
+                  <li key={video.id}>
+                    <MovieVideoCard movieId={movie.id} video={video} />
+                  </li>
+                );
+              })}
+            </SingleRowGridList>
+            <SeeAllLink
+              // TODO: movies array'i için refactor (ilk item yoksa vs)
+              href={`/movies/${movie.id}/videos/${movie.videos?.results[0]?.id}`}
+              isLinkVisible={!!movie.videos?.results.length}
+            />
+          </section>
 
-        <section>
-          <SectionTitle>Images</SectionTitle>
-          <SingleRowGridList itemCount={{ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 }}>
-            {/* TODO: Çok zoom out yapınca vs noluyo bi bak. */}
-            {movie.images?.backdrops.slice(0, 6).map((image) => {
-              return (
-                <li key={image.file_path}>
-                  <MovieImageCard movieId={movie.id} image={image} />
-                </li>
-              );
-            })}
-          </SingleRowGridList>
-          <SeeAllLink
-            // TODO: movies array'i için refactor (ilk item yoksa vs)
-            href={`/movies/${movie.id}/images${movie.images?.backdrops[0].file_path}`}
-            isLinkVisible={!!movie.images?.backdrops.length}
-          />
-        </section>
+          <section>
+            <SectionTitle>Images</SectionTitle>
+            <SingleRowGridList
+              itemCount={{ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 }}
+            >
+              {/* TODO: Çok zoom out yapınca vs noluyo bi bak. */}
+              {movie.images?.backdrops.slice(0, 6).map((image) => {
+                return (
+                  <li key={image.file_path}>
+                    <MovieImageCard movieId={movie.id} image={image} />
+                  </li>
+                );
+              })}
+            </SingleRowGridList>
+            <SeeAllLink
+              // TODO: movies array'i için refactor (ilk item yoksa vs)
+              href={`/movies/${movie.id}/images${movie.images?.backdrops[0].file_path}`}
+              isLinkVisible={!!movie.images?.backdrops.length}
+            />
+          </section>
 
-        <section>
-          <SectionTitle>Cast</SectionTitle>
-          <SingleRowGridList itemCount={{ xs: 3, sm: 4, md: 5, lg: 6, xl: 7 }}>
-            {movie.credits?.cast.slice(0, 7).map((movieCast) => {
-              return (
-                <li key={movieCast.id}>
-                  <MovieCastCard
-                    personId={movieCast.id}
-                    imageSrc={movieCast.profile_path}
-                    title={movieCast.name}
-                    subheader={movieCast.character}
-                  />
-                </li>
-              );
-            })}
-          </SingleRowGridList>
-          <SeeAllLink
-            href={`/movies/${movie.id}/people`}
-            isLinkVisible={!!movie.credits?.cast.length}
-          />
-        </section>
+          <section>
+            <SectionTitle>Cast</SectionTitle>
+            <SingleRowGridList
+              itemCount={{ xs: 3, sm: 4, md: 5, lg: 6, xl: 7 }}
+            >
+              {movie.credits?.cast.slice(0, 7).map((movieCast) => {
+                return (
+                  <li key={movieCast.id}>
+                    <MovieCastCard
+                      personId={movieCast.id}
+                      imageSrc={movieCast.profile_path}
+                      title={movieCast.name}
+                      subheader={movieCast.character}
+                    />
+                  </li>
+                );
+              })}
+            </SingleRowGridList>
+            <SeeAllLink
+              href={`/movies/${movie.id}/people`}
+              isLinkVisible={!!movie.credits?.cast.length}
+            />
+          </section>
 
-        <aside>
-          <SectionTitle>Recommendations</SectionTitle>
-          <MovieRecommendations movieId={movie.id} />
-        </aside>
-      </Stack>
+          <aside>
+            <SectionTitle>Recommendations</SectionTitle>
+            <MovieRecommendations movieId={movie.id} />
+          </aside>
+        </Stack>
+      </Container>
     </Box>
   );
 }

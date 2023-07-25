@@ -5,7 +5,7 @@ import PeopleInfiniteGridList from '@/people/people-infinite-list';
 import SearchResultsHeader from '@/search/SearchResultsHeader';
 import { searchMovies, searchPeople } from '@/search/search-fetchers';
 import SearchResultsTabs from '@/search/search-results-tabs';
-import { Box } from '@mui/material';
+import { Box, Toolbar } from '@mui/material';
 
 type SearchPageProps = {
   params: {
@@ -54,25 +54,28 @@ export default async function SearchPage({
 
   return (
     <>
-      <SearchResultsHeader query={query} />
-      <SearchResultsTabs
-        value={mediaType as Maybe<MediaType>}
-        isMoviesTabVisible={!!moviesFirstPage.total_results}
-        isPeopleTabVisible={!!peopleFirstPage.total_results}
-      />
-      <Box marginTop={2}>
-        {mediaType === MediaType.MOVIE && (
-          <MovieInfiniteGridList
-            pageKeyTemplate={`/search/${query}/movies/api?${infiniteListSearchParams.toString()}`}
-            firstPage={moviesFirstPage}
-          />
-        )}
-        {mediaType === MediaType.PERSON && (
-          <PeopleInfiniteGridList
-            pageKeyTemplate={`/search/${query}/people/api?${infiniteListSearchParams.toString()}`}
-            firstPage={peopleFirstPage}
-          />
-        )}
+      <Toolbar />
+      <Box sx={{ padding: 2 }}>
+        <SearchResultsHeader query={query} />
+        <SearchResultsTabs
+          value={mediaType as Maybe<MediaType>}
+          isMoviesTabVisible={!!moviesFirstPage.total_results}
+          isPeopleTabVisible={!!peopleFirstPage.total_results}
+        />
+        <Box marginTop={2}>
+          {mediaType === MediaType.MOVIE && (
+            <MovieInfiniteGridList
+              pageKeyTemplate={`/search/${query}/movies/api?${infiniteListSearchParams.toString()}`}
+              firstPage={moviesFirstPage}
+            />
+          )}
+          {mediaType === MediaType.PERSON && (
+            <PeopleInfiniteGridList
+              pageKeyTemplate={`/search/${query}/people/api?${infiniteListSearchParams.toString()}`}
+              firstPage={peopleFirstPage}
+            />
+          )}
+        </Box>
       </Box>
     </>
   );
