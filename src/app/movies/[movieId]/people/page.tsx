@@ -40,8 +40,8 @@ export default async function MoviePeoplePage({
 
   return (
     <>
-      <Toolbar data-testid="denemece" />
-      <Padder paddingX paddingY>
+      <Toolbar />
+      <Padder paddingY>
         <PageTitle title="Full Cast & Crew" />
         <Stack spacing={2}>
           <section>

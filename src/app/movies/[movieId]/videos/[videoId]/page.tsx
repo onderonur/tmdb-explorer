@@ -51,7 +51,7 @@ export default async function MovieVideoPage({
   return (
     <>
       <Toolbar />
-      <Padder paddingX paddingY>
+      <Padder paddingY>
         <Box
           sx={{
             display: 'grid',

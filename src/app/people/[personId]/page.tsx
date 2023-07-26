@@ -49,7 +49,7 @@ export default async function PersonPage({
   return (
     <>
       <Toolbar />
-      <Padder paddingX paddingY>
+      <Padder paddingY>
         <FullSizeBackgroundImage src={person.profile_path} alt={person.name} />
         <Stack spacing={2}>
           <Container>

@@ -1,11 +1,10 @@
 import { APP_TITLE } from '@/common/CommonConstants';
 import { Maybe } from '@/common/CommonTypes';
-import { getTmdbConfiguration } from '@/tmdb/tmdb-configuration-fetchers';
 import { Metadata } from 'next';
 
 const APP_DESCRIPTION = `${APP_TITLE} is a client application for TMDb API. It's created with Next.js.`;
 
-export async function getMetadata({
+export function getMetadata({
   title,
   description,
   pathname,
@@ -13,10 +12,7 @@ export async function getMetadata({
   title: string;
   description: Maybe<string>;
   pathname: string;
-}): Promise<Metadata> {
-  // TODO: Refactor edilebilir belki bu
-  const apiConfiguration = await getTmdbConfiguration();
-
+}): Metadata {
   const metaTitle = `${title} | ${APP_TITLE}`;
   const metaDescription = description ?? APP_DESCRIPTION;
   // const url = `${process.env.NEXT_PUBLIC_BASE_URL}${pathname}`;
@@ -24,7 +20,7 @@ export async function getMetadata({
   return {
     title: metaTitle,
     description: metaDescription,
-    metadataBase: new URL(apiConfiguration.images.secure_base_url),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
     alternates: {
       canonical: pathname,
     },

@@ -14,12 +14,12 @@ function PersonSummary({ person }: PersonSummaryProps) {
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
+        justifyContent: 'center',
         alignItems: 'flex-start',
         gap: 2,
-        marginX: 'auto',
       }}
     >
-      <Card sx={{ flexBasis: '18rem', marginX: 'auto' }}>
+      <Card sx={{ flexBasis: '18rem' }}>
         <CardMedia
           sx={{ position: 'relative', width: '100%', aspectRatio: '2 / 3' }}
         >
@@ -33,7 +33,7 @@ function PersonSummary({ person }: PersonSummaryProps) {
         </CardMedia>
       </Card>
 
-      <Box sx={{ flex: 1, flexBasis: '28rem' }}>
+      <Box sx={{ flexBasis: '75ch' }}>
         <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold' }}>
           {person.name}
         </Typography>

@@ -21,7 +21,7 @@ function MovieSummary({ movie }: MovieSummaryProps) {
 
   return (
     <Box sx={{ paddingTop: 32, maxWidth: '75ch' }}>
-      <Stack spacing={0.8}>
+      <Stack spacing={1}>
         <div>
           <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold' }}>
             {movie.title}
@@ -64,7 +64,7 @@ function MovieSummary({ movie }: MovieSummaryProps) {
             disablePadding
             sx={{
               display: 'flex',
-              gap: 0.75,
+              gap: 1,
               flexWrap: 'wrap',
             }}
           >
@@ -78,10 +78,12 @@ function MovieSummary({ movie }: MovieSummaryProps) {
 
         {!!crew?.length && (
           <List
+            disablePadding
             sx={{
               display: 'flex',
               gap: 2,
               flexWrap: 'wrap',
+              paddingTop: 1,
             }}
           >
             {crew.map((crewPerson) => {
@@ -90,11 +92,7 @@ function MovieSummary({ movie }: MovieSummaryProps) {
                 .map((crewPerson) => crewPerson.job);
 
               return (
-                <ListItem
-                  key={crewPerson.id}
-                  disablePadding
-                  sx={{ width: 'auto' }}
-                >
+                <ListItem key={crewPerson.id} disablePadding>
                   <TextWithLabel
                     label={
                       <NextLink

@@ -1,3 +1,4 @@
+import { FIRST_PAGE } from '@/common/CommonUtils';
 import PageTitle from '@/common/PageTitle';
 import Padder from '@/common/padder';
 import FeaturedMovie from '@/movies/featured-movie';
@@ -7,7 +8,7 @@ import { Divider, Stack } from '@mui/material';
 
 // TODO: Page naming'ine Next'ten falan bak. Hatta genel naming'lere bak root page, layout vs vs.
 export default async function PopularMoviesPage() {
-  const firstPage = await getPopularMovies(1);
+  const firstPage = await getPopularMovies(FIRST_PAGE);
 
   const [featuredMovie] = firstPage.results;
 
@@ -17,7 +18,7 @@ export default async function PopularMoviesPage() {
   return (
     <>
       <FeaturedMovie movie={featuredMovie} />
-      <Padder paddingX>
+      <Padder>
         <Stack spacing={2}>
           <Divider />
           <PageTitle title="Popular Movies" />

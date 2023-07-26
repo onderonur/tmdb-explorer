@@ -38,7 +38,7 @@ export default async function DiscoverMoviesPage({
   return (
     <>
       <FeaturedMovie movie={featuredMovie} />
-      <Padder paddingX>
+      <Padder>
         <Stack spacing={2}>
           <Divider />
           <PageTitle

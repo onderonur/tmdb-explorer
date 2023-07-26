@@ -1,4 +1,5 @@
 import { Maybe } from '@/common/CommonTypes';
+import Padder from '@/common/padder';
 import { MediaType } from '@/medias/media-enums';
 import MovieInfiniteGridList from '@/movies/movie-infinite-grid-list';
 import PeopleInfiniteGridList from '@/people/people-infinite-list';
@@ -55,7 +56,7 @@ export default async function SearchPage({
   return (
     <>
       <Toolbar />
-      <Box sx={{ padding: 2 }}>
+      <Padder paddingY>
         <SearchResultsHeader query={query} />
         <SearchResultsTabs
           value={mediaType as Maybe<MediaType>}
@@ -76,7 +77,7 @@ export default async function SearchPage({
             />
           )}
         </Box>
-      </Box>
+      </Padder>
     </>
   );
 }

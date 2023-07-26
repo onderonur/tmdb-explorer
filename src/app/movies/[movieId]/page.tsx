@@ -61,7 +61,7 @@ export default async function MoviePage({
         hasScrollBasedOpacity
         hasDimmer
       />
-      <Padder paddingX>
+      <Padder>
         <Stack spacing={2}>
           <MovieSummary movie={movie} />
 
@@ -70,10 +70,10 @@ export default async function MoviePage({
           <section>
             <SectionTitle title="Videos" />
             <SingleRowGridList
-              itemCount={{ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 }}
+              itemCount={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 4 }}
             >
               {/* TODO: Çok zoom out yapınca vs noluyo bi bak. */}
-              {movie.videos?.results.slice(0, 6).map((video) => {
+              {movie.videos?.results.slice(0, 4).map((video) => {
                 return (
                   <li key={video.id}>
                     <MovieVideoCard movieId={movie.id} video={video} />
@@ -91,10 +91,10 @@ export default async function MoviePage({
           <section>
             <SectionTitle title="Images" />
             <SingleRowGridList
-              itemCount={{ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 }}
+              itemCount={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 4 }}
             >
               {/* TODO: Çok zoom out yapınca vs noluyo bi bak. */}
-              {movie.images?.backdrops.slice(0, 6).map((image) => {
+              {movie.images?.backdrops.slice(0, 4).map((image) => {
                 return (
                   <li key={image.file_path}>
                     <MovieImageCard movieId={movie.id} image={image} />
@@ -112,7 +112,7 @@ export default async function MoviePage({
           <section>
             <SectionTitle title="Cast" />
             <SingleRowGridList
-              itemCount={{ xs: 3, sm: 4, md: 5, lg: 6, xl: 7 }}
+              itemCount={{ xs: 3, sm: 4, md: 5, lg: 6, xl: 6 }}
             >
               {movie.credits?.cast.slice(0, 7).map((movieCast) => {
                 return (

@@ -50,7 +50,7 @@ export default function FeaturedMovie({ movie }: FeaturedMovieProps) {
         }}
       >
         {/* TODO: Stack de kullanılabilir burada, eğer hala öneriliyosa. */}
-        <Padder paddingX paddingY>
+        <Padder paddingY>
           <Box
             sx={{
               position: 'relative',
