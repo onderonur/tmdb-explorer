@@ -2,9 +2,10 @@ import { Box, Typography } from '@mui/material';
 import { MovieListItem } from './movie-types';
 import { getMovieReleaseYear } from './movie-utils';
 import { InfoOutlined } from '@mui/icons-material';
-import { lineClamp, pagePaddingX, pagePaddingY } from '@/theme/theme-utils';
+import { lineClamp } from '@/theme/theme-utils';
 import TmdbImage from '@/tmdb/tmdb-image';
 import ButtonLink from '@/common/button-link';
+import Padder from '@/common/padder';
 
 type FeaturedMovieProps = {
   movie: MovieListItem;
@@ -49,42 +50,46 @@ export default function FeaturedMovie({ movie }: FeaturedMovieProps) {
         }}
       >
         {/* TODO: Stack de kullanılabilir burada, eğer hala öneriliyosa. */}
-        <Box
-          sx={{
-            position: 'relative',
-            height: '100%',
-            display: 'grid',
-            gap: 1,
-            justifyItems: 'start',
-            maxWidth: '75ch',
-            ...pagePaddingX,
-            ...pagePaddingY,
-          }}
-        >
-          <div>
-            <Typography variant="h4" component="p" sx={{ fontWeight: 'bold' }}>
-              {movie.title}
-            </Typography>
-            <Typography sx={{ color: 'text.secondary', fontWeight: 'bold' }}>
-              {getMovieReleaseYear(movie)}
-            </Typography>
-            {/* TODO: max line ekle. */}
-          </div>
-          <div>
-            <Typography sx={{ ...lineClamp(4), fontSize: 'h6.fontSize' }}>
-              {movie.overview}
-            </Typography>
-          </div>
-          <ButtonLink
-            href={`/movies/${movie.id}`}
-            variant="outlined"
-            color="primary"
-            sx={{ marginTop: 1 }}
-            startIcon={<InfoOutlined />}
+        <Padder paddingX paddingY>
+          <Box
+            sx={{
+              position: 'relative',
+              height: '100%',
+              display: 'grid',
+              gap: 1,
+              justifyItems: 'start',
+              maxWidth: '75ch',
+            }}
           >
-            More Info
-          </ButtonLink>
-        </Box>
+            <div>
+              <Typography
+                variant="h4"
+                component="p"
+                sx={{ fontWeight: 'bold' }}
+              >
+                {movie.title}
+              </Typography>
+              <Typography sx={{ color: 'text.secondary', fontWeight: 'bold' }}>
+                {getMovieReleaseYear(movie)}
+              </Typography>
+              {/* TODO: max line ekle. */}
+            </div>
+            <div>
+              <Typography sx={{ ...lineClamp(4), fontSize: 'h6.fontSize' }}>
+                {movie.overview}
+              </Typography>
+            </div>
+            <ButtonLink
+              href={`/movies/${movie.id}`}
+              variant="outlined"
+              color="primary"
+              sx={{ marginTop: 1 }}
+              startIcon={<InfoOutlined />}
+            >
+              More Info
+            </ButtonLink>
+          </Box>
+        </Padder>
       </Box>
     </Box>
   );

@@ -1,8 +1,8 @@
 import PageTitle from '@/common/PageTitle';
+import Padder from '@/common/padder';
 import { getPopularPeople } from '@/people/people-fetchers';
 import PeopleInfiniteGridList from '@/people/people-infinite-list';
-import { pagePaddingX, pagePaddingY } from '@/theme/theme-utils';
-import { Box, Toolbar } from '@mui/material';
+import { Toolbar } from '@mui/material';
 
 export default async function PopularPeoplePage() {
   const firstPage = await getPopularPeople(1);
@@ -14,13 +14,13 @@ export default async function PopularPeoplePage() {
   return (
     <>
       <Toolbar />
-      <Box sx={{ ...pagePaddingX, ...pagePaddingY }}>
+      <Padder paddingX paddingY>
         <PageTitle title="Popular People" />
         <PeopleInfiniteGridList
           pageKeyTemplate={`/people/popular/api?${infiniteListSearchParams.toString()}`}
           firstPage={firstPage}
         />
-      </Box>
+      </Padder>
     </>
   );
 }

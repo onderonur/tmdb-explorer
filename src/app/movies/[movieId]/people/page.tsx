@@ -4,10 +4,10 @@ import MoviePersonCard from '@/movies-profile/movie-person-card';
 import SectionTitle from '@/common/section-title';
 import { getMovieDetails } from '@/movies/movie-fetchers';
 import { MovieCrew } from '@/movies/movie-types';
-import { Box, Divider, Toolbar } from '@mui/material';
+import { Divider, Stack, Toolbar } from '@mui/material';
 import PageTitle from '@/common/PageTitle';
 import { notFound } from 'next/navigation';
-import { pagePaddingX, pagePaddingY } from '@/theme/theme-utils';
+import Padder from '@/common/padder';
 
 type MoviePeoplePageProps = {
   params: {
@@ -41,10 +41,9 @@ export default async function MoviePeoplePage({
   return (
     <>
       <Toolbar data-testid="denemece" />
-      <Box sx={{ ...pagePaddingX, ...pagePaddingY }}>
+      <Padder paddingX paddingY>
         <PageTitle title="Full Cast & Crew" />
-        <Box sx={{ display: 'grid', gap: 2 }}>
-          {/* TODO: PageTitle ve SectionTitle'ın prop API'ını aynı yap */}
+        <Stack spacing={2}>
           <section>
             <SectionTitle title="Cast" />
             <BaseGridList>
@@ -84,8 +83,8 @@ export default async function MoviePeoplePage({
               })}
             </BaseGridList>
           </section>
-        </Box>
-      </Box>
+        </Stack>
+      </Padder>
     </>
   );
 }

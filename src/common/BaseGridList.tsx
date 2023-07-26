@@ -1,19 +1,13 @@
 import { Box, Typography } from '@mui/material';
 import { Children } from 'react';
 
-type BaseGridListStyleProps = {
-  spacing?: number;
-  minItemWidth?: number;
-};
+const spacing = 1;
 
-export type BaseGridListProps = BaseGridListStyleProps &
-  React.PropsWithChildren<{
-    listEmptyMessage?: string;
-  }>;
+export type BaseGridListProps = React.PropsWithChildren<{
+  listEmptyMessage?: string;
+}>;
 
 function BaseGridList({
-  spacing = 1,
-  minItemWidth = 10,
   listEmptyMessage = 'Nothing has been found',
   children,
 }: BaseGridListProps) {
@@ -30,7 +24,10 @@ function BaseGridList({
         display: 'grid',
         columnGap: spacing,
         rowGap: spacing * 3,
-        gridTemplateColumns: `repeat(auto-fill, minmax(${minItemWidth}rem, 1fr))`,
+        gridTemplateColumns: {
+          xs: `repeat(auto-fill, minmax(9rem, 1fr))`,
+          md: `repeat(auto-fill, minmax(12rem, 1fr))`,
+        },
         margin: 0,
       }}
     >

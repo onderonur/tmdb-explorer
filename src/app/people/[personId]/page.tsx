@@ -1,6 +1,6 @@
 import { getPersonDetails } from '@/people/people-fetchers';
 import { notFound } from 'next/navigation';
-import { Box, Container, Divider, Stack, Toolbar } from '@mui/material';
+import { Container, Divider, Stack, Toolbar } from '@mui/material';
 import PersonSummary from '@/people-profile/person-summary';
 import SingleRowGridList from '@/common/single-row-grid-list';
 import ImageCard from '@/medias/image-card';
@@ -11,7 +11,7 @@ import FullSizeBackgroundImage from '@/common/full-size-background-image';
 import { Metadata } from 'next';
 import { getMetadata } from '@/seo/seo-utils';
 import SectionTitle from '@/common/section-title';
-import { pagePaddingX, pagePaddingY } from '@/theme/theme-utils';
+import Padder from '@/common/padder';
 
 type PersonPageProps = {
   params: {
@@ -49,7 +49,7 @@ export default async function PersonPage({
   return (
     <>
       <Toolbar />
-      <Box sx={{ ...pagePaddingX, ...pagePaddingY }}>
+      <Padder paddingX paddingY>
         <FullSizeBackgroundImage src={person.profile_path} alt={person.name} />
         <Stack spacing={2}>
           <Container>
@@ -89,7 +89,7 @@ export default async function PersonPage({
             <PersonCrewGridList person={person} />
           </section>
         </Stack>
-      </Box>
+      </Padder>
     </>
   );
 }
