@@ -1,20 +1,19 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import BaseAutocomplete from '@/common/BaseAutocomplete';
-import { useRouter } from 'next/router';
-import { Maybe } from '@/common/CommonTypes';
-import { getAllPageResults } from '@/common/CommonUtils';
-import { Suggestion } from './SearchTypes';
-import MovieAutocompleteItem from './MovieAutocompleteItem';
-import PersonAutocompleteItem from './PersonAutocompleteItem';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { Maybe, PaginationResponse } from '@/common/CommonTypes';
+import MovieAutocompleteItem from './movie-autocomplete-item';
+import PersonAutocompleteItem from './person-autocomplete-item';
 import { isMovie } from '@/movies/movie-utils';
 import { MediaType } from '@/medias/media-enums';
-import { isPerson } from '@/people/PeopleUtils';
-import { searchAPI } from './searchAPI';
+import { isPerson } from '@/people/people-utils';
 import { SxProps, Theme } from '@mui/material';
 import { useDebounce, useHasChanged } from '@/common/CommonHooks';
+import useSWR from 'swr';
+import { useSearchParams } from 'next/navigation';
+import { MultiSearchResult } from './search-types';
 
 type SearchAutocompleteProps = {
   autoFocus?: boolean;
@@ -23,30 +22,38 @@ type SearchAutocompleteProps = {
 
 function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
   const router = useRouter();
-  const { searchQuery } = router.query;
-  const queryValue = typeof searchQuery === 'string' ? searchQuery : '';
-  const [searchValue, setSearchValue] = useState(queryValue);
-  if (useHasChanged(queryValue)) {
-    setSearchValue(queryValue);
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('searchQuery');
+  const [searchValue, setSearchValue] = useState(searchQuery);
+  if (useHasChanged(searchQuery)) {
+    setSearchValue(searchQuery);
   }
 
   const debouncedSearchValue = useDebounce(searchValue);
-  const isSearchEnabled = !!debouncedSearchValue;
-  const { data, isFetching } = useInfiniteQuery({
-    ...searchAPI.searchMulti(debouncedSearchValue),
-    enabled: isSearchEnabled,
-  });
+
+  const { data, isValidating } = useSWR<PaginationResponse<MultiSearchResult>>(
+    () => {
+      if (!debouncedSearchValue) {
+        return null;
+      }
+
+      const apiSearchParams = new URLSearchParams();
+      apiSearchParams.set('page', '1');
+      apiSearchParams.set('query', debouncedSearchValue);
+
+      return `/search/multi/api?${apiSearchParams.toString()}`;
+    },
+  );
 
   const handleRedirect = (inputValue: string) => {
-    if (inputValue) {
-      router.push({
-        pathname: '/search',
-        query: { searchQuery: inputValue },
-      });
+    const trimmedValue = inputValue.trim();
+
+    if (trimmedValue) {
+      router.push(`/search/${trimmedValue}`);
     }
   };
 
-  const handleSelect = (selectedOption: Maybe<Suggestion>) => {
+  const handleSelect = (selectedOption: Maybe<MultiSearchResult>) => {
     if (selectedOption) {
       switch (selectedOption.media_type) {
         case MediaType.MOVIE:
@@ -61,16 +68,11 @@ function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
     }
   };
 
-  const options = useMemo<Suggestion[]>(
-    () =>
-      getAllPageResults(data).filter(
-        (option) => isMovie(option) || isPerson(option),
-      ),
-    [data],
-  );
+  const options =
+    data?.results.filter((option) => isMovie(option) || isPerson(option)) ?? [];
 
   return (
-    <BaseAutocomplete<Suggestion, false, true, true>
+    <BaseAutocomplete<MultiSearchResult, false, true, true>
       sx={sx}
       placeholder="Search Movies & People"
       options={options}
@@ -96,7 +98,7 @@ function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
         }
         return isMovie(option) ? option.title : option.name;
       }}
-      loading={isFetching}
+      loading={isValidating}
       inputValue={searchValue ?? ''}
       onInputChange={(e, newInputValue) => setSearchValue(newInputValue)}
       freeSolo

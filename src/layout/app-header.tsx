@@ -13,13 +13,14 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
-import AppTitle from './AppTitle';
+import AppTitle from './app-title';
 import { usePaletteMode } from '@/theme/BaseThemeProvider';
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
 import Brightness5OutlinedIcon from '@mui/icons-material/Brightness5Outlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import ExternalLink from '@/routing/ExternalLink';
+import ExternalLink from '@/routing/external-link';
 import { useIsMobile } from '@/common/CommonHooks';
+import SearchAutocomplete from '@/search/search-autocomplete';
 
 export default function AppHeader() {
   const isMobile = useIsMobile();
@@ -47,14 +48,9 @@ export default function AppHeader() {
     <AppBar
       color="transparent"
       sx={{
-        // To make the drawer clipped
-        // zIndex: 'modal',
-        // TODO: Buna bi bak
         transition: 'background-color 300ms ease-in-out',
         bgcolor: scrollTrigger ? 'background.default' : undefined,
         boxShadow: 'none',
-        // backgroundImage:
-        //   'linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))',
       }}
     >
       <Toolbar>
@@ -70,7 +66,7 @@ export default function AppHeader() {
               >
                 <CloseIcon />
               </IconButton>
-              {/* <SearchAutocomplete autoFocus /> */}
+              <SearchAutocomplete autoFocus />
             </>
           )}
         </Box>
@@ -83,7 +79,7 @@ export default function AppHeader() {
             justifyContent: 'center',
           }}
         >
-          {/* <SearchAutocomplete sx={{ maxWidth: 'sm' }} /> */}
+          <SearchAutocomplete sx={{ maxWidth: 'sm' }} />
         </Box>
 
         {!isMobileSearch && (

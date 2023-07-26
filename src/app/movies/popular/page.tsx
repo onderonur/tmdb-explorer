@@ -6,7 +6,6 @@ import { getPopularMovies } from '@/movies/movie-fetchers';
 import MovieInfiniteGridList from '@/movies/movie-infinite-grid-list';
 import { Divider, Stack } from '@mui/material';
 
-// TODO: Page naming'ine Next'ten falan bak. Hatta genel naming'lere bak root page, layout vs vs.
 export default async function PopularMoviesPage() {
   const firstPage = await getPopularMovies(FIRST_PAGE);
 

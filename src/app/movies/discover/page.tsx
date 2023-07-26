@@ -42,7 +42,6 @@ export default async function DiscoverMoviesPage({
         <Stack spacing={2}>
           <Divider />
           <PageTitle
-            // TODO: Fix title
             title={genre ? `${genre.name} Movies` : 'Discover Movies'}
             extra={<MovieSortingSelect />}
           />

@@ -1,5 +1,5 @@
-import { BasePerson } from '@/people/PeopleTypes';
-import AutocompleteItem, { AutocompleteItemProps } from './AutocompleteItem';
+import { BasePerson } from '@/people/people-types';
+import AutocompleteItem, { AutocompleteItemProps } from './autocomplete-item';
 
 type PersonAutocompleteItemProps = Pick<
   AutocompleteItemProps,

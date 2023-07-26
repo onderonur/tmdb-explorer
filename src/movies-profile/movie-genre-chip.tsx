@@ -2,7 +2,7 @@
 'use client';
 
 import { Chip } from '@mui/material';
-import NextLink from '@/routing/NextLink';
+import NextLink from '@/routing/next-link';
 import { Genre } from '@/movies/movie-types';
 
 type MovieGenreChipProps = {

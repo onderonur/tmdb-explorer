@@ -7,8 +7,7 @@ import {
   ListItem,
 } from '@mui/material';
 import { Maybe } from '@/common/CommonTypes';
-import useApiConfiguration from '@/api-configuration/ApiConfigurationHooks';
-import BaseAvatar from '@/common/base-avatar';
+import TmdbAvatar from '@/tmdb/tmdb-avatar';
 
 const StyledListItemText = styled(ListItemText)({
   '.MuiListItemText-secondary': {
@@ -33,13 +32,11 @@ function AutocompleteItem<C extends React.ElementType>({
   secondaryText,
   ...rest
 }: AutocompleteItemProps<C>) {
-  const { getImageUrl } = useApiConfiguration();
-
   return (
     <ListItem disablePadding>
       <ListItemButton dense sx={{ alignItems: 'flex-start' }} {...rest}>
         <ListItemAvatar>
-          <BaseAvatar src={getImageUrl(avatarUrl)} alt={'Avatar'} />
+          <TmdbAvatar src={avatarUrl} alt={'Avatar'} />
         </ListItemAvatar>
         <StyledListItemText primary={primaryText} secondary={secondaryText} />
       </ListItemButton>

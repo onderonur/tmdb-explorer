@@ -32,8 +32,3 @@ export function isOfType<T extends object>(
 ): obj is T {
   return keys.every((key) => Object.prototype.hasOwnProperty.call(obj, key));
 }
-
-// TODO: Bu daha iyi bi yere konulabilir medias youtube vs.
-export function getYouTubeThumbnailUrl(youtubeId: string) {
-  return `https://img.youtube.com/vi/${youtubeId}/0.jpg`;
-}

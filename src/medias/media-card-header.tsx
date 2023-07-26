@@ -1,7 +1,7 @@
 import { ID } from '@/common/CommonTypes';
 import TmdbAvatar from '@/tmdb/tmdb-avatar';
 import { getMovieDetails } from '@/movies/movie-fetchers';
-import NextLink from '@/routing/NextLink';
+import NextLink from '@/routing/next-link';
 import { CardHeader, Typography } from '@mui/material';
 
 type MediaCardHeaderProps = {

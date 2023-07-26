@@ -21,6 +21,10 @@ export function getMetadata({
     title: metaTitle,
     description: metaDescription,
     metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
+    // TODO: Fix
+    themeColor: '#e2f0ec',
+    creator: 'Onur Önder',
+    applicationName: APP_TITLE,
     alternates: {
       canonical: pathname,
     },
@@ -29,7 +33,7 @@ export function getMetadata({
       description: metaDescription,
       type: 'website',
       // TODO: Bu doğru mu bi bak
-      locale: 'en_IE',
+      locale: 'en_US',
       url: pathname,
       siteName: APP_TITLE,
     },
@@ -37,6 +41,7 @@ export function getMetadata({
       title: metaTitle,
       description: metaDescription,
       card: 'summary_large_image',
+      creator: '@onderonur_',
     },
   };
 }

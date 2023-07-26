@@ -2,7 +2,7 @@
 
 import { getMovieGenres } from '@/movies/movie-fetchers';
 import { List, ListSubheader } from '@mui/material';
-import AppDrawerItem from './AppDrawerItem';
+import AppDrawerItem from './app-drawer-item';
 
 export default async function AppDrawerGenres() {
   const genres = await getMovieGenres();

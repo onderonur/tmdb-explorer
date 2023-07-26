@@ -11,7 +11,6 @@ export default async function PopularPeoplePage() {
   const infiniteListSearchParams = new URLSearchParams();
   infiniteListSearchParams.set('page', '%pageIndex%');
 
-  // TODO: Bu container'ın bi anlamı var mı maxWidth olmadan bi bak. Başka page'lerde de var.
   return (
     <>
       <Toolbar />

@@ -1,5 +1,5 @@
 import { Button, Box, Typography } from '@mui/material';
-import NextLink from '@/routing/NextLink';
+import NextLink from '@/routing/next-link';
 
 type ErrorMessageProps = {
   statusCode?: number;

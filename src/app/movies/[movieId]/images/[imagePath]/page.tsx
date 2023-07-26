@@ -62,7 +62,6 @@ export default async function MovieImagePage({
             alignItems: 'start',
           }}
         >
-          {/* TODO: Bu Card kullanımlarına bi bak valid mi vs. Belki komple de kaldırılabilir */}
           <Card
             sx={{
               alignSelf: 'start',
@@ -75,8 +74,6 @@ export default async function MovieImagePage({
                 position: 'relative',
                 width: '100%',
                 aspectRatio: '16 / 9',
-                // TODO: Fix
-                // bgcolor: 'background.paper',
               }}
             >
               <TmdbImage
@@ -94,7 +91,6 @@ export default async function MovieImagePage({
               movieId={Number(movieId)}
             />
           </Card>
-          {/* TODO: Card yerine Paper vs de kullanılabilir vs vs. Tasarım da düzeltilebilir. */}
           <Card
             component="aside"
             sx={{
@@ -121,7 +117,6 @@ export default async function MovieImagePage({
               <List
                 sx={{
                   overflow: 'auto',
-                  // TODO: dvh kullanılabilir belki
                   maxHeight: '76vh',
                 }}
                 subheader={

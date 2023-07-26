@@ -1,6 +1,6 @@
 'use client';
 
-import NextLink from '@/routing/NextLink';
+import NextLink from '@/routing/next-link';
 import { ListItemButton, ListItemButtonProps } from '@mui/material';
 
 type ListItemLinkProps = ListItemButtonProps<

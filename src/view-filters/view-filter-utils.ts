@@ -1,8 +1,8 @@
 import { PaginationResponse } from '@/common/CommonTypes';
 import { Movie } from '@/movies/movie-types';
 import { isMovie } from '@/movies/movie-utils';
-import { BasePerson } from '@/people/PeopleTypes';
-import { isPerson } from '@/people/PeopleUtils';
+import { BasePerson } from '@/people/people-types';
+import { isPerson } from '@/people/people-utils';
 
 export const VIEW_FILTER_LIMIT = {
   minVoteCount: 200,
@@ -37,7 +37,15 @@ export function filterViewablePageResults<T>(
       (isMovie(item) && shouldViewMovie(item)) ||
       (isPerson(item) && shouldViewPerson(item)),
   );
+
   const removedItemCount = page.results.length - remainingItems.length;
+
+  let { total_pages } = page;
+
+  if (!remainingItems.length) {
+    total_pages = page.page === 1 ? 0 : page.page;
+  }
+
   return {
     ...page,
     results: remainingItems,
@@ -46,6 +54,6 @@ export function filterViewablePageResults<T>(
     total_results: page.total_results - removedItemCount,
     // If all of the items are removed, we set this page as the last one
     // to stop infinite loaders.
-    total_pages: !remainingItems.length ? page.page : page.total_pages,
+    total_pages,
   };
 }

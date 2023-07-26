@@ -51,7 +51,9 @@ export default async function MoviePage({
     return notFound();
   }
 
-  // TODO: Belki Container kullanılabilir.
+  const firstImage = movie.images?.backdrops[0];
+  const firstVideo = movie.videos?.results[0];
+
   return (
     <>
       <FullSizeBackgroundImage
@@ -72,7 +74,6 @@ export default async function MoviePage({
             <SingleRowGridList
               itemCount={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 4 }}
             >
-              {/* TODO: Çok zoom out yapınca vs noluyo bi bak. */}
               {movie.videos?.results.slice(0, 4).map((video) => {
                 return (
                   <li key={video.id}>
@@ -82,9 +83,8 @@ export default async function MoviePage({
               })}
             </SingleRowGridList>
             <SeeAllLink
-              // TODO: movies array'i için refactor (ilk item yoksa vs)
-              href={`/movies/${movie.id}/videos/${movie.videos?.results[0]?.id}`}
-              isLinkVisible={!!movie.videos?.results.length}
+              href={`/movies/${movie.id}/videos/${firstVideo?.id}`}
+              isLinkVisible={!!firstVideo}
             />
           </section>
 
@@ -93,7 +93,6 @@ export default async function MoviePage({
             <SingleRowGridList
               itemCount={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 4 }}
             >
-              {/* TODO: Çok zoom out yapınca vs noluyo bi bak. */}
               {movie.images?.backdrops.slice(0, 4).map((image) => {
                 return (
                   <li key={image.file_path}>
@@ -103,9 +102,8 @@ export default async function MoviePage({
               })}
             </SingleRowGridList>
             <SeeAllLink
-              // TODO: movies array'i için refactor (ilk item yoksa vs)
-              href={`/movies/${movie.id}/images${movie.images?.backdrops[0].file_path}`}
-              isLinkVisible={!!movie.images?.backdrops.length}
+              href={`/movies/${movie.id}/images${firstImage?.file_path}`}
+              isLinkVisible={!!firstImage}
             />
           </section>
 

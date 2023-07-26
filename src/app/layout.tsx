@@ -1,7 +1,7 @@
-import { APP_TITLE } from '@/common/CommonConstants';
 import AppProviders from '@/common/app-providers';
-import AppLayout from '@/layout/AppLayout';
-import ThemeRegistry from '@/theme/theme-registry';
+import AppLayout from '@/layout/app-layout';
+import { getMetadata } from '@/seo/seo-utils';
+import { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 
 // TODO: Gereksiz package'ları sil.
@@ -16,36 +16,13 @@ const roboto = Roboto({
   display: 'swap',
 });
 
-const title = APP_TITLE;
-// TODO: Fix
-const description = `${APP_TITLE} is a URL shortener which makes it easy to shorten and share your URLs.`;
-
-// TODO: Fix these.
-export const metadata = {
-  title,
-  description,
-  themeColor: '#e2f0ec',
-  //   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL),
-  creator: 'Onur Önder',
-  applicationName: APP_TITLE,
-  alternates: {
-    canonical: '/',
-  },
-  openGraph: {
-    title,
-    type: 'website',
-    url: '/',
-    description,
-    siteName: APP_TITLE,
-    locale: 'en_US',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: APP_TITLE,
-    description,
-    creator: '@onderonur_',
-  },
-};
+export function generateMetadata(): Metadata {
+  return getMetadata({
+    title: 'Home',
+    description: null,
+    pathname: '/',
+  });
+}
 
 export default function RootLayout({
   children,
@@ -55,12 +32,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={roboto.variable}>
       <body className={roboto.className}>
-        {/* TODO: ThemeRegistry de AppProviders'a alınabilir. */}
-        <ThemeRegistry options={{ key: 'mui' }}>
-          <AppProviders>
-            <AppLayout>{children}</AppLayout>
-          </AppProviders>
-        </ThemeRegistry>
+        <AppProviders>
+          <AppLayout>{children}</AppLayout>
+        </AppProviders>
       </body>
     </html>
   );

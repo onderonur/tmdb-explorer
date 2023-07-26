@@ -1,9 +1,9 @@
 import { Maybe } from '@/common/CommonTypes';
+import PageTitle from '@/common/PageTitle';
 import Padder from '@/common/padder';
 import { MediaType } from '@/medias/media-enums';
 import MovieInfiniteGridList from '@/movies/movie-infinite-grid-list';
 import PeopleInfiniteGridList from '@/people/people-infinite-list';
-import SearchResultsHeader from '@/search/SearchResultsHeader';
 import { searchMovies, searchPeople } from '@/search/search-fetchers';
 import SearchResultsTabs from '@/search/search-results-tabs';
 import { Box, Toolbar } from '@mui/material';
@@ -57,11 +57,11 @@ export default async function SearchPage({
     <>
       <Toolbar />
       <Padder paddingY>
-        <SearchResultsHeader query={query} />
+        <PageTitle title={`Search Results for: ${query}`} />
         <SearchResultsTabs
           value={mediaType as Maybe<MediaType>}
-          isMoviesTabVisible={!!moviesFirstPage.total_results}
-          isPeopleTabVisible={!!peopleFirstPage.total_results}
+          isMoviesTabVisible={!!moviesFirstPage.total_pages}
+          isPeopleTabVisible={!!peopleFirstPage.total_pages}
         />
         <Box marginTop={2}>
           {mediaType === MediaType.MOVIE && (

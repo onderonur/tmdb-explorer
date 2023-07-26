@@ -1,6 +1,6 @@
 'use client';
 
-import NextLink from '@/routing/NextLink';
+import NextLink from '@/routing/next-link';
 import { CardActionArea, CardActionAreaProps } from '@mui/material';
 
 type CardLinkAreaProps = CardActionAreaProps<

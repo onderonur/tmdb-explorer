@@ -4,7 +4,7 @@ import { Typography, Stack, List, ListItem, Box } from '@mui/material';
 import MovieRating from '@/movies/movie-rating';
 import { getMovieReleaseYear } from '@/movies/movie-utils';
 import TextWithLabel from '@/common/TextWithLabel';
-import NextLink from '@/routing/NextLink';
+import NextLink from '@/routing/next-link';
 import MovieGenreChip from './movie-genre-chip';
 import { Movie } from '@/movies/movie-types';
 import SectionTitle from '@/common/section-title';

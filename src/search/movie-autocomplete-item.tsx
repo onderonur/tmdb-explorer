@@ -1,6 +1,6 @@
 import { getMovieReleaseYear } from '@/movies/movie-utils';
 import { Movie } from '@/movies/movie-types';
-import AutocompleteItem from './AutocompleteItem';
+import AutocompleteItem from './autocomplete-item';
 
 type MovieAutocompleteItemProps = {
   movie: Movie;

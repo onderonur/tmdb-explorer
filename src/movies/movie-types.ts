@@ -4,7 +4,7 @@ import {
   Maybe,
   PaginationResponse,
 } from '@/common/CommonTypes';
-import { BasePerson } from '@/people/PeopleTypes';
+import { BasePerson } from '@/people/people-types';
 
 export interface Genre extends ItemWithId {
   name: string;

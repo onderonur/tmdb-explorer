@@ -4,8 +4,8 @@ import InfiniteGridList from '@/common/InfiniteGridList';
 import { PaginationResponse } from '@/common/CommonTypes';
 import useSWRInfinite from 'swr/infinite';
 import { getAllPageResults, getHasNextPage } from '@/common/CommonUtils';
-import { Person } from './PeopleTypes';
-import PersonCard from './PersonCard';
+import { Person } from './people-types';
+import PersonCard from './person-card';
 
 type PeopleInfiniteListProps = {
   firstPage: PaginationResponse<Person>;

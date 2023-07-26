@@ -1,4 +1,4 @@
-import ExternalLink from '@/routing/ExternalLink';
+import ExternalLink from '@/routing/external-link';
 import { SvgIcon, Box, Typography } from '@mui/material';
 import { useId } from 'react';
 

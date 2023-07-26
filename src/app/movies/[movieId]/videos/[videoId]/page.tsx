@@ -1,6 +1,5 @@
 // TODO: Metadata'ları düzelt
 
-import { getYouTubeThumbnailUrl } from '@/common/CommonUtils';
 import YouTubePlayer from '@/medias/youtube-player';
 import MediaCardHeader from '@/medias/media-card-header';
 import { getMovieDetails } from '@/movies/movie-fetchers';
@@ -21,8 +20,7 @@ import { notFound } from 'next/navigation';
 import BaseAvatar from '@/common/base-avatar';
 import ListItemLink from '@/common/list-item-link';
 import Padder from '@/common/padder';
-
-// TODO: Request sadeleştirilebilir belki filter'a da dikkat ederek.
+import { getYouTubeThumbnailUrl } from '@/medias/media-utils';
 
 type MovieVideoPageProps = {
   params: {
@@ -56,12 +54,10 @@ export default async function MovieVideoPage({
           sx={{
             display: 'grid',
             gap: 2,
-            // TODO: Diğer boyutlar için column'ları ayarla.
             gridTemplateColumns: { md: '1fr 25rem', lg: '1fr 30rem' },
             alignItems: 'start',
           }}
         >
-          {/* TODO: Bu Card kullanımlarına bi bak valid mi vs. Belki komple de kaldırılabilir */}
           <Card sx={{ alignSelf: 'start', bgcolor: 'transparent' }}>
             <CardContent sx={{ padding: 0 }}>
               <YouTubePlayer youTubeId={videoToWatch.key} />
@@ -72,7 +68,6 @@ export default async function MovieVideoPage({
               movieId={Number(movieId)}
             />
           </Card>
-          {/* TODO: Card yerine Paper vs de kullanılabilir vs vs. Tasarım da düzeltilebilir. */}
           <Card
             component="aside"
             sx={{
@@ -99,7 +94,6 @@ export default async function MovieVideoPage({
               <List
                 sx={{
                   overflow: 'auto',
-                  // TODO: dvh kullanılabilir belki
                   maxHeight: { lg: '76vh' },
                 }}
                 // TODO: plural singular fix

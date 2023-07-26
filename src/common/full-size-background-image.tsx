@@ -1,6 +1,6 @@
 'use client';
 
-import { APP_DRAWER_WIDTH } from '@/layout/AppDrawer';
+import { APP_DRAWER_WIDTH } from '@/layout/app-drawer';
 import { Box } from '@mui/material';
 import TmdbImage from '@/tmdb/tmdb-image';
 import { useWindowScrollY } from './CommonHooks';
