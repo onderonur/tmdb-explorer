@@ -1,5 +1,5 @@
 import TextWithLabel from '@/common/TextWithLabel';
-import { Person } from '@/people/people-types';
+import { PersonListItem } from '@/people/people-types';
 import { Box } from '@mui/material';
 
 enum Genders {
@@ -8,7 +8,7 @@ enum Genders {
 }
 
 type PersonInfoProps = {
-  person: Person;
+  person: PersonListItem;
 };
 
 function PersonInfo({ person }: PersonInfoProps) {

@@ -1,5 +1,5 @@
-import { APP_TITLE } from '@/common/CommonConstants';
-import { Maybe } from '@/common/CommonTypes';
+import { APP_TITLE } from '@/common/common-constants';
+import { Maybe } from '@/common/common-types';
 import { Metadata } from 'next';
 
 const APP_DESCRIPTION = `${APP_TITLE} is a client application for TMDb API. It's created with Next.js.`;

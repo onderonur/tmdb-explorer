@@ -1,14 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import BaseAutocomplete from '@/common/BaseAutocomplete';
+import BaseAutocomplete from '@/common/base-autocomplete';
 import { useRouter } from 'next/navigation';
-import { Maybe, PaginationResponse } from '@/common/CommonTypes';
+import { Maybe, PaginationResponse } from '@/common/common-types';
 import MovieAutocompleteItem from './movie-autocomplete-item';
 import PersonAutocompleteItem from './person-autocomplete-item';
-import { isMovie } from '@/movies/movie-utils';
 import { MediaType } from '@/medias/media-enums';
-import { isPerson } from '@/people/people-utils';
 import { SxProps, Theme } from '@mui/material';
 import { useDebounce, useHasChanged } from '@/common/CommonHooks';
 import useSWR from 'swr';
@@ -69,7 +67,9 @@ function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
   };
 
   const options =
-    data?.results.filter((option) => isMovie(option) || isPerson(option)) ?? [];
+    data?.results.filter((option) =>
+      [MediaType.MOVIE, MediaType.PERSON].includes(option.media_type),
+    ) ?? [];
 
   return (
     <BaseAutocomplete<MultiSearchResult, false, true, true>
@@ -77,7 +77,7 @@ function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
       placeholder="Search Movies & People"
       options={options}
       renderOption={(props, option) => {
-        return isMovie(option) ? (
+        return option.media_type === MediaType.MOVIE ? (
           <MovieAutocompleteItem
             {...props}
             key={`${option.media_type}_${option.id}`}
@@ -96,7 +96,9 @@ function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
           // For freeSolo
           return option;
         }
-        return isMovie(option) ? option.title : option.name;
+        return option.media_type === MediaType.MOVIE
+          ? option.title
+          : option.name;
       }}
       loading={isValidating}
       inputValue={searchValue ?? ''}

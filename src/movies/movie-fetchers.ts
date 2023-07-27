@@ -1,8 +1,8 @@
-import { ID, PaginationResponse } from '@/common/CommonTypes';
+import { Id, PaginationResponse } from '@/common/common-types';
 import { tmdbClient } from '@/tmdb/tmdb-client';
-// TODO: querystring type'larına gerek olmayabilir. URLSearchParams ile çöz.
+// TODO: Buna gerek olmayabilir.
 import queryString from 'query-string';
-import { Genre, Movie, MovieListItem } from './movie-types';
+import { Genre, MovieDetails, MovieListItem } from './movie-types';
 import {
   VIEW_FILTER_LIMIT,
   filterViewablePageResults,
@@ -15,8 +15,8 @@ import { cache } from 'react';
 
 // TODO: Bu movie detail cast vs fetch'ler ayrıştırılabilir de.
 
-async function getMovie<T extends Movie>(
-  movieId: ID,
+async function getMovie<T extends MovieDetails>(
+  movieId: Id,
   args: {
     appendToResponse?: string[];
     params?: queryString.StringifiableRecord;
@@ -34,8 +34,8 @@ async function getMovie<T extends Movie>(
   return movie;
 }
 
-export const getMovieDetails = cache(async (movieId: ID) => {
-  const movie = await getMovie<Movie>(movieId, {
+export const getMovieDetails = cache(async (movieId: Id) => {
+  const movie = await getMovie<MovieDetails>(movieId, {
     appendToResponse: ['images,videos,credits'],
   });
 
@@ -52,7 +52,7 @@ export const getMovieDetails = cache(async (movieId: ID) => {
 });
 
 export const getDiscoverMovies = cache(
-  async (page: number, params: { genreId?: ID; sortBy?: string }) => {
+  async (page: number, params: { genreId?: Id; sortBy?: string }) => {
     const movies = await tmdbClient.get<PaginationResponse<MovieListItem>>(
       '/discover/movie',
       {
@@ -98,9 +98,9 @@ export const getMovieGenres = cache(async () => {
 });
 
 export const getMovieRecommendations = cache(
-  async (movieId: ID, params: { page: number }) => {
+  async (movieId: Id, params: { page: number }) => {
     // To be sure movie is viewable, we fetch it too
-    const movie = await getMovie<Movie>(movieId, {
+    const movie = await getMovie<MovieDetails>(movieId, {
       appendToResponse: ['recommendations'],
       params,
     });

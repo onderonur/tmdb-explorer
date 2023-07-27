@@ -2,7 +2,7 @@
 
 import { createSafeContext } from '@/common/safe-context';
 import { TmdbConfiguration, TmdbImageQuality } from './tmdb-types';
-import { Maybe } from '@/common/CommonTypes';
+import { Maybe } from '@/common/common-types';
 
 type TmdbConfigurationContextValue = TmdbConfiguration & {
   getImageUrl: (

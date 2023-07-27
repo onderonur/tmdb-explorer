@@ -1,4 +1,4 @@
-import { ID } from '@/common/CommonTypes';
+import { Id } from '@/common/common-types';
 import TmdbAvatar from '@/tmdb/tmdb-avatar';
 import { getMovieDetails } from '@/movies/movie-fetchers';
 import NextLink from '@/routing/next-link';
@@ -6,7 +6,7 @@ import { CardHeader, Typography } from '@mui/material';
 
 type MediaCardHeaderProps = {
   title: string;
-  movieId: ID;
+  movieId: Id;
 };
 
 export default async function MediaCardHeader({

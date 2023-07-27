@@ -1,6 +1,8 @@
 import { CustomError } from '@/error-handling/CustomError';
 import { NextApiHandler } from 'next';
 
+// TODO: Husky fix.
+
 export const createHandler =
   (fn: NextApiHandler): NextApiHandler =>
   async (req, res) => {

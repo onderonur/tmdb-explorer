@@ -6,7 +6,7 @@ import {
   ListItemButton,
   ListItem,
 } from '@mui/material';
-import { Maybe } from '@/common/CommonTypes';
+import { Maybe } from '@/common/common-types';
 import TmdbAvatar from '@/tmdb/tmdb-avatar';
 
 const StyledListItemText = styled(ListItemText)({

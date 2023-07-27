@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { MovieListItem } from './movie-types';
+import { MovieBase } from './movie-types';
 import { getMovieReleaseYear } from './movie-utils';
 import { InfoOutlined } from '@mui/icons-material';
 import { lineClamp } from '@/theme/theme-utils';
@@ -8,7 +8,7 @@ import ButtonLink from '@/common/button-link';
 import Padder from '@/common/padder';
 
 type FeaturedMovieProps = {
-  movie: MovieListItem;
+  movie: MovieBase;
 };
 
 export default function FeaturedMovie({ movie }: FeaturedMovieProps) {

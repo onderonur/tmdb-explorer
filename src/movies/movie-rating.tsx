@@ -1,10 +1,10 @@
 import { Box, SxProps, Theme, Typography } from '@mui/material';
 import { yellow } from '@mui/material/colors';
-import { Movie, MovieListItem } from '@/movies/movie-types';
+import { MovieBase } from '@/movies/movie-types';
 import StarIcon from '@mui/icons-material/Star';
 
 type MovieRatingProps = {
-  movie: Movie | MovieListItem;
+  movie: MovieBase;
   sx?: SxProps<Theme>;
 };
 

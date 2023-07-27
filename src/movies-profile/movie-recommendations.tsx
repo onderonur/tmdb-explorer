@@ -1,9 +1,9 @@
-import { ID } from '@/common/CommonTypes';
+import { Id } from '@/common/common-types';
 import MovieInfiniteGridList from '@/movies/movie-infinite-grid-list';
 import { getMovieRecommendations } from '@/movies/movie-fetchers';
 
 type MovieRecommendationsProps = {
-  movieId: ID;
+  movieId: Id;
 };
 
 export default async function MovieRecommendations({

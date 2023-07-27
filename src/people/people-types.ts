@@ -1,17 +1,17 @@
 import { MediaType } from '@/medias/media-enums';
-import { DateString, ItemWithId, Maybe } from '@/common/CommonTypes';
-import { Movie, MovieImage } from '@/movies/movie-types';
+import { DateString, Id, Maybe } from '@/common/common-types';
+import { MovieImage, MovieListItem } from '@/movies/movie-types';
 
-// TODO: Bu belki daha iyi isimlendirilebilir.
-export interface BasePerson extends ItemWithId {
+export type PersonBase = {
+  id: Id;
   name: string;
   profile_path: string;
   gender: number;
   adult: boolean;
   popularity: number;
-}
+};
 
-export interface Person extends BasePerson {
+export type PersonListItem = PersonBase & {
   biography: Maybe<string>;
   known_for_department: string;
   birthday: DateString;
@@ -20,15 +20,15 @@ export interface Person extends BasePerson {
   also_known_as: Maybe<string[]>;
   imdb_id: Maybe<string>;
   media_type: MediaType;
-}
+};
 
 type PersonImage = MovieImage;
 
-type PersonCasting = Movie & { character: string };
-type PersonCrew = Movie & { job: string };
+type PersonCasting = MovieListItem & { character: string };
+type PersonCrew = MovieListItem & { job: string };
 type PersonCredits = { cast: PersonCasting[]; crew: PersonCrew[] };
 
-export type PersonDetails = Person & {
+export type PersonDetails = PersonListItem & {
   images: { profiles: PersonImage[] };
   credits: PersonCredits;
 };

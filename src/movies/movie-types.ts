@@ -1,20 +1,15 @@
-import {
-  ID,
-  ItemWithId,
-  Maybe,
-  PaginationResponse,
-} from '@/common/CommonTypes';
-import { BasePerson } from '@/people/people-types';
+import { Id, Maybe, PaginationResponse } from '@/common/common-types';
+import { PersonBase } from '@/people/people-types';
 
-export interface Genre extends ItemWithId {
+export type Genre = {
+  id: Id;
   name: string;
-}
+};
 
-export type MovieListItem = ItemWithId & {
+export type MovieBase = {
   adult: boolean;
   backdrop_path: string;
-  genre_ids: number[];
-  id: ID;
+  id: Id;
   original_language: string;
   original_title: string;
   overview: string;
@@ -26,37 +21,28 @@ export type MovieListItem = ItemWithId & {
   vote_count: number;
 };
 
-export interface Movie extends ItemWithId {
-  adult: boolean;
-  backdrop_path: string;
+export type MovieListItem = MovieBase & {
+  genre_ids: number[];
+};
+
+export type MovieDetails = MovieBase & {
+  genre_ids: number[];
   credits?: { cast: MovieCast[]; crew: MovieCrew[] };
   genres: Genre[];
   homepage: string;
-  id: ID;
   images?: {
     backdrops: MovieImage[];
     logos: MovieImage[];
     posters: MovieImage[];
   };
   imdb_id: Maybe<string>;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
   revenue: number;
   runtime: number;
   status: string;
   tagline: Maybe<string>;
-  title: string;
   videos?: PaginationResponse<MovieVideo>;
   recommendations: PaginationResponse<MovieListItem>;
-  vote_average: number;
-  vote_count: number;
-  // TODO: Bu lazım mı? API'dan gelmiyor.
-  // media_type: MediaType;
-}
+};
 
 export type MovieImage = {
   file_path: string;
@@ -69,10 +55,10 @@ export type MovieVideo = {
   type: string;
 };
 
-export type MovieCast = BasePerson & {
+type MovieCast = PersonBase & {
   character: string;
 };
 
-export type MovieCrew = BasePerson & {
+export type MovieCrew = PersonBase & {
   job: string;
 };

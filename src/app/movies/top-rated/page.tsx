@@ -1,4 +1,4 @@
-import { FIRST_PAGE } from '@/common/CommonUtils';
+import { FIRST_PAGE } from '@/common/common-constants';
 import PageTitle from '@/common/PageTitle';
 import Padder from '@/common/padder';
 import FeaturedMovie from '@/movies/featured-movie';

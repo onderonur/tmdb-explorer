@@ -1,14 +1,14 @@
 import { Card, CardHeader, CardMedia } from '@mui/material';
 import { lineClamp } from '@/theme/theme-utils';
 import BaseImage from '@/common/base-image';
-import { ID } from '@/common/CommonTypes';
+import { Id } from '@/common/common-types';
 import { MovieVideo } from '@/movies/movie-types';
 import CardLinkArea from '@/common/card-link-area';
 import { getYouTubeThumbnailUrl } from '@/medias/media-utils';
 
 type MovieVideoProps = {
-  // TODO: ID'yi Id yap.
-  movieId: ID;
+  // TODO: Id'yi Id yap.
+  movieId: Id;
   video: MovieVideo;
 };
 

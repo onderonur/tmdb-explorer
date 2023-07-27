@@ -1,15 +1,13 @@
-import { PaginationResponse } from '@/common/CommonTypes';
-import { Movie } from '@/movies/movie-types';
-import { isMovie } from '@/movies/movie-utils';
-import { BasePerson } from '@/people/people-types';
-import { isPerson } from '@/people/people-utils';
+import { PaginationResponse } from '@/common/common-types';
+import { ViewableMovie, ViewablePerson } from './view-filter-types';
+import { isOfType } from '@/common/common-utils';
 
 export const VIEW_FILTER_LIMIT = {
   minVoteCount: 200,
   minPopularity: 5,
 };
 
-export function shouldViewMovie<T extends Movie>(movie: T) {
+export function shouldViewMovie(movie: ViewableMovie) {
   return (
     !movie.adult &&
     movie.vote_count >= VIEW_FILTER_LIMIT.minVoteCount &&
@@ -17,25 +15,27 @@ export function shouldViewMovie<T extends Movie>(movie: T) {
   );
 }
 
-export function filterViewableMovies<T extends Movie>(movies: T[]) {
+export function filterViewableMovies<T extends ViewableMovie>(movies: T[]) {
   return movies.filter(shouldViewMovie);
 }
 
-export function shouldViewPerson<T extends BasePerson>(person: T) {
+export function shouldViewPerson(person: ViewablePerson) {
   return !person.adult && person.popularity >= VIEW_FILTER_LIMIT.minPopularity;
 }
 
-export function filterViewablePeople<T extends BasePerson>(people: T[]) {
+export function filterViewablePeople<T extends ViewablePerson>(people: T[]) {
   return people.filter(shouldViewPerson);
 }
 
-export function filterViewablePageResults<T>(
-  page: PaginationResponse<T>,
-): PaginationResponse<T> {
+export function filterViewablePageResults<
+  T extends ViewableMovie | ViewablePerson,
+>(page: PaginationResponse<T>): PaginationResponse<T> {
   const remainingItems = page.results.filter(
     (item) =>
-      (isMovie(item) && shouldViewMovie(item)) ||
-      (isPerson(item) && shouldViewPerson(item)),
+      (isOfType<ViewableMovie>(item, ['title', 'overview', 'release_date']) &&
+        shouldViewMovie(item)) ||
+      (isOfType<ViewablePerson>(item, ['name', 'gender']) &&
+        shouldViewPerson(item)),
   );
 
   const removedItemCount = page.results.length - remainingItems.length;

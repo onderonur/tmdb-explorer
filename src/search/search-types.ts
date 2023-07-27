@@ -1,7 +1,13 @@
 import { MediaType } from '@/medias/media-enums';
 import { MovieListItem } from '@/movies/movie-types';
-import { Person } from '@/people/people-types';
+import { PersonListItem } from '@/people/people-types';
 
-export type MultiSearchResult = (MovieListItem | Person) & {
-  media_type: MediaType;
+export type MovieSearchResult = MovieListItem & {
+  media_type: MediaType.MOVIE;
 };
+
+export type PersonSearchResult = PersonListItem & {
+  media_type: MediaType.PERSON;
+};
+
+export type MultiSearchResult = MovieSearchResult | PersonSearchResult;

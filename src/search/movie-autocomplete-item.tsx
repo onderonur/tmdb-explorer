@@ -1,12 +1,15 @@
 import { getMovieReleaseYear } from '@/movies/movie-utils';
-import { Movie } from '@/movies/movie-types';
 import AutocompleteItem from './autocomplete-item';
+import { MovieSearchResult } from './search-types';
 
 type MovieAutocompleteItemProps = {
-  movie: Movie;
+  movie: MovieSearchResult;
 };
 
-function MovieAutocompleteItem({ movie, ...rest }: MovieAutocompleteItemProps) {
+export default function MovieAutocompleteItem({
+  movie,
+  ...rest
+}: MovieAutocompleteItemProps) {
   return (
     <AutocompleteItem
       avatarUrl={movie.poster_path}
@@ -17,5 +20,3 @@ function MovieAutocompleteItem({ movie, ...rest }: MovieAutocompleteItemProps) {
     />
   );
 }
-
-export default MovieAutocompleteItem;

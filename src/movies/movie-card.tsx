@@ -1,12 +1,12 @@
 import MovieRating from './movie-rating';
 import { Box, Card, CardContent, CardHeader, Typography } from '@mui/material';
-import { MovieListItem } from '@/movies/movie-types';
+import { MovieBase } from '@/movies/movie-types';
 import { getMovieReleaseYear } from '@/movies/movie-utils';
 import TmdbImage from '@/tmdb/tmdb-image';
 import CardLinkArea from '@/common/card-link-area';
 
 type MovieCardProps = {
-  movie: MovieListItem;
+  movie: MovieBase;
   subheader?: string;
 };
 

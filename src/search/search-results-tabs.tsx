@@ -1,6 +1,6 @@
 'use client';
 
-import { Maybe } from '@/common/CommonTypes';
+import { Maybe } from '@/common/common-types';
 import { MediaType } from '@/medias/media-enums';
 import { Tab, Tabs, Typography } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';

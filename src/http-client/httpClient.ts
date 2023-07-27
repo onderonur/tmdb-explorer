@@ -1,4 +1,5 @@
 import { CustomError } from '@/error-handling/CustomError';
+// TODO: Buna gerek olmayabilir.
 import queryString from 'query-string';
 
 async function handleResponse(response: Response) {

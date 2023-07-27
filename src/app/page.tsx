@@ -4,7 +4,7 @@ import FeaturedMovie from '@/movies/featured-movie';
 import { getPopularMovies } from '@/movies/movie-fetchers';
 import { Divider, Stack } from '@mui/material';
 import Padder from '@/common/padder';
-import { FIRST_PAGE } from '@/common/CommonUtils';
+import { FIRST_PAGE } from '@/common/common-constants';
 
 export default async function RootPage() {
   const moviesPage = await getPopularMovies(FIRST_PAGE);

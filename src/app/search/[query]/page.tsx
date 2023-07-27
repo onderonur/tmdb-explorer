@@ -1,4 +1,4 @@
-import { Maybe } from '@/common/CommonTypes';
+import { Maybe } from '@/common/common-types';
 import PageTitle from '@/common/PageTitle';
 import Padder from '@/common/padder';
 import { MediaType } from '@/medias/media-enums';

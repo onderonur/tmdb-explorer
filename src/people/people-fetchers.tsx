@@ -1,7 +1,7 @@
-import { ID, PaginationResponse } from '@/common/CommonTypes';
+import { Id, PaginationResponse } from '@/common/common-types';
 import { tmdbClient } from '@/tmdb/tmdb-client';
 import { cache } from 'react';
-import { Person, PersonDetails } from './people-types';
+import { PersonListItem, PersonDetails } from './people-types';
 import {
   filterViewableMovies,
   filterViewablePageResults,
@@ -9,7 +9,7 @@ import {
 } from '@/view-filters/view-filter-utils';
 
 export const getPopularPeople = cache(async (page: number) => {
-  const people = await tmdbClient.get<PaginationResponse<Person>>(
+  const people = await tmdbClient.get<PaginationResponse<PersonListItem>>(
     '/person/popular',
     {
       page,
@@ -19,7 +19,7 @@ export const getPopularPeople = cache(async (page: number) => {
   return filterViewablePageResults(people);
 });
 
-export const getPersonDetails = cache(async (personId: ID) => {
+export const getPersonDetails = cache(async (personId: Id) => {
   const person = await tmdbClient.get<PersonDetails>(`/person/${personId}`, {
     append_to_response: 'images,credits',
   });

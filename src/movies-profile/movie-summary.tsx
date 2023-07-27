@@ -6,13 +6,13 @@ import { getMovieReleaseYear } from '@/movies/movie-utils';
 import TextWithLabel from '@/common/TextWithLabel';
 import NextLink from '@/routing/next-link';
 import MovieGenreChip from './movie-genre-chip';
-import { Movie } from '@/movies/movie-types';
+import { MovieDetails } from '@/movies/movie-types';
 import SectionTitle from '@/common/section-title';
 
 // TODO: styled yerine sx mi önerilio next için bi bak
 
 type MovieSummaryProps = {
-  movie: Movie;
+  movie: MovieDetails;
 };
 
 function MovieSummary({ movie }: MovieSummaryProps) {

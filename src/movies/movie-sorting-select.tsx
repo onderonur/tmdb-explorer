@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, MenuItem, TextField } from '@mui/material';
-import { Maybe } from '@/common/CommonTypes';
+import { Maybe } from '@/common/common-types';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const MOVIE_SORTING = {

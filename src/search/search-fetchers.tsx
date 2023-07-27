@@ -1,6 +1,6 @@
-import { PaginationResponse } from '@/common/CommonTypes';
+import { PaginationResponse } from '@/common/common-types';
 import { MovieListItem } from '@/movies/movie-types';
-import { Person } from '@/people/people-types';
+import { PersonListItem } from '@/people/people-types';
 import { tmdbClient } from '@/tmdb/tmdb-client';
 import { filterViewablePageResults } from '@/view-filters/view-filter-utils';
 import { cache } from 'react';
@@ -20,7 +20,7 @@ export const searchMovies = cache(async ({ query, page }: SearchInput) => {
 });
 
 export const searchPeople = cache(async ({ query, page }: SearchInput) => {
-  const results = await tmdbClient.get<PaginationResponse<Person>>(
+  const results = await tmdbClient.get<PaginationResponse<PersonListItem>>(
     `/search/person`,
     {
       query,
@@ -34,7 +34,7 @@ export const searchPeople = cache(async ({ query, page }: SearchInput) => {
 export const searchMulti = cache(async ({ query, page }: SearchInput) => {
   const results = await tmdbClient.get<
     // TODO: Biri ListItem. Biri normal. Name fix.
-    PaginationResponse<MovieListItem | Person>
+    PaginationResponse<MovieListItem | PersonListItem>
   >(`/search/multi`, {
     query,
     page,

@@ -1,10 +1,10 @@
 import { Card, CardHeader, CardMedia } from '@mui/material';
 import TmdbAvatar from '@/tmdb/tmdb-avatar';
 import CardLinkArea from '@/common/card-link-area';
-import { ID } from '@/common/CommonTypes';
+import { Id } from '@/common/common-types';
 
 type MoviePersonCardProps = {
-  personId: ID;
+  personId: Id;
   imageSrc: string;
   title: string;
   subheader: string;

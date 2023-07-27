@@ -1,7 +1,7 @@
 import { Link, Box } from '@mui/material';
 import AppDrawerToggleButton from '@/layout/app-drawer-toggle-button';
 import NextLink from '@/routing/next-link';
-import { APP_TITLE } from '@/common/CommonConstants';
+import { APP_TITLE } from '@/common/common-constants';
 
 function AppTitle() {
   return (

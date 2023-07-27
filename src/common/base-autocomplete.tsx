@@ -26,8 +26,8 @@ type BaseAutocompleteProps<
   | 'onInputChange'
   | 'onChange'
   | 'freeSolo'
+  | 'autoFocus'
 > & {
-  autoFocus?: boolean;
   onSearchClick: (inputValue: string) => void;
 };
 

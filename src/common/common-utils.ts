@@ -1,7 +1,7 @@
-import { PaginationResponse, ItemWithId, Maybe } from '@/common/CommonTypes';
+import { PaginationResponse, Maybe } from '@/common/common-types';
 import _ from 'lodash';
 
-export function getAllPageResults<T extends ItemWithId>(
+export function getAllPageResults<T extends { id: number | string }>(
   allPages: Maybe<PaginationResponse<T>[]>,
 ): T[] {
   if (!allPages) {
@@ -24,11 +24,10 @@ export function getHasNextPage<T>(allPages: Maybe<PaginationResponse<T>[]>) {
   return lastPage.page < lastPage.total_pages;
 }
 
-export const FIRST_PAGE = 1;
+export function isOfType<T>(obj: unknown, keys: Array<keyof T>): obj is T {
+  if (typeof obj !== 'object' || obj === null) {
+    return false;
+  }
 
-export function isOfType<T extends object>(
-  obj: object,
-  keys: Array<keyof T>,
-): obj is T {
   return keys.every((key) => Object.prototype.hasOwnProperty.call(obj, key));
 }

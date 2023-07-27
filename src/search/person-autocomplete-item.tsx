@@ -1,25 +1,18 @@
-import { BasePerson } from '@/people/people-types';
-import AutocompleteItem, { AutocompleteItemProps } from './autocomplete-item';
+import AutocompleteItem from './autocomplete-item';
+import { PersonSearchResult } from './search-types';
 
-type PersonAutocompleteItemProps = Pick<
-  AutocompleteItemProps,
-  'secondaryText'
-> & { person: BasePerson };
+type PersonAutocompleteItemProps = { person: PersonSearchResult };
 
-function PersonAutocompleteItem({
+export default function PersonAutocompleteItem({
   person,
-  secondaryText,
   ...rest
 }: PersonAutocompleteItemProps) {
   return (
     <AutocompleteItem
       avatarUrl={person.profile_path}
       primaryText={person.name}
-      secondaryText={secondaryText}
       // Required for SearchAutocomplete
       {...rest}
     />
   );
 }
-
-export default PersonAutocompleteItem;

@@ -2,7 +2,7 @@
 
 import { useTmdbConfigurationContext } from '@/tmdb/tmdb-configuration-context';
 import BaseImage, { BaseImageProps } from '@/common/base-image';
-import { Omit } from '@/common/CommonTypes';
+import { Omit } from '@/common/common-types';
 import { TmdbImageQuality } from './tmdb-types';
 
 type TmdbImageProps = Omit<BaseImageProps, 'src'> & {

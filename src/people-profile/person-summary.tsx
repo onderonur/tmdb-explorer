@@ -1,11 +1,11 @@
 import { Typography, Stack, Box, Card, CardMedia } from '@mui/material';
-import { Person } from '@/people/people-types';
+import { PersonListItem } from '@/people/people-types';
 import PersonInfo from './PersonInfo';
 import TmdbImage from '@/tmdb/tmdb-image';
 import SectionTitle from '@/common/section-title';
 
 type PersonSummaryProps = {
-  person: Person;
+  person: PersonListItem;
 };
 
 function PersonSummary({ person }: PersonSummaryProps) {

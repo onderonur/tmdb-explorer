@@ -1,5 +1,5 @@
 import BaseGridList from '@/common/BaseGridList';
-import { ID } from '@/common/CommonTypes';
+import { Id } from '@/common/common-types';
 import MoviePersonCard from '@/movies-profile/movie-person-card';
 import SectionTitle from '@/common/section-title';
 import { getMovieDetails } from '@/movies/movie-fetchers';
@@ -30,7 +30,7 @@ export default async function MoviePeoplePage({
     return notFound();
   }
 
-  const crewById: Record<ID, MovieCrew[]> = {};
+  const crewById: Record<Id, MovieCrew[]> = {};
 
   for (const crew of credits.crew) {
     crewById[crew.id] = [...(crewById[crew.id] ?? []), crew];
