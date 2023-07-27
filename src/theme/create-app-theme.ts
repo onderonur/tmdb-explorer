@@ -1,10 +1,18 @@
 import { createTheme, PaletteMode, responsiveFontSizes } from '@mui/material';
+import { Roboto } from 'next/font/google';
+
+const roboto = Roboto({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  // TODO: swap'a gerek var mı bi bak
+  display: 'swap',
+});
 
 export function createAppTheme(mode: PaletteMode) {
   return responsiveFontSizes(
     createTheme({
       typography: {
-        fontFamily: 'var(--font-roboto)',
+        fontFamily: roboto.style.fontFamily,
       },
       palette: {
         mode,

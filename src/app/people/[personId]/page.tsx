@@ -25,8 +25,7 @@ export async function generateMetadata({
   const person = await getPersonDetails(Number(personId));
 
   if (!person) {
-    // TODO: Fix
-    return {};
+    return notFound();
   }
 
   // TODO: Tamamla

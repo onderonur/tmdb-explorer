@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { MovieBase } from './movie-types';
 import { getMovieReleaseYear } from './movie-utils';
-import { InfoOutlined } from '@mui/icons-material';
+import InfoIcon from '@mui/icons-material/InfoOutlined';
 import { lineClamp } from '@/theme/theme-utils';
 import TmdbImage from '@/tmdb/tmdb-image';
 import ButtonLink from '@/common/button-link';
@@ -63,19 +63,23 @@ export default function FeaturedMovie({ movie }: FeaturedMovieProps) {
           >
             <div>
               <Typography
-                variant="h4"
+                variant="h3"
                 component="p"
                 sx={{ fontWeight: 'bold' }}
               >
                 {movie.title}
               </Typography>
-              <Typography sx={{ color: 'text.secondary', fontWeight: 'bold' }}>
+              <Typography
+                variant="h6"
+                component="p"
+                sx={{ color: 'text.secondary', fontWeight: 'bold' }}
+              >
                 {getMovieReleaseYear(movie)}
               </Typography>
               {/* TODO: max line ekle. */}
             </div>
             <div>
-              <Typography sx={{ ...lineClamp(4), fontSize: 'h6.fontSize' }}>
+              <Typography variant="h6" component="p" sx={{ ...lineClamp(4) }}>
                 {movie.overview}
               </Typography>
             </div>
@@ -84,7 +88,7 @@ export default function FeaturedMovie({ movie }: FeaturedMovieProps) {
               variant="outlined"
               color="primary"
               sx={{ marginTop: 1 }}
-              startIcon={<InfoOutlined />}
+              startIcon={<InfoIcon />}
             >
               More Info
             </ButtonLink>

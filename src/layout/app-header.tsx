@@ -11,24 +11,17 @@ import {
   Stack,
   useScrollTrigger,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
 import AppTitle from './app-title';
-import { usePaletteMode } from '@/theme/BaseThemeProvider';
-import DarkModeIcon from '@mui/icons-material/DarkModeOutlined';
-import Brightness5OutlinedIcon from '@mui/icons-material/Brightness5Outlined';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import ExternalLink from '@/routing/external-link';
 import { useIsMobile } from '@/common/CommonHooks';
 import SearchAutocomplete from '@/search/search-autocomplete';
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 export default function AppHeader() {
   const isMobile = useIsMobile();
   const [isMobileSearch, setIsMobileSearch] = useState(false);
-
-  if (!isMobile && isMobileSearch) {
-    setIsMobileSearch(false);
-  }
 
   function showMobileSearch() {
     setIsMobileSearch(true);
@@ -38,7 +31,10 @@ export default function AppHeader() {
     setIsMobileSearch(false);
   }
 
-  const { mode, toggleMode } = usePaletteMode();
+  // TODO: Bu media query vs ile daha iyi yapılabilir.
+  if (!isMobile && isMobileSearch) {
+    hideMobileSearch();
+  }
 
   const scrollTrigger = useScrollTrigger({
     disableHysteresis: true,
@@ -90,13 +86,6 @@ export default function AppHeader() {
               sx={{ display: { md: 'none' } }}
             >
               <SearchIcon />
-            </IconButton>
-            <IconButton aria-label="Toggle theme" onClick={toggleMode}>
-              {mode === 'light' ? (
-                <DarkModeIcon />
-              ) : (
-                <Brightness5OutlinedIcon />
-              )}
             </IconButton>
             <IconButton
               aria-label="Toggle theme"

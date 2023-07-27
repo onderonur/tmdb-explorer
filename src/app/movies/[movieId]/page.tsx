@@ -30,8 +30,7 @@ export async function generateMetadata({
   const movie = await getMovieDetails(Number(movieId));
 
   if (!movie) {
-    // TODO: Fix
-    return {};
+    return notFound();
   }
 
   // TODO: Tamamla
