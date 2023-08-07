@@ -13,6 +13,7 @@ import SectionTitle from '@/common/section-title';
 import { notFound } from 'next/navigation';
 import { getMetadata } from '@/seo/seo-utils';
 import Padder from '@/common/padder';
+import { getTmdbConfiguration } from '@/tmdb/tmdb-configuration-fetchers';
 
 // TODO: Tüm file name'leri kebab-case yap ve github'dan kontrol et tek kelimelikleri vs.
 
@@ -27,9 +28,12 @@ type MoviePageProps = {
 export async function generateMetadata({
   params: { movieId },
 }: MoviePageProps): Promise<Metadata> {
-  const movie = await getMovieDetails(Number(movieId));
+  const [movie, tmdbConfiguration] = await Promise.all([
+    getMovieDetails(Number(movieId)),
+    getTmdbConfiguration(),
+  ]);
 
-  if (!movie) {
+  if (!movie || !tmdbConfiguration) {
     return notFound();
   }
 
@@ -38,6 +42,14 @@ export async function generateMetadata({
     title: movie.title,
     description: movie.overview,
     pathname: `/movies/${movieId}`,
+    images: [
+      // {
+      //   url: tmdbConfiguration.images.secure_base_url,
+      //   width: 500,
+      //   height: 750,
+      //   alt: movie.title,
+      // },
+    ],
   });
 }
 

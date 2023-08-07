@@ -1,15 +1,13 @@
-import { httpClient } from '@/http-client/httpClient';
-// TODO: Buna gerek olmayabilir.
-import queryString from 'query-string';
+import { httpClient } from '@/http-client/http-client';
 
 export const tmdbClient = {
-  get: async <T>(
-    endpoint: string,
-    params?: queryString.StringifiableRecord,
-  ): Promise<T> => {
+  get: async <T>(endpoint: string, params?: URLSearchParams): Promise<T> => {
+    const searchParams = new URLSearchParams(params);
+    searchParams.set('api_key', process.env.API_KEY as string);
+
     const response = await httpClient.get<T>(
       `${process.env.API_URL}${endpoint}`,
-      { ...params, api_key: process.env.API_KEY },
+      searchParams,
     );
 
     return response;

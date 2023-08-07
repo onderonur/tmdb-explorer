@@ -41,7 +41,6 @@ export default function SingleRowGridList({
         columnGap: 1,
       }}
     >
-      {/* TODO: Çok zoom out yapınca vs noluyo bi bak. */}
       {children}
     </Box>
   );

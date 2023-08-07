@@ -1,7 +1,5 @@
 import { Id, PaginationResponse } from '@/common/common-types';
 import { tmdbClient } from '@/tmdb/tmdb-client';
-// TODO: Buna gerek olmayabilir.
-import queryString from 'query-string';
 import { Genre, MovieDetails, MovieListItem } from './movie-types';
 import {
   VIEW_FILTER_LIMIT,
@@ -17,15 +15,24 @@ import { cache } from 'react';
 
 async function getMovie<T extends MovieDetails>(
   movieId: Id,
-  args: {
-    appendToResponse?: string[];
-    params?: queryString.StringifiableRecord;
+  params?: {
+    page?: number;
+    appendToResponse: string[];
   },
 ) {
-  const movie = await tmdbClient.get<T>(`/movie/${movieId}`, {
-    ...args.params,
-    append_to_response: args.appendToResponse?.join(),
-  });
+  const searchParams = new URLSearchParams();
+
+  const appendToResponse = params?.appendToResponse.join(',');
+
+  if (appendToResponse) {
+    searchParams.set('append_to_response', appendToResponse);
+  }
+
+  if (params?.page) {
+    searchParams.set('page', params.page.toString());
+  }
+
+  const movie = await tmdbClient.get<T>(`/movie/${movieId}`, searchParams);
 
   if (!shouldViewMovie(movie)) {
     return null;
@@ -36,7 +43,7 @@ async function getMovie<T extends MovieDetails>(
 
 export const getMovieDetails = cache(async (movieId: Id) => {
   const movie = await getMovie<MovieDetails>(movieId, {
-    appendToResponse: ['images,videos,credits'],
+    appendToResponse: ['images', 'videos', 'credits'],
   });
 
   if (!movie) {
@@ -52,15 +59,28 @@ export const getMovieDetails = cache(async (movieId: Id) => {
 });
 
 export const getDiscoverMovies = cache(
-  async (page: number, params: { genreId?: Id; sortBy?: string }) => {
+  async (
+    page: number,
+    { genreId, sortBy }: { genreId?: Id; sortBy?: string },
+  ) => {
+    const searchParams = new URLSearchParams();
+    searchParams.set('page', page.toString());
+    searchParams.set(
+      'vote_count.gte',
+      VIEW_FILTER_LIMIT.minVoteCount.toString(),
+    );
+
+    if (genreId) {
+      searchParams.set('with_genres', genreId.toString());
+    }
+
+    if (sortBy) {
+      searchParams.set('sort_by', sortBy);
+    }
+
     const movies = await tmdbClient.get<PaginationResponse<MovieListItem>>(
       '/discover/movie',
-      {
-        with_genres: params.genreId,
-        sort_by: params.sortBy,
-        page,
-        'vote_count.gte': VIEW_FILTER_LIMIT.minVoteCount,
-      },
+      searchParams,
     );
 
     return filterViewablePageResults(movies);
@@ -70,9 +90,9 @@ export const getDiscoverMovies = cache(
 export const getPopularMovies = cache(async (page: number) => {
   const movies = await tmdbClient.get<PaginationResponse<MovieListItem>>(
     '/movie/popular',
-    {
-      page,
-    },
+    new URLSearchParams({
+      page: page.toString(),
+    }),
   );
 
   return filterViewablePageResults(movies);
@@ -81,9 +101,9 @@ export const getPopularMovies = cache(async (page: number) => {
 export const getTopRatedMovies = cache(async (page: number) => {
   const movies = await tmdbClient.get<PaginationResponse<MovieListItem>>(
     '/movie/top_rated',
-    {
-      page,
-    },
+    new URLSearchParams({
+      page: page.toString(),
+    }),
   );
 
   return filterViewablePageResults(movies);
@@ -98,17 +118,17 @@ export const getMovieGenres = cache(async () => {
 });
 
 export const getMovieRecommendations = cache(
-  async (movieId: Id, params: { page: number }) => {
+  async (movieId: Id, { page }: { page: number }) => {
     // To be sure movie is viewable, we fetch it too
     const movie = await getMovie<MovieDetails>(movieId, {
+      page,
       appendToResponse: ['recommendations'],
-      params,
     });
 
     if (!movie) {
       return null;
     }
 
-    return filterViewablePageResults(movie.recommendations);
+    return movie.recommendations;
   },
 );

@@ -1,6 +1,6 @@
 'use client';
 
-import { httpClient } from '@/http-client/httpClient';
+import { httpClient } from '@/http-client/http-client';
 import { SWRConfig } from 'swr';
 
 type BaseSWRConfigProps = React.PropsWithChildren;

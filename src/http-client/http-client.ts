@@ -1,6 +1,4 @@
 import { CustomError } from '@/error-handling/CustomError';
-// TODO: Buna gerek olmayabilir.
-import queryString from 'query-string';
 
 async function handleResponse(response: Response) {
   if (response.ok) {
@@ -19,12 +17,15 @@ async function handleResponse(response: Response) {
 }
 
 export const httpClient = {
-  get: <Data>(
-    url: string,
-    params?: queryString.StringifiableRecord,
-  ): Promise<Data> => {
-    return fetch(queryString.stringifyUrl({ url, query: params })).then(
-      handleResponse,
-    );
+  get: <Data>(url: string, params?: URLSearchParams): Promise<Data> => {
+    let fullUrl = url;
+
+    const queryString = params?.toString();
+
+    if (queryString) {
+      fullUrl = `${url}?${queryString}`;
+    }
+
+    return fetch(fullUrl).then(handleResponse);
   },
 };

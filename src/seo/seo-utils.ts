@@ -8,14 +8,15 @@ export function getMetadata({
   title,
   description,
   pathname,
+  images,
 }: {
   title: string;
   description: Maybe<string>;
   pathname: string;
+  images?: NonNullable<Metadata['openGraph']>['images'];
 }): Metadata {
   const metaTitle = `${title} | ${APP_TITLE}`;
   const metaDescription = description ?? APP_DESCRIPTION;
-  // const url = `${process.env.NEXT_PUBLIC_BASE_URL}${pathname}`;
 
   return {
     title: metaTitle,
@@ -36,12 +37,14 @@ export function getMetadata({
       locale: 'en_US',
       url: pathname,
       siteName: APP_TITLE,
+      images,
     },
     twitter: {
       title: metaTitle,
       description: metaDescription,
       card: 'summary_large_image',
       creator: '@onderonur_',
+      images,
     },
   };
 }

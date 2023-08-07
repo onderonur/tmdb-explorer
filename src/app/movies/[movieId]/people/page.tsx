@@ -42,6 +42,7 @@ export default async function MoviePeoplePage({
     <>
       <Toolbar />
       <Padder paddingY>
+        {/* TODO: Bu title'a movie avatar ve link'ini ekle */}
         <PageTitle title="Full Cast & Crew" />
         <Stack spacing={2}>
           <section>

@@ -17,6 +17,7 @@ import { visuallyHidden } from '@mui/utils';
 import ListItemLink from '@/common/list-item-link';
 import TmdbAvatar from '@/tmdb/tmdb-avatar';
 import NextLink from '@/routing/next-link';
+import { Fragment } from 'react';
 
 // TODO: styled yerine sx mi önerilio next için bi bak
 
@@ -57,15 +58,12 @@ function MovieSummary({ movie }: MovieSummaryProps) {
               const isLastItem = i === movie.genres.length - 1;
 
               return (
-                <>
-                  <NextLink
-                    key={genre.id}
-                    href={`/movies/discover?genreId=${genre.id}`}
-                  >
+                <Fragment key={genre.id}>
+                  <NextLink href={`/movies/discover?genreId=${genre.id}`}>
                     {genre.name}
                   </NextLink>
                   {!isLastItem && <span>, </span>}
-                </>
+                </Fragment>
               );
             })}
           </Typography>

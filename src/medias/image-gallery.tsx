@@ -38,6 +38,8 @@ export default async function ImageGallery({
     return notFound();
   }
 
+  // TODO: Sağ sol tık tık eklenecek.
+
   return (
     <Box
       sx={{
