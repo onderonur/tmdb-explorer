@@ -1,12 +1,12 @@
 import { Card, CardMedia } from '@mui/material';
-import { MovieImage } from '@/movies/movie-types';
 import { Id } from '@/common/common-types';
 import TmdbImage from '@/tmdb/tmdb-image';
 import CardLinkArea from '@/common/card-link-area';
+import { TImage } from '@/medias/media-types';
 
 type MovieImageCardProps = {
   movieId: Id;
-  image: MovieImage;
+  image: TImage & { alt: string };
 };
 
 export default function MovieImageCard({
@@ -19,9 +19,7 @@ export default function MovieImageCard({
         <CardMedia sx={{ position: 'relative', aspectRatio: '16 / 9' }}>
           <TmdbImage
             src={image.file_path}
-            // TODO: Fix
-            // alt={`${movie.title} Image - ${i}`}
-            alt="TODO"
+            alt={image.alt}
             fill
             sx={{ objectFit: 'cover', borderRadius: 1 }}
           />

@@ -1,3 +1,4 @@
+import { Maybe } from '@/common/common-types';
 import { TmdbConfiguration, TmdbImageQuality } from './tmdb-types';
 
 export function getTmdbImageUrl({
@@ -6,7 +7,7 @@ export function getTmdbImageUrl({
   quality = 'w500',
 }: {
   tmdbConfiguration: TmdbConfiguration;
-  imagePath: string;
+  imagePath: Maybe<string>;
   quality?: TmdbImageQuality;
 }) {
   if (!imagePath) {

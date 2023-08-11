@@ -2,7 +2,7 @@ import TmdbAvatar from '@/tmdb/tmdb-avatar';
 import NextLink from '@/routing/next-link';
 import { CardHeader, Typography } from '@mui/material';
 
-type MediaCardHeaderProps = {
+export type MediaCardHeaderProps = {
   title: string;
   subheader: string;
   href: string;

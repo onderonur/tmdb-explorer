@@ -14,6 +14,7 @@ const theme = responsiveFontSizes(
       fontFamily: roboto.style.fontFamily,
     },
     palette: {
+      mode: 'dark',
       background: {
         default: '#141f29',
         paper: '#151f28',

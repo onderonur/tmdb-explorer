@@ -1,4 +1,5 @@
 import { Id, Maybe, PaginationResponse } from '@/common/common-types';
+import { TImage } from '@/medias/media-types';
 import { PersonBase } from '@/people/people-types';
 
 export type Genre = {
@@ -31,9 +32,9 @@ export type MovieDetails = MovieBase & {
   genres: Genre[];
   homepage: string;
   images?: {
-    backdrops: MovieImage[];
-    logos: MovieImage[];
-    posters: MovieImage[];
+    backdrops: TImage[];
+    logos: TImage[];
+    posters: TImage[];
   };
   imdb_id: Maybe<string>;
   revenue: number;
@@ -42,10 +43,6 @@ export type MovieDetails = MovieBase & {
   tagline: Maybe<string>;
   videos?: PaginationResponse<MovieVideo>;
   recommendations: PaginationResponse<MovieListItem>;
-};
-
-export type MovieImage = {
-  file_path: string;
 };
 
 export type MovieVideo = {

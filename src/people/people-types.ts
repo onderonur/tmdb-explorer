@@ -1,6 +1,7 @@
 import { SearchResultType } from '@/medias/media-enums';
 import { DateString, Id, Maybe } from '@/common/common-types';
-import { MovieImage, MovieListItem } from '@/movies/movie-types';
+import { MovieListItem } from '@/movies/movie-types';
+import { TImage } from '@/medias/media-types';
 
 export type PersonBase = {
   id: Id;
@@ -22,13 +23,11 @@ export type PersonListItem = PersonBase & {
   media_type: SearchResultType;
 };
 
-type PersonImage = MovieImage;
-
 type PersonCasting = MovieListItem & { character: string };
 type PersonCrew = MovieListItem & { job: string };
 type PersonCredits = { cast: PersonCasting[]; crew: PersonCrew[] };
 
 export type PersonDetails = PersonListItem & {
-  images: { profiles: PersonImage[] };
+  images: { profiles: TImage[] };
   credits: PersonCredits;
 };

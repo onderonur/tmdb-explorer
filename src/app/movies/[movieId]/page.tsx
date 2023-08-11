@@ -109,10 +109,16 @@ export default async function MoviePage({
             <SingleRowGridList
               itemCount={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 4 }}
             >
-              {movie.images?.backdrops.slice(0, 4).map((image) => {
+              {movie.images?.backdrops.slice(0, 4).map((image, i) => {
                 return (
                   <li key={image.file_path}>
-                    <MovieImageCard movieId={movie.id} image={image} />
+                    <MovieImageCard
+                      movieId={movie.id}
+                      image={{
+                        ...image,
+                        alt: `"${movie.title}" Image - ${i + 1}`,
+                      }}
+                    />
                   </li>
                 );
               })}
