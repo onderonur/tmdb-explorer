@@ -1,6 +1,6 @@
 'use client';
 
-import InfiniteGridList from '@/common/InfiniteGridList';
+import InfiniteGridList from '@/common/infinite-grid-list';
 import { PaginationResponse } from '@/common/common-types';
 import useSWRInfinite from 'swr/infinite';
 import { getAllPageResults, getHasNextPage } from '@/common/common-utils';
@@ -11,8 +11,6 @@ type PeopleInfiniteListProps = {
   firstPage: PaginationResponse<PersonListItem>;
   pageKeyTemplate: string;
 };
-
-// TODO: People -> Person yapılabilir belki.
 
 export default function PeopleInfiniteGridList({
   firstPage,

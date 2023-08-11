@@ -22,8 +22,7 @@ export function getMetadata({
     title: metaTitle,
     description: metaDescription,
     metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
-    // TODO: Fix
-    themeColor: '#e2f0ec',
+    themeColor: '#141f29',
     creator: 'Onur Önder',
     applicationName: APP_TITLE,
     alternates: {
@@ -33,7 +32,6 @@ export function getMetadata({
       title: metaTitle,
       description: metaDescription,
       type: 'website',
-      // TODO: Bu doğru mu bi bak
       locale: 'en_US',
       url: pathname,
       siteName: APP_TITLE,

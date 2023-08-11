@@ -2,7 +2,7 @@
 
 import { Box } from '@mui/material';
 import TmdbImage from '@/tmdb/tmdb-image';
-import { useWindowScrollY } from './CommonHooks';
+import { useWindowScrollY } from './common-hooks';
 import { APP_DRAWER_WIDTH } from '@/layout/app-drawer-utils';
 
 type FullSizeBackgroundImageProps = {
@@ -31,8 +31,6 @@ export default function FullSizeBackgroundImage({
     (opacityScrollYThreshold - windowScrollY) / opacityScrollYThreshold,
     minOpacity,
   );
-
-  // TODO: Ufak bi scale up eklenebilir.
 
   return (
     <Box

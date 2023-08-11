@@ -1,5 +1,5 @@
 import { FIRST_PAGE } from '@/common/common-constants';
-import PageTitle from '@/common/PageTitle';
+import PageTitle from '@/common/page-title';
 import Padder from '@/common/padder';
 import FeaturedMovie from '@/movies/featured-movie';
 import { getTopRatedMovies } from '@/movies/movie-fetchers';

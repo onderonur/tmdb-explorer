@@ -1,29 +1,28 @@
 import { Maybe } from '@/common/common-types';
-import PageTitle from '@/common/PageTitle';
+import PageTitle from '@/common/page-title';
 import Padder from '@/common/padder';
-import { MediaType } from '@/medias/media-enums';
+import { SearchResultType } from '@/medias/media-enums';
 import MovieInfiniteGridList from '@/movies/movie-infinite-grid-list';
 import PeopleInfiniteGridList from '@/people/people-infinite-list';
 import { searchMovies, searchPeople } from '@/search/search-fetchers';
 import SearchResultsTabs from '@/search/search-results-tabs';
 import { Box, Toolbar } from '@mui/material';
+import { notFound } from 'next/navigation';
 
 type SearchPageProps = {
-  params: {
-    query: string;
-  };
   searchParams: {
-    mediaType?: string;
+    query?: string;
+    type?: string;
   };
 };
 
-// TODO: mediaType ismi çok kötü onu değiştir.
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+  const { query } = searchParams;
+  let type = searchParams.type as Maybe<SearchResultType>;
 
-export default async function SearchPage({
-  params: { query },
-  searchParams,
-}: SearchPageProps) {
-  let { mediaType } = searchParams;
+  if (!query) {
+    notFound();
+  }
 
   const [moviesFirstPage, peopleFirstPage] = await Promise.all([
     searchMovies({
@@ -36,22 +35,17 @@ export default async function SearchPage({
     }),
   ]);
 
-  if (!mediaType) {
+  if (!type) {
     if (moviesFirstPage.total_results) {
-      mediaType = MediaType.MOVIE;
+      type = SearchResultType.MOVIE;
     } else if (peopleFirstPage.total_results) {
-      mediaType = MediaType.PERSON;
+      type = SearchResultType.PERSON;
     }
   }
 
   const infiniteListSearchParams = new URLSearchParams();
-
   infiniteListSearchParams.set('page', '%pageIndex%');
-
-  // searchQuery boş oluncaki durumu handle et veya bunu param'a çevir query string'dense
-  if (query) {
-    infiniteListSearchParams.set('query', query);
-  }
+  infiniteListSearchParams.set('query', query);
 
   return (
     <>
@@ -59,20 +53,20 @@ export default async function SearchPage({
       <Padder paddingY>
         <PageTitle title={`Search Results for: ${query}`} />
         <SearchResultsTabs
-          value={mediaType as Maybe<MediaType>}
+          value={type}
           isMoviesTabVisible={!!moviesFirstPage.total_pages}
           isPeopleTabVisible={!!peopleFirstPage.total_pages}
         />
         <Box marginTop={2}>
-          {mediaType === MediaType.MOVIE && (
+          {type === SearchResultType.MOVIE && (
             <MovieInfiniteGridList
-              pageKeyTemplate={`/search/${query}/movies/api?${infiniteListSearchParams.toString()}`}
+              pageKeyTemplate={`/search/movies/api?${infiniteListSearchParams.toString()}`}
               firstPage={moviesFirstPage}
             />
           )}
-          {mediaType === MediaType.PERSON && (
+          {type === SearchResultType.PERSON && (
             <PeopleInfiniteGridList
-              pageKeyTemplate={`/search/${query}/people/api?${infiniteListSearchParams.toString()}`}
+              pageKeyTemplate={`/search/people/api?${infiniteListSearchParams.toString()}`}
               firstPage={peopleFirstPage}
             />
           )}

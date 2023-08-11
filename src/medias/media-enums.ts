@@ -1,4 +1,4 @@
-export enum MediaType {
+export enum SearchResultType {
   MOVIE = 'movie',
   PERSON = 'person',
 }

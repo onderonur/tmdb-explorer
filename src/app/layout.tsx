@@ -1,4 +1,4 @@
-import AppProviders from '@/common/app-providers';
+import AppProviders from '@/layout/app-providers';
 import AppLayout from '@/layout/app-layout';
 import { getMetadata } from '@/seo/seo-utils';
 import { Metadata } from 'next';

@@ -14,6 +14,20 @@ import { notFound } from 'next/navigation';
 import { getMetadata } from '@/seo/seo-utils';
 import Padder from '@/common/padder';
 import { getTmdbConfiguration } from '@/tmdb/tmdb-configuration-fetchers';
+import { getTmdbImageUrl } from '@/tmdb/tmdb-configuration-utils';
+
+async function getPageData(movieId: string) {
+  const [movie, tmdbConfiguration] = await Promise.all([
+    getMovieDetails(Number(movieId)),
+    getTmdbConfiguration(),
+  ]);
+
+  if (!movie || !tmdbConfiguration) {
+    notFound();
+  }
+
+  return { movie, tmdbConfiguration };
+}
 
 // TODO: Tüm file name'leri kebab-case yap ve github'dan kontrol et tek kelimelikleri vs.
 
@@ -28,27 +42,22 @@ type MoviePageProps = {
 export async function generateMetadata({
   params: { movieId },
 }: MoviePageProps): Promise<Metadata> {
-  const [movie, tmdbConfiguration] = await Promise.all([
-    getMovieDetails(Number(movieId)),
-    getTmdbConfiguration(),
-  ]);
+  const { movie, tmdbConfiguration } = await getPageData(movieId);
 
-  if (!movie || !tmdbConfiguration) {
-    return notFound();
-  }
-
-  // TODO: Tamamla
   return getMetadata({
     title: movie.title,
     description: movie.overview,
     pathname: `/movies/${movieId}`,
     images: [
-      // {
-      //   url: tmdbConfiguration.images.secure_base_url,
-      //   width: 500,
-      //   height: 750,
-      //   alt: movie.title,
-      // },
+      {
+        url: getTmdbImageUrl({
+          tmdbConfiguration,
+          imagePath: movie.poster_path,
+        }),
+        width: 500,
+        height: 750,
+        alt: movie.title,
+      },
     ],
   });
 }
@@ -56,11 +65,7 @@ export async function generateMetadata({
 export default async function MoviePage({
   params: { movieId },
 }: MoviePageProps) {
-  const movie = await getMovieDetails(Number(movieId));
-
-  if (!movie) {
-    return notFound();
-  }
+  const { movie } = await getPageData(movieId);
 
   const firstImage = movie.images?.backdrops[0];
   const firstVideo = movie.videos?.results[0];

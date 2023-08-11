@@ -14,6 +14,7 @@ module.exports = {
     'object-shorthand': 'warn',
     curly: 'warn',
     eqeqeq: 'warn',
+    'require-await': 'warn',
     '@typescript-eslint/no-unused-vars': 'warn',
   },
   // Files starting with . are ignored by default.

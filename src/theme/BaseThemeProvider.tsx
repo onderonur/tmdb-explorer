@@ -36,7 +36,7 @@ type BaseThemeProviderProps = React.PropsWithChildren<{
   initialPaletteMode: PaletteMode;
 }>;
 
-function BaseThemeProvider({
+export default function BaseThemeProvider({
   initialPaletteMode,
   children,
 }: BaseThemeProviderProps) {
@@ -78,5 +78,3 @@ function BaseThemeProvider({
     </PaletteModeContext.Provider>
   );
 }
-
-export default BaseThemeProvider;

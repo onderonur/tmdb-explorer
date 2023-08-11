@@ -1,12 +1,15 @@
-import { Button, Box, Typography } from '@mui/material';
-import NextLink from '@/routing/next-link';
+import { Box, Typography } from '@mui/material';
+import ButtonLink from '@/common/button-link';
 
 type ErrorMessageProps = {
   statusCode?: number;
   message?: string;
 };
 
-function ErrorMessage({ statusCode, message }: ErrorMessageProps) {
+export default function ErrorMessage({
+  statusCode,
+  message,
+}: ErrorMessageProps) {
   return (
     <Box
       sx={{
@@ -20,17 +23,14 @@ function ErrorMessage({ statusCode, message }: ErrorMessageProps) {
     >
       {statusCode && <Typography variant="h1">{statusCode}</Typography>}
       <Typography variant="h4">{message || 'Something went wrong'}</Typography>
-      <Button
+      <ButtonLink
         aria-label="Go to Homepage"
         href="/"
         variant="contained"
-        component={NextLink}
         sx={{ marginTop: 2, marginBottom: 8 }}
       >
         Go to Homepage
-      </Button>
+      </ButtonLink>
     </Box>
   );
 }
-
-export default ErrorMessage;

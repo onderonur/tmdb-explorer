@@ -2,7 +2,7 @@ import ExternalLink from '@/routing/external-link';
 import { SvgIcon, Box, Typography } from '@mui/material';
 import { useId } from 'react';
 
-function TmdbAttribution() {
+export default function TmdbAttribution() {
   const linearGradientId = useId();
 
   return (
@@ -41,5 +41,3 @@ function TmdbAttribution() {
     </Box>
   );
 }
-
-export default TmdbAttribution;

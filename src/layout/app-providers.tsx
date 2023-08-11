@@ -1,6 +1,6 @@
 import TmdbConfigurationProvider from '@/tmdb/tmdb-configuration-context';
 import { getTmdbConfiguration } from '@/tmdb/tmdb-configuration-fetchers';
-import BaseSWRConfig from './base-swr-config';
+import BaseSWRConfig from '../common/base-swr-config';
 import ThemeRegistry from '@/theme/theme-registry';
 
 type AppProvidersProps = React.PropsWithChildren;

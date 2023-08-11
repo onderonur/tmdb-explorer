@@ -1,4 +1,4 @@
-import { MediaType } from '@/medias/media-enums';
+import { SearchResultType } from '@/medias/media-enums';
 import { DateString, Id, Maybe } from '@/common/common-types';
 import { MovieImage, MovieListItem } from '@/movies/movie-types';
 
@@ -19,7 +19,7 @@ export type PersonListItem = PersonBase & {
   official_site: Maybe<string>;
   also_known_as: Maybe<string[]>;
   imdb_id: Maybe<string>;
-  media_type: MediaType;
+  media_type: SearchResultType;
 };
 
 type PersonImage = MovieImage;

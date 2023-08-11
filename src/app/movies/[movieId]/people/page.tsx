@@ -1,13 +1,13 @@
-import BaseGridList from '@/common/BaseGridList';
+import BaseGridList from '@/common/base-grid-list';
 import { Id } from '@/common/common-types';
 import MoviePersonCard from '@/movies-profile/movie-person-card';
-import SectionTitle from '@/common/section-title';
 import { getMovieDetails } from '@/movies/movie-fetchers';
 import { MovieCrew } from '@/movies/movie-types';
-import { Divider, Stack, Toolbar } from '@mui/material';
-import PageTitle from '@/common/PageTitle';
+import { Card, CardContent, Stack, Toolbar } from '@mui/material';
 import { notFound } from 'next/navigation';
 import Padder from '@/common/padder';
+import MediaCardHeader from '@/medias/media-card-header';
+import SectionTitle from '@/common/section-title';
 
 type MoviePeoplePageProps = {
   params: {
@@ -21,13 +21,14 @@ export default async function MoviePeoplePage({
   const movie = await getMovieDetails(Number(movieId));
 
   if (!movie) {
-    return notFound();
+    // TODO: Bu notFound app route'larda da kullanılabiliyor galiba bi bak.
+    notFound();
   }
 
   const { credits } = movie;
 
   if (!credits) {
-    return notFound();
+    notFound();
   }
 
   const crewById: Record<Id, MovieCrew[]> = {};
@@ -42,47 +43,60 @@ export default async function MoviePeoplePage({
     <>
       <Toolbar />
       <Padder paddingY>
-        {/* TODO: Bu title'a movie avatar ve link'ini ekle */}
-        <PageTitle title="Full Cast & Crew" />
         <Stack spacing={2}>
+          <Card>
+            <MediaCardHeader
+              title="Full Cast & Crew"
+              subheader={movie.title}
+              href={`/movies/${movie.id}`}
+              imageSrc={movie.poster_path}
+            />
+          </Card>
           <section>
             <SectionTitle title="Cast" />
-            <BaseGridList>
-              {credits.cast.map((castCredit) => {
-                return (
-                  <li key={castCredit.id}>
-                    <MoviePersonCard
-                      personId={castCredit.id}
-                      imageSrc={castCredit.profile_path}
-                      title={castCredit.name}
-                      subheader={castCredit.character}
-                    />
-                  </li>
-                );
-              })}
-            </BaseGridList>
+            <Card>
+              <CardContent>
+                <BaseGridList>
+                  {credits.cast.map((castCredit) => {
+                    return (
+                      <li key={castCredit.id}>
+                        <MoviePersonCard
+                          personId={castCredit.id}
+                          imageSrc={castCredit.profile_path}
+                          title={castCredit.name}
+                          subheader={castCredit.character}
+                        />
+                      </li>
+                    );
+                  })}
+                </BaseGridList>
+              </CardContent>
+            </Card>
           </section>
-          <Divider />
           <section>
             <SectionTitle title="Crew" />
-            <BaseGridList>
-              {Object.values(crewById).map((crewCredits) => {
-                const [first] = crewCredits;
+            <Card>
+              <CardContent>
+                <BaseGridList>
+                  {Object.values(crewById).map((crewCredits) => {
+                    const [first] = crewCredits;
 
-                return (
-                  <li key={first.id}>
-                    <MoviePersonCard
-                      personId={first.id}
-                      imageSrc={first.profile_path}
-                      title={first.name}
-                      subheader={crewCredits
-                        .map((crewCredit) => crewCredit.job)
-                        .join(', ')}
-                    />
-                  </li>
-                );
-              })}
-            </BaseGridList>
+                    return (
+                      <li key={first.id}>
+                        <MoviePersonCard
+                          personId={first.id}
+                          imageSrc={first.profile_path}
+                          title={first.name}
+                          subheader={crewCredits
+                            .map((crewCredit) => crewCredit.job)
+                            .join(', ')}
+                        />
+                      </li>
+                    );
+                  })}
+                </BaseGridList>
+              </CardContent>
+            </Card>
           </section>
         </Stack>
       </Padder>

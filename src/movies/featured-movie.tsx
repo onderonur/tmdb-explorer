@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { MovieBase } from './movie-types';
 import { getMovieReleaseYear } from './movie-utils';
 import InfoIcon from '@mui/icons-material/InfoOutlined';
@@ -38,29 +38,16 @@ export default function FeaturedMovie({ movie }: FeaturedMovieProps) {
           position: 'absolute',
           inset: 0,
           backgroundImage:
-            // TODO: Fix for theming
             'radial-gradient(farthest-side at 70% 20%, transparent, #141f29)',
         }}
       />
       <Box
         sx={{
-          height: '100%',
-          display: 'grid',
-          alignContent: 'end',
+          marginTop: 'auto',
         }}
       >
-        {/* TODO: Stack de kullanılabilir burada, eğer hala öneriliyosa. */}
         <Padder paddingY>
-          <Box
-            sx={{
-              position: 'relative',
-              height: '100%',
-              display: 'grid',
-              gap: 1,
-              justifyItems: 'start',
-              maxWidth: '75ch',
-            }}
-          >
+          <Stack spacing={2} sx={{ position: 'relative', maxWidth: '75ch' }}>
             <div>
               <Typography
                 variant="h3"
@@ -76,23 +63,23 @@ export default function FeaturedMovie({ movie }: FeaturedMovieProps) {
               >
                 {getMovieReleaseYear(movie)}
               </Typography>
-              {/* TODO: max line ekle. */}
             </div>
             <div>
               <Typography variant="h6" component="p" sx={{ ...lineClamp(4) }}>
                 {movie.overview}
               </Typography>
             </div>
-            <ButtonLink
-              href={`/movies/${movie.id}`}
-              variant="outlined"
-              color="primary"
-              sx={{ marginTop: 1 }}
-              startIcon={<InfoIcon />}
-            >
-              More Info
-            </ButtonLink>
-          </Box>
+            <div>
+              <ButtonLink
+                href={`/movies/${movie.id}`}
+                variant="outlined"
+                color="primary"
+                startIcon={<InfoIcon />}
+              >
+                More Info
+              </ButtonLink>
+            </div>
+          </Stack>
         </Padder>
       </Box>
     </Box>

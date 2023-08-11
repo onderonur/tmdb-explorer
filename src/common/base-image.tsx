@@ -7,7 +7,7 @@ export type BaseImageProps = ImageProps & {
   sx?: SxProps<Theme>;
 };
 
-function BaseImage({ src, alt, ...rest }: BaseImageProps) {
+export default function BaseImage({ src, alt, ...rest }: BaseImageProps) {
   return (
     <Box
       component={Image}
@@ -21,5 +21,3 @@ function BaseImage({ src, alt, ...rest }: BaseImageProps) {
     />
   );
 }
-
-export default BaseImage;

@@ -5,7 +5,7 @@ type PageTitleProps = {
   extra?: React.ReactNode;
 };
 
-function PageTitle({ title, extra }: PageTitleProps) {
+export default function PageTitle({ title, extra }: PageTitleProps) {
   return (
     <Box
       sx={{
@@ -24,5 +24,3 @@ function PageTitle({ title, extra }: PageTitleProps) {
     </Box>
   );
 }
-
-export default PageTitle;

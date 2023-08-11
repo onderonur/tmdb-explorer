@@ -1,4 +1,4 @@
-import BaseGridList from '@/common/BaseGridList';
+import BaseGridList from '@/common/base-grid-list';
 import MovieCard from '@/movies/movie-card';
 import FeaturedMovie from '@/movies/featured-movie';
 import { getPopularMovies } from '@/movies/movie-fetchers';

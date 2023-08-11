@@ -18,7 +18,9 @@ export { useAppDrawerContext };
 
 type AppDrawerProviderProps = React.PropsWithChildren<unknown>;
 
-function AppDrawerProvider({ children }: AppDrawerProviderProps) {
+export default function AppDrawerProvider({
+  children,
+}: AppDrawerProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const open = useCallback(() => {
@@ -52,5 +54,3 @@ function AppDrawerProvider({ children }: AppDrawerProviderProps) {
     </AppDrawerContext.Provider>
   );
 }
-
-export default AppDrawerProvider;

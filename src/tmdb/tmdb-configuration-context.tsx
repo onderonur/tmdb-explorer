@@ -3,10 +3,11 @@
 import { createSafeContext } from '@/common/safe-context';
 import { TmdbConfiguration, TmdbImageQuality } from './tmdb-types';
 import { Maybe } from '@/common/common-types';
+import { getTmdbImageUrl } from './tmdb-configuration-utils';
 
 type TmdbConfigurationContextValue = TmdbConfiguration & {
   getImageUrl: (
-    path: Maybe<string>,
+    imagePath: Maybe<string>,
     config?: { quality?: TmdbImageQuality },
   ) => string;
 };
@@ -27,16 +28,15 @@ export default function TmdbConfigurationProvider({
   children,
 }: TmdbConfigurationProviderProps) {
   const getImageUrl: TmdbConfigurationContextValue['getImageUrl'] = (
-    path,
+    imagePath,
     config,
   ) => {
-    if (!path) {
-      return '/placeholder.png';
-    }
-
-    return `${tmdbConfiguration.images.secure_base_url}${
-      config?.quality ?? 'w500'
-    }${path}`;
+    return getTmdbImageUrl({
+      tmdbConfiguration,
+      imagePath,
+      // TODO: config yerine direkt quality kullanılıp flat'leştirilebilir
+      quality: config?.quality,
+    });
   };
 
   return (

@@ -8,7 +8,7 @@ type MovieRatingProps = {
   sx?: SxProps<Theme>;
 };
 
-function MovieRating({ movie, sx }: MovieRatingProps) {
+export default function MovieRating({ movie, sx }: MovieRatingProps) {
   return (
     <Box
       sx={[
@@ -38,5 +38,3 @@ function MovieRating({ movie, sx }: MovieRatingProps) {
     </Box>
   );
 }
-
-export default MovieRating;

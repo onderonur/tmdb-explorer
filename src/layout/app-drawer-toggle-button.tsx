@@ -2,7 +2,7 @@ import { IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAppDrawerContext } from './app-drawer-context';
 
-function AppDrawerToggleButton() {
+export default function AppDrawerToggleButton() {
   const { toggle } = useAppDrawerContext();
 
   return (
@@ -11,5 +11,3 @@ function AppDrawerToggleButton() {
     </IconButton>
   );
 }
-
-export default AppDrawerToggleButton;

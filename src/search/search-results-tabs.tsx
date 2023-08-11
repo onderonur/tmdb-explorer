@@ -1,12 +1,12 @@
 'use client';
 
 import { Maybe } from '@/common/common-types';
-import { MediaType } from '@/medias/media-enums';
+import { SearchResultType } from '@/medias/media-enums';
 import { Tab, Tabs, Typography } from '@mui/material';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type SearchResultsTabsProps = {
-  value: Maybe<MediaType>;
+  value: Maybe<SearchResultType>;
   isMoviesTabVisible: boolean;
   isPeopleTabVisible: boolean;
 };
@@ -18,6 +18,7 @@ export default function SearchResultsTabs({
 }: SearchResultsTabsProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   if (!isMoviesTabVisible && !isPeopleTabVisible) {
     return <Typography>Nothing has been found</Typography>;
@@ -26,16 +27,20 @@ export default function SearchResultsTabs({
   return (
     <Tabs
       value={value}
-      onChange={(event, newMediaType) => {
-        const newSearchParams = new URLSearchParams();
+      onChange={(event, newType) => {
+        const newSearchParams = new URLSearchParams(searchParams.toString());
 
-        newSearchParams.set('mediaType', newMediaType);
+        newSearchParams.set('type', newType);
 
         router.replace(`${pathname}?${newSearchParams.toString()}`);
       }}
     >
-      {isMoviesTabVisible && <Tab value={MediaType.MOVIE} label={'Movies'} />}
-      {isPeopleTabVisible && <Tab value={MediaType.PERSON} label={'People'} />}
+      {isMoviesTabVisible && (
+        <Tab value={SearchResultType.MOVIE} label={'Movies'} />
+      )}
+      {isPeopleTabVisible && (
+        <Tab value={SearchResultType.PERSON} label={'People'} />
+      )}
     </Tabs>
   );
 }

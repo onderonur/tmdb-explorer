@@ -1,4 +1,4 @@
-import PageTitle from '@/common/PageTitle';
+import PageTitle from '@/common/page-title';
 import MovieSortingSelect from '@/movies/movie-sorting-select';
 import FeaturedMovie from '@/movies/featured-movie';
 import { getDiscoverMovies, getMovieGenres } from '@/movies/movie-fetchers';

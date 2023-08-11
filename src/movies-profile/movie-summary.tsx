@@ -19,13 +19,11 @@ import TmdbAvatar from '@/tmdb/tmdb-avatar';
 import NextLink from '@/routing/next-link';
 import { Fragment } from 'react';
 
-// TODO: styled yerine sx mi önerilio next için bi bak
-
 type MovieSummaryProps = {
   movie: MovieDetails;
 };
 
-function MovieSummary({ movie }: MovieSummaryProps) {
+export default function MovieSummary({ movie }: MovieSummaryProps) {
   const releaseYear = getMovieReleaseYear(movie);
   const crew = movie.credits?.crew.filter((crew) => crew.job === 'Director');
 
@@ -36,7 +34,6 @@ function MovieSummary({ movie }: MovieSummaryProps) {
           <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold' }}>
             {movie.title}
           </Typography>
-          {/* TODO: Burada semantic header vs belki olabilir daha */}
           {movie.tagline && (
             <Typography
               variant="h6"
@@ -132,5 +129,3 @@ function MovieSummary({ movie }: MovieSummaryProps) {
     </Box>
   );
 }
-
-export default MovieSummary;

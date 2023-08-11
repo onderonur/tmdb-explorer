@@ -30,13 +30,17 @@ export function filterViewablePeople<T extends ViewablePerson>(people: T[]) {
 export function filterViewablePageResults<
   T extends ViewableMovie | ViewablePerson,
 >(page: PaginationResponse<T>): PaginationResponse<T> {
-  const remainingItems = page.results.filter(
-    (item) =>
-      (isOfType<ViewableMovie>(item, ['title', 'overview', 'release_date']) &&
-        shouldViewMovie(item)) ||
-      (isOfType<ViewablePerson>(item, ['name', 'gender']) &&
-        shouldViewPerson(item)),
-  );
+  const remainingItems = page.results.filter((item) => {
+    if (isOfType<ViewableMovie>(item, ['title', 'overview', 'release_date'])) {
+      return shouldViewMovie(item);
+    }
+
+    if (isOfType<ViewablePerson>(item, ['name', 'gender'])) {
+      return shouldViewPerson(item);
+    }
+
+    return false;
+  });
 
   const removedItemCount = page.results.length - remainingItems.length;
 

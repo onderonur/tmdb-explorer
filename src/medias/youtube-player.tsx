@@ -1,14 +1,12 @@
 'use client';
 
-// TODO: styled kullanımlarını kontrol et nasıl öneriliyor veya komple kaldır vs.
-
 import { Box } from '@mui/material';
 
 type YouTubePlayerProps = {
   youTubeId: string;
 };
 
-function YouTubePlayer({ youTubeId }: YouTubePlayerProps) {
+export default function YouTubePlayer({ youTubeId }: YouTubePlayerProps) {
   return (
     <Box
       component="iframe"
@@ -27,5 +25,3 @@ function YouTubePlayer({ youTubeId }: YouTubePlayerProps) {
     />
   );
 }
-
-export default YouTubePlayer;

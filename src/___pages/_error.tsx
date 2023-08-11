@@ -16,7 +16,7 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode, message }) => {
 
 const notFoundStatusCode = 404;
 
-ErrorPage.getInitialProps = async ({ res, err }) => {
+ErrorPage.getInitialProps = ({ res, err }) => {
   // When an error occurs in a "getServerSideProps" etc, both the "res" and "err" has a value.
   // If there is a client-side error, only "err" has a value.
   // If we open a non-existing path, "res" has a value but "err" not etc.

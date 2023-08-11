@@ -9,7 +9,7 @@ export default async function AppDrawerGenres() {
 
   return (
     <List subheader={<ListSubheader>Movie Genres</ListSubheader>}>
-      {genres?.map((genre) => {
+      {genres.map((genre) => {
         const searchParams = new URLSearchParams();
         searchParams.set('genreId', genre.id.toString());
 

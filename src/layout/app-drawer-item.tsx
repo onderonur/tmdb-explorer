@@ -8,7 +8,12 @@ type AppDrawerItemProps = {
   href: string;
 };
 
-function AppDrawerItem({ href, icon, title, selected }: AppDrawerItemProps) {
+export default function AppDrawerItem({
+  href,
+  icon,
+  title,
+  selected,
+}: AppDrawerItemProps) {
   return (
     <ListItem disablePadding>
       <ListItemLink href={href} selected={selected}>
@@ -18,5 +23,3 @@ function AppDrawerItem({ href, icon, title, selected }: AppDrawerItemProps) {
     </ListItem>
   );
 }
-
-export default AppDrawerItem;

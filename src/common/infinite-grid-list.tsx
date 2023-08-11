@@ -1,7 +1,7 @@
-import BaseGridList, { BaseGridListProps } from './BaseGridList';
+import BaseGridList, { BaseGridListProps } from './base-grid-list';
 import InfiniteScrollSentry, {
   InfiniteScrollSentryProps,
-} from './InfiniteScrollSentry';
+} from './infinite-scroll-sentry';
 
 type InfiniteGridListProps = Pick<
   BaseGridListProps,
@@ -9,7 +9,7 @@ type InfiniteGridListProps = Pick<
 > &
   InfiniteScrollSentryProps;
 
-function InfiniteGridList({
+export default function InfiniteGridList({
   listEmptyMessage,
   hasNextPage,
   loading,
@@ -29,5 +29,3 @@ function InfiniteGridList({
     </>
   );
 }
-
-export default InfiniteGridList;

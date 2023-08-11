@@ -11,7 +11,6 @@ type MovieCardProps = {
 };
 
 export default function MovieCard({ movie, subheader }: MovieCardProps) {
-  // TODO: CardContent CardHeader vs kullanmaya gerek var mı direkt yapılabilir mi Box'larla vs bi bak.
   return (
     <Card elevation={0} sx={{ bgcolor: 'transparent' }}>
       <CardLinkArea href={`/movies/${movie.id}`}>

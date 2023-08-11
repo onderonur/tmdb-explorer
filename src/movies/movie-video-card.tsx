@@ -7,7 +7,6 @@ import CardLinkArea from '@/common/card-link-area';
 import { getYouTubeThumbnailUrl } from '@/medias/media-utils';
 
 type MovieVideoProps = {
-  // TODO: Id'yi Id yap.
   movieId: Id;
   video: MovieVideo;
 };

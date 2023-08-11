@@ -1,6 +1,6 @@
 import { Typography, Stack, Box, Card, CardMedia } from '@mui/material';
 import { PersonListItem } from '@/people/people-types';
-import PersonInfo from './PersonInfo';
+import PersonalInfo from './personal-info';
 import TmdbImage from '@/tmdb/tmdb-image';
 import SectionTitle from '@/common/section-title';
 
@@ -8,7 +8,7 @@ type PersonSummaryProps = {
   person: PersonListItem;
 };
 
-function PersonSummary({ person }: PersonSummaryProps) {
+export default function PersonSummary({ person }: PersonSummaryProps) {
   return (
     <Box
       sx={{
@@ -34,10 +34,10 @@ function PersonSummary({ person }: PersonSummaryProps) {
       </Card>
 
       <Box sx={{ flexBasis: '75ch' }}>
-        <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold' }}>
-          {person.name}
-        </Typography>
-        <Stack spacing={2}>
+        <Stack spacing={1}>
+          <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold' }}>
+            {person.name}
+          </Typography>
           {person.biography && (
             <section>
               <SectionTitle title="Biography" />
@@ -52,12 +52,10 @@ function PersonSummary({ person }: PersonSummaryProps) {
           )}
           <section>
             <SectionTitle title="Personal Info" />
-            <PersonInfo person={person} />
+            <PersonalInfo person={person} />
           </section>
         </Stack>
       </Box>
     </Box>
   );
 }
-
-export default PersonSummary;

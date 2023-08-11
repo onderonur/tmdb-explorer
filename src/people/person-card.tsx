@@ -7,7 +7,7 @@ type PersonCardProps = {
   person: PersonListItem;
 };
 
-function PersonCard({ person }: PersonCardProps) {
+export default function PersonCard({ person }: PersonCardProps) {
   return (
     <Card elevation={0} sx={{ bgcolor: 'transparent' }}>
       <CardLinkArea href={`/people/${person.id}`}>
@@ -28,5 +28,3 @@ function PersonCard({ person }: PersonCardProps) {
     </Card>
   );
 }
-
-export default PersonCard;

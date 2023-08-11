@@ -5,7 +5,7 @@ type TextWithLabelProps = {
   text: React.ReactNode;
 };
 
-function TextWithLabel({ label, text }: TextWithLabelProps) {
+export default function TextWithLabel({ label, text }: TextWithLabelProps) {
   return (
     <div>
       <Typography
@@ -24,5 +24,3 @@ function TextWithLabel({ label, text }: TextWithLabelProps) {
     </div>
   );
 }
-
-export default TextWithLabel;

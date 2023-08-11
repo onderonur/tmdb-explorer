@@ -5,13 +5,23 @@ import PersonSummary from '@/people-profile/person-summary';
 import SingleRowGridList from '@/common/single-row-grid-list';
 import ImageCard from '@/medias/image-card';
 import SeeAllLink from '@/common/see-all-link';
-import PersonCrewGridList from '@/people-profile/PersonCrewGridList';
-import PersonCastingGridList from '@/people-profile/PersonCastingGridList';
+import PersonCrewGridList from '@/people-profile/person-crew-grid-list';
+import PersonCastingGridList from '@/people-profile/person-casting-grid-list';
 import FullSizeBackgroundImage from '@/common/full-size-background-image';
 import { Metadata } from 'next';
 import { getMetadata } from '@/seo/seo-utils';
 import SectionTitle from '@/common/section-title';
 import Padder from '@/common/padder';
+
+async function getPageData(personId: string) {
+  const person = await getPersonDetails(Number(personId));
+
+  if (!person) {
+    notFound();
+  }
+
+  return { person };
+}
 
 type PersonPageProps = {
   params: {
@@ -22,11 +32,7 @@ type PersonPageProps = {
 export async function generateMetadata({
   params: { personId },
 }: PersonPageProps): Promise<Metadata> {
-  const person = await getPersonDetails(Number(personId));
-
-  if (!person) {
-    return notFound();
-  }
+  const { person } = await getPageData(personId);
 
   // TODO: Tamamla
   return getMetadata({
@@ -39,11 +45,7 @@ export async function generateMetadata({
 export default async function PersonPage({
   params: { personId },
 }: PersonPageProps) {
-  const person = await getPersonDetails(Number(personId));
-
-  if (!person) {
-    return notFound();
-  }
+  const { person } = await getPageData(personId);
 
   return (
     <>

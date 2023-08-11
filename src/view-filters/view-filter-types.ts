@@ -1,4 +1,3 @@
-// TODO: Bunlara rename iyi olabilir.
 export type ViewableMovie = {
   title: string;
   overview: string;

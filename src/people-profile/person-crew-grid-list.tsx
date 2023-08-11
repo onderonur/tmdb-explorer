@@ -1,4 +1,4 @@
-import BaseGridList from '@/common/BaseGridList';
+import BaseGridList from '@/common/base-grid-list';
 import MovieCard from '@/movies/movie-card';
 import _ from 'lodash';
 import { PersonDetails } from '@/people/people-types';
@@ -7,7 +7,9 @@ type PersonCrewGridListProps = {
   person: PersonDetails;
 };
 
-function PersonCrewGridList({ person }: PersonCrewGridListProps) {
+export default function PersonCrewGridList({
+  person,
+}: PersonCrewGridListProps) {
   // TODO: Buna gerek var mı bak genel olarak kullanıldığı yerler vs.
   const crewList = _.uniqBy(person.credits.crew, (crew) => crew.id);
 
@@ -27,5 +29,3 @@ function PersonCrewGridList({ person }: PersonCrewGridListProps) {
     </BaseGridList>
   );
 }
-
-export default PersonCrewGridList;

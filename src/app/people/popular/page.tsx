@@ -1,5 +1,5 @@
 import { FIRST_PAGE } from '@/common/common-constants';
-import PageTitle from '@/common/PageTitle';
+import PageTitle from '@/common/page-title';
 import Padder from '@/common/padder';
 import { getPopularPeople } from '@/people/people-fetchers';
 import PeopleInfiniteGridList from '@/people/people-infinite-list';

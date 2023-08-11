@@ -7,7 +7,7 @@ import { APP_DRAWER_WIDTH } from './app-drawer-utils';
 
 type AppLayoutProps = React.PropsWithChildren<unknown>;
 
-function AppLayout({ children }: AppLayoutProps) {
+export default function AppLayout({ children }: AppLayoutProps) {
   return (
     <AppDrawerProvider>
       <AppHeader />
@@ -29,5 +29,3 @@ function AppLayout({ children }: AppLayoutProps) {
     </AppDrawerProvider>
   );
 }
-
-export default AppLayout;

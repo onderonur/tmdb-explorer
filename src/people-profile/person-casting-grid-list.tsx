@@ -1,4 +1,4 @@
-import BaseGridList from '@/common/BaseGridList';
+import BaseGridList from '@/common/base-grid-list';
 import MovieCard from '@/movies/movie-card';
 import { PersonDetails } from '@/people/people-types';
 
@@ -6,7 +6,9 @@ type PersonCastingGridListProps = {
   person: PersonDetails;
 };
 
-function PersonCastingGridList({ person }: PersonCastingGridListProps) {
+export default function PersonCastingGridList({
+  person,
+}: PersonCastingGridListProps) {
   const castings = person.credits.cast;
 
   return (
@@ -21,5 +23,3 @@ function PersonCastingGridList({ person }: PersonCastingGridListProps) {
     </BaseGridList>
   );
 }
-
-export default PersonCastingGridList;

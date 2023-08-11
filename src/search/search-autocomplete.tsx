@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 import { Maybe, PaginationResponse } from '@/common/common-types';
 import MovieAutocompleteItem from './movie-autocomplete-item';
 import PersonAutocompleteItem from './person-autocomplete-item';
-import { MediaType } from '@/medias/media-enums';
+import { SearchResultType } from '@/medias/media-enums';
 import { SxProps, Theme } from '@mui/material';
-import { useDebounce, useHasChanged } from '@/common/CommonHooks';
+import { useDebounce, useHasChanged } from '@/common/common-hooks';
 import useSWR from 'swr';
 import { useSearchParams } from 'next/navigation';
 import { MultiSearchResult } from './search-types';
@@ -18,7 +18,10 @@ type SearchAutocompleteProps = {
   sx?: SxProps<Theme>;
 };
 
-function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
+export default function SearchAutocomplete({
+  autoFocus,
+  sx,
+}: SearchAutocompleteProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('searchQuery');
@@ -46,18 +49,20 @@ function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
   const handleRedirect = (inputValue: string) => {
     const trimmedValue = inputValue.trim();
 
+    const newSearchParams = new URLSearchParams({ query: trimmedValue });
+
     if (trimmedValue) {
-      router.push(`/search/${trimmedValue}`);
+      router.push(`/search?${newSearchParams}`);
     }
   };
 
   const handleSelect = (selectedOption: Maybe<MultiSearchResult>) => {
     if (selectedOption) {
       switch (selectedOption.media_type) {
-        case MediaType.MOVIE:
+        case SearchResultType.MOVIE:
           router.push(`/movies/${selectedOption.id}`);
           break;
-        case MediaType.PERSON:
+        case SearchResultType.PERSON:
           router.push(`/people/${selectedOption.id}`);
           break;
         default:
@@ -68,7 +73,9 @@ function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
 
   const options =
     data?.results.filter((option) =>
-      [MediaType.MOVIE, MediaType.PERSON].includes(option.media_type),
+      [SearchResultType.MOVIE, SearchResultType.PERSON].includes(
+        option.media_type,
+      ),
     ) ?? [];
 
   return (
@@ -77,7 +84,7 @@ function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
       placeholder="Search Movies & People"
       options={options}
       renderOption={(props, option) => {
-        return option.media_type === MediaType.MOVIE ? (
+        return option.media_type === SearchResultType.MOVIE ? (
           <MovieAutocompleteItem
             {...props}
             key={`${option.media_type}_${option.id}`}
@@ -96,7 +103,7 @@ function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
           // For freeSolo
           return option;
         }
-        return option.media_type === MediaType.MOVIE
+        return option.media_type === SearchResultType.MOVIE
           ? option.title
           : option.name;
       }}
@@ -122,5 +129,3 @@ function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
     />
   );
 }
-
-export default SearchAutocomplete;

@@ -1,14 +1,14 @@
 'use client';
 
-import InfiniteGridList from '@/common/InfiniteGridList';
-import { PaginationResponse } from '@/common/common-types';
+import InfiniteGridList from '@/common/infinite-grid-list';
+import { Maybe, PaginationResponse } from '@/common/common-types';
 import { MovieListItem } from './movie-types';
 import useSWRInfinite from 'swr/infinite';
 import { getAllPageResults, getHasNextPage } from '@/common/common-utils';
 import MovieCard from './movie-card';
 
 type MovieInfiniteGridListProps = {
-  firstPage: PaginationResponse<MovieListItem>;
+  firstPage: Maybe<PaginationResponse<MovieListItem>>;
   pageKeyTemplate: string;
   skipFirstMovie?: boolean;
 };
@@ -29,7 +29,7 @@ export default function MovieInfiniteGridList({
       ),
     {
       // TODO: İlk sayfayı client'ta yine çekiyor. Bunu kapatmanın yolu var mı bak.
-      fallbackData: [firstPage],
+      fallbackData: firstPage ? [firstPage] : [],
       // To stop fetching the first page too, when the next page is loading.
       revalidateFirstPage: false,
     },

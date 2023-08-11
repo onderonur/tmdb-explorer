@@ -31,7 +31,7 @@ type BaseAutocompleteProps<
   onSearchClick: (inputValue: string) => void;
 };
 
-function BaseAutocomplete<
+export default function BaseAutocomplete<
   T,
   Multiple extends boolean | undefined,
   DisableClearable extends boolean | undefined,
@@ -77,5 +77,3 @@ function BaseAutocomplete<
     />
   );
 }
-
-export default BaseAutocomplete;

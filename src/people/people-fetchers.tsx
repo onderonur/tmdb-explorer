@@ -9,20 +9,25 @@ import {
 } from '@/view-filters/view-filter-utils';
 
 export const getPopularPeople = cache(async (page: number) => {
+  const searchParams = new URLSearchParams();
+  searchParams.set('page', page.toString());
+
   const people = await tmdbClient.get<PaginationResponse<PersonListItem>>(
     '/person/popular',
-    {
-      page,
-    },
+    searchParams,
   );
 
   return filterViewablePageResults(people);
 });
 
 export const getPersonDetails = cache(async (personId: Id) => {
-  const person = await tmdbClient.get<PersonDetails>(`/person/${personId}`, {
-    append_to_response: 'images,credits',
-  });
+  const searchParams = new URLSearchParams();
+  searchParams.set('append_to_response', 'images,credits');
+
+  const person = await tmdbClient.get<PersonDetails>(
+    `/person/${personId}`,
+    searchParams,
+  );
 
   if (!shouldViewPerson(person)) {
     return null;

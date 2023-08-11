@@ -23,7 +23,7 @@ import { APP_DRAWER_WIDTH } from './app-drawer-utils';
 
 type AppDrawerProps = React.PropsWithChildren;
 
-function AppDrawer({ children }: AppDrawerProps) {
+export default function AppDrawer({ children }: AppDrawerProps) {
   const { isOpen, close } = useAppDrawerContext();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -117,5 +117,3 @@ function AppDrawer({ children }: AppDrawerProps) {
     </>
   );
 }
-
-export default AppDrawer;

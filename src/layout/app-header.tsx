@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import AppTitle from './app-title';
 import ExternalLink from '@/routing/external-link';
-import { useIsMobile } from '@/common/CommonHooks';
+import { useIsMobile } from '@/common/common-hooks';
 import SearchAutocomplete from '@/search/search-autocomplete';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';

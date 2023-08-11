@@ -2,31 +2,23 @@ import {
   ListItemAvatar,
   ListItemText,
   ListItemProps,
-  styled,
   ListItemButton,
   ListItem,
 } from '@mui/material';
 import { Maybe } from '@/common/common-types';
 import TmdbAvatar from '@/tmdb/tmdb-avatar';
 
-const StyledListItemText = styled(ListItemText)({
-  '.MuiListItemText-secondary': {
-    wordBreak: 'break-word',
-  },
-});
+type AutocompleteItemProps<C extends React.ElementType = 'li'> = ListItemProps<
+  C,
+  {
+    component?: C;
+    avatarUrl: string;
+    primaryText: string;
+    secondaryText?: Maybe<string>;
+  }
+>;
 
-export type AutocompleteItemProps<C extends React.ElementType = 'li'> =
-  ListItemProps<
-    C,
-    {
-      component?: C;
-      avatarUrl: string;
-      primaryText: string;
-      secondaryText?: Maybe<string>;
-    }
-  >;
-
-function AutocompleteItem<C extends React.ElementType>({
+export default function AutocompleteItem<C extends React.ElementType>({
   avatarUrl,
   primaryText,
   secondaryText,
@@ -38,10 +30,8 @@ function AutocompleteItem<C extends React.ElementType>({
         <ListItemAvatar>
           <TmdbAvatar src={avatarUrl} alt={'Avatar'} />
         </ListItemAvatar>
-        <StyledListItemText primary={primaryText} secondary={secondaryText} />
+        <ListItemText primary={primaryText} secondary={secondaryText} />
       </ListItemButton>
     </ListItem>
   );
 }
-
-export default AutocompleteItem;

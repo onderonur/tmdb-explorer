@@ -42,9 +42,7 @@ function getSelectedSorting(sortBy: Maybe<string | string[]>) {
   return selectedSorting;
 }
 
-// TODO: interface'leri type yap
-
-function MovieSortingSelect() {
+export default function MovieSortingSelect() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const selectedSorting = getSelectedSorting(searchParams.get('sortBy'));
@@ -77,5 +75,3 @@ function MovieSortingSelect() {
     </Box>
   );
 }
-
-export default MovieSortingSelect;

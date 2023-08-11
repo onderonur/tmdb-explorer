@@ -7,7 +7,7 @@ export type BaseGridListProps = React.PropsWithChildren<{
   listEmptyMessage?: string;
 }>;
 
-function BaseGridList({
+export default function BaseGridList({
   listEmptyMessage = 'Nothing has been found',
   children,
 }: BaseGridListProps) {
@@ -35,5 +35,3 @@ function BaseGridList({
     </Box>
   );
 }
-
-export default BaseGridList;
