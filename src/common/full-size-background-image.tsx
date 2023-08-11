@@ -3,6 +3,7 @@
 import { Box } from '@mui/material';
 import TmdbImage from '@/tmdb/tmdb-image';
 import { useWindowScrollY } from './CommonHooks';
+import { APP_DRAWER_WIDTH } from '@/layout/app-drawer-utils';
 
 type FullSizeBackgroundImageProps = {
   src: string;
@@ -42,7 +43,7 @@ export default function FullSizeBackgroundImage({
         inset: 0,
         // top is equal to AppBar min-height.
         // top: { xs: 56, sm: 64 },
-        // left: { xs: 0, md: APP_DRAWER_WIDTH },
+        left: { xs: 0, lg: APP_DRAWER_WIDTH },
         zIndex: -1,
         transition: 'opacity 200ms ease 0s',
         opacity: hasScrollBasedOpacity ? scrollBasedOpacity : minOpacity,

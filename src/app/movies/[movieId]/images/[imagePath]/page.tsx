@@ -9,6 +9,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -18,6 +19,8 @@ import {
 import { notFound } from 'next/navigation';
 import ListItemLink from '@/common/list-item-link';
 import Padder from '@/common/padder';
+import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
+import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 
 // TODO: Request sadeleştirilebilir belki filter'a da dikkat ederek.
 
@@ -58,14 +61,13 @@ export default async function MovieImagePage({
             display: 'grid',
             gap: 2,
             // TODO: Diğer boyutlar için column'ları ayarla.
-            gridTemplateColumns: { md: '1fr', lg: '1fr 12rem' },
+            gridTemplateColumns: { md: '1fr', lg: '1fr 23rem' },
             alignItems: 'start',
           }}
         >
           <Card
             sx={{
               alignSelf: 'start',
-              bgcolor: 'transparent',
             }}
           >
             <CardContent
@@ -84,6 +86,28 @@ export default async function MovieImagePage({
                 sx={{ objectFit: 'contain' }}
                 priority
               />
+              <Box
+                sx={{
+                  position: 'absolute',
+                  inset: 0,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Box sx={{ padding: 1 }}>
+                  {/* TODO: IconButtonLink yapılabilir bunlar */}
+                  {/* TODO: Bunlar çalışmıyor */}
+                  <IconButton aria-label="Previous image" size="large">
+                    <ChevronLeftOutlinedIcon />
+                  </IconButton>
+                </Box>
+                <Box sx={{ padding: 1 }}>
+                  <IconButton aria-label="Next image" size="large">
+                    <ChevronRightOutlinedIcon />
+                  </IconButton>
+                </Box>
+              </Box>
             </CardContent>
             {/* TODO: Semantic yapı fix'lenebilir burada heading, link vs vs. */}
             <MediaCardHeader
@@ -91,12 +115,7 @@ export default async function MovieImagePage({
               movieId={Number(movieId)}
             />
           </Card>
-          <Card
-            component="aside"
-            sx={{
-              bgcolor: 'transparent',
-            }}
-          >
+          <Card component="aside">
             <CardHeader
               title="Images"
               titleTypographyProps={{
@@ -116,32 +135,40 @@ export default async function MovieImagePage({
             >
               <List
                 sx={{
-                  overflow: 'auto',
-                  maxHeight: '76vh',
+                  overflow: { lg: 'auto' },
+                  maxHeight: { lg: '76vh' },
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(11rem, 1fr))',
+                  gap: 1,
                 }}
                 subheader={
-                  <ListSubheader>{images.length} Images</ListSubheader>
+                  <ListSubheader sx={{ gridColumn: '1 / -1' }}>
+                    {images.length} Images
+                  </ListSubheader>
                 }
               >
                 {images.map((image, i) => {
                   return (
-                    <ListItem key={image.file_path} disablePadding divider>
+                    <ListItem key={image.file_path} disablePadding>
                       <ListItemLink
                         selected={image.file_path === imageToView.file_path}
                         href={`/movies/${movie.id}/images${image.file_path}`}
+                        sx={{
+                          position: 'relative',
+                          aspectRatio: '16 / 9',
+                          borderRadius: 1,
+                          overflow: 'hidden',
+                          '&.Mui-selected': {
+                            border: 4,
+                            borderColor: 'primary.main',
+                          },
+                        }}
                       >
-                        <ListItemAvatar sx={{ marginRight: 1 }}>
-                          <TmdbAvatar
-                            src={image.file_path}
-                            alt={`${movie.title} Image - ${i}`}
-                            variant="rounded"
-                            sx={{
-                              width: '10rem',
-                              height: 'auto',
-                              aspectRatio: '16 / 9',
-                            }}
-                          />
-                        </ListItemAvatar>
+                        <TmdbImage
+                          src={image.file_path}
+                          alt={`${movie.title} Image - ${i}`}
+                          fill
+                        />
                       </ListItemLink>
                     </ListItem>
                   );

@@ -58,7 +58,7 @@ export default async function MovieVideoPage({
             alignItems: 'start',
           }}
         >
-          <Card sx={{ alignSelf: 'start', bgcolor: 'transparent' }}>
+          <Card sx={{ alignSelf: 'start' }}>
             <CardContent sx={{ padding: 0 }}>
               <YouTubePlayer youTubeId={videoToWatch.key} />
             </CardContent>
@@ -68,12 +68,7 @@ export default async function MovieVideoPage({
               movieId={Number(movieId)}
             />
           </Card>
-          <Card
-            component="aside"
-            sx={{
-              bgcolor: 'transparent',
-            }}
-          >
+          <Card component="aside">
             <CardHeader
               title="Videos"
               titleTypographyProps={{

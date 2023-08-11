@@ -15,6 +15,7 @@ const NextLink = forwardRef<React.ElementRef<typeof Link>, NextLinkProps>(
         ref={ref}
         component={Link}
         underline="none"
+        // TODO: Bunu bi check et prod ve dev'de vs.
         // To disable prefetch feature of next/link
         prefetch={false}
         {...props}

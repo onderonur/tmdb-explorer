@@ -67,7 +67,7 @@ export default function ThemeRegistry({
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {/* TODO: theme-color meta tag */}
-        <div>{children}</div>
+        {children}
       </ThemeProvider>
     </CacheProvider>
   );

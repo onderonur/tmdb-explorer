@@ -17,10 +17,10 @@ async function handleResponse(response: Response) {
 }
 
 export const httpClient = {
-  get: <Data>(url: string, params?: URLSearchParams): Promise<Data> => {
+  get: <Data>(url: string, searchParams?: URLSearchParams): Promise<Data> => {
     let fullUrl = url;
 
-    const queryString = params?.toString();
+    const queryString = searchParams?.toString();
 
     if (queryString) {
       fullUrl = `${url}?${queryString}`;
