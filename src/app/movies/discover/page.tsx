@@ -5,6 +5,7 @@ import { getDiscoverMovies, getMovieGenres } from '@/movies/movie-fetchers';
 import MovieInfiniteGridList from '@/movies/movie-infinite-grid-list';
 import { Divider, Stack } from '@mui/material';
 import Padder from '@/common/padder';
+import { FIRST_PAGE } from '@/common/common-constants';
 
 // TODO: Hem Next'in hem SWR'nin cache mantığını bi anla.
 
@@ -22,7 +23,8 @@ export default async function DiscoverMoviesPage({
 
   const [genres, firstPage] = await Promise.all([
     getMovieGenres(),
-    getDiscoverMovies(1, {
+    getDiscoverMovies({
+      page: FIRST_PAGE,
       genreId,
       sortBy: searchParams.sortBy,
     }),

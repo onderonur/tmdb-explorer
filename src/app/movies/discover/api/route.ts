@@ -11,10 +11,7 @@ export async function GET(request: NextRequest) {
   // So, we fall back to `undefined` here.
   const sortBy = searchParams.get('sortBy') || undefined;
 
-  const moviesPage = await getDiscoverMovies(page, {
-    genreId,
-    sortBy,
-  });
+  const moviesPage = await getDiscoverMovies({ page, genreId, sortBy });
 
   return NextResponse.json(moviesPage);
 }

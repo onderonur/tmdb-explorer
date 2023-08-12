@@ -58,11 +58,17 @@ export const getMovieDetails = cache(async (movieId: Id) => {
   return movie;
 });
 
+// TODO: cache function'ı object parametrelerle nasıl çalışıyor vs.
 export const getDiscoverMovies = cache(
-  async (
-    page: number,
-    { genreId, sortBy }: { genreId?: Id; sortBy?: string },
-  ) => {
+  async ({
+    page,
+    genreId,
+    sortBy,
+  }: {
+    page: number;
+    genreId?: Id;
+    sortBy?: string;
+  }) => {
     const searchParams = new URLSearchParams();
     searchParams.set('page', page.toString());
     searchParams.set(

@@ -1,1 +1,1 @@
-export const APP_DRAWER_WIDTH = '16rem';
+export const APP_DRAWER_WIDTH = '15rem';
