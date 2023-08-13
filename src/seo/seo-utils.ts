@@ -1,5 +1,5 @@
 import { APP_TITLE } from '@/common/common-constants';
-import theme from '@/theme/theme';
+import { Maybe } from '@/common/common-types';
 import { Metadata } from 'next';
 
 const APP_DESCRIPTION = `${APP_TITLE} is a client application for TMDb API. It's created with Next.js.`;
@@ -11,7 +11,7 @@ export function getMetadata({
   images,
 }: {
   title?: string;
-  description?: string;
+  description?: Maybe<string>;
   pathname?: string;
   images?: NonNullable<Metadata['openGraph']>['images'];
 }): Metadata {
@@ -22,7 +22,7 @@ export function getMetadata({
     title: metaTitle,
     description: metaDescription,
     metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
-    themeColor: theme.palette.background.default,
+    themeColor: '#141f29',
     creator: 'Onur Önder',
     applicationName: APP_TITLE,
     alternates: {

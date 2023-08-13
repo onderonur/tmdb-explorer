@@ -3,6 +3,19 @@ import InfiniteScrollSentry, {
   InfiniteScrollSentryProps,
 } from './infinite-scroll-sentry';
 
+export function getInfiniteSwrKey({
+  pageIndex,
+  pageKeyTemplate,
+}: {
+  pageIndex: number;
+  pageKeyTemplate: string;
+}) {
+  return decodeURIComponent(pageKeyTemplate).replace(
+    '%pageIndex%',
+    (pageIndex + 1).toString(),
+  );
+}
+
 type InfiniteGridListProps = Pick<
   BaseGridListProps,
   'listEmptyMessage' | 'children'

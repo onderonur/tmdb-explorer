@@ -48,7 +48,7 @@ export default async function DiscoverMoviesPage({
             extra={<MovieSortingSelect />}
           />
           <MovieInfiniteGridList
-            pageKeyTemplate={`/movies/discover/api?${infiniteListSearchParams.toString()}`}
+            pageKeyTemplate={`/movies/discover/api?${infiniteListSearchParams}`}
             firstPage={firstPage}
             skipFirstMovie
           />

@@ -3,7 +3,6 @@ import {
   Box,
   Card,
   CardHeader,
-  IconButton,
   List,
   ListItem,
   ListSubheader,
@@ -11,19 +10,18 @@ import {
 } from '@mui/material';
 import ListItemLink from '@/common/list-item-link';
 import Padder from '@/common/padder';
-import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
-import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import MediaCardHeader, { MediaCardHeaderProps } from './media-card-header';
 import { TImage } from './media-types';
+import ImageGalleryNavigationLink from './image-gallery-navigation-link';
 
 type ImageGalleryProps = {
   // TODO: Change name
   mediaCardHeaderProps: MediaCardHeaderProps;
   imageToView: TImage & { alt: string };
   images: TImage[];
+  imagePagePathTemplate: string;
   listItemProps: {
     aspectRatio: string;
-    hrefTemplate: string;
   };
 };
 
@@ -31,8 +29,23 @@ export default function ImageGallery({
   mediaCardHeaderProps,
   imageToView,
   images,
+  imagePagePathTemplate,
   listItemProps,
 }: ImageGalleryProps) {
+  const imageToViewIndex = images.findIndex(
+    (image) => image.file_path === imageToView.file_path,
+  );
+
+  const previousImage = images[imageToViewIndex - 1];
+  const nextImage = images[imageToViewIndex + 1];
+
+  function getImagePagePath(imagePath: string) {
+    return imagePagePathTemplate.replace(
+      '%imagePath%',
+      imagePath.replace('/', ''),
+    );
+  }
+
   return (
     <>
       <Toolbar />
@@ -66,22 +79,21 @@ export default function ImageGallery({
                   position: 'absolute',
                   inset: 0,
                   display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
                 }}
               >
-                <Box sx={{ padding: 1 }}>
-                  {/* TODO: IconButtonLink yapılabilir bunlar */}
-                  {/* TODO: Bunlar çalışmıyor */}
-                  <IconButton aria-label="Previous image" size="large">
-                    <ChevronLeftOutlinedIcon />
-                  </IconButton>
-                </Box>
-                <Box sx={{ padding: 1 }}>
-                  <IconButton aria-label="Next image" size="large">
-                    <ChevronRightOutlinedIcon />
-                  </IconButton>
-                </Box>
+                {previousImage && (
+                  <ImageGalleryNavigationLink
+                    href={getImagePagePath(previousImage.file_path)}
+                    direction="previous"
+                  />
+                )}
+                <Box sx={{ flex: 1 }} />
+                {nextImage && (
+                  <ImageGalleryNavigationLink
+                    href={getImagePagePath(nextImage.file_path)}
+                    direction="next"
+                  />
+                )}
               </Box>
             </Box>
             <MediaCardHeader {...mediaCardHeaderProps} />
@@ -114,10 +126,7 @@ export default function ImageGallery({
                   <ListItem key={image.file_path} disablePadding>
                     <ListItemLink
                       selected={image.file_path === imageToView.file_path}
-                      href={listItemProps.hrefTemplate.replace(
-                        '%imagePath%',
-                        image.file_path,
-                      )}
+                      href={getImagePagePath(image.file_path)}
                       sx={{
                         position: 'relative',
                         aspectRatio: listItemProps.aspectRatio,

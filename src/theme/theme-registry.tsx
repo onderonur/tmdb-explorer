@@ -8,8 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useState } from 'react';
 import theme from './theme';
 
-// TODO: Dynamic theme
-
 type ThemeRegistryProps = React.PropsWithChildren<{
   options: Options;
 }>;

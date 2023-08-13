@@ -86,9 +86,9 @@ export default async function MovieImagePage({
       }}
       imageToView={{ ...imageToView, alt: `Image of "${movie.title}"` }}
       images={images}
+      imagePagePathTemplate={`/movies/${movie.id}/images/%imagePath%`}
       listItemProps={{
         aspectRatio: '16 / 9',
-        hrefTemplate: `/movies/${movie.id}/images/%imagePath%`,
       }}
     />
   );

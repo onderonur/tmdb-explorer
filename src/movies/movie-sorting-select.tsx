@@ -61,7 +61,7 @@ export default function MovieSortingSelect() {
 
           newSearchParams.set('sortBy', e.target.value);
 
-          router.push(`/movies/discover?${newSearchParams.toString()}`);
+          router.push(`/movies/discover?${newSearchParams}`);
         }}
       >
         {sortings.map((option) => {

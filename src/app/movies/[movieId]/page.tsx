@@ -1,4 +1,4 @@
-import FullSizeBackgroundImage from '@/common/full-size-background-image';
+import FixedBackgroundImage from '@/common/fixed-background-image';
 import MovieSummary from '@/movies-profile/movie-summary';
 import { getMovieDetails } from '@/movies/movie-fetchers';
 import { Divider, Stack } from '@mui/material';
@@ -72,7 +72,7 @@ export default async function MoviePage({
 
   return (
     <>
-      <FullSizeBackgroundImage
+      <FixedBackgroundImage
         src={movie.backdrop_path}
         alt={movie.title}
         aspectRatio="16 / 9"

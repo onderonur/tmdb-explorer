@@ -7,7 +7,7 @@ import ImageCard from '@/medias/image-card';
 import SeeAllLink from '@/common/see-all-link';
 import PersonCrewGridList from '@/people-profile/person-crew-grid-list';
 import PersonCastingGridList from '@/people-profile/person-casting-grid-list';
-import FullSizeBackgroundImage from '@/common/full-size-background-image';
+import FixedBackgroundImage from '@/common/fixed-background-image';
 import { Metadata } from 'next';
 import { getMetadata } from '@/seo/seo-utils';
 import SectionTitle from '@/common/section-title';
@@ -51,7 +51,7 @@ export default async function PersonPage({
     <>
       <Toolbar />
       <Padder paddingY>
-        <FullSizeBackgroundImage src={person.profile_path} alt={person.name} />
+        <FixedBackgroundImage src={person.profile_path} alt={person.name} />
         <Stack spacing={2}>
           <Container>
             <PersonSummary person={person} />

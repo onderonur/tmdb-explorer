@@ -57,16 +57,16 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           isMoviesTabVisible={!!moviesFirstPage.total_pages}
           isPeopleTabVisible={!!peopleFirstPage.total_pages}
         />
-        <Box marginTop={2}>
+        <Box sx={{ marginTop: 2 }}>
           {type === SearchResultType.MOVIE && (
             <MovieInfiniteGridList
-              pageKeyTemplate={`/search/movies/api?${infiniteListSearchParams.toString()}`}
+              pageKeyTemplate={`/search/movies/api?${infiniteListSearchParams}`}
               firstPage={moviesFirstPage}
             />
           )}
           {type === SearchResultType.PERSON && (
             <PeopleInfiniteGridList
-              pageKeyTemplate={`/search/people/api?${infiniteListSearchParams.toString()}`}
+              pageKeyTemplate={`/search/people/api?${infiniteListSearchParams}`}
               firstPage={peopleFirstPage}
             />
           )}

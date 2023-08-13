@@ -22,7 +22,7 @@ export default async function PopularMoviesPage() {
           <Divider />
           <PageTitle title="Popular Movies" />
           <MovieInfiniteGridList
-            pageKeyTemplate={`/movies/popular/api?${infiniteListSearchParams.toString()}`}
+            pageKeyTemplate={`/movies/popular/api?${infiniteListSearchParams}`}
             firstPage={firstPage}
             skipFirstMovie
           />

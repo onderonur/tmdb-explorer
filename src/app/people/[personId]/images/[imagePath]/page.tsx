@@ -83,9 +83,9 @@ export default async function PersonImagePage({
       }}
       imageToView={{ ...imageToView, alt: `Image of "${person.name}"` }}
       images={images}
+      imagePagePathTemplate={`/people/${person.id}/images/%imagePath%`}
       listItemProps={{
         aspectRatio: '2 / 3',
-        hrefTemplate: `/people/${person.id}/images/%imagePath%`,
       }}
     />
   );

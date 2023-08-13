@@ -5,7 +5,7 @@ import TmdbImage from '@/tmdb/tmdb-image';
 import { useWindowScrollY } from './common-hooks';
 import { APP_DRAWER_WIDTH } from '@/layout/app-drawer-utils';
 
-type FullSizeBackgroundImageProps = {
+type FixedBackgroundImageProps = {
   src: string;
   alt: string;
   aspectRatio?: string;
@@ -13,14 +13,13 @@ type FullSizeBackgroundImageProps = {
   hasDimmer?: boolean;
 };
 
-// TODO: Rename
-export default function FullSizeBackgroundImage({
+export default function FixedBackgroundImage({
   src,
   alt,
   aspectRatio,
   hasScrollBasedOpacity,
   hasDimmer,
-}: FullSizeBackgroundImageProps) {
+}: FixedBackgroundImageProps) {
   const windowScrollY = useWindowScrollY();
 
   const opacityScrollYThreshold = 300;

@@ -6,10 +6,7 @@ import { Maybe } from '@/common/common-types';
 import { getTmdbImageUrl } from './tmdb-configuration-utils';
 
 type TmdbConfigurationContextValue = TmdbConfiguration & {
-  getImageUrl: (
-    imagePath: Maybe<string>,
-    config?: { quality?: TmdbImageQuality },
-  ) => string;
+  getImageUrl: (imagePath: Maybe<string>, quality?: TmdbImageQuality) => string;
 };
 
 const [TmdbConfigurationContext, useTmdbConfigurationContext] =
@@ -29,13 +26,12 @@ export default function TmdbConfigurationProvider({
 }: TmdbConfigurationProviderProps) {
   const getImageUrl: TmdbConfigurationContextValue['getImageUrl'] = (
     imagePath,
-    config,
+    quality,
   ) => {
     return getTmdbImageUrl({
       tmdbConfiguration,
       imagePath,
-      // TODO: config yerine direkt quality kullanılıp flat'leştirilebilir
-      quality: config?.quality,
+      quality,
     });
   };
 

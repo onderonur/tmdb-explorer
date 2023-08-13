@@ -2,8 +2,8 @@
 
 import { Maybe } from '@/common/common-types';
 import { SearchResultType } from '@/medias/media-enums';
-import { Tab, Tabs, Typography } from '@mui/material';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Tabs, Typography } from '@mui/material';
+import SearchResultsTabLink from './search-results-tab-link';
 
 type SearchResultsTabsProps = {
   value: Maybe<SearchResultType>;
@@ -16,31 +16,41 @@ export default function SearchResultsTabs({
   isMoviesTabVisible,
   isPeopleTabVisible,
 }: SearchResultsTabsProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const tabs: Array<{ key: SearchResultType; content: React.ReactNode }> = [];
 
-  if (!isMoviesTabVisible && !isPeopleTabVisible) {
+  if (isMoviesTabVisible) {
+    tabs.push({
+      key: SearchResultType.MOVIE,
+      content: (
+        <SearchResultsTabLink
+          key={SearchResultType.MOVIE}
+          label="Movies"
+          searchResultType={SearchResultType.MOVIE}
+        />
+      ),
+    });
+  }
+
+  if (isPeopleTabVisible) {
+    tabs.push({
+      key: SearchResultType.PERSON,
+      content: (
+        <SearchResultsTabLink
+          key={SearchResultType.PERSON}
+          label="People"
+          searchResultType={SearchResultType.PERSON}
+        />
+      ),
+    });
+  }
+
+  if (!tabs.length) {
     return <Typography>Nothing has been found</Typography>;
   }
 
   return (
-    <Tabs
-      value={value}
-      onChange={(event, newType) => {
-        const newSearchParams = new URLSearchParams(searchParams.toString());
-
-        newSearchParams.set('type', newType);
-
-        router.replace(`${pathname}?${newSearchParams.toString()}`);
-      }}
-    >
-      {isMoviesTabVisible && (
-        <Tab value={SearchResultType.MOVIE} label={'Movies'} />
-      )}
-      {isPeopleTabVisible && (
-        <Tab value={SearchResultType.PERSON} label={'People'} />
-      )}
+    <Tabs value={tabs.findIndex((tab) => tab.key === value)}>
+      {tabs.map((tab) => tab.content)}
     </Tabs>
   );
 }

@@ -23,7 +23,7 @@ export default async function TopRatedMoviesPage() {
           <Divider />
           <PageTitle title="Top Rated Movies" />
           <MovieInfiniteGridList
-            pageKeyTemplate={`/movies/top-rated/api?${infiniteListSearchParams.toString()}`}
+            pageKeyTemplate={`/movies/top-rated/api?${infiniteListSearchParams}`}
             firstPage={firstPage}
             skipFirstMovie
           />

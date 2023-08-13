@@ -1,6 +1,8 @@
 'use client';
 
-import InfiniteGridList from '@/common/infinite-grid-list';
+import InfiniteGridList, {
+  getInfiniteSwrKey,
+} from '@/common/infinite-grid-list';
 import { PaginationResponse } from '@/common/common-types';
 import useSWRInfinite from 'swr/infinite';
 import { getAllPageResults, getHasNextPage } from '@/common/common-utils';
@@ -18,20 +20,12 @@ export default function PeopleInfiniteGridList({
 }: PeopleInfiniteListProps) {
   const { data, setSize, isValidating } = useSWRInfinite<
     PaginationResponse<PersonListItem>
-  >(
-    (pageIndex: number) =>
-      // TODO: Bu function ortak bi yere konulabilir.
-      decodeURIComponent(pageKeyTemplate).replace(
-        '%pageIndex%',
-        (pageIndex + 1).toString(),
-      ),
-    {
-      // TODO: İlk sayfayı client'ta yine çekiyor. Bunu kapatmanın yolu var mı bak.
-      fallbackData: [firstPage],
-      // To stop fetching the first page too, when the next page is loading.
-      revalidateFirstPage: false,
-    },
-  );
+  >((pageIndex: number) => getInfiniteSwrKey({ pageIndex, pageKeyTemplate }), {
+    // TODO: İlk sayfayı client'ta yine çekiyor. Bunu kapatmanın yolu var mı bak.
+    fallbackData: [firstPage],
+    // To stop fetching the first page too, when the next page is loading.
+    revalidateFirstPage: false,
+  });
 
   const hasNextPage = getHasNextPage(data);
 

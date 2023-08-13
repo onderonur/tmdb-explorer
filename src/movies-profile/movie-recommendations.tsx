@@ -19,7 +19,7 @@ export default async function MovieRecommendations({
 
   return (
     <MovieInfiniteGridList
-      pageKeyTemplate={`/movies/${movieId}/api?${infiniteListSearchParams.toString()}`}
+      pageKeyTemplate={`/movies/${movieId}/api?${infiniteListSearchParams}`}
       firstPage={movieRecommendations}
     />
   );

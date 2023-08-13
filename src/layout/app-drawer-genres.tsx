@@ -16,7 +16,7 @@ export default async function AppDrawerGenres() {
         return (
           <AppDrawerItem
             key={genre.id}
-            href={`/movies/discover?${searchParams.toString()}`}
+            href={`/movies/discover?${searchParams}`}
             title={genre.name}
             // TODO: Fix
             selected={false}

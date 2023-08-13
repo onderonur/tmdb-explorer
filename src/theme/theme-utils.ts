@@ -1,8 +1,6 @@
-import { SxProps } from '@mui/material';
+import { SxProps, Theme } from '@mui/material';
 
-// TODO: SxProps<Theme> için Theme typing nasıl olcak vs bi bak.
-
-export function lineClamp(maxLines: number): SxProps {
+export function lineClamp(maxLines: number): SxProps<Theme> {
   return {
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',

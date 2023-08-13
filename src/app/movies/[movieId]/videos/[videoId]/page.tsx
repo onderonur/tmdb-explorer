@@ -59,7 +59,7 @@ export async function generateMetadata({
   const { movie, videoToWatch } = await getPageData({ movieId, videoId });
 
   return getMetadata({
-    title: videoToWatch.name,
+    title: `${videoToWatch.name} | ${movie.title}`,
     description: `Watch "${videoToWatch.name}" video of "${movie.title}"`,
     images: [
       { url: getYouTubeThumbnailUrl(videoToWatch.key), alt: videoToWatch.name },

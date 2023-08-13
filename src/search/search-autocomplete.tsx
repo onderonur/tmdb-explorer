@@ -42,7 +42,7 @@ export default function SearchAutocomplete({
       apiSearchParams.set('page', '1');
       apiSearchParams.set('query', debouncedSearchValue);
 
-      return `/search/multi/api?${apiSearchParams.toString()}`;
+      return `/search/multi/api?${apiSearchParams}`;
     },
   );
 

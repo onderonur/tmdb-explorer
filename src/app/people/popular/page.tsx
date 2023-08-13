@@ -17,7 +17,7 @@ export default async function PopularPeoplePage() {
       <Padder paddingY>
         <PageTitle title="Popular People" />
         <PeopleInfiniteGridList
-          pageKeyTemplate={`/people/popular/api?${infiniteListSearchParams.toString()}`}
+          pageKeyTemplate={`/people/popular/api?${infiniteListSearchParams}`}
           firstPage={firstPage}
         />
       </Padder>

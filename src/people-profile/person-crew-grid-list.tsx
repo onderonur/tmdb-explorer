@@ -10,7 +10,6 @@ type PersonCrewGridListProps = {
 export default function PersonCrewGridList({
   person,
 }: PersonCrewGridListProps) {
-  // TODO: Buna gerek var mı bak genel olarak kullanıldığı yerler vs.
   const crewList = _.uniqBy(person.credits.crew, (crew) => crew.id);
 
   return (
@@ -22,7 +21,7 @@ export default function PersonCrewGridList({
 
         return (
           <li key={personCrew.id}>
-            <MovieCard movie={personCrew} subheader={allJobs?.join(', ')} />
+            <MovieCard movie={personCrew} subheader={allJobs.join(', ')} />
           </li>
         );
       })}
