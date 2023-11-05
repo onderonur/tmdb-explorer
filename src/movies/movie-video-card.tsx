@@ -1,8 +1,8 @@
 import { Card, CardHeader, CardMedia } from '@mui/material';
 import { lineClamp } from '@/theme/theme-utils';
 import BaseImage from '@/common/base-image';
-import { Id } from '@/common/common-types';
-import { MovieVideo } from '@/movies/movie-types';
+import type { Id } from '@/common/common-types';
+import type { MovieVideo } from '@/movies/movie-types';
 import CardLinkArea from '@/common/card-link-area';
 import { getYouTubeThumbnailUrl } from '@/medias/media-utils';
 
@@ -26,9 +26,11 @@ export default function MovideVideoCard({ movieId, video }: MovieVideoProps) {
         <CardHeader
           title={video.name}
           titleTypographyProps={{
-            sx: lineClamp(2),
-            variant: 'subtitle1',
-            fontWeight: 'bold',
+            sx: {
+              ...lineClamp(2),
+              typography: { xs: 'body2', md: 'body1' },
+              fontWeight: { xs: 'bold', md: 'bold' },
+            },
           }}
           subheader={video.type}
           subheaderTypographyProps={{

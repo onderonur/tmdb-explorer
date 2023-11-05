@@ -16,7 +16,7 @@ const [AppDrawerContext, useAppDrawerContext] =
 
 export { useAppDrawerContext };
 
-type AppDrawerProviderProps = React.PropsWithChildren<unknown>;
+type AppDrawerProviderProps = React.PropsWithChildren;
 
 export default function AppDrawerProvider({
   children,

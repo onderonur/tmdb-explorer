@@ -1,17 +1,14 @@
-'use client';
-
 import { useState } from 'react';
 import BaseAutocomplete from '@/common/base-autocomplete';
-import { useRouter } from 'next/navigation';
-import { Maybe, PaginationResponse } from '@/common/common-types';
+import { useRouter, useSearchParams } from 'next/navigation';
+import type { Maybe, PaginationResponse } from '@/common/common-types';
 import MovieAutocompleteItem from './movie-autocomplete-item';
 import PersonAutocompleteItem from './person-autocomplete-item';
 import { SearchResultType } from '@/medias/media-enums';
-import { SxProps, Theme } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material';
 import { useDebounce, useHasChanged } from '@/common/common-hooks';
 import useSWR from 'swr';
-import { useSearchParams } from 'next/navigation';
-import { MultiSearchResult } from './search-types';
+import type { MultiSearchResult } from './search-types';
 
 type SearchAutocompleteProps = {
   autoFocus?: boolean;
@@ -42,7 +39,7 @@ export default function SearchAutocomplete({
       apiSearchParams.set('page', '1');
       apiSearchParams.set('query', debouncedSearchValue);
 
-      return `/search/multi/api?${apiSearchParams}`;
+      return `/search/multi/api?${apiSearchParams.toString()}`;
     },
   );
 
@@ -52,7 +49,7 @@ export default function SearchAutocomplete({
     const newSearchParams = new URLSearchParams({ query: trimmedValue });
 
     if (trimmedValue) {
-      router.push(`/search?${newSearchParams}`);
+      router.push(`/search?${newSearchParams.toString()}`);
     }
   };
 
@@ -109,7 +106,9 @@ export default function SearchAutocomplete({
       }}
       loading={isValidating}
       inputValue={searchValue ?? ''}
-      onInputChange={(e, newInputValue) => setSearchValue(newInputValue)}
+      onInputChange={(e, newInputValue) => {
+        setSearchValue(newInputValue);
+      }}
       freeSolo
       autoFocus={autoFocus}
       // To make repeatedly hitting Enter work, we set the value as empty string.

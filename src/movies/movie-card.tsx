@@ -1,9 +1,10 @@
 import MovieRating from './movie-rating';
 import { Box, Card, CardContent, CardHeader, Typography } from '@mui/material';
-import { MovieBase } from '@/movies/movie-types';
+import type { MovieBase } from '@/movies/movie-types';
 import { getMovieReleaseYear } from '@/movies/movie-utils';
 import TmdbImage from '@/tmdb/tmdb-image';
 import CardLinkArea from '@/common/card-link-area';
+import { lineClamp } from '@/theme/theme-utils';
 
 type MovieCardProps = {
   movie: MovieBase;
@@ -27,6 +28,10 @@ export default function MovieCard({ movie, subheader }: MovieCardProps) {
           titleTypographyProps={{
             variant: 'body2',
             fontWeight: 'bold',
+            sx: {
+              ...lineClamp(2),
+              wordBreak: 'break-word',
+            },
           }}
           subheader={subheader}
           subheaderTypographyProps={{

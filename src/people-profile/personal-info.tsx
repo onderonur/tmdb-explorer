@@ -1,5 +1,5 @@
 import TextWithLabel from '@/common/text-with-label';
-import { PersonListItem } from '@/people/people-types';
+import type { PersonListItem } from '@/people/people-types';
 import { Box } from '@mui/material';
 
 enum Genders {
@@ -21,10 +21,6 @@ export default function PersonalInfo({ person }: PersonalInfoProps) {
       default:
         return '';
     }
-  }
-
-  if (!person) {
-    return null;
   }
 
   const gender = getGender();

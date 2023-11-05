@@ -1,5 +1,5 @@
-import { PaginationResponse } from '@/common/common-types';
-import { ViewableMovie, ViewablePerson } from './view-filter-types';
+import type { PaginationResponse } from '@/common/common-types';
+import type { ViewableMovie, ViewablePerson } from './view-filter-types';
 import { isOfType } from '@/common/common-utils';
 
 export const VIEW_FILTER_LIMIT = {

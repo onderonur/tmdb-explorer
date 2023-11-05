@@ -1,4 +1,4 @@
-import { Id } from '@/common/common-types';
+import type { Id } from '@/common/common-types';
 import MovieInfiniteGridList from '@/movies/movie-infinite-grid-list';
 import { getMovieRecommendations } from '@/movies/movie-fetchers';
 
@@ -19,7 +19,7 @@ export default async function MovieRecommendations({
 
   return (
     <MovieInfiniteGridList
-      pageKeyTemplate={`/movies/${movieId}/api?${infiniteListSearchParams}`}
+      pageKeyTemplate={`/movies/${movieId}/api?${infiniteListSearchParams.toString()}`}
       firstPage={movieRecommendations}
     />
   );

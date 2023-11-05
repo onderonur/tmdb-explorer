@@ -1,6 +1,6 @@
-import { Id, Maybe, PaginationResponse } from '@/common/common-types';
-import { TImage } from '@/medias/media-types';
-import { PersonBase } from '@/people/people-types';
+import type { Id, Maybe, PaginationResponse } from '@/common/common-types';
+import type { TImage } from '@/medias/media-types';
+import type { PersonBase } from '@/people/people-types';
 
 export type Genre = {
   id: Id;

@@ -1,18 +1,16 @@
-import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 
 type PadderProps = React.PropsWithChildren<{
-  paddingY?: boolean;
+  disableMobilePadding?: boolean;
 }>;
 
-export default function Padder({ paddingY, children }: PadderProps) {
+export default function Padder({
+  disableMobilePadding,
+  children,
+}: PadderProps) {
   return (
-    <Container
-      maxWidth="xl"
-      sx={{
-        paddingY: paddingY ? { xs: 2, sm: 3 } : undefined,
-      }}
-    >
+    <Box sx={{ paddingX: { xs: disableMobilePadding ? 0 : 2, md: 3 } }}>
       {children}
-    </Container>
+    </Box>
   );
 }

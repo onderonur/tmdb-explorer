@@ -1,7 +1,8 @@
 'use client';
 
 import NextLink from '@/routing/next-link';
-import { Chip, ChipProps } from '@mui/material';
+import type { ChipProps } from '@mui/material';
+import { Chip } from '@mui/material';
 
 type ChipLinkProps = ChipProps<
   typeof NextLink,

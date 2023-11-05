@@ -1,6 +1,6 @@
 'use client';
 
-import { Maybe } from '@/common/common-types';
+import type { Maybe } from '@/common/common-types';
 import { SearchResultType } from '@/medias/media-enums';
 import { Tabs, Typography } from '@mui/material';
 import SearchResultsTabLink from './search-results-tab-link';

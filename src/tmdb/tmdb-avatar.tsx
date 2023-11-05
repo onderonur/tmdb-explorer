@@ -1,6 +1,7 @@
 'use client';
 
-import BaseAvatar, { BaseAvatarProps } from '@/common/base-avatar';
+import type { BaseAvatarProps } from '@/common/base-avatar';
+import BaseAvatar from '@/common/base-avatar';
 import { useTmdbConfigurationContext } from '@/tmdb/tmdb-configuration-context';
 
 type TmdbAvatarProps = BaseAvatarProps;

@@ -3,7 +3,7 @@ import PageTitle from '@/common/page-title';
 import Padder from '@/common/padder';
 import { getPopularPeople } from '@/people/people-fetchers';
 import PeopleInfiniteGridList from '@/people/people-infinite-list';
-import { Toolbar } from '@mui/material';
+import PageRoot from '@/layout/page-root';
 
 export default async function PopularPeoplePage() {
   const firstPage = await getPopularPeople(FIRST_PAGE);
@@ -12,15 +12,14 @@ export default async function PopularPeoplePage() {
   infiniteListSearchParams.set('page', '%pageIndex%');
 
   return (
-    <>
-      <Toolbar />
-      <Padder paddingY>
+    <PageRoot hasHeaderGutter>
+      <Padder>
         <PageTitle title="Popular People" />
         <PeopleInfiniteGridList
-          pageKeyTemplate={`/people/popular/api?${infiniteListSearchParams}`}
+          pageKeyTemplate={`/people/popular/api?${infiniteListSearchParams.toString()}`}
           firstPage={firstPage}
         />
       </Padder>
-    </>
+    </PageRoot>
   );
 }

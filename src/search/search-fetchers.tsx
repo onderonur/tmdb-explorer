@@ -1,6 +1,6 @@
-import { PaginationResponse } from '@/common/common-types';
-import { MovieListItem } from '@/movies/movie-types';
-import { PersonListItem } from '@/people/people-types';
+import type { PaginationResponse } from '@/common/common-types';
+import type { MovieListItem } from '@/movies/movie-types';
+import type { PersonListItem } from '@/people/people-types';
 import { tmdbClient } from '@/tmdb/tmdb-client';
 import { filterViewablePageResults } from '@/view-filters/view-filter-utils';
 import { cache } from 'react';

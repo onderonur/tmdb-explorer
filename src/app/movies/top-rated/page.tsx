@@ -18,17 +18,17 @@ export default async function TopRatedMoviesPage() {
   return (
     <>
       <FeaturedMovie movie={featuredMovie} />
-      <Padder>
-        <Stack spacing={2}>
-          <Divider />
+      <Stack spacing={2}>
+        <Divider />
+        <Padder>
           <PageTitle title="Top Rated Movies" />
           <MovieInfiniteGridList
-            pageKeyTemplate={`/movies/top-rated/api?${infiniteListSearchParams}`}
+            pageKeyTemplate={`/movies/top-rated/api?${infiniteListSearchParams.toString()}`}
             firstPage={firstPage}
             skipFirstMovie
           />
-        </Stack>
-      </Padder>
+        </Padder>
+      </Stack>
     </>
   );
 }

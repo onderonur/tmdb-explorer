@@ -3,7 +3,7 @@
 import YouTubePlayer from '@/medias/youtube-player';
 import MediaCardHeader from '@/medias/media-card-header';
 import { getMovieDetails } from '@/movies/movie-fetchers';
-import { lineClamp } from '@/theme/theme-utils';
+import { responsiveBorderRadius, lineClamp } from '@/theme/theme-utils';
 import {
   Box,
   Card,
@@ -13,7 +13,6 @@ import {
   ListItemAvatar,
   ListItemText,
   ListSubheader,
-  Toolbar,
 } from '@mui/material';
 import { notFound } from 'next/navigation';
 import BaseAvatar from '@/common/base-avatar';
@@ -21,6 +20,7 @@ import ListItemLink from '@/common/list-item-link';
 import Padder from '@/common/padder';
 import { getYouTubeThumbnailUrl } from '@/medias/media-utils';
 import { getMetadata } from '@/seo/seo-utils';
+import PageRoot from '@/layout/page-root';
 
 async function getPageData({
   movieId,
@@ -61,10 +61,10 @@ export async function generateMetadata({
   return getMetadata({
     title: `${videoToWatch.name} | ${movie.title}`,
     description: `Watch "${videoToWatch.name}" video of "${movie.title}"`,
+    pathname: `/movies/${movieId}/videos/${videoId}`,
     images: [
       { url: getYouTubeThumbnailUrl(videoToWatch.key), alt: videoToWatch.name },
     ],
-    pathname: `/movies/${movieId}/videos/${videoId}`,
   });
 }
 
@@ -77,9 +77,8 @@ export default async function MovieVideoPage({
   });
 
   return (
-    <>
-      <Toolbar />
-      <Padder paddingY>
+    <PageRoot hasHeaderGutter>
+      <Padder disableMobilePadding>
         <Box
           sx={{
             display: 'grid',
@@ -88,7 +87,7 @@ export default async function MovieVideoPage({
             alignItems: 'start',
           }}
         >
-          <Card>
+          <Card sx={responsiveBorderRadius()}>
             <YouTubePlayer youTubeId={videoToWatch.key} />
             <MediaCardHeader
               title={videoToWatch.name}
@@ -97,7 +96,7 @@ export default async function MovieVideoPage({
               imageSrc={movie.poster_path}
             />
           </Card>
-          <Card component="aside">
+          <Card component="aside" sx={responsiveBorderRadius()}>
             <CardHeader
               title="Videos"
               titleTypographyProps={{
@@ -137,10 +136,16 @@ export default async function MovieVideoPage({
                       <ListItemText
                         primary={video.name}
                         primaryTypographyProps={{
-                          sx: lineClamp(2),
-                          fontWeight: 'medium',
+                          sx: {
+                            ...lineClamp(2),
+                            typography: { xs: 'body2', md: 'body1' },
+                            fontWeight: { xs: 'bold', md: 'bold' },
+                          },
                         }}
                         secondary={video.type}
+                        secondaryTypographyProps={{
+                          typography: 'subtitle2',
+                        }}
                       />
                     </ListItemLink>
                   </ListItem>
@@ -150,6 +155,6 @@ export default async function MovieVideoPage({
           </Card>
         </Box>
       </Padder>
-    </>
+    </PageRoot>
   );
 }

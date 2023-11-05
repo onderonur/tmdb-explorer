@@ -1,5 +1,3 @@
-'use client';
-
 import {
   Typography,
   Stack,
@@ -11,13 +9,15 @@ import {
 } from '@mui/material';
 import MovieRating from '@/movies/movie-rating';
 import { getMovieReleaseYear } from '@/movies/movie-utils';
-import { MovieDetails } from '@/movies/movie-types';
+import type { MovieDetails } from '@/movies/movie-types';
 import SectionTitle from '@/common/section-title';
 import { visuallyHidden } from '@mui/utils';
 import ListItemLink from '@/common/list-item-link';
 import TmdbAvatar from '@/tmdb/tmdb-avatar';
 import NextLink from '@/routing/next-link';
 import { Fragment } from 'react';
+import MovieOverview from '@/movies/movie-overview';
+import MovieTitle from '@/movies/movie-title';
 
 type MovieSummaryProps = {
   movie: MovieDetails;
@@ -25,32 +25,37 @@ type MovieSummaryProps = {
 
 export default function MovieSummary({ movie }: MovieSummaryProps) {
   const releaseYear = getMovieReleaseYear(movie);
-  const crew = movie.credits?.crew.filter((crew) => crew.job === 'Director');
+  const filteredCrew = movie.credits?.crew.filter(
+    (crew) => crew.job === 'Director',
+  );
 
   return (
-    <Box sx={{ paddingTop: 32 }}>
+    <Box sx={{ paddingTop: { xs: 24, md: 32 } }}>
       <Stack spacing={2}>
         <Stack spacing={0.4} sx={{ maxWidth: '75ch' }}>
-          <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold' }}>
-            {movie.title}
-          </Typography>
-          {movie.tagline && (
-            <Typography
-              variant="h6"
-              component="p"
-              sx={{ color: 'text.secondary' }}
-            >
-              &quot;{movie.tagline}&quot;
-            </Typography>
-          )}
-          <Stack direction="row" spacing={0.8} sx={{ color: 'text.secondary' }}>
+          <MovieTitle
+            component="h1"
+            title={movie.title}
+            subtitle={movie.tagline && `"${movie.tagline}"`}
+          />
+          <Stack
+            direction="row"
+            spacing={0.8}
+            sx={{
+              color: 'text.secondary',
+              typography: { xs: 'body2', md: 'body1' },
+            }}
+          >
             {releaseYear && <span>{releaseYear}</span>}
             <span>&middot;</span>
             <span>{movie.runtime} minutes</span>
             <span>&middot;</span>
             <MovieRating movie={movie} />
           </Stack>
-          <Typography variant="subtitle1" component="p">
+          <Typography
+            component="p"
+            sx={{ typography: { xs: 'subtitle2', md: 'subtitle1' } }}
+          >
             {movie.genres.map((genre, i) => {
               const isLastItem = i === movie.genres.length - 1;
 
@@ -68,18 +73,10 @@ export default function MovieSummary({ movie }: MovieSummaryProps) {
 
         <Box component="section" sx={{ maxWidth: '75ch' }}>
           <SectionTitle title="Overview" sx={visuallyHidden} />
-          <Typography
-            variant="h6"
-            component="p"
-            sx={{
-              whiteSpace: 'pre-wrap',
-            }}
-          >
-            {movie.overview}
-          </Typography>
+          <MovieOverview text={movie.overview} />
         </Box>
 
-        {!!crew?.length && (
+        {!!filteredCrew?.length && (
           <section>
             <SectionTitle title="Top Crew" sx={visuallyHidden} />
             <List
@@ -90,10 +87,10 @@ export default function MovieSummary({ movie }: MovieSummaryProps) {
                 flexWrap: 'wrap',
               }}
             >
-              {crew.map((crewPerson) => {
+              {filteredCrew.map((crewPerson) => {
                 const allJobs = movie.credits?.crew
                   .filter((crew) => crew.id === crewPerson.id)
-                  .map((crewPerson) => crewPerson.job);
+                  .map((crewInfoOfPerson) => crewInfoOfPerson.job);
 
                 return (
                   <ListItem

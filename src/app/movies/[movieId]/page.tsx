@@ -2,7 +2,7 @@ import FixedBackgroundImage from '@/common/fixed-background-image';
 import MovieSummary from '@/movies-profile/movie-summary';
 import { getMovieDetails } from '@/movies/movie-fetchers';
 import { Divider, Stack } from '@mui/material';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import MovieRecommendations from '@/movies-profile/movie-recommendations';
 import MovieVideoCard from '@/movies/movie-video-card';
 import MovieImageCard from '@/movies/movie-image-card';
@@ -12,9 +12,10 @@ import SeeAllLink from '@/common/see-all-link';
 import SectionTitle from '@/common/section-title';
 import { notFound } from 'next/navigation';
 import { getMetadata } from '@/seo/seo-utils';
-import Padder from '@/common/padder';
 import { getTmdbConfiguration } from '@/tmdb/tmdb-configuration-fetchers';
 import { getTmdbImageUrl } from '@/tmdb/tmdb-configuration-utils';
+import PageRoot from '@/layout/page-root';
+import Padder from '@/common/padder';
 
 async function getPageData(movieId: string) {
   const [movie, tmdbConfiguration] = await Promise.all([
@@ -22,7 +23,7 @@ async function getPageData(movieId: string) {
     getTmdbConfiguration(),
   ]);
 
-  if (!movie || !tmdbConfiguration) {
+  if (!movie) {
     notFound();
   }
 
@@ -30,8 +31,6 @@ async function getPageData(movieId: string) {
 }
 
 // TODO: Tüm file name'leri kebab-case yap ve github'dan kontrol et tek kelimelikleri vs.
-
-// TODO: Gereksiz Fragment'ları sil.
 
 type MoviePageProps = {
   params: {
@@ -71,7 +70,7 @@ export default async function MoviePage({
   const firstVideo = movie.videos?.results[0];
 
   return (
-    <>
+    <PageRoot>
       <FixedBackgroundImage
         src={movie.backdrop_path}
         alt={movie.title}
@@ -79,13 +78,15 @@ export default async function MoviePage({
         hasScrollBasedOpacity
         hasDimmer
       />
-      <Padder>
-        <Stack spacing={2}>
+      <Stack spacing={2}>
+        <Padder>
           <MovieSummary movie={movie} />
+        </Padder>
 
-          <Divider />
+        <Divider />
 
-          <section>
+        <section>
+          <Padder>
             <SectionTitle title="Videos" />
             <SingleRowGridList
               itemCount={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 4 }}
@@ -98,13 +99,15 @@ export default async function MoviePage({
                 );
               })}
             </SingleRowGridList>
-            <SeeAllLink
-              href={`/movies/${movie.id}/videos/${firstVideo?.id}`}
-              isLinkVisible={!!firstVideo}
-            />
-          </section>
+          </Padder>
+          <SeeAllLink
+            href={`/movies/${movie.id}/videos/${firstVideo?.id}`}
+            isLinkVisible={!!firstVideo}
+          />
+        </section>
 
-          <section>
+        <section>
+          <Padder>
             <SectionTitle title="Images" />
             <SingleRowGridList
               itemCount={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 4 }}
@@ -123,13 +126,17 @@ export default async function MoviePage({
                 );
               })}
             </SingleRowGridList>
-            <SeeAllLink
-              href={`/movies/${movie.id}/images${firstImage?.file_path}`}
-              isLinkVisible={!!firstImage}
-            />
-          </section>
+          </Padder>
+          <SeeAllLink
+            href={`/movies/${movie.id}/images${firstImage?.file_path}`}
+            isLinkVisible={!!firstImage}
+          />
+        </section>
 
-          <section>
+        <section>
+          <Padder>
+            {/* TODO: Bu, sayfayı x ekseninde overflow ediyor.
+            http://localhost:3000/movies/569094 */}
             <SectionTitle title="Cast" />
             <SingleRowGridList
               itemCount={{ xs: 3, sm: 4, md: 5, lg: 6, xl: 6 }}
@@ -147,18 +154,20 @@ export default async function MoviePage({
                 );
               })}
             </SingleRowGridList>
-            <SeeAllLink
-              href={`/movies/${movie.id}/people`}
-              isLinkVisible={!!movie.credits?.cast.length}
-            />
-          </section>
+          </Padder>
+          <SeeAllLink
+            href={`/movies/${movie.id}/people`}
+            isLinkVisible={!!movie.credits?.cast.length}
+          />
+        </section>
 
-          <aside>
+        <aside>
+          <Padder>
             <SectionTitle title="Recommendations" />
             <MovieRecommendations movieId={movie.id} />
-          </aside>
-        </Stack>
-      </Padder>
-    </>
+          </Padder>
+        </aside>
+      </Stack>
+    </PageRoot>
   );
 }

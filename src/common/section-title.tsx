@@ -1,4 +1,6 @@
-import { SxProps, Theme, Typography } from '@mui/material';
+import { mergeSx } from '@/theme/theme-utils';
+import type { SxProps, Theme } from '@mui/material';
+import { Typography } from '@mui/material';
 
 type SectionTitle = {
   title: string;
@@ -11,7 +13,7 @@ export default function SectionTitle({ title, sx }: SectionTitle) {
       variant="h6"
       component="h2"
       gutterBottom
-      sx={[{ fontWeight: 'bold' }, ...(Array.isArray(sx) ? sx : [sx])]}
+      sx={mergeSx({ fontWeight: 'bold' }, sx)}
     >
       {title}
     </Typography>

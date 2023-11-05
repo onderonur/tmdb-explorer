@@ -7,8 +7,10 @@ export function useDebounce<Value>(value: Value, wait = 250) {
   const changeHandlerRef = useRef<ReturnType<(typeof _)['debounce']>>();
 
   useEffect(() => {
-    changeHandlerRef.current = _.debounce(
-      (newValue) => setDebouncedValue(newValue),
+    changeHandlerRef.current = _.debounce<(newValue: Value) => void>(
+      (newValue) => {
+        setDebouncedValue(newValue);
+      },
       wait,
     );
 

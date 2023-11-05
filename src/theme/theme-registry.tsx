@@ -1,6 +1,7 @@
 'use client';
 
-import createCache, { Options } from '@emotion/cache';
+import type { Options } from '@emotion/cache';
+import createCache from '@emotion/cache';
 import { useServerInsertedHTML } from 'next/navigation';
 import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
@@ -21,11 +22,12 @@ export default function ThemeRegistry({
   const [{ cache, flush }] = useState(() => {
     const cache = createCache(options);
     cache.compat = true;
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     const prevInsert = cache.insert;
     let inserted: string[] = [];
     cache.insert = (...args) => {
-      // eslint-disable-next-line prefer-destructuring
-      const serialized = args[1];
+      const [, serialized] = args;
+
       if (cache.inserted[serialized.name] === undefined) {
         inserted.push(serialized.name);
       }
@@ -62,7 +64,7 @@ export default function ThemeRegistry({
   return (
     <CacheProvider value={cache}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
+        <CssBaseline enableColorScheme />
         {children}
       </ThemeProvider>
     </CacheProvider>

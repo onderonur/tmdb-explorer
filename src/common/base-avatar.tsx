@@ -1,5 +1,6 @@
 import BaseImage from '@/common/base-image';
-import { Avatar, AvatarProps } from '@mui/material';
+import type { AvatarProps } from '@mui/material';
+import { Avatar } from '@mui/material';
 
 export type BaseAvatarProps = AvatarProps & {
   alt: string;

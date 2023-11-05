@@ -1,7 +1,7 @@
-import BaseGridList, { BaseGridListProps } from './base-grid-list';
-import InfiniteScrollSentry, {
-  InfiniteScrollSentryProps,
-} from './infinite-scroll-sentry';
+import type { BaseGridListProps } from './base-grid-list';
+import BaseGridList from './base-grid-list';
+import type { InfiniteScrollSentryProps } from './infinite-scroll-sentry';
+import InfiniteScrollSentry from './infinite-scroll-sentry';
 
 export function getInfiniteSwrKey({
   pageIndex,

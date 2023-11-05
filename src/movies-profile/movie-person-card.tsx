@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardMedia } from '@mui/material';
 import TmdbAvatar from '@/tmdb/tmdb-avatar';
 import CardLinkArea from '@/common/card-link-area';
-import { Id } from '@/common/common-types';
+import type { Id } from '@/common/common-types';
 
 type MoviePersonCardProps = {
   personId: Id;
@@ -31,8 +31,8 @@ export default function MoviePersonCard({
         <CardHeader
           title={title}
           titleTypographyProps={{
-            variant: 'subtitle1',
-            fontWeight: 'medium',
+            variant: 'body2',
+            fontWeight: 'bold',
           }}
           subheader={subheader}
           subheaderTypographyProps={{

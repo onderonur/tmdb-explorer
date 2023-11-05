@@ -1,5 +1,5 @@
-import { Maybe } from '@/common/common-types';
-import { TmdbConfiguration, TmdbImageQuality } from './tmdb-types';
+import type { Maybe } from '@/common/common-types';
+import type { TmdbConfiguration, TmdbImageQuality } from './tmdb-types';
 
 export function getTmdbImageUrl({
   tmdbConfiguration,

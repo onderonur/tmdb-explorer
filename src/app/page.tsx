@@ -15,8 +15,8 @@ import SeeAllLink from '@/common/see-all-link';
 import { getPopularPeople } from '@/people/people-fetchers';
 import PersonCard from '@/people/person-card';
 import ChipLink from '@/common/chip-link';
-import { PersonListItem } from '@/people/people-types';
-import { Genre, MovieListItem } from '@/movies/movie-types';
+import type { PersonListItem } from '@/people/people-types';
+import type { Genre, MovieListItem } from '@/movies/movie-types';
 import { getMetadata } from '@/seo/seo-utils';
 
 enum RootPageSectionType {
@@ -91,15 +91,17 @@ export default async function RootPage() {
   return (
     <>
       <FeaturedMovie movie={featuredMovie} />
-      <Padder>
-        <Stack spacing={2}>
-          <Divider />
-          {sections.map((section) => {
-            return (
-              <>
-                <section key={section.title}>
+      <Stack spacing={2}>
+        <Divider />
+        {sections.map((section) => {
+          return (
+            <>
+              <section key={section.title}>
+                <Padder>
                   <SectionTitle title={section.title} />
-                  {section.type === RootPageSectionType.GENRES ? (
+                </Padder>
+                {section.type === RootPageSectionType.GENRES ? (
+                  <Padder>
                     <Box
                       component="ul"
                       sx={{
@@ -124,7 +126,9 @@ export default async function RootPage() {
                         );
                       })}
                     </Box>
-                  ) : (
+                  </Padder>
+                ) : (
+                  <Padder>
                     <SingleRowGridList
                       itemCount={{ xs: 2, sm: 4, md: 5, lg: 6, xl: 7 }}
                     >
@@ -133,24 +137,26 @@ export default async function RootPage() {
                           <li key={item.id}>
                             {section.type === RootPageSectionType.MOVIES ? (
                               <MovieCard movie={item as MovieListItem} />
-                            ) : section.type === RootPageSectionType.PEOPLE ? (
-                              <PersonCard person={item as PersonListItem} />
-                            ) : null}
+                            ) : (
+                              section.type === RootPageSectionType.PEOPLE && (
+                                <PersonCard person={item as PersonListItem} />
+                              )
+                            )}
                           </li>
                         );
                       })}
                     </SingleRowGridList>
-                  )}
-                  {section.seeAllHref && (
-                    <SeeAllLink isLinkVisible href={section.seeAllHref} />
-                  )}
-                </section>
-                {!section.seeAllHref && <Divider />}
-              </>
-            );
-          })}
-        </Stack>
-      </Padder>
+                  </Padder>
+                )}
+                {section.seeAllHref && (
+                  <SeeAllLink isLinkVisible href={section.seeAllHref} />
+                )}
+              </section>
+              {!section.seeAllHref && <Divider />}
+            </>
+          );
+        })}
+      </Stack>
     </>
   );
 }

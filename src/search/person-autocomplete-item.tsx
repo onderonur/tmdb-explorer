@@ -1,5 +1,5 @@
 import AutocompleteItem from './autocomplete-item';
-import { PersonSearchResult } from './search-types';
+import type { PersonSearchResult } from './search-types';
 
 type PersonAutocompleteItemProps = { person: PersonSearchResult };
 

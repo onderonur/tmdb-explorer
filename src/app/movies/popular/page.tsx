@@ -17,17 +17,17 @@ export default async function PopularMoviesPage() {
   return (
     <>
       <FeaturedMovie movie={featuredMovie} />
-      <Padder>
-        <Stack spacing={2}>
-          <Divider />
+      <Stack spacing={2}>
+        <Divider />
+        <Padder>
           <PageTitle title="Popular Movies" />
           <MovieInfiniteGridList
-            pageKeyTemplate={`/movies/popular/api?${infiniteListSearchParams}`}
+            pageKeyTemplate={`/movies/popular/api?${infiniteListSearchParams.toString()}`}
             firstPage={firstPage}
             skipFirstMovie
           />
-        </Stack>
-      </Padder>
+        </Padder>
+      </Stack>
     </>
   );
 }

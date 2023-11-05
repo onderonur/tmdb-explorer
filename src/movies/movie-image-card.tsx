@@ -1,8 +1,8 @@
 import { Card, CardMedia } from '@mui/material';
-import { Id } from '@/common/common-types';
+import type { Id } from '@/common/common-types';
 import TmdbImage from '@/tmdb/tmdb-image';
 import CardLinkArea from '@/common/card-link-area';
-import { TImage } from '@/medias/media-types';
+import type { TImage } from '@/medias/media-types';
 
 type MovieImageCardProps = {
   movieId: Id;

@@ -1,6 +1,6 @@
 import BaseGridList from '@/common/base-grid-list';
 import MovieCard from '@/movies/movie-card';
-import { PersonDetails } from '@/people/people-types';
+import type { PersonDetails } from '@/people/people-types';
 
 type PersonCastingGridListProps = {
   person: PersonDetails;

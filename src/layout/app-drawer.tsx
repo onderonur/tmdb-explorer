@@ -1,6 +1,7 @@
 // TODO: Genel olarak use client'lara bi bak fazla mı vs
 'use client';
 
+import type { DrawerProps } from '@mui/material';
 import {
   Divider,
   Drawer,
@@ -8,7 +9,6 @@ import {
   ListSubheader,
   Toolbar,
   Box,
-  DrawerProps,
 } from '@mui/material';
 import AppDrawerItem from './app-drawer-item';
 import { useAppDrawerContext } from './app-drawer-context';

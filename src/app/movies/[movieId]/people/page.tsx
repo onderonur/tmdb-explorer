@@ -1,13 +1,14 @@
 import BaseGridList from '@/common/base-grid-list';
-import { Id } from '@/common/common-types';
+import type { Id } from '@/common/common-types';
 import MoviePersonCard from '@/movies-profile/movie-person-card';
 import { getMovieDetails } from '@/movies/movie-fetchers';
-import { MovieCrew } from '@/movies/movie-types';
-import { Card, CardContent, Stack, Toolbar } from '@mui/material';
+import type { MovieCrew } from '@/movies/movie-types';
+import { Card, CardContent, Stack } from '@mui/material';
 import { notFound } from 'next/navigation';
-import Padder from '@/common/padder';
 import MediaCardHeader from '@/medias/media-card-header';
 import SectionTitle from '@/common/section-title';
+import PageRoot from '@/layout/page-root';
+import Padder from '@/common/padder';
 
 type MoviePeoplePageProps = {
   params: {
@@ -34,16 +35,16 @@ export default async function MoviePeoplePage({
   const crewById: Record<Id, MovieCrew[]> = {};
 
   for (const crew of credits.crew) {
+    // TODO: Buradaki eslint warning'i hatalı gibi. Bi kontrol et.
     crewById[crew.id] = [...(crewById[crew.id] ?? []), crew];
   }
 
   // TODO: Ayrı olarak "aside" main'in içinde olabilir mi dışında mı olmalı bi bak.
 
   return (
-    <>
-      <Toolbar />
-      <Padder paddingY>
-        <Stack spacing={2}>
+    <PageRoot hasHeaderGutter>
+      <Stack spacing={2}>
+        <Padder disableMobilePadding>
           <Card>
             <MediaCardHeader
               title="Full Cast & Crew"
@@ -52,8 +53,12 @@ export default async function MoviePeoplePage({
               imageSrc={movie.poster_path}
             />
           </Card>
-          <section>
+        </Padder>
+        <section>
+          <Padder>
             <SectionTitle title="Cast" />
+          </Padder>
+          <Padder disableMobilePadding>
             <Card>
               <CardContent>
                 <BaseGridList>
@@ -72,9 +77,13 @@ export default async function MoviePeoplePage({
                 </BaseGridList>
               </CardContent>
             </Card>
-          </section>
-          <section>
+          </Padder>
+        </section>
+        <section>
+          <Padder>
             <SectionTitle title="Crew" />
+          </Padder>
+          <Padder disableMobilePadding>
             <Card>
               <CardContent>
                 <BaseGridList>
@@ -97,9 +106,9 @@ export default async function MoviePeoplePage({
                 </BaseGridList>
               </CardContent>
             </Card>
-          </section>
-        </Stack>
-      </Padder>
-    </>
+          </Padder>
+        </section>
+      </Stack>
+    </PageRoot>
   );
 }

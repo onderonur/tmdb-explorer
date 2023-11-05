@@ -1,4 +1,4 @@
-import { MovieBase } from './movie-types';
+import type { MovieBase } from './movie-types';
 
 export function getMovieReleaseYear(movie: MovieBase) {
   const date = movie.release_date;

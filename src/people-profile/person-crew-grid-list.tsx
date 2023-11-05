@@ -1,7 +1,7 @@
 import BaseGridList from '@/common/base-grid-list';
 import MovieCard from '@/movies/movie-card';
 import _ from 'lodash';
-import { PersonDetails } from '@/people/people-types';
+import type { PersonDetails } from '@/people/people-types';
 
 type PersonCrewGridListProps = {
   person: PersonDetails;

@@ -54,6 +54,7 @@ export async function generateMetadata({
   return getMetadata({
     title: `Images of "${movie.title}"`,
     description: `Explore images of "${movie.title}"`,
+    pathname: `/movies/${movieId}/images/${imagePath}`,
     // TODO: Fix
     images: [
       {
@@ -64,7 +65,6 @@ export async function generateMetadata({
         alt: `Image of "${movie.title}"`,
       },
     ],
-    pathname: `/movies/${movieId}/images/${imagePath}`,
   });
 }
 

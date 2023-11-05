@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, MenuItem, TextField } from '@mui/material';
-import { Maybe } from '@/common/common-types';
+import type { Maybe } from '@/common/common-types';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const MOVIE_SORTING = {
@@ -57,11 +57,11 @@ export default function MovieSortingSelect() {
         value={selectedSorting.id}
         onChange={(e) => {
           // https://nextjs.org/docs/app/api-reference/functions/use-search-params#updating-searchparams
-          const newSearchParams = new URLSearchParams(searchParams.toString());
+          const newSearchParams = new URLSearchParams(searchParams);
 
           newSearchParams.set('sortBy', e.target.value);
 
-          router.push(`/movies/discover?${newSearchParams}`);
+          router.push(`/movies/discover?${newSearchParams.toString()}`);
         }}
       >
         {sortings.map((option) => {

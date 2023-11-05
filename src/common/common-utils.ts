@@ -1,4 +1,4 @@
-import { PaginationResponse, Maybe } from '@/common/common-types';
+import type { PaginationResponse, Maybe } from '@/common/common-types';
 import _ from 'lodash';
 
 export function getAllPageResults<T extends { id: number | string }>(

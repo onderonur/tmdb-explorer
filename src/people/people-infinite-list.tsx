@@ -3,10 +3,10 @@
 import InfiniteGridList, {
   getInfiniteSwrKey,
 } from '@/common/infinite-grid-list';
-import { PaginationResponse } from '@/common/common-types';
+import type { PaginationResponse } from '@/common/common-types';
 import useSWRInfinite from 'swr/infinite';
 import { getAllPageResults, getHasNextPage } from '@/common/common-utils';
-import { PersonListItem } from './people-types';
+import type { PersonListItem } from './people-types';
 import PersonCard from './person-card';
 
 type PeopleInfiniteListProps = {

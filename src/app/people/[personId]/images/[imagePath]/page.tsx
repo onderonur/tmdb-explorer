@@ -21,7 +21,7 @@ async function getPageData({
     notFound();
   }
 
-  const images = person.images?.profiles ?? [];
+  const images = person.images.profiles;
 
   const imageToView = images.find(
     (backdrop) => backdrop.file_path === `/${imagePath}`,
@@ -52,6 +52,7 @@ export async function generateMetadata({
   return getMetadata({
     title: `Images of "${person.name}"`,
     description: `Explore images of "${person.name}"`,
+    pathname: `/people/${personId}/images/${imagePath}`,
     images: [
       {
         url: getTmdbImageUrl({
@@ -61,7 +62,6 @@ export async function generateMetadata({
         alt: `Image of "${person.name}"`,
       },
     ],
-    pathname: `/people/${personId}/images/${imagePath}`,
   });
 }
 

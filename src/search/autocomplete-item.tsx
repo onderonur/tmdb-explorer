@@ -1,11 +1,11 @@
+import type { ListItemProps } from '@mui/material';
 import {
   ListItemAvatar,
   ListItemText,
-  ListItemProps,
   ListItemButton,
   ListItem,
 } from '@mui/material';
-import { Maybe } from '@/common/common-types';
+import type { Maybe } from '@/common/common-types';
 import TmdbAvatar from '@/tmdb/tmdb-avatar';
 
 type AutocompleteItemProps<C extends React.ElementType = 'li'> = ListItemProps<

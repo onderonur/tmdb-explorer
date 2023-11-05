@@ -1,4 +1,4 @@
-import { PersonListItem } from '@/people/people-types';
+import type { PersonListItem } from '@/people/people-types';
 import { Box, Card, CardHeader } from '@mui/material';
 import TmdbImage from '@/tmdb/tmdb-image';
 import CardLinkArea from '@/common/card-link-area';

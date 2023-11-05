@@ -6,13 +6,14 @@ import {
   List,
   ListItem,
   ListSubheader,
-  Toolbar,
 } from '@mui/material';
 import ListItemLink from '@/common/list-item-link';
 import Padder from '@/common/padder';
-import MediaCardHeader, { MediaCardHeaderProps } from './media-card-header';
-import { TImage } from './media-types';
+import type { MediaCardHeaderProps } from './media-card-header';
+import MediaCardHeader from './media-card-header';
+import type { TImage } from './media-types';
 import ImageGalleryNavigationLink from './image-gallery-navigation-link';
+import PageRoot from '@/layout/page-root';
 
 type ImageGalleryProps = {
   // TODO: Change name
@@ -47,9 +48,8 @@ export default function ImageGallery({
   }
 
   return (
-    <>
-      <Toolbar />
-      <Padder paddingY>
+    <PageRoot hasHeaderGutter>
+      <Padder disableMobilePadding>
         <Box
           sx={{
             display: 'grid',
@@ -152,6 +152,6 @@ export default function ImageGallery({
           </Card>
         </Box>
       </Padder>
-    </>
+    </PageRoot>
   );
 }

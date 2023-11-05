@@ -1,5 +1,5 @@
 import { Typography, Stack, Box, Card, CardMedia } from '@mui/material';
-import { PersonListItem } from '@/people/people-types';
+import type { PersonListItem } from '@/people/people-types';
 import PersonalInfo from './personal-info';
 import TmdbImage from '@/tmdb/tmdb-image';
 import SectionTitle from '@/common/section-title';

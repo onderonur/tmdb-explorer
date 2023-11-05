@@ -1,12 +1,8 @@
 import { useState } from 'react';
 import LoadingIndicator from '@/common/loading-indicator';
 import SearchIcon from '@mui/icons-material/Search';
-import {
-  Autocomplete,
-  AutocompleteProps,
-  IconButton,
-  TextField,
-} from '@mui/material';
+import type { AutocompleteProps } from '@mui/material';
+import { Autocomplete, IconButton, TextField } from '@mui/material';
 
 type BaseAutocompleteProps<
   T,
@@ -47,8 +43,12 @@ export default function BaseAutocomplete<
     <Autocomplete<T, Multiple, DisableClearable, FreeSolo>
       {...rest}
       open={isOpen}
-      onOpen={() => setIsOpen(true)}
-      onClose={() => setIsOpen(false)}
+      onOpen={() => {
+        setIsOpen(true);
+      }}
+      onClose={() => {
+        setIsOpen(false);
+      }}
       fullWidth
       loadingText={<LoadingIndicator loading={!!rest.loading} />}
       disableClearable={true as DisableClearable}

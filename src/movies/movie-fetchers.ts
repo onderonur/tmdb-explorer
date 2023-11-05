@@ -1,6 +1,6 @@
-import { Id, PaginationResponse } from '@/common/common-types';
+import type { Id, PaginationResponse } from '@/common/common-types';
 import { tmdbClient } from '@/tmdb/tmdb-client';
-import { Genre, MovieDetails, MovieListItem } from './movie-types';
+import type { Genre, MovieDetails, MovieListItem } from './movie-types';
 import {
   VIEW_FILTER_LIMIT,
   filterViewablePageResults,
@@ -123,6 +123,12 @@ export const getMovieGenres = cache(async () => {
   return genres;
 });
 
+export const getMovieGenre = cache(async (genreId: Id) => {
+  const genres = await getMovieGenres();
+
+  return genres.find((genre) => genre.id === genreId);
+});
+
 export const getMovieRecommendations = cache(
   async (movieId: Id, { page }: { page: number }) => {
     // To be sure movie is viewable, we fetch it too
@@ -135,6 +141,6 @@ export const getMovieRecommendations = cache(
       return null;
     }
 
-    return movie.recommendations;
+    return filterViewablePageResults(movie.recommendations);
   },
 );

@@ -3,8 +3,8 @@
 import InfiniteGridList, {
   getInfiniteSwrKey,
 } from '@/common/infinite-grid-list';
-import { Maybe, PaginationResponse } from '@/common/common-types';
-import { MovieListItem } from './movie-types';
+import type { Maybe, PaginationResponse } from '@/common/common-types';
+import type { MovieListItem } from './movie-types';
 import useSWRInfinite from 'swr/infinite';
 import { getAllPageResults, getHasNextPage } from '@/common/common-utils';
 import MovieCard from './movie-card';

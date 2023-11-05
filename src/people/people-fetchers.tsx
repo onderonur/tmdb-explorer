@@ -1,7 +1,7 @@
-import { Id, PaginationResponse } from '@/common/common-types';
+import type { Id, PaginationResponse } from '@/common/common-types';
 import { tmdbClient } from '@/tmdb/tmdb-client';
 import { cache } from 'react';
-import { PersonListItem, PersonDetails } from './people-types';
+import type { PersonListItem, PersonDetails } from './people-types';
 import {
   filterViewableMovies,
   filterViewablePageResults,

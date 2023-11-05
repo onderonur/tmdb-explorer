@@ -1,4 +1,5 @@
-import { Link, LinkProps } from '@mui/material';
+import type { LinkProps } from '@mui/material';
+import { Link } from '@mui/material';
 import { forwardRef } from 'react';
 
 type ExternalLinkProps = LinkProps;

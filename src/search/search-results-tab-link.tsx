@@ -1,9 +1,8 @@
-'use client';
-
-import { Omit } from '@/common/common-types';
-import { SearchResultType } from '@/medias/media-enums';
+import type { Omit } from '@/common/common-types';
+import type { SearchResultType } from '@/medias/media-enums';
 import NextLink from '@/routing/next-link';
-import { Tab, TabProps } from '@mui/material';
+import type { TabProps } from '@mui/material';
+import { Tab } from '@mui/material';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 type SearchResultsTabLinkProps = Omit<
@@ -28,7 +27,7 @@ export default function SearchResultsTabLink({
   return (
     <Tab
       component={NextLink}
-      href={`${pathname}?${newSearchParams}`}
+      href={`${pathname}?${newSearchParams.toString()}`}
       {...rest}
     />
   );

@@ -1,6 +1,7 @@
 import TmdbAvatar from '@/tmdb/tmdb-avatar';
 import NextLink from '@/routing/next-link';
 import { CardHeader, Typography } from '@mui/material';
+import { lineClamp } from '@/theme/theme-utils';
 
 export type MediaCardHeaderProps = {
   title: string;
@@ -24,11 +25,28 @@ export default function MediaCardHeader({
         </NextLink>
       }
       title={
-        <Typography variant="h6" component="h1">
+        <Typography
+          component="h1"
+          sx={{
+            fontSize: { xs: '1rem', md: '1.25rem' },
+            fontWeight: 'bold',
+            ...lineClamp(2),
+          }}
+        >
           {title}
         </Typography>
       }
-      subheader={<NextLink href={href}>{subheader}</NextLink>}
+      subheader={
+        <NextLink
+          href={href}
+          sx={{
+            fontSize: { xs: '0.875rem', md: '1rem' },
+            fontWeight: 'medium',
+          }}
+        >
+          {subheader}
+        </NextLink>
+      }
       disableTypography
     />
   );

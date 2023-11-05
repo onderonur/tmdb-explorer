@@ -1,8 +1,8 @@
 'use client';
 
 import { createSafeContext } from '@/common/safe-context';
-import { TmdbConfiguration, TmdbImageQuality } from './tmdb-types';
-import { Maybe } from '@/common/common-types';
+import type { TmdbConfiguration, TmdbImageQuality } from './tmdb-types';
+import type { Maybe } from '@/common/common-types';
 import { getTmdbImageUrl } from './tmdb-configuration-utils';
 
 type TmdbConfigurationContextValue = TmdbConfiguration & {

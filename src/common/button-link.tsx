@@ -1,7 +1,8 @@
 'use client';
 
 import NextLink from '@/routing/next-link';
-import { Button, ButtonProps } from '@mui/material';
+import type { ButtonProps } from '@mui/material';
+import { Button } from '@mui/material';
 
 type ButtonLinkProps = ButtonProps<
   typeof NextLink,

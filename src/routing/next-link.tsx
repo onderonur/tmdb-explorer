@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { Link as MuiLink, LinkProps as MuiLinkProps } from '@mui/material';
+import type { LinkProps as MuiLinkProps } from '@mui/material';
+import { Link as MuiLink } from '@mui/material';
 import { forwardRef } from 'react';
-import { Omit } from '@/common/common-types';
+import type { Omit } from '@/common/common-types';
 
 type NextLinkProps = Omit<
   MuiLinkProps<typeof Link, { component?: typeof Link }>,

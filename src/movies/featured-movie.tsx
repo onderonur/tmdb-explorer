@@ -1,11 +1,12 @@
-import { Box, Stack, Typography } from '@mui/material';
-import { MovieBase } from './movie-types';
+import { Box, Stack } from '@mui/material';
+import type { MovieBase } from './movie-types';
 import { getMovieReleaseYear } from './movie-utils';
 import InfoIcon from '@mui/icons-material/InfoOutlined';
-import { lineClamp } from '@/theme/theme-utils';
 import TmdbImage from '@/tmdb/tmdb-image';
 import ButtonLink from '@/common/button-link';
 import Padder from '@/common/padder';
+import MovieOverview from './movie-overview';
+import MovieTitle from './movie-title';
 
 type FeaturedMovieProps = {
   movie: MovieBase;
@@ -44,30 +45,17 @@ export default function FeaturedMovie({ movie }: FeaturedMovieProps) {
       <Box
         sx={{
           marginTop: 'auto',
+          marginBottom: 2,
         }}
       >
-        <Padder paddingY>
+        <Padder>
           <Stack spacing={2} sx={{ position: 'relative', maxWidth: '75ch' }}>
+            <MovieTitle
+              title={movie.title}
+              subtitle={getMovieReleaseYear(movie)?.toString()}
+            />
             <div>
-              <Typography
-                variant="h3"
-                component="p"
-                sx={{ fontWeight: 'bold' }}
-              >
-                {movie.title}
-              </Typography>
-              <Typography
-                variant="h6"
-                component="p"
-                sx={{ color: 'text.secondary', fontWeight: 'bold' }}
-              >
-                {getMovieReleaseYear(movie)}
-              </Typography>
-            </div>
-            <div>
-              <Typography variant="h6" component="p" sx={{ ...lineClamp(4) }}>
-                {movie.overview}
-              </Typography>
+              <MovieOverview text={movie.overview} maxLines={4} />
             </div>
             <div>
               <ButtonLink

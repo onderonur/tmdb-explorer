@@ -1,6 +1,6 @@
-import { SearchResultType } from '@/medias/media-enums';
-import { MovieListItem } from '@/movies/movie-types';
-import { PersonListItem } from '@/people/people-types';
+import type { SearchResultType } from '@/medias/media-enums';
+import type { MovieListItem } from '@/movies/movie-types';
+import type { PersonListItem } from '@/people/people-types';
 
 export type MovieSearchResult = MovieListItem & {
   media_type: SearchResultType.MOVIE;

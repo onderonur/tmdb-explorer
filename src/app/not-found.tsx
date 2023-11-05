@@ -1,12 +1,11 @@
 import ErrorMessage from '@/error-handling/ErrorMessage';
-import { Toolbar } from '@mui/material';
+import PageRoot from '@/layout/page-root';
 
 // TODO: Bu page'de css yüklenmiyor falan bi garip
 export default function NotFoundPage() {
   return (
-    <>
-      <Toolbar />
+    <PageRoot hasHeaderGutter>
       <ErrorMessage statusCode={404} message="Not Found" />
-    </>
+    </PageRoot>
   );
 }
