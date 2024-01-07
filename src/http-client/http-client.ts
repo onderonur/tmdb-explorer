@@ -1,4 +1,4 @@
-import { CustomError } from '@/error-handling/CustomError';
+import { CustomError } from '@/error-handling/custom-error';
 
 type ApiErrorData = {
   status_message: string;

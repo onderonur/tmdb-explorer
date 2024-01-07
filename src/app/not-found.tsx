@@ -1,4 +1,4 @@
-import ErrorMessage from '@/error-handling/ErrorMessage';
+import ErrorMessage from '@/error-handling/error-message';
 import PageRoot from '@/layout/page-root';
 
 // TODO: Bu page'de css yüklenmiyor falan bi garip

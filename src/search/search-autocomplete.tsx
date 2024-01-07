@@ -78,8 +78,11 @@ export default function SearchAutocomplete({
   return (
     <BaseAutocomplete<MultiSearchResult, false, true, true>
       sx={sx}
-      placeholder="Search Movies & People"
       options={options}
+      inputProps={{
+        placeholder: 'Search Movies & People',
+        autoFocus,
+      }}
       renderOption={(props, option) => {
         return option.media_type === SearchResultType.MOVIE ? (
           <MovieAutocompleteItem
@@ -110,7 +113,6 @@ export default function SearchAutocomplete({
         setSearchValue(newInputValue);
       }}
       freeSolo
-      autoFocus={autoFocus}
       // To make repeatedly hitting Enter work, we set the value as empty string.
       // Otherwise, after user selects an option or hits enter, `onChange` does not get triggered
       // by hitting Enter again without changing the input text value.

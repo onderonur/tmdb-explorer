@@ -1,11 +1,7 @@
 import TextWithLabel from '@/common/text-with-label';
 import type { PersonListItem } from '@/people/people-types';
+import { Gender } from '@/people/people-utils';
 import { Box } from '@mui/material';
-
-enum Genders {
-  FEMALE = 1,
-  MALE = 2,
-}
 
 type PersonalInfoProps = {
   person: PersonListItem;
@@ -14,9 +10,9 @@ type PersonalInfoProps = {
 export default function PersonalInfo({ person }: PersonalInfoProps) {
   function getGender() {
     switch (person.gender) {
-      case Genders.FEMALE:
+      case Gender.FEMALE:
         return 'Female';
-      case Genders.MALE:
+      case Gender.MALE:
         return 'Male';
       default:
         return '';

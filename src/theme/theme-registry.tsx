@@ -28,6 +28,8 @@ export default function ThemeRegistry({
     cache.insert = (...args) => {
       const [, serialized] = args;
 
+      // TODO: Fix?
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (cache.inserted[serialized.name] === undefined) {
         inserted.push(serialized.name);
       }

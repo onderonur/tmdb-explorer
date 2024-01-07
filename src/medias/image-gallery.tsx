@@ -81,6 +81,8 @@ export default function ImageGallery({
                   display: 'flex',
                 }}
               >
+                {/* TODO: Fix */}
+                {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
                 {previousImage && (
                   <ImageGalleryNavigationLink
                     href={getImagePagePath(previousImage.file_path)}
@@ -88,6 +90,8 @@ export default function ImageGallery({
                   />
                 )}
                 <Box sx={{ flex: 1 }} />
+                {/* TODO: Fix */}
+                {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
                 {nextImage && (
                   <ImageGalleryNavigationLink
                     href={getImagePagePath(nextImage.file_path)}

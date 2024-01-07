@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import LoadingIndicator from '@/common/loading-indicator';
 import SearchIcon from '@mui/icons-material/Search';
-import type { AutocompleteProps } from '@mui/material';
+import type { AutocompleteProps, TextFieldProps } from '@mui/material';
 import { Autocomplete, IconButton, TextField } from '@mui/material';
 
 type BaseAutocompleteProps<
@@ -11,7 +11,6 @@ type BaseAutocompleteProps<
   FreeSolo extends boolean | undefined,
 > = Pick<
   AutocompleteProps<T, Multiple, DisableClearable, FreeSolo>,
-  | 'placeholder'
   | 'loading'
   | 'inputValue'
   | 'value'
@@ -22,8 +21,8 @@ type BaseAutocompleteProps<
   | 'onInputChange'
   | 'onChange'
   | 'freeSolo'
-  | 'autoFocus'
 > & {
+  inputProps: Pick<TextFieldProps, 'placeholder' | 'autoFocus'>;
   onSearchClick: (inputValue: string) => void;
 };
 
@@ -33,7 +32,7 @@ export default function BaseAutocomplete<
   DisableClearable extends boolean | undefined,
   FreeSolo extends boolean | undefined,
 >({
-  autoFocus,
+  inputProps,
   onSearchClick,
   ...rest
 }: BaseAutocompleteProps<T, Multiple, DisableClearable, FreeSolo>) {
@@ -56,9 +55,8 @@ export default function BaseAutocomplete<
         <TextField
           {...params}
           variant="standard"
-          autoFocus={autoFocus}
-          placeholder={rest.placeholder}
           InputProps={{
+            ...inputProps,
             ...params.InputProps,
             endAdornment: (
               <IconButton

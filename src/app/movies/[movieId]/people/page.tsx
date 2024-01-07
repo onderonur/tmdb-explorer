@@ -36,6 +36,7 @@ export default async function MoviePeoplePage({
 
   for (const crew of credits.crew) {
     // TODO: Buradaki eslint warning'i hatalı gibi. Bi kontrol et.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     crewById[crew.id] = [...(crewById[crew.id] ?? []), crew];
   }
 

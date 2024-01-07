@@ -16,12 +16,12 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
+    "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.18",
-    "@mui/material": "^5.14.18",
+    "@mui/icons-material": "^5.15.3",
+    "@mui/material": "^5.15.3",
     "lodash": "^4.17.21",
-    "next": "^14.0.3",
+    "next": "^14.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-infinite-scroll-hook": "^4.1.1",
@@ -29,17 +29,19 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.202",
-    "@types/node": "^20.10.0",
-    "@types/react": "^18.2.38",
-    "@typescript-eslint/eslint-plugin": "^6.12.0",
-    "eslint": "^8.54.0",
-    "eslint-config-next": "^14.0.3",
-    "eslint-config-prettier": "^9.0.0",
+    "@types/node": "^20.10.6",
+    "@types/react": "^18.2.47",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.0.4",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-deprecation": "^2.0.0",
+    "eslint-plugin-only-warn": "^1.1.0",
+    "eslint-plugin-unicorn": "^50.0.1",
     "husky": "^8.0.3",
-    "lint-staged": "^15.1.0",
-    "prettier": "^3.1.0",
-    "prettier-plugin-packagejson": "^2.4.6",
-    "typescript": "^5.3.2"
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1",
+    "prettier-plugin-packagejson": "^2.4.9",
+    "typescript": "^5.3.3"
   }
 }

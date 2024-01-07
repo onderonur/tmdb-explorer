@@ -9,6 +9,8 @@ export function getAllPageResults<T extends { id: number | string }>(
   }
 
   return _.uniqBy(
+    // TODO: Check this
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     allPages.flatMap((page) => page.results) ?? [],
     (item) => item.id,
   );
