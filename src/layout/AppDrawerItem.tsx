@@ -5,6 +5,8 @@ import {
   ListItem,
 } from '@mui/material';
 import NextLink, { NextLinkProps } from '@/routing/NextLink';
+import Router from 'next/router';
+import { resolveHref } from 'next/dist/shared/lib/router/utils/resolve-href';
 
 type AppDrawerItemProps = Pick<NextLinkProps, 'href'> & {
   icon?: React.ReactNode;
@@ -15,7 +17,7 @@ type AppDrawerItemProps = Pick<NextLinkProps, 'href'> & {
 function AppDrawerItem({ href, icon, title, selected }: AppDrawerItemProps) {
   return (
     <ListItem disablePadding>
-      <ListItemButton href={href} component={NextLink} selected={selected}>
+      <ListItemButton href={resolveHref(Router, href, false)} component={NextLink} selected={selected}>
         {icon && <ListItemIcon>{icon}</ListItemIcon>}
         <ListItemText primary={title} />
       </ListItemButton>
