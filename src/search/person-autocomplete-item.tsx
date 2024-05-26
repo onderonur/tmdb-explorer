@@ -1,9 +1,9 @@
-import AutocompleteItem from './autocomplete-item';
+import { AutocompleteItem } from './autocomplete-item';
 import type { PersonSearchResult } from './search-types';
 
 type PersonAutocompleteItemProps = { person: PersonSearchResult };
 
-export default function PersonAutocompleteItem({
+export function PersonAutocompleteItem({
   person,
   ...rest
 }: PersonAutocompleteItemProps) {

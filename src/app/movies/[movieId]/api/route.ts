@@ -3,7 +3,6 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 // TODO: Route handler file'larının nereye konulması öneriliyor bi bak.
-
 // TODO: Route handler'lar için error handling.
 
 export async function GET(request: NextRequest) {

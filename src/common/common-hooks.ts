@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef, useSyncExternalStore } from 'react';
-import _ from 'lodash';
 import { useMediaQuery, useTheme } from '@mui/material';
+import _ from 'lodash';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 export function useDebounce<Value>(value: Value, wait = 250) {
   const [debouncedValue, setDebouncedValue] = useState<Value>(value);

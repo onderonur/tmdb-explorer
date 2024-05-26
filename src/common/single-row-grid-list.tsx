@@ -11,7 +11,7 @@ type SingleRowGridListProps = React.PropsWithChildren<{
   };
 }>;
 
-export default function SingleRowGridList({
+export function SingleRowGridList({
   itemCount,
   children,
 }: SingleRowGridListProps) {

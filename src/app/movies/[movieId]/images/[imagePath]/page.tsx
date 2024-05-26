@@ -1,11 +1,9 @@
-import { getMovieDetails } from '@/movies/movie-fetchers';
-import { notFound } from 'next/navigation';
+import { ImageGallery } from '@/medias/image-gallery';
+import { getMovie, getMovieImages } from '@/movies/movie-fetchers';
 import { getMetadata } from '@/seo/seo-utils';
-import { getTmdbImageUrl } from '@/tmdb/tmdb-configuration-utils';
 import { getTmdbConfiguration } from '@/tmdb/tmdb-configuration-fetchers';
-import ImageGallery from '@/medias/image-gallery';
-
-// TODO: Request sadeleştirilebilir belki filter'a da dikkat ederek.
+import { getTmdbImageUrl } from '@/tmdb/tmdb-configuration-utils';
+import { notFound } from 'next/navigation';
 
 async function getPageData({
   movieId,
@@ -14,8 +12,9 @@ async function getPageData({
   movieId: string;
   imagePath: string;
 }) {
-  const [movie, tmdbConfiguration] = await Promise.all([
-    getMovieDetails(Number(movieId)),
+  const [movie, images, tmdbConfiguration] = await Promise.all([
+    getMovie(Number(movieId)),
+    getMovieImages(Number(movieId)),
     getTmdbConfiguration(),
   ]);
 
@@ -23,9 +22,7 @@ async function getPageData({
     notFound();
   }
 
-  const images = movie.images?.backdrops ?? [];
-
-  const imageToView = images.find(
+  const imageToView = images.backdrops.find(
     (backdrop) => backdrop.file_path === `/${imagePath}`,
   );
 
@@ -33,7 +30,7 @@ async function getPageData({
     notFound();
   }
 
-  return { movie, tmdbConfiguration, images, imageToView };
+  return { movie, tmdbConfiguration, images: images.backdrops, imageToView };
 }
 
 type MovieImagePageProps = {
@@ -55,7 +52,6 @@ export async function generateMetadata({
     title: `Images of "${movie.title}"`,
     description: `Explore images of "${movie.title}"`,
     pathname: `/movies/${movieId}/images/${imagePath}`,
-    // TODO: Fix
     images: [
       {
         url: getTmdbImageUrl({

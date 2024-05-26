@@ -1,18 +1,15 @@
-import { Card, CardMedia } from '@mui/material';
+import { CardLinkArea } from '@/common/card-link-area';
 import type { Id } from '@/common/common-types';
-import TmdbImage from '@/tmdb/tmdb-image';
-import CardLinkArea from '@/common/card-link-area';
 import type { TImage } from '@/medias/media-types';
+import { TmdbImage } from '@/tmdb/tmdb-image';
+import { Card, CardMedia, Skeleton } from '@mui/material';
 
 type MovieImageCardProps = {
   movieId: Id;
   image: TImage & { alt: string };
 };
 
-export default function MovieImageCard({
-  movieId,
-  image,
-}: MovieImageCardProps) {
+export function MovieImageCard({ movieId, image }: MovieImageCardProps) {
   return (
     <Card>
       <CardLinkArea href={`/movies/${movieId}/images${image.file_path}`}>
@@ -25,6 +22,16 @@ export default function MovieImageCard({
           />
         </CardMedia>
       </CardLinkArea>
+    </Card>
+  );
+}
+
+export function MovieImageCardSkeleton() {
+  return (
+    <Card>
+      <CardMedia sx={{ aspectRatio: '16 / 9' }}>
+        <Skeleton variant="rounded" height="100%" />
+      </CardMedia>
     </Card>
   );
 }

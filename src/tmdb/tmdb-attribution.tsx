@@ -1,8 +1,8 @@
-import ExternalLink from '@/routing/external-link';
-import { SvgIcon, Box, Typography } from '@mui/material';
+import { ExternalLink } from '@/routing/external-link';
+import { Box, SvgIcon, Typography } from '@mui/material';
 import { useId } from 'react';
 
-export default function TmdbAttribution() {
+export function TmdbAttribution() {
   const linearGradientId = useId();
 
   return (

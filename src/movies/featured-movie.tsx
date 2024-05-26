@@ -1,18 +1,18 @@
+import { ButtonLink } from '@/common/button-link';
+import { Padder } from '@/common/padder';
+import { TmdbImage } from '@/tmdb/tmdb-image';
+import InfoIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Stack } from '@mui/material';
+import { MovieOverview } from './movie-overview';
+import { MovieTitle } from './movie-title';
 import type { MovieBase } from './movie-types';
 import { getMovieReleaseYear } from './movie-utils';
-import InfoIcon from '@mui/icons-material/InfoOutlined';
-import TmdbImage from '@/tmdb/tmdb-image';
-import ButtonLink from '@/common/button-link';
-import Padder from '@/common/padder';
-import MovieOverview from './movie-overview';
-import MovieTitle from './movie-title';
 
 type FeaturedMovieProps = {
   movie: MovieBase;
 };
 
-export default function FeaturedMovie({ movie }: FeaturedMovieProps) {
+export function FeaturedMovie({ movie }: FeaturedMovieProps) {
   return (
     <Box
       sx={{

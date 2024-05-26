@@ -1,6 +1,6 @@
+import { CardLinkArea } from '@/common/card-link-area';
+import { TmdbImage } from '@/tmdb/tmdb-image';
 import { Card, CardMedia } from '@mui/material';
-import TmdbImage from '@/tmdb/tmdb-image';
-import CardLinkArea from '@/common/card-link-area';
 
 type ImageCardProps = {
   href: string;
@@ -9,7 +9,7 @@ type ImageCardProps = {
   aspectRatio: string;
 };
 
-export default function ImageCard({
+export function ImageCard({
   href,
   imageSrc,
   alt,

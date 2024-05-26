@@ -1,6 +1,6 @@
 import type { Omit } from '@/common/common-types';
 import type { SearchResultType } from '@/medias/media-enums';
-import NextLink from '@/routing/next-link';
+import { NextLink } from '@/routing/next-link';
 import type { TabProps } from '@mui/material';
 import { Tab } from '@mui/material';
 import { usePathname, useSearchParams } from 'next/navigation';
@@ -12,7 +12,7 @@ type SearchResultsTabLinkProps = Omit<
   searchResultType: SearchResultType;
 };
 
-export default function SearchResultsTabLink({
+export function SearchResultsTabLink({
   searchResultType,
   // This is required for `Tabs` component to style `Tab` components
   // when props like `variant` is used on `Tabs`.

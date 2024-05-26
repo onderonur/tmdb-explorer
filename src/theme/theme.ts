@@ -7,7 +7,7 @@ const roboto = Roboto({
   display: 'swap',
 });
 
-const theme = responsiveFontSizes(
+export const theme = responsiveFontSizes(
   createTheme({
     typography: {
       fontFamily: roboto.style.fontFamily,
@@ -21,5 +21,3 @@ const theme = responsiveFontSizes(
     },
   }),
 );
-
-export default theme;

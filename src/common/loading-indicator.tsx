@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 
 type LoadingIndicatorProps = React.PropsWithChildren<{ loading: boolean }>;
 
-const LoadingIndicator = forwardRef<
+export const LoadingIndicator = forwardRef<
   React.ElementRef<'div'>,
   LoadingIndicatorProps
 >(function LoadingIndicator({ loading, children }, ref) {
@@ -25,5 +25,3 @@ const LoadingIndicator = forwardRef<
     </Box>
   );
 });
-
-export default LoadingIndicator;

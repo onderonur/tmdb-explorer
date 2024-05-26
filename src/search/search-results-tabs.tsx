@@ -3,7 +3,7 @@
 import type { Maybe } from '@/common/common-types';
 import { SearchResultType } from '@/medias/media-enums';
 import { Tabs, Typography } from '@mui/material';
-import SearchResultsTabLink from './search-results-tab-link';
+import { SearchResultsTabLink } from './search-results-tab-link';
 
 type SearchResultsTabsProps = {
   value: Maybe<SearchResultType>;
@@ -11,7 +11,7 @@ type SearchResultsTabsProps = {
   isPeopleTabVisible: boolean;
 };
 
-export default function SearchResultsTabs({
+export function SearchResultsTabs({
   value,
   isMoviesTabVisible,
   isPeopleTabVisible,

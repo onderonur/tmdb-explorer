@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import BaseAutocomplete from '@/common/base-autocomplete';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { BaseAutocomplete } from '@/common/base-autocomplete';
+import { useDebounce, useHasChanged } from '@/common/common-hooks';
 import type { Maybe, PaginationResponse } from '@/common/common-types';
-import MovieAutocompleteItem from './movie-autocomplete-item';
-import PersonAutocompleteItem from './person-autocomplete-item';
 import { SearchResultType } from '@/medias/media-enums';
 import type { SxProps, Theme } from '@mui/material';
-import { useDebounce, useHasChanged } from '@/common/common-hooks';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import useSWR from 'swr';
+import { MovieAutocompleteItem } from './movie-autocomplete-item';
+import { PersonAutocompleteItem } from './person-autocomplete-item';
 import type { MultiSearchResult } from './search-types';
 
 type SearchAutocompleteProps = {
@@ -15,10 +15,7 @@ type SearchAutocompleteProps = {
   sx?: SxProps<Theme>;
 };
 
-export default function SearchAutocomplete({
-  autoFocus,
-  sx,
-}: SearchAutocompleteProps) {
+export function SearchAutocomplete({ autoFocus, sx }: SearchAutocompleteProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('searchQuery');
@@ -56,14 +53,17 @@ export default function SearchAutocomplete({
   const handleSelect = (selectedOption: Maybe<MultiSearchResult>) => {
     if (selectedOption) {
       switch (selectedOption.media_type) {
-        case SearchResultType.MOVIE:
+        case SearchResultType.MOVIE: {
           router.push(`/movies/${selectedOption.id}`);
           break;
-        case SearchResultType.PERSON:
+        }
+        case SearchResultType.PERSON: {
           router.push(`/people/${selectedOption.id}`);
           break;
-        default:
+        }
+        default: {
           return;
+        }
       }
     }
   };

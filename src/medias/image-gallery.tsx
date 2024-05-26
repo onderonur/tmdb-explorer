@@ -1,4 +1,7 @@
-import TmdbImage from '@/tmdb/tmdb-image';
+import { ListItemLink } from '@/common/list-item-link';
+import { Padder } from '@/common/padder';
+import { PageRoot } from '@/layout/page-root';
+import { TmdbImage } from '@/tmdb/tmdb-image';
 import {
   Box,
   Card,
@@ -7,13 +10,10 @@ import {
   ListItem,
   ListSubheader,
 } from '@mui/material';
-import ListItemLink from '@/common/list-item-link';
-import Padder from '@/common/padder';
+import { ImageGalleryNavigationLink } from './image-gallery-navigation-link';
 import type { MediaCardHeaderProps } from './media-card-header';
-import MediaCardHeader from './media-card-header';
+import { MediaCardHeader } from './media-card-header';
 import type { TImage } from './media-types';
-import ImageGalleryNavigationLink from './image-gallery-navigation-link';
-import PageRoot from '@/layout/page-root';
 
 type ImageGalleryProps = {
   // TODO: Change name
@@ -26,7 +26,7 @@ type ImageGalleryProps = {
   };
 };
 
-export default function ImageGallery({
+export function ImageGallery({
   mediaCardHeaderProps,
   imageToView,
   images,

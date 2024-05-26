@@ -1,6 +1,6 @@
 'use client';
 
-import NextLink from '@/routing/next-link';
+import { NextLink } from '@/routing/next-link';
 import type { CardActionAreaProps } from '@mui/material';
 import { CardActionArea } from '@mui/material';
 
@@ -9,6 +9,6 @@ type CardLinkAreaProps = CardActionAreaProps<
   { component?: typeof NextLink }
 >;
 
-export default function CardLinkArea(props: CardLinkAreaProps) {
+export function CardLinkArea(props: CardLinkAreaProps) {
   return <CardActionArea {...props} component={NextLink} />;
 }

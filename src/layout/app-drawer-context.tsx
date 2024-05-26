@@ -2,7 +2,7 @@
 
 import { createSafeContext } from '@/common/safe-context';
 import { usePathname } from 'next/navigation';
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 type AppDrawerContextValue = {
   isOpen: boolean;
@@ -18,9 +18,7 @@ export { useAppDrawerContext };
 
 type AppDrawerProviderProps = React.PropsWithChildren;
 
-export default function AppDrawerProvider({
-  children,
-}: AppDrawerProviderProps) {
+export function AppDrawerProvider({ children }: AppDrawerProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const open = useCallback(() => {

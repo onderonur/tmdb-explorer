@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import LoadingIndicator from '@/common/loading-indicator';
+import { LoadingIndicator } from '@/common/loading-indicator';
 import SearchIcon from '@mui/icons-material/Search';
 import type { AutocompleteProps, TextFieldProps } from '@mui/material';
 import { Autocomplete, IconButton, TextField } from '@mui/material';
+import { useState } from 'react';
 
 type BaseAutocompleteProps<
   T,
@@ -26,7 +26,7 @@ type BaseAutocompleteProps<
   onSearchClick: (inputValue: string) => void;
 };
 
-export default function BaseAutocomplete<
+export function BaseAutocomplete<
   T,
   Multiple extends boolean | undefined,
   DisableClearable extends boolean | undefined,

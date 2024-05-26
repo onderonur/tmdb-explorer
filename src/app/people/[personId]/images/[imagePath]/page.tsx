@@ -1,9 +1,9 @@
-import { notFound } from 'next/navigation';
-import { getMetadata } from '@/seo/seo-utils';
-import { getTmdbImageUrl } from '@/tmdb/tmdb-configuration-utils';
-import { getTmdbConfiguration } from '@/tmdb/tmdb-configuration-fetchers';
+import { ImageGallery } from '@/medias/image-gallery';
 import { getPersonDetails } from '@/people/people-fetchers';
-import ImageGallery from '@/medias/image-gallery';
+import { getMetadata } from '@/seo/seo-utils';
+import { getTmdbConfiguration } from '@/tmdb/tmdb-configuration-fetchers';
+import { getTmdbImageUrl } from '@/tmdb/tmdb-configuration-utils';
+import { notFound } from 'next/navigation';
 
 async function getPageData({
   personId,

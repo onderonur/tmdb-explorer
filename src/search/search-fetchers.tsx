@@ -39,7 +39,6 @@ export const searchMulti = cache(async ({ query, page }: SearchInput) => {
   searchParams.set('page', page.toString());
 
   const results = await tmdbClient.get<
-    // TODO: Biri ListItem. Biri normal. Name fix.
     PaginationResponse<MovieListItem | PersonListItem>
   >(`/search/multi`, searchParams);
 

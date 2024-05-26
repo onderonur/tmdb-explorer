@@ -1,12 +1,12 @@
 import useInfiniteScroll from 'react-infinite-scroll-hook';
-import LoadingIndicator from './loading-indicator';
+import { LoadingIndicator } from './loading-indicator';
 
 export type InfiniteScrollSentryProps = Pick<
   Parameters<typeof useInfiniteScroll>[0],
   'hasNextPage' | 'loading' | 'onLoadMore'
 >;
 
-export default function InfiniteScrollSentry({
+export function InfiniteScrollSentry({
   hasNextPage,
   loading,
   onLoadMore,

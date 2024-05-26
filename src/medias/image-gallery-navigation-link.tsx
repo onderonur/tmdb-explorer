@@ -1,14 +1,14 @@
-import NextLink from '@/routing/next-link';
-import { Box } from '@mui/material';
+import { NextLink } from '@/routing/next-link';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
+import { Box } from '@mui/material';
 
 type ImageGalleryNavigationLinkProps = {
   href: string;
   direction: 'previous' | 'next';
 };
 
-export default function ImageGalleryNavigationLink({
+export function ImageGalleryNavigationLink({
   href,
   direction,
 }: ImageGalleryNavigationLinkProps) {

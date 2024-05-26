@@ -2,12 +2,12 @@
 
 import type { Options } from '@emotion/cache';
 import createCache from '@emotion/cache';
-import { useServerInsertedHTML } from 'next/navigation';
 import { CacheProvider } from '@emotion/react';
-import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import { useServerInsertedHTML } from 'next/navigation';
 import { useState } from 'react';
-import theme from './theme';
+import { theme } from './theme';
 
 type ThemeRegistryProps = React.PropsWithChildren<{
   options: Options;
@@ -15,10 +15,7 @@ type ThemeRegistryProps = React.PropsWithChildren<{
 
 // This implementation is from emotion-js
 // https://github.com/emotion-js/emotion/issues/2928#issuecomment-1319747902
-export default function ThemeRegistry({
-  options,
-  children,
-}: ThemeRegistryProps) {
+export function ThemeRegistry({ options, children }: ThemeRegistryProps) {
   const [{ cache, flush }] = useState(() => {
     const cache = createCache(options);
     cache.compat = true;
@@ -28,11 +25,11 @@ export default function ThemeRegistry({
     cache.insert = (...args) => {
       const [, serialized] = args;
 
-      // TODO: Fix?
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (cache.inserted[serialized.name] === undefined) {
         inserted.push(serialized.name);
       }
+
       return prevInsert(...args);
     };
     const flush = () => {
@@ -50,6 +47,7 @@ export default function ThemeRegistry({
     }
     let styles = '';
     for (const name of names) {
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       styles += cache.inserted[name];
     }
     return (

@@ -1,11 +1,11 @@
-import TmdbConfigurationProvider from '@/tmdb/tmdb-configuration-context';
+import { ThemeRegistry } from '@/theme/theme-registry';
+import { TmdbConfigurationProvider } from '@/tmdb/tmdb-configuration-context';
 import { getTmdbConfiguration } from '@/tmdb/tmdb-configuration-fetchers';
-import BaseSWRConfig from '../common/base-swr-config';
-import ThemeRegistry from '@/theme/theme-registry';
+import { BaseSWRConfig } from '../common/base-swr-config';
 
 type AppProvidersProps = React.PropsWithChildren;
 
-export default async function AppProviders({ children }: AppProvidersProps) {
+export async function AppProviders({ children }: AppProvidersProps) {
   const tmdbConfiguration = await getTmdbConfiguration();
 
   return (

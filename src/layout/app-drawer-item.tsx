@@ -1,5 +1,5 @@
-import { ListItemIcon, ListItemText, ListItem } from '@mui/material';
-import ListItemLink from '@/common/list-item-link';
+import { ListItemLink } from '@/common/list-item-link';
+import { ListItem, ListItemIcon, ListItemText } from '@mui/material';
 
 type AppDrawerItemProps = {
   icon?: React.ReactNode;
@@ -8,7 +8,7 @@ type AppDrawerItemProps = {
   href: string;
 };
 
-export default function AppDrawerItem({
+export function AppDrawerItem({
   href,
   icon,
   title,

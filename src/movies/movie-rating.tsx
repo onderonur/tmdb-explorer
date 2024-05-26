@@ -1,16 +1,16 @@
+import type { MovieBase } from '@/movies/movie-types';
+import { mergeSx } from '@/theme/theme-utils';
+import StarIcon from '@mui/icons-material/Star';
 import type { SxProps, Theme } from '@mui/material';
 import { Box, Typography } from '@mui/material';
 import { yellow } from '@mui/material/colors';
-import type { MovieBase } from '@/movies/movie-types';
-import StarIcon from '@mui/icons-material/Star';
-import { mergeSx } from '@/theme/theme-utils';
 
 type MovieRatingProps = {
   movie: MovieBase;
   sx?: SxProps<Theme>;
 };
 
-export default function MovieRating({ movie, sx }: MovieRatingProps) {
+export function MovieRating({ movie, sx }: MovieRatingProps) {
   return (
     <Box
       sx={mergeSx(

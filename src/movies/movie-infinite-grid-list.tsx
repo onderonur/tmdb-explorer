@@ -1,13 +1,14 @@
 'use client';
 
-import InfiniteGridList, {
+import type { Maybe, PaginationResponse } from '@/common/common-types';
+import { getAllPageResults, getHasNextPage } from '@/common/common-utils';
+import {
+  InfiniteGridList,
   getInfiniteSwrKey,
 } from '@/common/infinite-grid-list';
-import type { Maybe, PaginationResponse } from '@/common/common-types';
-import type { MovieListItem } from './movie-types';
 import useSWRInfinite from 'swr/infinite';
-import { getAllPageResults, getHasNextPage } from '@/common/common-utils';
-import MovieCard from './movie-card';
+import { MovieCard } from './movie-card';
+import type { MovieListItem } from './movie-types';
 
 type MovieInfiniteGridListProps = {
   firstPage: Maybe<PaginationResponse<MovieListItem>>;
@@ -15,8 +16,7 @@ type MovieInfiniteGridListProps = {
   skipFirstMovie?: boolean;
 };
 
-// TODO: InfiniteGridList -> InfiniteList olarak değiştirilebilir.
-export default function MovieInfiniteGridList({
+export function MovieInfiniteGridList({
   firstPage,
   pageKeyTemplate,
   skipFirstMovie,

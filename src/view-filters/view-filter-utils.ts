@@ -1,6 +1,6 @@
 import type { PaginationResponse } from '@/common/common-types';
-import type { ViewableMovie, ViewablePerson } from './view-filter-types';
 import { isOfType } from '@/common/common-utils';
+import type { ViewableMovie, ViewablePerson } from './view-filter-types';
 
 export const VIEW_FILTER_LIMIT = {
   minVoteCount: 200,
@@ -16,7 +16,7 @@ export function shouldViewMovie(movie: ViewableMovie) {
 }
 
 export function filterViewableMovies<T extends ViewableMovie>(movies: T[]) {
-  return movies.filter(shouldViewMovie);
+  return movies.filter((movie) => shouldViewMovie(movie));
 }
 
 export function shouldViewPerson(person: ViewablePerson) {
@@ -24,7 +24,7 @@ export function shouldViewPerson(person: ViewablePerson) {
 }
 
 export function filterViewablePeople<T extends ViewablePerson>(people: T[]) {
-  return people.filter(shouldViewPerson);
+  return people.filter((person) => shouldViewPerson(person));
 }
 
 export function filterViewablePageResults<

@@ -1,12 +1,12 @@
 import type { Id, PaginationResponse } from '@/common/common-types';
 import { tmdbClient } from '@/tmdb/tmdb-client';
-import { cache } from 'react';
-import type { PersonListItem, PersonDetails } from './people-types';
 import {
   filterViewableMovies,
   filterViewablePageResults,
   shouldViewPerson,
 } from '@/view-filters/view-filter-utils';
+import { cache } from 'react';
+import type { PersonDetails, PersonListItem } from './people-types';
 
 export const getPopularPeople = cache(async (page: number) => {
   const searchParams = new URLSearchParams();
@@ -22,6 +22,7 @@ export const getPopularPeople = cache(async (page: number) => {
 
 export const getPersonDetails = cache(async (personId: Id) => {
   const searchParams = new URLSearchParams();
+  // TODO: append to response kullanımını kaldır.
   searchParams.set('append_to_response', 'images,credits');
 
   const person = await tmdbClient.get<PersonDetails>(

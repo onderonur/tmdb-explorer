@@ -1,9 +1,9 @@
 'use client';
 
-import { Box } from '@mui/material';
-import TmdbImage from '@/tmdb/tmdb-image';
-import { useWindowScrollY } from './common-hooks';
 import { APP_DRAWER_WIDTH } from '@/layout/app-drawer-utils';
+import { TmdbImage } from '@/tmdb/tmdb-image';
+import { Box } from '@mui/material';
+import { useWindowScrollY } from './common-hooks';
 
 type FixedBackgroundImageProps = {
   src: string;
@@ -13,7 +13,7 @@ type FixedBackgroundImageProps = {
   hasDimmer?: boolean;
 };
 
-export default function FixedBackgroundImage({
+export function FixedBackgroundImage({
   src,
   alt,
   aspectRatio,

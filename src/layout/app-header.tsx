@@ -2,24 +2,24 @@
 
 // TODO: Refactor this
 
-import { useState } from 'react';
+import { useIsMobile } from '@/common/common-hooks';
+import { ExternalLink } from '@/routing/external-link';
+import { SearchAutocomplete } from '@/search/search-autocomplete';
+import CloseIcon from '@mui/icons-material/Close';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   AppBar,
-  Toolbar,
   Box,
   IconButton,
   Stack,
+  Toolbar,
   useScrollTrigger,
 } from '@mui/material';
-import AppTitle from './app-title';
-import ExternalLink from '@/routing/external-link';
-import { useIsMobile } from '@/common/common-hooks';
-import SearchAutocomplete from '@/search/search-autocomplete';
-import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
-import GitHubIcon from '@mui/icons-material/GitHub';
+import { useState } from 'react';
+import { AppTitle } from './app-title';
 
-export default function AppHeader() {
+export function AppHeader() {
   const isMobile = useIsMobile();
   const [isMobileSearch, setIsMobileSearch] = useState(false);
 

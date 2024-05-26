@@ -1,12 +1,12 @@
+import type { Maybe } from '@/common/common-types';
+import { TmdbAvatar } from '@/tmdb/tmdb-avatar';
 import type { ListItemProps } from '@mui/material';
 import {
-  ListItemAvatar,
-  ListItemText,
-  ListItemButton,
   ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
 } from '@mui/material';
-import type { Maybe } from '@/common/common-types';
-import TmdbAvatar from '@/tmdb/tmdb-avatar';
 
 type AutocompleteItemProps<C extends React.ElementType = 'li'> = ListItemProps<
   C,
@@ -18,7 +18,7 @@ type AutocompleteItemProps<C extends React.ElementType = 'li'> = ListItemProps<
   }
 >;
 
-export default function AutocompleteItem<C extends React.ElementType>({
+export function AutocompleteItem<C extends React.ElementType>({
   avatarUrl,
   primaryText,
   secondaryText,

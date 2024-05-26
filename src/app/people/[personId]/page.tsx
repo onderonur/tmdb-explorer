@@ -1,20 +1,20 @@
+import { FixedBackgroundImage } from '@/common/fixed-background-image';
+import { Padder } from '@/common/padder';
+import { SectionTitle } from '@/common/section-title';
+import { SeeAllLink } from '@/common/see-all-link';
+import { SingleRowGridList } from '@/common/single-row-grid-list';
+import { PageRoot } from '@/layout/page-root';
+import { ImageCard } from '@/medias/image-card';
+import { PersonCastingGridList } from '@/people-profile/person-casting-grid-list';
+import { PersonCrewGridList } from '@/people-profile/person-crew-grid-list';
+import { PersonSummary } from '@/people-profile/person-summary';
 import { getPersonDetails } from '@/people/people-fetchers';
-import { notFound } from 'next/navigation';
-import { Container, Divider, Stack } from '@mui/material';
-import PersonSummary from '@/people-profile/person-summary';
-import SingleRowGridList from '@/common/single-row-grid-list';
-import ImageCard from '@/medias/image-card';
-import SeeAllLink from '@/common/see-all-link';
-import PersonCrewGridList from '@/people-profile/person-crew-grid-list';
-import PersonCastingGridList from '@/people-profile/person-casting-grid-list';
-import FixedBackgroundImage from '@/common/fixed-background-image';
-import type { Metadata } from 'next';
 import { getMetadata } from '@/seo/seo-utils';
-import SectionTitle from '@/common/section-title';
-import Padder from '@/common/padder';
-import PageRoot from '@/layout/page-root';
-import { getTmdbImageUrl } from '@/tmdb/tmdb-configuration-utils';
 import { getTmdbConfiguration } from '@/tmdb/tmdb-configuration-fetchers';
+import { getTmdbImageUrl } from '@/tmdb/tmdb-configuration-utils';
+import { Container, Divider, Stack } from '@mui/material';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 async function getPageData(personId: string) {
   const [tmdbConfiguration, person] = await Promise.all([

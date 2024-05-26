@@ -1,23 +1,23 @@
-import MovieCard from '@/movies/movie-card';
-import FeaturedMovie from '@/movies/featured-movie';
+import { ChipLink } from '@/common/chip-link';
+import { FIRST_PAGE } from '@/common/common-constants';
+import { Padder } from '@/common/padder';
+import { SectionTitle } from '@/common/section-title';
+import { SeeAllLink } from '@/common/see-all-link';
+import { SingleRowGridList } from '@/common/single-row-grid-list';
+import { FeaturedMovie } from '@/movies/featured-movie';
+import { MovieCard } from '@/movies/movie-card';
 import {
   getDiscoverMovies,
   getMovieGenres,
   getPopularMovies,
   getTopRatedMovies,
 } from '@/movies/movie-fetchers';
-import { Box, Divider, Stack } from '@mui/material';
-import Padder from '@/common/padder';
-import { FIRST_PAGE } from '@/common/common-constants';
-import SectionTitle from '@/common/section-title';
-import SingleRowGridList from '@/common/single-row-grid-list';
-import SeeAllLink from '@/common/see-all-link';
-import { getPopularPeople } from '@/people/people-fetchers';
-import PersonCard from '@/people/person-card';
-import ChipLink from '@/common/chip-link';
-import type { PersonListItem } from '@/people/people-types';
 import type { Genre, MovieListItem } from '@/movies/movie-types';
+import { getPopularPeople } from '@/people/people-fetchers';
+import type { PersonListItem } from '@/people/people-types';
+import { PersonCard } from '@/people/person-card';
 import { getMetadata } from '@/seo/seo-utils';
+import { Box, Divider, Stack } from '@mui/material';
 
 enum RootPageSectionType {
   MOVIES,

@@ -5,7 +5,7 @@ type TextWithLabelProps = {
   text: React.ReactNode;
 };
 
-export default function TextWithLabel({ label, text }: TextWithLabelProps) {
+export function TextWithLabel({ label, text }: TextWithLabelProps) {
   return (
     <div>
       <Typography

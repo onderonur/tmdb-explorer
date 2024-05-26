@@ -1,14 +1,14 @@
-import BaseGridList from '@/common/base-grid-list';
+import { BaseGridList } from '@/common/base-grid-list';
 import type { Id } from '@/common/common-types';
-import MoviePersonCard from '@/movies-profile/movie-person-card';
-import { getMovieDetails } from '@/movies/movie-fetchers';
+import { Padder } from '@/common/padder';
+import { SectionTitle } from '@/common/section-title';
+import { PageRoot } from '@/layout/page-root';
+import { MediaCardHeader } from '@/medias/media-card-header';
+import { MoviePersonCard } from '@/movies-profile/movie-person-card';
+import { getMovie, getMovieCredits } from '@/movies/movie-fetchers';
 import type { MovieCrew } from '@/movies/movie-types';
 import { Card, CardContent, Stack } from '@mui/material';
 import { notFound } from 'next/navigation';
-import MediaCardHeader from '@/medias/media-card-header';
-import SectionTitle from '@/common/section-title';
-import PageRoot from '@/layout/page-root';
-import Padder from '@/common/padder';
 
 type MoviePeoplePageProps = {
   params: {
@@ -19,24 +19,18 @@ type MoviePeoplePageProps = {
 export default async function MoviePeoplePage({
   params: { movieId },
 }: MoviePeoplePageProps) {
-  const movie = await getMovieDetails(Number(movieId));
+  const [movie, credits] = await Promise.all([
+    getMovie(Number(movieId)),
+    getMovieCredits(Number(movieId)),
+  ]);
 
   if (!movie) {
-    // TODO: Bu notFound app route'larda da kullanılabiliyor galiba bi bak.
-    notFound();
-  }
-
-  const { credits } = movie;
-
-  if (!credits) {
     notFound();
   }
 
   const crewById: Record<Id, MovieCrew[]> = {};
 
   for (const crew of credits.crew) {
-    // TODO: Buradaki eslint warning'i hatalı gibi. Bi kontrol et.
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     crewById[crew.id] = [...(crewById[crew.id] ?? []), crew];
   }
 

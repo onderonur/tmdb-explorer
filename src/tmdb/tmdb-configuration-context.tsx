@@ -1,9 +1,9 @@
 'use client';
 
-import { createSafeContext } from '@/common/safe-context';
-import type { TmdbConfiguration, TmdbImageQuality } from './tmdb-types';
 import type { Maybe } from '@/common/common-types';
+import { createSafeContext } from '@/common/safe-context';
 import { getTmdbImageUrl } from './tmdb-configuration-utils';
+import type { TmdbConfiguration, TmdbImageQuality } from './tmdb-types';
 
 type TmdbConfigurationContextValue = TmdbConfiguration & {
   getImageUrl: (imagePath: Maybe<string>, quality?: TmdbImageQuality) => string;
@@ -20,7 +20,7 @@ type TmdbConfigurationProviderProps = React.PropsWithChildren<{
   tmdbConfiguration: TmdbConfiguration;
 }>;
 
-export default function TmdbConfigurationProvider({
+export function TmdbConfigurationProvider({
   tmdbConfiguration,
   children,
 }: TmdbConfigurationProviderProps) {

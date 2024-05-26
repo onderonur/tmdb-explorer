@@ -1,13 +1,13 @@
+import { AppDrawer } from '@/layout/app-drawer';
+import { AppDrawerProvider } from '@/layout/app-drawer-context';
 import { Box, Container } from '@mui/material';
-import AppHeader from './app-header';
-import AppDrawerProvider from '@/layout/app-drawer-context';
-import AppDrawer from '@/layout/app-drawer';
-import AppDrawerGenres from './app-drawer-genres';
+import { AppDrawerGenres } from './app-drawer-genres';
 import { APP_DRAWER_WIDTH } from './app-drawer-utils';
+import { AppHeader } from './app-header';
 
 type AppLayoutProps = React.PropsWithChildren;
 
-export default function AppLayout({ children }: AppLayoutProps) {
+export function AppLayout({ children }: AppLayoutProps) {
   return (
     <AppDrawerProvider>
       <AppHeader />

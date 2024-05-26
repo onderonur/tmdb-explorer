@@ -1,14 +1,14 @@
 import type { Maybe } from '@/common/common-types';
-import PageTitle from '@/common/page-title';
-import Padder from '@/common/padder';
+import { Padder } from '@/common/padder';
+import { PageTitle } from '@/common/page-title';
+import { PageRoot } from '@/layout/page-root';
 import { SearchResultType } from '@/medias/media-enums';
-import MovieInfiniteGridList from '@/movies/movie-infinite-grid-list';
-import PeopleInfiniteGridList from '@/people/people-infinite-list';
+import { MovieInfiniteGridList } from '@/movies/movie-infinite-grid-list';
+import { PeopleInfiniteGridList } from '@/people/people-infinite-list';
 import { searchMovies, searchPeople } from '@/search/search-fetchers';
-import SearchResultsTabs from '@/search/search-results-tabs';
+import { SearchResultsTabs } from '@/search/search-results-tabs';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
-import PageRoot from '@/layout/page-root';
 
 type SearchPageProps = {
   searchParams: {
@@ -51,7 +51,6 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   return (
     <PageRoot hasHeaderGutter>
       <Padder>
-        {/* TODO: Mobile'da paddingTop lazım buna */}
         <PageTitle title={`Search Results for: ${query}`} />
         <SearchResultsTabs
           value={type}

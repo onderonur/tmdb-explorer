@@ -1,7 +1,7 @@
-import TmdbAvatar from '@/tmdb/tmdb-avatar';
-import NextLink from '@/routing/next-link';
-import { CardHeader, Typography } from '@mui/material';
+import { NextLink } from '@/routing/next-link';
 import { lineClamp } from '@/theme/theme-utils';
+import { TmdbAvatar } from '@/tmdb/tmdb-avatar';
+import { CardHeader, Typography } from '@mui/material';
 
 export type MediaCardHeaderProps = {
   title: string;
@@ -11,7 +11,7 @@ export type MediaCardHeaderProps = {
 };
 
 // TODO: Rename
-export default function MediaCardHeader({
+export function MediaCardHeader({
   title,
   subheader,
   href,

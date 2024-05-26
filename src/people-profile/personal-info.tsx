@@ -1,4 +1,4 @@
-import TextWithLabel from '@/common/text-with-label';
+import { TextWithLabel } from '@/common/text-with-label';
 import type { PersonListItem } from '@/people/people-types';
 import { Gender } from '@/people/people-utils';
 import { Box } from '@mui/material';
@@ -7,15 +7,18 @@ type PersonalInfoProps = {
   person: PersonListItem;
 };
 
-export default function PersonalInfo({ person }: PersonalInfoProps) {
+export function PersonalInfo({ person }: PersonalInfoProps) {
   function getGender() {
     switch (person.gender) {
-      case Gender.FEMALE:
+      case Gender.FEMALE: {
         return 'Female';
-      case Gender.MALE:
+      }
+      case Gender.MALE: {
         return 'Male';
-      default:
+      }
+      default: {
         return '';
+      }
     }
   }
 

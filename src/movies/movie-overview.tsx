@@ -6,7 +6,7 @@ type MovieOverviewProps = {
   maxLines?: number;
 };
 
-export default function MovieOverview({ text, maxLines }: MovieOverviewProps) {
+export function MovieOverview({ text, maxLines }: MovieOverviewProps) {
   return (
     <Typography
       component="p"

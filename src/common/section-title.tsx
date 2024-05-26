@@ -7,7 +7,7 @@ type SectionTitle = {
   sx?: SxProps<Theme>;
 };
 
-export default function SectionTitle({ title, sx }: SectionTitle) {
+export function SectionTitle({ title, sx }: SectionTitle) {
   return (
     <Typography
       variant="h6"

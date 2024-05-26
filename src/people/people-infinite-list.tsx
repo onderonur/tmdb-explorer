@@ -1,20 +1,21 @@
 'use client';
 
-import InfiniteGridList, {
+import type { PaginationResponse } from '@/common/common-types';
+import { getAllPageResults, getHasNextPage } from '@/common/common-utils';
+import {
+  InfiniteGridList,
   getInfiniteSwrKey,
 } from '@/common/infinite-grid-list';
-import type { PaginationResponse } from '@/common/common-types';
 import useSWRInfinite from 'swr/infinite';
-import { getAllPageResults, getHasNextPage } from '@/common/common-utils';
 import type { PersonListItem } from './people-types';
-import PersonCard from './person-card';
+import { PersonCard } from './person-card';
 
 type PeopleInfiniteListProps = {
   firstPage: PaginationResponse<PersonListItem>;
   pageKeyTemplate: string;
 };
 
-export default function PeopleInfiniteGridList({
+export function PeopleInfiniteGridList({
   firstPage,
   pageKeyTemplate,
 }: PeopleInfiniteListProps) {

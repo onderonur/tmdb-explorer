@@ -1,7 +1,7 @@
-import type { SearchResultType } from '@/medias/media-enums';
 import type { DateString, Id, Maybe } from '@/common/common-types';
-import type { MovieListItem } from '@/movies/movie-types';
+import type { SearchResultType } from '@/medias/media-enums';
 import type { TImage } from '@/medias/media-types';
+import type { MovieListItem } from '@/movies/movie-types';
 import type { Gender } from './people-utils';
 
 export type PersonBase = {

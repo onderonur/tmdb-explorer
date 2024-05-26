@@ -1,9 +1,15 @@
-// TODO: Metadata'ları düzelt
+// TODO: Metadata'ları düzelt genel projede
 
-import YouTubePlayer from '@/medias/youtube-player';
-import MediaCardHeader from '@/medias/media-card-header';
-import { getMovieDetails } from '@/movies/movie-fetchers';
-import { responsiveBorderRadius, lineClamp } from '@/theme/theme-utils';
+import { BaseAvatar } from '@/common/base-avatar';
+import { ListItemLink } from '@/common/list-item-link';
+import { Padder } from '@/common/padder';
+import { PageRoot } from '@/layout/page-root';
+import { MediaCardHeader } from '@/medias/media-card-header';
+import { getYouTubeThumbnailUrl } from '@/medias/media-utils';
+import { YouTubePlayer } from '@/medias/youtube-player';
+import { getMovie, getMovieVideos } from '@/movies/movie-fetchers';
+import { getMetadata } from '@/seo/seo-utils';
+import { lineClamp, responsiveBorderRadius } from '@/theme/theme-utils';
 import {
   Box,
   Card,
@@ -15,12 +21,6 @@ import {
   ListSubheader,
 } from '@mui/material';
 import { notFound } from 'next/navigation';
-import BaseAvatar from '@/common/base-avatar';
-import ListItemLink from '@/common/list-item-link';
-import Padder from '@/common/padder';
-import { getYouTubeThumbnailUrl } from '@/medias/media-utils';
-import { getMetadata } from '@/seo/seo-utils';
-import PageRoot from '@/layout/page-root';
 
 async function getPageData({
   movieId,
@@ -29,21 +29,22 @@ async function getPageData({
   movieId: string;
   videoId: string;
 }) {
-  const movie = await getMovieDetails(Number(movieId));
+  const [movie, videos] = await Promise.all([
+    getMovie(Number(movieId)),
+    getMovieVideos(Number(movieId)),
+  ]);
 
   if (!movie) {
     notFound();
   }
 
-  const videos = movie.videos?.results ?? [];
-
-  const videoToWatch = videos.find((video) => video.id === videoId);
+  const videoToWatch = videos.results.find((video) => video.id === videoId);
 
   if (!videoToWatch) {
     notFound();
   }
 
-  return { movie, videos: movie.videos?.results ?? [], videoToWatch };
+  return { movie, videos: videos.results, videoToWatch };
 }
 
 type MovieVideoPageProps = {

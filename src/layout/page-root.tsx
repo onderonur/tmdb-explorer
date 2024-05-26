@@ -5,7 +5,7 @@ type PageRootProps = React.PropsWithChildren<{
   hasHeaderGutter?: boolean;
 }>;
 
-export default function PageRoot({ hasHeaderGutter, children }: PageRootProps) {
+export function PageRoot({ hasHeaderGutter, children }: PageRootProps) {
   return (
     <div>
       {hasHeaderGutter && <Toolbar />}

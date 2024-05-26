@@ -2,5 +2,10 @@
 module.exports = {
   singleQuote: true,
   trailingComma: 'all',
-  plugins: ['prettier-plugin-packagejson'],
+  endOfLine: 'lf',
+  // To skip destructive code actions of `prettier-plugin-organize-imports`,
+  // removing unused imports:
+  // https://www.npmjs.com/package/prettier-plugin-organize-imports#skip-destructive-code-actions
+  organizeImportsSkipDestructiveCodeActions: true,
+  plugins: ['prettier-plugin-organize-imports', 'prettier-plugin-packagejson'],
 };

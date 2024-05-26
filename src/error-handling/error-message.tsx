@@ -1,15 +1,12 @@
+import { ButtonLink } from '@/common/button-link';
 import { Box, Typography } from '@mui/material';
-import ButtonLink from '@/common/button-link';
 
 type ErrorMessageProps = {
   statusCode?: number;
   message?: string;
 };
 
-export default function ErrorMessage({
-  statusCode,
-  message,
-}: ErrorMessageProps) {
+export function ErrorMessage({ statusCode, message }: ErrorMessageProps) {
   return (
     <Box
       sx={{

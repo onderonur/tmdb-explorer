@@ -1,13 +1,13 @@
-import PageTitle from '@/common/page-title';
-import MovieSortingSelect from '@/movies/movie-sorting-select';
-import FeaturedMovie from '@/movies/featured-movie';
-import { getDiscoverMovies, getMovieGenre } from '@/movies/movie-fetchers';
-import MovieInfiniteGridList from '@/movies/movie-infinite-grid-list';
-import { Divider, Stack } from '@mui/material';
-import Padder from '@/common/padder';
 import { FIRST_PAGE } from '@/common/common-constants';
-import type { Metadata } from 'next';
+import { Padder } from '@/common/padder';
+import { PageTitle } from '@/common/page-title';
+import { FeaturedMovie } from '@/movies/featured-movie';
+import { getDiscoverMovies, getMovieGenre } from '@/movies/movie-fetchers';
+import { MovieInfiniteGridList } from '@/movies/movie-infinite-grid-list';
+import { MovieSortingSelect } from '@/movies/movie-sorting-select';
 import { getMetadata } from '@/seo/seo-utils';
+import { Divider, Stack } from '@mui/material';
+import type { Metadata } from 'next';
 
 // TODO: Hem Next'in hem SWR'nin cache mantığını bi anla.
 

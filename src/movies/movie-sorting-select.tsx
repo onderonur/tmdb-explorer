@@ -1,7 +1,7 @@
 'use client';
 
-import { Box, MenuItem, TextField } from '@mui/material';
 import type { Maybe } from '@/common/common-types';
+import { Box, MenuItem, TextField } from '@mui/material';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const MOVIE_SORTING = {
@@ -42,7 +42,7 @@ function getSelectedSorting(sortBy: Maybe<string | string[]>) {
   return selectedSorting;
 }
 
-export default function MovieSortingSelect() {
+export function MovieSortingSelect() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const selectedSorting = getSelectedSorting(searchParams.get('sortBy'));

@@ -1,13 +1,13 @@
+import { CardLinkArea } from '@/common/card-link-area';
 import type { PersonListItem } from '@/people/people-types';
+import { TmdbImage } from '@/tmdb/tmdb-image';
 import { Box, Card, CardHeader } from '@mui/material';
-import TmdbImage from '@/tmdb/tmdb-image';
-import CardLinkArea from '@/common/card-link-area';
 
 type PersonCardProps = {
   person: PersonListItem;
 };
 
-export default function PersonCard({ person }: PersonCardProps) {
+export function PersonCard({ person }: PersonCardProps) {
   return (
     <Card elevation={0} sx={{ bgcolor: 'transparent' }}>
       <CardLinkArea href={`/people/${person.id}`}>

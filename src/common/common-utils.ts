@@ -1,4 +1,4 @@
-import type { PaginationResponse, Maybe } from '@/common/common-types';
+import type { Maybe, PaginationResponse } from '@/common/common-types';
 import _ from 'lodash';
 
 export function getAllPageResults<T extends { id: number | string }>(
@@ -9,9 +9,7 @@ export function getAllPageResults<T extends { id: number | string }>(
   }
 
   return _.uniqBy(
-    // TODO: Check this
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    allPages.flatMap((page) => page.results) ?? [],
+    allPages.flatMap((page) => page.results),
     (item) => item.id,
   );
 }
@@ -33,3 +31,13 @@ export function isOfType<T>(obj: unknown, keys: Array<keyof T>): obj is T {
 
   return keys.every((key) => Object.prototype.hasOwnProperty.call(obj, key));
 }
+
+export const createMockArray = (length: number) => {
+  const mockArray = [];
+
+  for (let i = 0; i < length; i++) {
+    mockArray.push(i);
+  }
+
+  return mockArray;
+};

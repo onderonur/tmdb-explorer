@@ -1,14 +1,14 @@
-import { Typography, Stack, Box, Card, CardMedia } from '@mui/material';
+import { SectionTitle } from '@/common/section-title';
 import type { PersonListItem } from '@/people/people-types';
-import PersonalInfo from './personal-info';
-import TmdbImage from '@/tmdb/tmdb-image';
-import SectionTitle from '@/common/section-title';
+import { TmdbImage } from '@/tmdb/tmdb-image';
+import { Box, Card, CardMedia, Stack, Typography } from '@mui/material';
+import { PersonalInfo } from './personal-info';
 
 type PersonSummaryProps = {
   person: PersonListItem;
 };
 
-export default function PersonSummary({ person }: PersonSummaryProps) {
+export function PersonSummary({ person }: PersonSummaryProps) {
   return (
     <Box
       sx={{

@@ -21,8 +21,7 @@ export function getMetadata({
   return {
     title: metaTitle,
     description: metaDescription,
-    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
-    themeColor: '#141f29',
+    metadataBase: new URL(process.env.BASE_URL as string),
     creator: 'Onur Önder',
     applicationName: APP_TITLE,
     alternates: {

@@ -1,29 +1,29 @@
 // TODO: Genel olarak use client'lara bi bak fazla mı vs
 'use client';
 
+import PersonIcon from '@mui/icons-material/RecentActors';
+import StarIcon from '@mui/icons-material/StarRate';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import type { DrawerProps } from '@mui/material';
 import {
+  Box,
   Divider,
   Drawer,
   List,
   ListSubheader,
   Toolbar,
-  Box,
 } from '@mui/material';
-import AppDrawerItem from './app-drawer-item';
-import { useAppDrawerContext } from './app-drawer-context';
-import PersonIcon from '@mui/icons-material/RecentActors';
-import StarIcon from '@mui/icons-material/StarRate';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import AppTitle from './app-title';
-import TmdbAttribution from '../tmdb/tmdb-attribution';
 import { usePathname, useSearchParams } from 'next/navigation';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import { TmdbAttribution } from '../tmdb/tmdb-attribution';
+import { useAppDrawerContext } from './app-drawer-context';
+import { AppDrawerItem } from './app-drawer-item';
 import { APP_DRAWER_WIDTH } from './app-drawer-utils';
+import { AppTitle } from './app-title';
 
 type AppDrawerProps = React.PropsWithChildren;
 
-export default function AppDrawer({ children }: AppDrawerProps) {
+export function AppDrawer({ children }: AppDrawerProps) {
   const { isOpen, close } = useAppDrawerContext();
   const pathname = usePathname();
   const searchParams = useSearchParams();

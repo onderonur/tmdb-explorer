@@ -1,33 +1,21 @@
-import {
-  Typography,
-  Stack,
-  List,
-  ListItem,
-  Box,
-  ListItemText,
-  ListItemAvatar,
-} from '@mui/material';
-import MovieRating from '@/movies/movie-rating';
-import { getMovieReleaseYear } from '@/movies/movie-utils';
+import { SectionTitle } from '@/common/section-title';
+import { MovieOverview } from '@/movies/movie-overview';
+import { MovieRating } from '@/movies/movie-rating';
+import { MovieTitle } from '@/movies/movie-title';
 import type { MovieDetails } from '@/movies/movie-types';
-import SectionTitle from '@/common/section-title';
+import { getMovieReleaseYear } from '@/movies/movie-utils';
+import { NextLink } from '@/routing/next-link';
+import { Box, Stack, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import ListItemLink from '@/common/list-item-link';
-import TmdbAvatar from '@/tmdb/tmdb-avatar';
-import NextLink from '@/routing/next-link';
-import { Fragment } from 'react';
-import MovieOverview from '@/movies/movie-overview';
-import MovieTitle from '@/movies/movie-title';
+import { Fragment, Suspense } from 'react';
+import { MovieTopCrew, MovieTopCrewSkeleton } from './movie-top-crew';
 
 type MovieSummaryProps = {
   movie: MovieDetails;
 };
 
-export default function MovieSummary({ movie }: MovieSummaryProps) {
+export function MovieSummary({ movie }: MovieSummaryProps) {
   const releaseYear = getMovieReleaseYear(movie);
-  const filteredCrew = movie.credits?.crew.filter(
-    (crew) => crew.job === 'Director',
-  );
 
   return (
     <Box sx={{ paddingTop: { xs: 24, md: 32 } }}>
@@ -76,52 +64,10 @@ export default function MovieSummary({ movie }: MovieSummaryProps) {
           <MovieOverview text={movie.overview} />
         </Box>
 
-        {!!filteredCrew?.length && (
-          <section>
-            <SectionTitle title="Top Crew" sx={visuallyHidden} />
-            <List
-              disablePadding
-              sx={{
-                display: 'flex',
-                gap: 1,
-                flexWrap: 'wrap',
-              }}
-            >
-              {filteredCrew.map((crewPerson) => {
-                const allJobs = movie.credits?.crew
-                  .filter((crew) => crew.id === crewPerson.id)
-                  .map((crewInfoOfPerson) => crewInfoOfPerson.job);
-
-                return (
-                  <ListItem
-                    key={crewPerson.id}
-                    disablePadding
-                    dense
-                    sx={{
-                      width: 'auto',
-                      border: 1,
-                      borderRadius: 2,
-                      borderColor: 'divider',
-                    }}
-                  >
-                    <ListItemLink href={`/people/${crewPerson.id}`}>
-                      <ListItemAvatar>
-                        <TmdbAvatar
-                          src={crewPerson.profile_path}
-                          alt={crewPerson.name}
-                        />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={crewPerson.name}
-                        secondary={allJobs?.join(', ')}
-                      />
-                    </ListItemLink>
-                  </ListItem>
-                );
-              })}
-            </List>
-          </section>
-        )}
+        {/* TODO: Bu buradan çıkartılıp direkt top level page'de de kullanılabilir ya. */}
+        <Suspense fallback={<MovieTopCrewSkeleton />}>
+          <MovieTopCrew movieId={movie.id} />
+        </Suspense>
       </Stack>
     </Box>
   );

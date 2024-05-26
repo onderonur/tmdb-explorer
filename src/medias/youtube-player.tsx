@@ -4,7 +4,7 @@ type YouTubePlayerProps = {
   youTubeId: string;
 };
 
-export default function YouTubePlayer({ youTubeId }: YouTubePlayerProps) {
+export function YouTubePlayer({ youTubeId }: YouTubePlayerProps) {
   return (
     <Box
       component="iframe"

@@ -1,10 +1,17 @@
 import { FIRST_PAGE } from '@/common/common-constants';
-import PageTitle from '@/common/page-title';
-import Padder from '@/common/padder';
-import FeaturedMovie from '@/movies/featured-movie';
+import { Padder } from '@/common/padder';
+import { PageTitle } from '@/common/page-title';
+import { FeaturedMovie } from '@/movies/featured-movie';
 import { getPopularMovies } from '@/movies/movie-fetchers';
-import MovieInfiniteGridList from '@/movies/movie-infinite-grid-list';
+import { MovieInfiniteGridList } from '@/movies/movie-infinite-grid-list';
+import { getMetadata } from '@/seo/seo-utils';
 import { Divider, Stack } from '@mui/material';
+
+export const metadata = getMetadata({
+  title: 'Popular Movies',
+  description: 'TODO',
+  pathname: '/movies/popular',
+});
 
 export default async function PopularMoviesPage() {
   const firstPage = await getPopularMovies(FIRST_PAGE);

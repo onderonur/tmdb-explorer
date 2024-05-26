@@ -1,7 +1,7 @@
 'use client';
 
-import ErrorMessage from '@/error-handling/error-message';
-import PageRoot from '@/layout/page-root';
+import { ErrorMessage } from '@/error-handling/error-message';
+import { PageRoot } from '@/layout/page-root';
 
 type ErrorPageProps = {
   error: Error;

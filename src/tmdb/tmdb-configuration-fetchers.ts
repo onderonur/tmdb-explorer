@@ -1,5 +1,5 @@
-import type { TmdbConfiguration } from '@/tmdb/tmdb-types';
 import { tmdbClient } from '@/tmdb/tmdb-client';
+import type { TmdbConfiguration } from '@/tmdb/tmdb-types';
 import { cache } from 'react';
 
 export const getTmdbConfiguration = cache(async () => {

@@ -1,12 +1,12 @@
 import { getMovieReleaseYear } from '@/movies/movie-utils';
-import AutocompleteItem from './autocomplete-item';
+import { AutocompleteItem } from './autocomplete-item';
 import type { MovieSearchResult } from './search-types';
 
 type MovieAutocompleteItemProps = {
   movie: MovieSearchResult;
 };
 
-export default function MovieAutocompleteItem({
+export function MovieAutocompleteItem({
   movie,
   ...rest
 }: MovieAutocompleteItemProps) {

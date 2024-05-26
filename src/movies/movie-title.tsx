@@ -1,6 +1,5 @@
 import type { Maybe } from '@/common/common-types';
 import { Typography } from '@mui/material';
-import React from 'react';
 
 type MovieTitleProps = {
   component?: keyof React.JSX.IntrinsicElements;
@@ -8,7 +7,7 @@ type MovieTitleProps = {
   subtitle?: Maybe<string>;
 };
 
-export default function MovieTitle({
+export function MovieTitle({
   component = 'p',
   title,
   subtitle,

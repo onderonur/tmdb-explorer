@@ -1,6 +1,6 @@
 import type { Id, PaginationResponse } from '@/common/common-types';
+import type { TImage } from '@/medias/media-types';
 import { tmdbClient } from '@/tmdb/tmdb-client';
-import type { Genre, MovieDetails, MovieListItem } from './movie-types';
 import {
   VIEW_FILTER_LIMIT,
   filterViewablePageResults,
@@ -8,54 +8,49 @@ import {
   shouldViewMovie,
 } from '@/view-filters/view-filter-utils';
 import { cache } from 'react';
+import type {
+  Genre,
+  MovieCast,
+  MovieCrew,
+  MovieDetails,
+  MovieListItem,
+  MovieVideo,
+} from './movie-types';
 
-// TODO: React cache function kullanımı lazım mı bak
-
-// TODO: Bu movie detail cast vs fetch'ler ayrıştırılabilir de.
-
-async function getMovie<T extends MovieDetails>(
-  movieId: Id,
-  params?: {
-    page?: number;
-    appendToResponse: string[];
-  },
-) {
-  const searchParams = new URLSearchParams();
-
-  const appendToResponse = params?.appendToResponse.join(',');
-
-  if (appendToResponse) {
-    searchParams.set('append_to_response', appendToResponse);
-  }
-
-  if (params?.page) {
-    searchParams.set('page', params.page.toString());
-  }
-
-  const movie = await tmdbClient.get<T>(`/movie/${movieId}`, searchParams);
+export const getMovie = cache(async (movieId: Id) => {
+  const movie = await tmdbClient.get<MovieDetails>(`/movie/${movieId}`);
 
   if (!shouldViewMovie(movie)) {
     return null;
   }
 
   return movie;
-}
+});
 
-export const getMovieDetails = cache(async (movieId: Id) => {
-  const movie = await getMovie<MovieDetails>(movieId, {
-    appendToResponse: ['images', 'videos', 'credits'],
+// TODO: Remove this
+const wait = () =>
+  new Promise<void>((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, 3000);
   });
 
-  if (!movie) {
-    return null;
-  }
+export const getMovieVideos = cache(async (movieId: Id) => {
+  const videos = await tmdbClient.get<PaginationResponse<MovieVideo>>(
+    `/movie/${movieId}/videos`,
+  );
+  await wait();
+  return videos;
+});
 
-  if (movie.credits) {
-    movie.credits.cast = filterViewablePeople(movie.credits.cast);
-    movie.credits.crew = filterViewablePeople(movie.credits.crew);
-  }
-
-  return movie;
+export const getMovieImages = cache(async (movieId: Id) => {
+  const images = await tmdbClient.get<{
+    backdrops: TImage[];
+    logos: TImage[];
+    posters: TImage[];
+  }>(`/movie/${movieId}/images`);
+  await wait();
+  return images;
 });
 
 // TODO: cache function'ı object parametrelerle nasıl çalışıyor vs.
@@ -131,16 +126,26 @@ export const getMovieGenre = cache(async (genreId: Id) => {
 
 export const getMovieRecommendations = cache(
   async (movieId: Id, { page }: { page: number }) => {
-    // To be sure movie is viewable, we fetch it too
-    const movie = await getMovie<MovieDetails>(movieId, {
-      page,
-      appendToResponse: ['recommendations'],
-    });
+    await wait();
+    const searchParams = new URLSearchParams();
+    searchParams.append('page', page.toString());
 
-    if (!movie) {
-      return null;
-    }
+    const recommendations = await tmdbClient.get<
+      PaginationResponse<MovieListItem>
+    >(`/movie/${movieId}/recommendations`, searchParams);
 
-    return filterViewablePageResults(movie.recommendations);
+    return filterViewablePageResults(recommendations);
   },
 );
+
+export const getMovieCredits = cache(async (movieId: Id) => {
+  const credits = await tmdbClient.get<{
+    cast: MovieCast[];
+    crew: MovieCrew[];
+  }>(`/movie/${movieId}/credits`);
+
+  credits.cast = filterViewablePeople(credits.cast);
+  credits.crew = filterViewablePeople(credits.crew);
+  await wait();
+  return credits;
+});
