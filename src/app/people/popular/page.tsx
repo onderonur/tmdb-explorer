@@ -1,9 +1,9 @@
-import { FIRST_PAGE } from '@/common/common-constants';
-import { Padder } from '@/common/padder';
-import { PageTitle } from '@/common/page-title';
-import { PageRoot } from '@/layout/page-root';
-import { getPopularPeople } from '@/people/people-fetchers';
-import { PeopleInfiniteGridList } from '@/people/people-infinite-list';
+import { AppHeaderOffset } from '@/core/layouts/app-header';
+import { FIRST_PAGE } from '@/core/shared/shared.utils';
+import { Padder } from '@/core/ui/components/padder';
+import { PageTitle } from '@/core/ui/components/page-title';
+import { PeopleInfiniteGridList } from '@/features/people/components/people-infinite-list';
+import { getPopularPeople } from '@/features/people/people.data';
 
 export default async function PopularPeoplePage() {
   const firstPage = await getPopularPeople(FIRST_PAGE);
@@ -12,14 +12,16 @@ export default async function PopularPeoplePage() {
   infiniteListSearchParams.set('page', '%pageIndex%');
 
   return (
-    <PageRoot hasHeaderGutter>
-      <Padder>
-        <PageTitle title="Popular People" />
-        <PeopleInfiniteGridList
-          pageKeyTemplate={`/people/popular/api?${infiniteListSearchParams.toString()}`}
-          firstPage={firstPage}
-        />
-      </Padder>
-    </PageRoot>
+    <AppHeaderOffset>
+      <main>
+        <Padder>
+          <PageTitle title="Popular People" />
+          <PeopleInfiniteGridList
+            pageKeyTemplate={`/api/people/popular?${infiniteListSearchParams.toString()}`}
+            firstPage={firstPage}
+          />
+        </Padder>
+      </main>
+    </AppHeaderOffset>
   );
 }

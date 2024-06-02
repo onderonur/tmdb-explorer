@@ -1,12 +1,13 @@
-import type { Maybe } from '@/common/common-types';
-import { Padder } from '@/common/padder';
-import { PageTitle } from '@/common/page-title';
-import { PageRoot } from '@/layout/page-root';
-import { SearchResultType } from '@/medias/media-enums';
-import { MovieInfiniteGridList } from '@/movies/movie-infinite-grid-list';
-import { PeopleInfiniteGridList } from '@/people/people-infinite-list';
-import { searchMovies, searchPeople } from '@/search/search-fetchers';
-import { SearchResultsTabs } from '@/search/search-results-tabs';
+import { AppHeaderOffset } from '@/core/layouts/app-header';
+import type { Maybe } from '@/core/shared/shared.types';
+import { FIRST_PAGE } from '@/core/shared/shared.utils';
+import { Padder } from '@/core/ui/components/padder';
+import { PageTitle } from '@/core/ui/components/page-title';
+import { MediaType } from '@/features/media/media.utils';
+import { MovieInfiniteGridList } from '@/features/movies/components/movie-infinite-grid-list';
+import { PeopleInfiniteGridList } from '@/features/people/components/people-infinite-list';
+import { SearchResultsTabs } from '@/features/search/components/search-results-tabs';
+import { searchMovies, searchPeople } from '@/features/search/search.data';
 import { Box } from '@mui/material';
 import { notFound } from 'next/navigation';
 
@@ -19,28 +20,20 @@ type SearchPageProps = {
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const { query } = searchParams;
-  let type = searchParams.type as Maybe<SearchResultType>;
+  let type = searchParams.type as Maybe<MediaType>;
 
-  if (!query) {
-    notFound();
-  }
+  if (!query) notFound();
 
   const [moviesFirstPage, peopleFirstPage] = await Promise.all([
-    searchMovies({
-      query,
-      page: 1,
-    }),
-    searchPeople({
-      query,
-      page: 1,
-    }),
+    searchMovies(query, FIRST_PAGE),
+    searchPeople(query, FIRST_PAGE),
   ]);
 
   if (!type) {
     if (moviesFirstPage.total_results) {
-      type = SearchResultType.MOVIE;
+      type = MediaType.MOVIE;
     } else if (peopleFirstPage.total_results) {
-      type = SearchResultType.PERSON;
+      type = MediaType.PERSON;
     }
   }
 
@@ -49,29 +42,31 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   infiniteListSearchParams.set('query', query);
 
   return (
-    <PageRoot hasHeaderGutter>
-      <Padder>
-        <PageTitle title={`Search Results for: ${query}`} />
-        <SearchResultsTabs
-          value={type}
-          isMoviesTabVisible={!!moviesFirstPage.total_pages}
-          isPeopleTabVisible={!!peopleFirstPage.total_pages}
-        />
-        <Box sx={{ marginTop: 2 }}>
-          {type === SearchResultType.MOVIE && (
-            <MovieInfiniteGridList
-              pageKeyTemplate={`/search/movies/api?${infiniteListSearchParams.toString()}`}
-              firstPage={moviesFirstPage}
-            />
-          )}
-          {type === SearchResultType.PERSON && (
-            <PeopleInfiniteGridList
-              pageKeyTemplate={`/search/people/api?${infiniteListSearchParams.toString()}`}
-              firstPage={peopleFirstPage}
-            />
-          )}
-        </Box>
-      </Padder>
-    </PageRoot>
+    <AppHeaderOffset>
+      <main>
+        <Padder>
+          <PageTitle title={`Search Results for: ${query}`} />
+          <SearchResultsTabs
+            value={type}
+            isMoviesTabVisible={!!moviesFirstPage.total_pages}
+            isPeopleTabVisible={!!peopleFirstPage.total_pages}
+          />
+          <Box sx={{ marginTop: 2 }}>
+            {type === MediaType.MOVIE && (
+              <MovieInfiniteGridList
+                pageKeyTemplate={`/api/search/movies?${infiniteListSearchParams.toString()}`}
+                firstPage={moviesFirstPage}
+              />
+            )}
+            {type === MediaType.PERSON && (
+              <PeopleInfiniteGridList
+                pageKeyTemplate={`/api/search/people?${infiniteListSearchParams.toString()}`}
+                firstPage={peopleFirstPage}
+              />
+            )}
+          </Box>
+        </Padder>
+      </main>
+    </AppHeaderOffset>
   );
 }

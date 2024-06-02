@@ -1,15 +1,18 @@
-import { FIRST_PAGE } from '@/common/common-constants';
-import { Padder } from '@/common/padder';
-import { PageTitle } from '@/common/page-title';
-import { FeaturedMovie } from '@/movies/featured-movie';
-import { getDiscoverMovies, getMovieGenre } from '@/movies/movie-fetchers';
-import { MovieInfiniteGridList } from '@/movies/movie-infinite-grid-list';
-import { MovieSortingSelect } from '@/movies/movie-sorting-select';
-import { getMetadata } from '@/seo/seo-utils';
+import { createUrl } from '@/core/routing/routing.utils';
+import { getMetadata } from '@/core/seo/seo.utils';
+import { FIRST_PAGE } from '@/core/shared/shared.utils';
+import { Padder } from '@/core/ui/components/padder';
+import { PageTitle } from '@/core/ui/components/page-title';
+import { FeaturedMovie } from '@/features/movies/components/featured-movie';
+import { MovieInfiniteGridList } from '@/features/movies/components/movie-infinite-grid-list';
+import { MovieSortingSelect } from '@/features/movies/components/movie-sorting-select';
+import {
+  getDiscoverMovies,
+  getMovieGenre,
+} from '@/features/movies/movies.data';
 import { Divider, Stack } from '@mui/material';
 import type { Metadata } from 'next';
-
-// TODO: Hem Next'in hem SWR'nin cache mantığını bi anla.
+import { Suspense } from 'react';
 
 type DiscoverMoviesPageProps = {
   searchParams: {
@@ -27,28 +30,16 @@ export async function generateMetadata({
 
   const genreId = Number(searchParams.genreId);
 
-  if (!genreId) {
-    return defaultMetadata;
-  }
+  if (!genreId) return defaultMetadata;
 
   const genre = await getMovieGenre(genreId);
 
-  if (!genre) {
-    return defaultMetadata;
-  }
-
-  let pathname = '/movies/discover';
-
-  const searchQuery = new URLSearchParams(searchParams).toString();
-
-  if (searchQuery) {
-    pathname = `${pathname}?${searchQuery}`;
-  }
+  if (!genre) return defaultMetadata;
 
   return getMetadata({
     title: `${genre.name} Movies`,
     description: `Discover ${genre.name} movies!`,
-    pathname,
+    pathname: createUrl('/movies/discover', new URLSearchParams(searchParams)),
   });
 }
 
@@ -59,11 +50,7 @@ export default async function DiscoverMoviesPage({
 
   const [genre, firstPage] = await Promise.all([
     getMovieGenre(genreId),
-    getDiscoverMovies({
-      page: FIRST_PAGE,
-      genreId,
-      sortBy: searchParams.sortBy,
-    }),
+    getDiscoverMovies(FIRST_PAGE, genreId, searchParams.sortBy),
   ]);
 
   const [featuredMovie] = firstPage.results;
@@ -72,22 +59,27 @@ export default async function DiscoverMoviesPage({
   infiniteListSearchParams.set('page', '%pageIndex%');
 
   return (
-    <>
+    <main>
       <FeaturedMovie movie={featuredMovie} />
       <Stack spacing={2}>
         <Divider />
         <Padder>
           <PageTitle
             title={genre ? `${genre.name} Movies` : 'Discover Movies'}
-            extra={<MovieSortingSelect />}
+            extra={
+              // Since we use `useSearchParams` in `<MovieSortingSelect>`, we wrap it with `<Suspense>`
+              <Suspense>
+                <MovieSortingSelect />
+              </Suspense>
+            }
           />
           <MovieInfiniteGridList
-            pageKeyTemplate={`/movies/discover/api?${infiniteListSearchParams.toString()}`}
+            pageKeyTemplate={`/api/movies/discover?${infiniteListSearchParams.toString()}`}
             firstPage={firstPage}
             skipFirstMovie
           />
         </Padder>
       </Stack>
-    </>
+    </main>
   );
 }

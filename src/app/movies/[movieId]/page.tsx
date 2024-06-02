@@ -1,25 +1,32 @@
-import type { Id } from '@/common/common-types';
-import { FixedBackgroundImage } from '@/common/fixed-background-image';
-import { Padder } from '@/common/padder';
-import { PageRoot } from '@/layout/page-root';
-import { MovieCast, MovieCastSkeleton } from '@/movies-profile/movie-cast';
+import { AppHeaderOffset } from '@/core/layouts/app-header';
+import { getMetadata } from '@/core/seo/seo.utils';
+import type { Id } from '@/core/shared/shared.types';
+import { FixedBackgroundImage } from '@/core/ui/components/fixed-background-image';
+import { Padder } from '@/core/ui/components/padder';
+import {
+  MovieCast,
+  MovieCastSkeleton,
+} from '@/features/movies/components/movie-cast';
 import {
   MovieImages,
   MovieImagesSkeleton,
-} from '@/movies-profile/movie-images';
+} from '@/features/movies/components/movie-images';
 import {
   MovieRecommendations,
   MovieRecommendationsSkeleton,
-} from '@/movies-profile/movie-recommendations';
-import { MovieSummary } from '@/movies-profile/movie-summary';
+} from '@/features/movies/components/movie-recommendations';
+import { MovieSummary } from '@/features/movies/components/movie-summary';
+import {
+  MovieTopCrew,
+  MovieTopCrewSkeleton,
+} from '@/features/movies/components/movie-top-crew';
 import {
   MovieVideos,
   MovieVideosSkeleton,
-} from '@/movies-profile/movie-videos';
-import { getMovie } from '@/movies/movie-fetchers';
-import { getMetadata } from '@/seo/seo-utils';
-import { getTmdbConfiguration } from '@/tmdb/tmdb-configuration-fetchers';
-import { getTmdbImageUrl } from '@/tmdb/tmdb-configuration-utils';
+} from '@/features/movies/components/movie-videos';
+import { getMovie } from '@/features/movies/movies.data';
+import { getTmdbConfiguration } from '@/features/tmdb/tmdb.data';
+import { getTmdbImageUrl } from '@/features/tmdb/tmdb.utils';
 import { Divider, Stack } from '@mui/material';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -31,9 +38,7 @@ async function getPageData(movieId: Id) {
     getTmdbConfiguration(),
   ]);
 
-  if (!movie) {
-    notFound();
-  }
+  if (!movie) notFound();
 
   return { movie, tmdbConfiguration };
 }
@@ -73,37 +78,48 @@ export default async function MoviePage({ params }: MoviePageProps) {
   const { movie } = await getPageData(movieId);
 
   return (
-    <PageRoot>
-      <FixedBackgroundImage
-        src={movie.backdrop_path}
-        alt={movie.title}
-        aspectRatio="16 / 9"
-        hasScrollBasedOpacity
-        hasDimmer
-      />
+    <AppHeaderOffset>
       <Stack spacing={2}>
-        <Padder>
-          <MovieSummary movie={movie} />
-        </Padder>
+        <main>
+          <FixedBackgroundImage
+            src={movie.backdrop_path}
+            alt={movie.title}
+            aspectRatio="16 / 9"
+            hasScrollBasedOpacity
+            hasDimmer
+          />
+          <Stack spacing={2}>
+            <Padder>
+              <MovieSummary movie={movie} />
+            </Padder>
 
-        <Divider />
+            <Padder>
+              <Suspense fallback={<MovieTopCrewSkeleton />}>
+                <MovieTopCrew movieId={movieId} />
+              </Suspense>
+            </Padder>
 
-        <Suspense fallback={<MovieVideosSkeleton />}>
-          <MovieVideos movieId={movieId} />
-        </Suspense>
+            <Divider />
 
-        <Suspense fallback={<MovieImagesSkeleton />}>
-          <MovieImages movieId={movieId} />
-        </Suspense>
+            <Suspense fallback={<MovieVideosSkeleton />}>
+              <MovieVideos movieId={movieId} />
+            </Suspense>
 
-        <Suspense fallback={<MovieCastSkeleton />}>
-          <MovieCast movieId={movieId} />
-        </Suspense>
+            <Suspense fallback={<MovieImagesSkeleton />}>
+              <MovieImages movieId={movieId} />
+            </Suspense>
 
-        <Suspense fallback={<MovieRecommendationsSkeleton />}>
-          <MovieRecommendations movieId={movie.id} />
-        </Suspense>
+            <Suspense fallback={<MovieCastSkeleton />}>
+              <MovieCast movieId={movieId} />
+            </Suspense>
+          </Stack>
+        </main>
+        <aside>
+          <Suspense fallback={<MovieRecommendationsSkeleton />}>
+            <MovieRecommendations movieId={movie.id} />
+          </Suspense>
+        </aside>
       </Stack>
-    </PageRoot>
+    </AppHeaderOffset>
   );
 }

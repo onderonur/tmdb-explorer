@@ -1,15 +1,14 @@
-import { FIRST_PAGE } from '@/common/common-constants';
-import { Padder } from '@/common/padder';
-import { PageTitle } from '@/common/page-title';
-import { FeaturedMovie } from '@/movies/featured-movie';
-import { getPopularMovies } from '@/movies/movie-fetchers';
-import { MovieInfiniteGridList } from '@/movies/movie-infinite-grid-list';
-import { getMetadata } from '@/seo/seo-utils';
+import { getMetadata } from '@/core/seo/seo.utils';
+import { FIRST_PAGE } from '@/core/shared/shared.utils';
+import { Padder } from '@/core/ui/components/padder';
+import { PageTitle } from '@/core/ui/components/page-title';
+import { FeaturedMovie } from '@/features/movies/components/featured-movie';
+import { MovieInfiniteGridList } from '@/features/movies/components/movie-infinite-grid-list';
+import { getPopularMovies } from '@/features/movies/movies.data';
 import { Divider, Stack } from '@mui/material';
 
 export const metadata = getMetadata({
   title: 'Popular Movies',
-  description: 'TODO',
   pathname: '/movies/popular',
 });
 
@@ -22,19 +21,19 @@ export default async function PopularMoviesPage() {
   infiniteListSearchParams.set('page', '%pageIndex%');
 
   return (
-    <>
+    <main>
       <FeaturedMovie movie={featuredMovie} />
       <Stack spacing={2}>
         <Divider />
         <Padder>
           <PageTitle title="Popular Movies" />
           <MovieInfiniteGridList
-            pageKeyTemplate={`/movies/popular/api?${infiniteListSearchParams.toString()}`}
+            pageKeyTemplate={`/api/movies/popular?${infiniteListSearchParams.toString()}`}
             firstPage={firstPage}
             skipFirstMovie
           />
         </Padder>
       </Stack>
-    </>
+    </main>
   );
 }
